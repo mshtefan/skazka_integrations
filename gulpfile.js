@@ -15,7 +15,7 @@
   gulp.task('connect', function () {
 
     browserSync.init({
-      server: "./dist/",
+      server: "./",
       host: '0.0.0.0',
       open: false
     });
@@ -27,7 +27,7 @@
     gulp.watch(__dirname + '/src/html/**/*.html', ['build.javascript']);
     gulp.watch(__dirname + '/src/less/**/*.less', ['build.less']);
     gulp.watch(__dirname + '/src/fonts/**/*', ['build.fonts']);
-    gulp.watch(__dirname + '/src/*.html', ['build.html']);
+    //gulp.watch(__dirname + '/src/*.html', ['build.html']);
     gulp.watch(__dirname + '/src/image/**/*', ['build.img']);
   });
 
@@ -91,13 +91,13 @@
       .pipe(gulp.dest(__dirname + '/dist/image'));
   });
 
-  gulp.task('build.html', function () {
-    return gulp.src(__dirname + '/src/*.html')
-      .pipe(gulp.dest(__dirname + '/dist/'));
-  });
+  //gulp.task('build.html', function () {
+  //  return gulp.src(__dirname + '/src/*.html')
+  //    .pipe(gulp.dest(__dirname + '/dist/'));
+  //});
 
-  gulp.task('default', ['connect', 'watch', 'build.javascript', 'build.less', 'build.img', 'build.fonts', 'build.html']);
+  gulp.task('default', ['connect', 'watch', 'build.javascript', 'build.less', 'build.img', 'build.fonts']);
 
-  gulp.task('build', ['build.javascript', 'build.less', 'build.img', 'build.fonts', 'build.html']);
+  gulp.task('build', ['build.javascript', 'build.less', 'build.img', 'build.fonts']);
 
 }());

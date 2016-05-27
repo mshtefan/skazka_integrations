@@ -10,6 +10,8 @@
 
     var _cookie_name = 'auth_hash';
 
+    var _redirect_url = 'https://sailplay.net';
+
     sp.send('init', {
 
       partner_id: $rootScope.config.partner_id || 1559,
@@ -27,6 +29,7 @@
         sp.send('login', auth_hash);
       }
       else {
+        window.location.href = _redirect_url;
         $rootScope.loaded = true;
       }
       $rootScope.$apply();
@@ -36,6 +39,7 @@
 
       console.log('login error');
 
+      window.location.href = _redirect_url;
       $rootScope.loaded = true;
       $rootScope.$apply();
 
