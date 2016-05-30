@@ -2720,7 +2720,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
         },
         link: function (scope, elm) {
 
-          elm.attr('data-styles', $rootScope.config.social_styles || 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/b542637bb441daafcf62dd95e00cf506.css');
+          elm.attr('data-styles', $rootScope.config.social_styles || 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/4164ea8221f2093fca2398c2ed899318.css');
 
           sp.actions && sp.actions.parse(elm[0], scope.action);
 
