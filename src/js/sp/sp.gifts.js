@@ -25,6 +25,8 @@
 
           scope.open_gift = function (gift) {
 
+            if(scope.user().user_points.confirmed < gift.points) return;
+
             scope.gift = angular.copy(gift);
             $('.js-gift-popup').bPopup({
               speed: 450,

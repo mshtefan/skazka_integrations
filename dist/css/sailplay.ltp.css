@@ -316,6 +316,7 @@ hr {
   line-height: 1;
   text-align: center;
   color: #fff;
+  font-weight: bold;
   padding-top: 15px;
 }
 .sp_common-btn:link {
@@ -1253,6 +1254,7 @@ hr {
   background-color: #00E1E6;
   font-size: 15px;
   line-height: 1;
+  font-weight: bold;
   text-transform: uppercase;
 }
 .sp_gift-slider__btn:hover {
@@ -1392,9 +1394,10 @@ hr {
   left: 123px;
   top: 50%;
   margin-top: -22px;
-  font-size: 15px;
+  font-size: 16px;
   padding-top: 14px;
   color: #fff;
+  font-family: sans-serif;
 }
 .sp_tasks-cell__btn:link {
   color: #fff;

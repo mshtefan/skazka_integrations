@@ -2,7 +2,7 @@
 
   angular.module('ltp', ['core', 'ui', 'sp', 'templates'])
 
-    .directive('sailplayLtp', function ($rootScope) {
+    .directive('sailplayLtp', function ($rootScope, $locale) {
 
       return {
         restrict: 'E',
@@ -10,6 +10,8 @@
         scope: true,
         templateUrl: '/html/main.html',
         link: function (scope) {
+
+          $locale.NUMBER_FORMATS.GROUP_SEP = ' ';
 
           // preloader
           $('#sp_status').fadeOut();

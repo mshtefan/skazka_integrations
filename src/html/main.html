@@ -53,16 +53,16 @@
                         </div>
                         <div class="sp_status-prog-sec__title" data-ng-if="!user().last_badge.id">No status</div>
                         <div class="sp_status-prog-sec__title" data-ng-if="get_offset() && get_next()">
-                            {{ get_offset() }} points to the {{ get_next().name }} status
+                            {{ get_offset() | number }} points to the {{ get_next().name }} status
                         </div>
                     </div>
                 </div>
 
                 <div class="sp_status-info-counter sp_status-prog-sec__right">
                     <div class="sp_status-info-counter__count">
-                        <span class="sp_status-info-counter__count-val">{{ user().user_points.confirmed }}</span>
+                        <span class="sp_status-info-counter__count-val">{{ user().user_points.confirmed | number }}</span>
                         <div class="sp_status-info-counter__remain" data-ng-if="user().user_points.unconfirmed">
-                            +{{ user().user_points.unconfirmed }}
+                            +{{ user().user_points.unconfirmed | number }}
                             <div class="sp_status-info-counter__remain-popup">
                                 Unconfirmed points that will be confirmed after the payment
                             </div>
@@ -93,7 +93,7 @@
             <div class="sp_progress-bar js-status-bar-wrap" data-ng-class="{type_hidden: hidden}">
                 <div class="sp_progress-bar__point this-point-{{ ($index+1) }} js-point"
                      data-ng-repeat="status in statuses().multilevel_badges[0]" data-status-slider>
-                    {{ limits[$index] }}
+                    {{ limits[$index] | number }}
                     <div class="sp_progress-bar__point-img"><img data-ng-src="{{ status.thumbs.url_250x250 }}" alt="">
                     </div>
                 </div>
@@ -115,12 +115,12 @@
                                  style="background-image: url('{{ gift.thumbs.url_250x250 | sailplay_pic }}');"></div>
                             <div class="sp_gift-slider__info this-hide-hover">
                                 <div class="sp_gift-slider__name" data-ng-bind="gift.name"></div>
-                                <div class="sp_gift-slider__weight">{{ gift.points }} points</div>
+                                <div class="sp_gift-slider__weight">{{ gift.points | number }} points</div>
                             </div>
                             <div class="sp_gift-slider__hover this-show-hover">
                                 <a href="#" class="sp_common-btn sp_gift-slider__btn"
                                    data-ng-click="open_gift(gift);$event.preventDefault();"
-                                   data-ng-class="{ disabled: user().user_points.confirmed < gift.points }">Get</a>
+                                   data-ng-class="{ type_disabled: user().user_points.confirmed < gift.points }">Get</a>
                             </div>
                         </div>
                     </div>
@@ -133,7 +133,7 @@
             <div class="sp_gift-popup js-gift-popup" style="display: none;"
                  data-overlay-click="close_gift();" data-ng-cloak>
                 <div class="sp_gift-popup__close js-close-popup"></div>
-                <div class="sp_gift-popup__text">You are about to spent {{ gift.points }} on</div>
+                <div class="sp_gift-popup__text">You are about to spent {{ gift.points | number }} on</div>
                 <div class="sp_gift-popup__img"
                      style="background-image: url('{{ gift.thumbs.url_250x250 | sailplay_pic }}');"></div>
                 <div class="sp_gift-popup__text">Are you sure?</div>
@@ -162,7 +162,7 @@
                              data-ng-mouseenter="hover_action = true;" data-ng-mouseleave="hover_action = false;">
                             <div class="sp_tasks-cell__inner">
                                 <div class="sp_tasks-cell__reward" data-ng-hide="hover_action">
-                                    <div class="sp_tasks-cell__reward-count" data-ng-bind="action.points"></div>
+                                    <div class="sp_tasks-cell__reward-count" data-ng-bind="action.points | number"></div>
                                     <div class="sp_tasks-cell__reward-title">points</div>
                                 </div>
                                 <div class="sp_tasks-cell__icon"
@@ -172,9 +172,9 @@
                                          data-ng-bind="action_data(action).name"></div>
                                 </div>
                                 <div data-ng-show="hover_action">
-                                    <a data-sailplay-action data-action="action" data-text="Get bonus point!"
+                                    <a data-sailplay-action data-action="action" data-text="Get bonus points!"
                                        data-ng-class="{'sp_common-btn sp_tasks-cell__btn' : action.type == 'inviteFriend',
-                                    'soc_btns' : action.type != 'inviteFriend'}">Get bonus point!</a>
+                                    'soc_btns' : action.type != 'inviteFriend'}">Get bonus points!</a>
                                 </div>
                             </div>
                         </div>
@@ -196,7 +196,7 @@
                                     </div>
                                 </div>
                                 <a href="#" class="sp_common-btn sp_tasks-cell__btn"
-                                   data-ng-click="open_profile();$event.preventDefault();">Get bonus point!</a>
+                                   data-ng-click="open_profile();$event.preventDefault();">Get bonus points!</a>
                             </div>
                         </div>
                     </div>
@@ -218,7 +218,7 @@
                         <div class="sp_tasks-cell">
                             <div class="sp_tasks-cell__inner">
                                 <div class="sp_tasks-cell__reward">
-                                    <div class="sp_tasks-cell__reward-count" data-ng-bind="action.points"></div>
+                                    <div class="sp_tasks-cell__reward-count" data-ng-bind="action.points | number"></div>
                                     <div class="sp_tasks-cell__reward-title">points</div>
                                 </div>
                                 <div class="sp_tasks-cell__icon"
@@ -227,7 +227,7 @@
                                     <div class="sp_tasks-cell__text-inner" data-ng-bind="action.name"></div>
                                 </div>
                                 <a href="#" class="sp_common-btn sp_tasks-cell__btn"
-                                   data-ng-click="open_action(action);$event.preventDefault();">Get bonus point!</a>
+                                   data-ng-click="open_action(action);$event.preventDefault();">Get bonus points!</a>
                             </div>
                         </div>
                     </div>
@@ -248,7 +248,7 @@
                     <div class="sp_action-popup__img_wrapper">
                         <div class="sp_action-popup__img"
                              style="background-image: url('{{ custom_action.pic }}');background-size: 80px;"></div>
-                        <div class="sp_action-popup__points" data-ng-bind="custom_action.points + ' points'"></div>
+                        <div class="sp_action-popup__points" data-ng-bind="(custom_action.points | number) + ' points'"></div>
                     </div>
                     <div class="sp_action-popup__text" data-ng-bind="custom_action.text"></div>
                 </div>
@@ -321,7 +321,7 @@
         <div class="sp_history-popup__item" data-dir-paginate="item in history() | itemsPerPage:5" data-pagination-id="history_pages">
             <div class="sp_history-popup__item-date" data-ng-bind="item.action_date | date:'d MMMM yyyy'"></div>
             <div class="sp_history-popup__item-points" data-ng-class="{ bns_minus: item.points_delta < 0 }"
-                 data-ng-show="item.points_delta">+{{ item.points_delta || 0 }} points
+                 data-ng-show="item.points_delta">+{{ (item.points_delta | number) || 0 }} points
             </div>
             <div class="sp_history-popup__item-name" data-ng-bind="item | history_item"></div>
         </div>
