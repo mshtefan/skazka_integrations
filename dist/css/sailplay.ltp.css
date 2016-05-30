@@ -294,6 +294,18 @@ hr {
 .sp_l-section {
   overflow: hidden;
 }
+.bns_hist_pager {
+  text-align: center;
+  font-size: 16px;
+}
+.bns_hist_pager a {
+  text-decoration: none;
+  color: #000;
+  margin-right: 4px;
+}
+.bns_hist_pager a.active {
+  color: #00E1E6;
+}
 .sp_common-btn {
   display: block;
   height: 44px;
@@ -1683,6 +1695,12 @@ hr {
   background-position: -70px 0;
   cursor: pointer;
 }
+.sp_history-popup__close_btn {
+  padding-top: 11px;
+  width: 200px;
+  display: block;
+  margin: 30px auto 0;
+}
 .sp_gift-popup {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1964,6 +1982,7 @@ hr {
   display: block;
   width: 60%;
   float: right;
+  padding-top: 10px;
 }
 .sp_action-popup__img_wrapper {
   display: block;

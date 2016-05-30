@@ -6,32 +6,32 @@
       "system": {
         "inviteFriend": {
           name: 'Invite a Friend',
-          pic: 'image/task-icon-09.png'
+          pic: 'dist/image/task-icon-09.png'
         }
       },
       "social": {
         "fb": {
           "partner_page": {
             "name": "Tell about LocalTradePros",
-            "pic": "image/task-icon-07.png"
+            "pic": "dist/image/task-icon-02.png"
           },
           "purchase": {
             "name": "Tell about your purchase on Facebook",
-            "pic": "image/task-icon-02.png"
+            "pic": "dist/image/task-icon-07.png"
           },
           "like": {
             "name": "Like us on Facebook",
-            "pic": "image/task-icon-01.png"
+            "pic": "dist/image/task-icon-01.png"
           }
         },
         "gp": {
           "partner_page": {
             "name": "Tell about LocalTradePros",
-            "pic": "image/task-icon-04.png"
+            "pic": "dist/image/task-icon-04.png"
           },
           "like": {
             "name": "Like us on Google Plus",
-            "pic": "image/task-icon-04.png"
+            "pic": "dist/image/task-icon-04.png"
           }
         }
       }
@@ -40,22 +40,22 @@
     .constant('custom_actions_data', [
       {
         name: 'Get registered as Pro',
-        text: 'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit. Praesent pulvinar tincidunt\nrutrum. Suspendisse vel ligula nec lacus\nullamcorper pretium eget nec ex. Cras\niaculis a mauris et placerat. Phasellus\npharetra tortor et ex vestibulum dictum. ',
-        pic: 'image/task-icon-10.png',
+        text: 'Good at something? Become a Pro and start selling your skills! Once you get registered as a Pro you will receive additional 10 bonus points to your account!',
+        pic: 'dist/image/task-icon-10.png',
         points: 10,
         tag: 'Registered as Pro'
       },
       {
         name: 'Get added to favorites as Pro',
-        text: 'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit. Praesent pulvinar tincidunt\nrutrum. Suspendisse vel ligula nec lacus\nullamcorper pretium eget nec ex. Cras\niaculis a mauris et placerat. Phasellus\npharetra tortor et ex vestibulum dictum. ',
-        pic: 'image/task-icon-08.png',
+        text: 'You will be rewarded with 20 bonus points every time your client added you to favorites! The more loyal clients you have, the more point you will earn.\n',
+        pic: 'dist/image/task-icon-08.png',
         points: 20,
         tag: 'TP tagged as fav'
       },
       {
         name: 'Extend your subscription',
-        text: 'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit. Praesent pulvinar tincidunt\nrutrum. Suspendisse vel ligula nec lacus\nullamcorper pretium eget nec ex. Cras\niaculis a mauris et placerat. Phasellus\npharetra tortor et ex vestibulum dictum. ',
-        pic: 'image/task-icon-11.png',
+        text: 'Every time you extend you LocalTradePros subscription by paying monthly fee we reward you with 30 points for staying with us!',
+        pic: 'dist/image/task-icon-11.png',
         points: 30,
         tag: 'TP Monthly payment made'
       }
@@ -195,7 +195,7 @@
 
               scope.form = angular.copy(_empty);
 
-            }, 200);
+            }, 500);
 
           };
 
@@ -225,7 +225,7 @@
 
               scope.custom_action = null;
 
-            }, 200);
+            }, 500);
 
           };
 

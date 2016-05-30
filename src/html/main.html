@@ -189,7 +189,7 @@
                                     <div class="sp_tasks-cell__reward-title">points</div>
                                 </div>
                                 <div class="sp_tasks-cell__icon"
-                                     style="background-image: url('image/task-icon-06.png');"></div>
+                                     style="background-image: url('dist/image/task-icon-06.png');"></div>
                                 <div class="sp_tasks-cell__text">
                                     <div class="sp_tasks-cell__text-inner">
                                         Fill your profile
@@ -222,7 +222,7 @@
                                     <div class="sp_tasks-cell__reward-title">points</div>
                                 </div>
                                 <div class="sp_tasks-cell__icon"
-                                     style="background-image: url('{{ action.pic }}');"></div>
+                                     style="background-image: url('{{ action.pic }}');background-size: contain;"></div>
                                 <div class="sp_tasks-cell__text">
                                     <div class="sp_tasks-cell__text-inner" data-ng-bind="action.name"></div>
                                 </div>
@@ -247,7 +247,7 @@
                 <div class="sp_action-popup__wrap">
                     <div class="sp_action-popup__img_wrapper">
                         <div class="sp_action-popup__img"
-                             style="background-image: url('{{ custom_action.pic }}');"></div>
+                             style="background-image: url('{{ custom_action.pic }}');background-size: 80px;"></div>
                         <div class="sp_action-popup__points" data-ng-bind="custom_action.points + ' points'"></div>
                     </div>
                     <div class="sp_action-popup__text" data-ng-bind="custom_action.text"></div>
@@ -312,20 +312,24 @@
     <!-- /wrapper -->
 
     <!-- popups -->
-    <div class="sp_history-popup js-history-popup" data-sailplay-history style="display: none;"
-         data-overlay-click="close_history();" data-ng-cloak>
+    <div class="sp_history-popup js-history-popup" data-sailplay-history style="display: none;" data-ng-cloak>
         <div class="sp_history-popup__close js-close-popup"></div>
         <div class="sp_history-popup__head-wr">
             <div class="sp_history-popup__head">History</div>
             <div class="sp_history-popup__title">History of transactions</div>
         </div>
-        <div class="sp_history-popup__item" data-dir-paginate="item in history() | itemsPerPage:6">
+        <div class="sp_history-popup__item" data-dir-paginate="item in history() | itemsPerPage:5" data-pagination-id="history_pages">
             <div class="sp_history-popup__item-date" data-ng-bind="item.action_date | date:'d MMMM yyyy'"></div>
             <div class="sp_history-popup__item-points" data-ng-class="{ bns_minus: item.points_delta < 0 }"
                  data-ng-show="item.points_delta">+{{ item.points_delta || 0 }} points
             </div>
             <div class="sp_history-popup__item-name" data-ng-bind="item | history_item"></div>
         </div>
+        <dir-pagination-controls data-max-size="7" data-pagination-id="history_pages" data-template-url="/html/ui/ui.pagination.controls.html" data-auto-hide="true"></dir-pagination-controls>
+
+        <a href="#" class="sp_common-btn sp_history-popup__close_btn"
+           data-ng-click="close_history();$event.preventDefault();">OK</a>
+
     </div>
     <!-- /popups -->
 

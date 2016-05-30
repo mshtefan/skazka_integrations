@@ -23,7 +23,6 @@
     sp.on('init.success', function(){
 
       var auth_hash = ipCookie(_cookie_name);
-
       //auth_hash = '25d866d7390bbbdbe4608e3afdc4d8c0448b1168';
       if(auth_hash){
         sp.send('login', auth_hash);
