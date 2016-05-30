@@ -2476,6 +2476,10 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
           "like": {
             "name": "Like us on Google Plus",
             "pic": "dist/image/task-icon-04.png"
+          },
+          "purchase": {
+            "name": "Tell about your purchase on Google+",
+            "pic": "dist/image/task-icon-07.png"
           }
         }
       }
