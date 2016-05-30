@@ -2,7 +2,7 @@
 
   angular.module('ltp', ['core', 'ui', 'sp', 'templates'])
 
-    .directive('sailplayLtp', function ($rootScope, $locale) {
+    .directive('sailplayLtp', function ($rootScope, $locale, sp_api) {
 
       return {
         restrict: 'E',
@@ -11,6 +11,7 @@
         templateUrl: '/html/main.html',
         link: function (scope) {
 
+          scope.user = sp_api.data('load.user.info');
           $locale.NUMBER_FORMATS.GROUP_SEP = ' ';
 
           // preloader
@@ -24,7 +25,8 @@
 
           scope.on_change_page = function(){
             var offset = $('.js-history-popup').offset().top;
-            $(window).scrollTop(offset);
+            //$(window).scrollTop(offset);
+            $("html, body").delay(100).animate({ scrollTop: offset }, 200);
           };
 
           scope.open_history = function () {
