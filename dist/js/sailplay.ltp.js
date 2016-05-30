@@ -2561,7 +2561,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
           scope.form = angular.copy(_empty);
 
-          sp.on('load.user.info.success', function(){
+          sp.on('load.user.info.success', function () {
 
             scope.form.firstName = scope.user && scope.user() && scope.user().user.first_name;
             scope.form.lastName = scope.user && scope.user() && scope.user().user.last_name;
@@ -2577,26 +2577,97 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
 
           scope.isValid = function () {
+
+            if(!scope.user || !scope.user()) {
+              return;
+            }
+
+            var form = angular.copy(scope.form);
+
+            if (form.addPhone) {
+
+              form.addPhone = '7' + form.addPhone;
+
+            }
+
+            if (form.birthDate[0]) {
+
+              form.birthDate[0] = form.birthDate[0] < 10 ? '0' + form.birthDate[0] : form.birthDate[0];
+
+            }
+
+            if (form.birthDate[1]) {
+
+              form.birthDate[1] = form.birthDate[1] < 10 ? '0' + form.birthDate[1] : form.birthDate[1];
+            }
+
+            form.birthDate = form.birthDate.reverse().join('-');
+
             if (
-              scope.form.firstName
-              && scope.form.lastName
-              && (scope.form.birthDate && scope.form.birthDate[0] && scope.form.birthDate[1] && scope.form.birthDate[2])
-              && (scope.form.sex == 1 || scope.form.sex == 2)
-              && scope.form.addPhone
-              && user_service.validateEmail(scope.form.addEmail)
+              (form.firstName)
+              && (form.lastName)
+              && (form.birthDate && form.birthDate[0] && form.birthDate[1] && form.birthDate[2])
+              && (form.sex == 1 || form.sex == 2)
+              && (form.addPhone)
+              && (user_service.validateEmail(form.addEmail))
             ) {
-              return true;
+              if(
+                (scope.user().user.first_name == form.firstName)
+                && (scope.user().user.last_name == form.lastName)
+                && (scope.user().user.birth_date == form.birthDate)
+                && (scope.user().user.sex == form.sex)
+                && (scope.user().user.phone == form.addPhone)
+                &&  (scope.user().user.email == form.addEmail)
+              ) {
+                return false;
+              } else {
+                return true;
+              }
             }
             return false;
           };
 
           scope.save_profile = function () {
 
-            var form = angular.copy(scope.form);
-
-            form.addPhone = '7' + form.addPhone;
-
             if (scope.isValid()) {
+
+              var form = angular.copy(scope.form);
+
+              form.addPhone = '7' + form.addPhone;
+
+              form.birthDate[0] = form.birthDate[0] < 10 ? '0' + form.birthDate[0] : form.birthDate[0];
+
+              form.birthDate[1] = form.birthDate[1] < 10 ? '0' + form.birthDate[1] : form.birthDate[1];
+
+              form.birthDate = form.birthDate.reverse().join('-');
+
+              if (scope.user().user.first_name == form.firstName) {
+                delete form.firstName;
+              }
+
+              if (scope.user().user.last_name == form.lastName) {
+                delete form.lastName;
+              }
+
+              if (scope.user().user.email == form.addEmail) {
+                delete form.addEmail;
+              }
+
+              if (scope.user().user.phone == form.addPhone) {
+                delete form.addPhone;
+              }
+
+              if (scope.user().user.sex == form.sex) {
+                delete form.sex;
+              }
+
+              if (scope.user().user.birth_date == form.birthDate) {
+                delete form.birthDate;
+              }
+
+              if (!Object.keys(form).length) {
+                return;
+              }
 
               sp.send('users.update', form);
 
