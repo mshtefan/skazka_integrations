@@ -325,7 +325,8 @@
             </div>
             <div class="sp_history-popup__item-name" data-ng-bind="item | history_item"></div>
         </div>
-        <dir-pagination-controls data-max-size="7" data-pagination-id="history_pages" data-template-url="/html/ui/ui.pagination.controls.html" data-auto-hide="true"></dir-pagination-controls>
+
+        <dir-pagination-controls data-max-size="7" data-pagination-id="history_pages" on-page-change="on_change_page()" data-template-url="/html/ui/ui.pagination.controls.html" data-auto-hide="true"></dir-pagination-controls>
 
         <a href="#" class="sp_common-btn sp_history-popup__close_btn"
            data-ng-click="close_history();$event.preventDefault();">OK</a>

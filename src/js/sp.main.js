@@ -22,6 +22,11 @@
             $('.js-history-popup').bPopup().close();
           };
 
+          scope.on_change_page = function(){
+            var offset = $('.js-history-popup').offset().top;
+            $(window).scrollTop(offset);
+          };
+
           scope.open_history = function () {
             $('.js-history-popup').bPopup({
               speed: 450,
