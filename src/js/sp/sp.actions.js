@@ -71,6 +71,7 @@
         link: function (scope) {
 
           scope.actions = sp_api.data('load.actions.list');
+          scope.user = sp_api.data('load.user.info');
 
           var tags = user_service.getTags();
 
@@ -119,13 +120,20 @@
 
           scope.form = angular.copy(_empty);
 
-          scope.form.firstName = scope.user && scope.user() && scope.user().user.first_name;
-          scope.form.lastName = scope.user && scope.user() && scope.user().user.last_name;
-          scope.form.sex = scope.user && scope.user() && scope.user().user.sex;
-          scope.form.addEmail = scope.user && scope.user() && scope.user().user.email;
-          scope.form.addPhone = scope.user && scope.user() && scope.user().user.phone && scope.user().user.phone.slice(1);
-          var bd = scope.user && scope.user() && scope.user().user.birth_date && scope.user().user.birth_date.split('-');
-          scope.form.birthDate = bd ? [parseInt(bd[2]), parseInt(bd[1]), parseInt(bd[0])] : [null, null, null];
+          sp.on('load.user.info.success', function(){
+
+            scope.form.firstName = scope.user && scope.user() && scope.user().user.first_name;
+            scope.form.lastName = scope.user && scope.user() && scope.user().user.last_name;
+            scope.form.sex = scope.user && scope.user() && scope.user().user.sex;
+            scope.form.addEmail = scope.user && scope.user() && scope.user().user.email;
+            scope.form.addPhone = scope.user && scope.user() && scope.user().user.phone && scope.user().user.phone.slice(1);
+            var bd = scope.user && scope.user() && scope.user().user.birth_date && scope.user().user.birth_date.split('-');
+            scope.form.birthDate = bd ? [parseInt(bd[2]), parseInt(bd[1]), parseInt(bd[0])] : [null, null, null];
+
+            scope.$digest();
+
+          });
+
 
           scope.isValid = function () {
             if (
@@ -171,7 +179,7 @@
 
           scope.open_profile = function () {
 
-            scope.form = angular.copy(_empty);
+            //scope.form = angular.copy(_empty);
 
             $('.js-profile-popup').bPopup({
               speed: 450,

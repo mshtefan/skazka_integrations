@@ -133,7 +133,7 @@
             <div class="sp_gift-popup js-gift-popup" style="display: none;"
                  data-overlay-click="close_gift();" data-ng-cloak>
                 <div class="sp_gift-popup__close js-close-popup"></div>
-                <div class="sp_gift-popup__text">You are about to spent {{ gift.points | number }} on</div>
+                <div class="sp_gift-popup__text">You are about to spent {{ gift.points | number }} points on</div>
                 <div class="sp_gift-popup__img"
                      style="background-image: url('{{ gift.thumbs.url_250x250 | sailplay_pic }}');"></div>
                 <div class="sp_gift-popup__text">Are you sure?</div>
@@ -297,7 +297,7 @@
                         </div>
 
                         <a href="#" class="sp_common-btn sp_profile-popup__btn" data-ng-class="{type_disabled : !isValid()}" style="margin-bottom: 0;"
-                           data-ng-click="save_profile();$event.preventDefault();">Sign Up</a>
+                           data-ng-click="save_profile();$event.preventDefault();">Submit</a>
 
                     </form>
                 </div>

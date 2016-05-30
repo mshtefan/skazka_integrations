@@ -50,7 +50,7 @@
       $rootScope.loaded = true;
 
       //load data for widgets
-      sp_api.call('load.user.info');
+      sp_api.call('load.user.info', { all : 1});
       sp_api.call('load.badges.list');
       sp_api.call('load.actions.list');
       sp_api.call('load.user.history');
