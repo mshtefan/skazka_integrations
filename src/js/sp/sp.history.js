@@ -13,10 +13,14 @@
 
           scope.history = sp_api.data('load.user.history');
 
-          scope.history_current_page = 0;
+          scope.abs = function(num){
+            return num ? Math.abs(num) : '';
+          };
 
-          scope.set_current_page = function(page){
-            scope.history_current_page = page;
+          scope.on_change_page = function(){
+            var offset = $('.js-history-popup').offset().top;
+            //$(window).scrollTop(offset);
+            $("html, body").delay(100).animate({ scrollTop: offset }, 200);
           };
 
         }

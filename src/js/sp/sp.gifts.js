@@ -2,7 +2,7 @@
 
   angular.module('sp.gifts', [])
 
-    .directive('sailplayGifts', function (sp, sp_api, $timeout) {
+    .directive('sailplayGifts', function (sp, sp_api, $timeout, $rootScope) {
 
       return {
 
@@ -17,15 +17,36 @@
           scope.close_gift = function () {
 
             $('.js-gift-popup').bPopup().close();
-            $timeout(function(){
+            $timeout(function () {
               scope.gift = null;
-            }, 200)
+            }, 500)
 
           };
 
+          sp.on('gift.purchase.error', function (res) {
+
+            if (res && res.status == 'error' && res.status_code && res.status_code == '-6001') {
+
+              scope.close_gift();
+
+              $timeout(function () {
+
+                $rootScope.$broadcast('notifier:notify', {
+
+                  header: 'Error',
+                  body: res.message
+
+                });
+
+              }, 500);
+
+            }
+
+          });
+
           scope.open_gift = function (gift) {
 
-            if(scope.user().user_points.confirmed < gift.points) return;
+            if (scope.user().user_points.confirmed < gift.points) return;
 
             scope.gift = angular.copy(gift);
             $('.js-gift-popup').bPopup({

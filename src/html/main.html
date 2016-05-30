@@ -321,7 +321,7 @@
         <div class="sp_history-popup__item" data-dir-paginate="item in history() | itemsPerPage:5" data-pagination-id="history_pages">
             <div class="sp_history-popup__item-date" data-ng-bind="item.action_date | date:'d MMMM yyyy'"></div>
             <div class="sp_history-popup__item-points" data-ng-class="{ bns_minus: item.points_delta < 0 }"
-                 data-ng-show="item.points_delta">+{{ (item.points_delta | number) || 0 }} points
+                 data-ng-show="item.points_delta">+{{ (abs(item.points_delta) | number) || 0 }} points
             </div>
             <div class="sp_history-popup__item-name" data-ng-bind="item | history_item"></div>
         </div>
