@@ -28,7 +28,7 @@
         sp.send('login', auth_hash);
       }
       else {
-        window.location.href = _redirect_url;
+        //window.location.href = _redirect_url;
         $rootScope.loaded = true;
       }
       $rootScope.$apply();
@@ -38,7 +38,7 @@
 
       console.log('login error');
 
-      window.location.href = _redirect_url;
+      //window.location.href = _redirect_url;
       $rootScope.loaded = true;
       $rootScope.$apply();
 
