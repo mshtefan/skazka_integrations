@@ -1435,12 +1435,20 @@ hr {
   top: 15px;
   position: relative;
 }
+.soc_btns.btn_gp_like {
+  top: 20px;
+}
 .soc_btns iframe {
   height: 44px !important;
   position: absolute;
-  top: 0;
-  width: 190px !important;
+  top: 40px;
+  width: 200px !important;
   left: 10px;
+  bottom: 0;
+  margin: auto;
+  overflow: visible !important;
+  border: none;
+  outline: none;
 }
 .sp_badges-sec {
   margin-top: 50px;

@@ -138,6 +138,32 @@
 
           });
 
+          // SOCIAL GOOGLE PLUS CHANGE HEIGHT
+          sp.on('actions.social.gp.like.mouseenter', function(){
+            var elms = document.querySelectorAll('.btn_gp_like iframe');
+            var originWidth,
+              w,
+              h = 500;
+            for(var i = 0, len = elms.length; i < len; i++){
+              elms[i].removeAttribute("style");
+              //originWidth = elms[i].parentNode.offsetWidth;
+              //w = +originWidth + 70;
+              w = 220;
+              elms[i].style.cssText = 'width: ' + w + 'px !important;height: ' + h + 'px !important;z-index: 10 !important;margin-left: -10px;';
+              elms[i].parentNode.style.setProperty ("overflow", "visible", "important");
+            }
+          });
+          sp.on('actions.social.gp.like.mouseleave', function(){
+            var elms = document.querySelectorAll('.btn_gp_like iframe');
+            var w = 200,
+              h = 27;
+            for(var i = 0, len = elms.length; i < len; i++){
+              elms[i].removeAttribute("style");
+              elms[i].style.cssText = 'width: ' + w + 'px !important;height: ' + h + 'px !important;';
+              elms[i].parentNode.style.setProperty ("overflow", "hidden", "important");
+            }
+          });
+
 
           scope.isValid = function () {
 

@@ -173,6 +173,7 @@
                                 </div>
                                 <div data-ng-show="hover_action">
                                     <a data-sailplay-action data-action="action" data-text="Get bonus points!"
+                                       class="btn_{{ action.socialType + '_' + action.action }}"
                                        data-ng-class="{'sp_common-btn sp_tasks-cell__btn' : action.type == 'inviteFriend',
                                     'soc_btns' : action.type != 'inviteFriend'}">Get bonus points!</a>
                                 </div>
