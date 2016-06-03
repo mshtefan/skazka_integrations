@@ -89,9 +89,9 @@
 
       });
 
-      sp.on('actions.social.connect.complete', function () {
-        sp_api.call('load.actions.list');
-      });
+      //sp.on('actions.social.connect.complete', function () {
+      //  sp_api.call('load.actions.list');
+      //});
 
 
     });
