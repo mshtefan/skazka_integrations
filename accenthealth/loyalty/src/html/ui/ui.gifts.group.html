@@ -1,0 +1,13 @@
+<div class="bns_choice_gift_main"  data-point-from="{{ limit }}" data-ng-show="needToShow()">
+    <span class="bns_nead_point">
+    {{ limit | number }} points
+    </span>
+    <div class="bns_gift_item" data-ng-repeat="gift in gifts | giftsGroup: getLimits(limit)">
+        <div class="bgi_icon" style="background-image: url({{ gift.thumbs.url_100x100 | sailplay_pic }});"></div>
+        <div class="bgi_right">
+            <span data-ng-bind="(gift.points | number) + ' – ' + gift.name"></span>
+            <a href="#" data-gift="{{ gift }}">REDEEM <em>»</em></a>
+        </div>
+    </div>
+    <a href="#" class="bns_show_more" data-ng-show="(gifts | giftsGroup: getLimits(limit)).length > 1">show more</a>
+</div>

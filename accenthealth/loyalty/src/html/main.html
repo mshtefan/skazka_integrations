@@ -1,0 +1,184 @@
+<div class="bns_wrapper" data-ng-cloak>
+    <div class="bns_top_block">
+        <div class="bns_left">
+            <h2>Easy Activities, Fun Rewards.</h2>
+            <h3>Complete Activities. Earn Points. Get Rewarded. It’s that easy!</h3>
+            <div class="bns_left_info">
+                <div class="col">
+                    <span class="bns_num">1</span>
+					<span class="bns_lb_text">
+						<strong>Complete activities to earn points.</strong>
+						<em>psst - you got points just for signing up!</em>
+					</span>
+                </div>
+                <div class="col">
+                    <span class="bns_num">2</span>
+					<span class="bns_lb_text">
+						<strong>Redeem points for a gift</strong>
+						 of your choice — or save them for a big reward.
+					</span>
+                </div>
+                <div class="col">
+                    <span class="bns_num">3</span>
+					<span class="bns_lb_text">
+						<strong>Keep an eye out for email promotions</strong>
+						<em>to rev up your points balance!</em>
+					</span>
+                </div>
+            </div>
+            <div class="bns_reit">
+                <div class="bns_reit_line_main" data-sailplay-statuses data-ng-cloak>
+                    <!-- тут указывать сколько пунктов набрано юзером -->
+                    <div class="bns_reit_line"
+                         data-points="{{ user().user_points.confirmed + user().user_points.spent }}"></div>
+
+                    <div class="bns_reit_point bns_reit_point_null act" data-points-act="0"></div>
+
+                    <div data-sp-status-list
+                         data-ng-cloak
+                         data-ng-repeat="status in statuses().multilevel_badges[0]"
+                         class="bns_reit_point bns_reit_point_{{ limits[$index] }}" data-points-act="{{ limits[$index] }}">
+						<span>
+							{{ status.name }}
+							<strong>{{ limits[$index] | number }} <span> points</span></strong>
+						</span>
+                    </div>
+
+                    <div class="bns_reit_point bns_reit_point_max" data-points-act="20000"></div>
+                </div>
+            </div>
+        </div>
+        <div class="bns_right" data-sailplay-profile  data-ng-cloak>
+            <h2>MyRewards:</h2>
+            <h3>STATUS</h3>
+            <div class="bns_right_stat" style="background-image: url({{ user().user_status.pic | sailplay_pic }});"
+                 data-ng-bind="user().user_status.name || 'NO STATUS'"></div>
+            <h3>POINTS BALANCE</h3>
+            <div class="bns_point_num" data-ng-bind="user().user_points.confirmed | number"></div>
+            <a href="#" class="bns_view_hist">view points history »</a>
+        </div>
+    </div>
+    <div class="bns_main_block">
+        <div class="bns_left" data-sailplay-actions data-ng-cloak>
+            <div class="bns_main_info">
+                <h2>Earn Points</h2>
+                <h3>Complete the activities below to rack up points!</h3>
+            </div>
+            <div class="bns_ern_point">
+                <span class="bns_ern_point_head">Earn 10 Points:</span>
+
+                <div class="bns_ern_point_item" data-ng-repeat="action in actions().actions | orderBy:'-_actionId'" data-ng-cloak>
+                    <img data-ng-src="{{ action_data(action).pic }}" alt="{{ action_data(action).name }}">
+                    <div class="bep_right">
+                        <span data-ng-bind="action_data(action).name"></span>
+                        <span class="bepi_text" data-ng-bind="action_data(action).text"></span>
+                        <a href="#" class="bns_open_compl" data-sailplay-action data-action="action"
+                           data-text="COMPLETE <em>»</em>">COMPLETE <em>»</em></a>
+                        <strong data-ng-show="action_data(action).points" data-ng-bind="(action_data(action).points | number) + ' points' + (action_data(action).plus ? ' (plus ' +  (action_data(action).plus | number) + ')' : '')"></strong>
+                    </div>
+                </div>
+
+                <div data-custom-action data-ng-repeat="action in custom_actions_data | filter:{type : 10}"
+                     data-data="action"></div>
+            </div>
+            <div class="bns_ern_point">
+                <span class="bns_ern_point_head">Earn 25 Points:</span>
+                <div data-custom-action data-ng-repeat="action in custom_actions_data | filter:{type : 25}"
+                     data-data="action"></div>
+            </div>
+            <div class="bns_ern_point">
+                <span class="bns_ern_point_head">Earn More:</span>
+                <div data-custom-action data-ng-repeat="action in custom_actions_data | filter:{type : 'more'}"
+                     data-data="action"></div>
+            </div>
+
+            <div class="bns_overlay bns_overlay_compl">
+                <div class="bns_overlay_iner">
+                    <a href="#" class="bns_close bns_close_event"></a>
+                    <div class="bns_load_block bns_load_block_up">
+                        <img src="" alt="">
+                        <h2></h2>
+                        <span style="width: 80%;display: inline-block;"></span>
+                        <div class="bns_for_ajax"></div>
+                        <strong></strong>
+                        <a href="#">COMPLETE <em>»</em></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="bns_right" data-sailplay-gifts data-ng-cloak>
+            <div class="bns_main_info">
+                <h2>GET REWARDED</h2>
+                <h3>Choose your gift!</h3>
+            </div>
+            <div class="bns_choice_gift">
+				<span class="bnc_note">
+					note: look for the orange REDEEM button to
+know you have enough points!
+				</span>
+
+                <div data-sailplay-gifts-group data-gifts="gifts()" data-limit="750"></div>
+
+                <div data-sailplay-gifts-group data-gifts="gifts()" data-limit="1500"></div>
+
+                <div data-sailplay-gifts-group data-gifts="gifts()" data-limit="5000"></div>
+
+                <div data-sailplay-gifts-group data-gifts="gifts()" data-limit="10000"></div>
+
+            </div>
+            <div class="bns_qust_com">
+                Questions or Comments? Contact us
+                at <a href="mailto:rewards@accenthealth.com">rewards@accenthealth.com</a>
+            </div>
+
+            <div class="bns_overlay bns_overlay_get_gift">
+                <div class="bns_overlay_iner">
+                    <a href="#" class="bns_close bns_close_event"></a>
+                    <div class="bns_load_block bns_load_block_gift">
+                        <h2>You're about to spent your bonus points</h2>
+                        <h3>Are you sure?</h3>
+                        <a href="#" data-ng-click="gift_purchase();$event.preventDefault();">Yes</a>
+                        <a href="#" class="bns_close_event">Cancel</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div><!-- .wrapper -->
+
+<div class="bns_overlay bns_overlay_hist" data-sailplay-history data-ng-cloak>
+    <div class="bns_overlay_iner">
+        <a href="#" class="bns_close bns_close_event"></a>
+        <table class="bns_hist_table">
+            <h3>History</h3>
+            <tbody>
+
+            <tr data-dir-paginate="item in history() | itemsPerPage:10" data-pagination-id="history_pages">
+                <td>
+                    <span data-ng-bind="item.action_date | date:'d MMMM yyyy'"></span>
+                </td>
+                <td>
+                    <span><b data-ng-bind="item | history_item"></b></span>
+                    <span data-ng-if="item.action === 'gift_purchase'"><b data-ng-bind="item.name"></b></span>
+                    <span data-ng-if="item.action === 'purchase'"><b data-ng-bind="'Order num: ' + item.order_num"></b></span>
+                </td>
+                <td>
+                    <span data-ng-class="{ bns_minus: item.points_delta < 0 }"
+                          data-ng-show="item.points_delta">{{ ((item.points_delta > 0) ? '+' : '-') +  (abs(item.points_delta) | number) || 0 }} KE </span>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div class="bns_hist_pager">
+
+            <dir-pagination-controls data-max-size="10" data-pagination-id="history_pages"
+                                     data-template-url="/html/ui/ui.pagination.controls.html"
+                                     data-auto-hide="true"></dir-pagination-controls>
+
+        </div>
+    </div>
+</div>
