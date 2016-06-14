@@ -2443,13 +2443,13 @@ module.run(['$templateCache', function($templateCache) {
       //url,cookie,remote
       SailPlayProvider.set_auth_type('url');
 
-      SailPlayProvider.set_config({
+      _CONFIG && SailPlayProvider.set_config({
         partner_id: _CONFIG.SAILPLAY.partner_id,
         domain: _CONFIG.SAILPLAY.domain,
         lang: 'ru'
       });
 
-      SailPlayActionsDataProvider.set_actions_data(_LOCALE.actions);
+      _LOCALE && SailPlayActionsDataProvider.set_actions_data(_LOCALE.actions);
 
       SailPlayBadgesProvider.set_limits([ 0, 200, 400, 800 ]);
 
