@@ -345,12 +345,15 @@ input.sp_cmn-btn:focus {
 .this-link {
   color: #EF8E4D;
 }
+.this-link:active {
+  color: #FD6900;
+}
 .sp_popup {
   background-color: white;
   border-radius: 10px;
   padding: 40px;
   text-align: center;
-  position: absolute;
+  position: fixed;
   display: table;
   left: 0;
   right: 0;
@@ -358,7 +361,8 @@ input.sp_cmn-btn:focus {
   top: 0;
   bottom: 0;
   z-index: 3;
-  width: 750px;
+  width: 100%;
+  max-width: 700px;
 }
 @media (max-width: 479px) {
   .sp_popup {
