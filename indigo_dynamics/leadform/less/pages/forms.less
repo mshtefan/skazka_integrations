@@ -1,0 +1,132 @@
+// checkboxes
+.sp_cmn-block-param {
+	display: block;
+	padding-left: 100px;
+	position: relative;
+
+	max-width: 380px;
+	min-height: 84px;
+
+	font-size: 20px;
+	color: #000;
+	font-weight: 100;
+	label {
+		display: none;
+	}
+}
+
+.sp_cmn-label {
+	font-size: 15px;
+	font-weight: 300;
+	line-height: 1;
+	cursor: pointer;
+	.user-select(none);
+}
+.sp_cmn-checkbox-wr {
+	display: inline-block;
+	a {
+		position: absolute;
+		display: block;
+		width: 75px;
+		height: 45px;
+		background-color: #D6D6D6;
+		border-radius: 45px;
+
+		left: 0px;
+		top: 21px;
+		.transition(all 200ms linear 0ms);
+
+		&:after {
+			.picon();
+			position: absolute;
+			height: 41px;
+			width: 41px;
+			border-radius: 50%;
+			background-color: #fff;
+			top: 2px;
+			left: 2px;
+			box-shadow: 0px 0px 7px rgba(0,0,0,0.4);
+			.transition(all 200ms linear 0ms);
+		}
+
+		&.checked {
+			background-color: #33D76C;
+			&:after {
+				left: 32px;
+			}
+		}
+	}
+}
+
+
+@input-height: 46px;
+@input-side-padding: 15px;
+@textarea-vertical-padding: 9px;
+
+@input-border-radius: 11px;
+@input-border-color: #adadad;
+@input-active-border-color: darken(@input-border-color, 15%);
+
+@input-font-size: 12px;
+@input-text-color: #635C4D;
+@input-placeholder-color: lighten(@input-text-color, 2%);
+
+.sp_cmn-input {
+	display: block;
+	width: 100%;
+	height: @input-height;
+	padding: 0 @input-side-padding;
+
+	
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
+	font-size: 20px;
+	line-height: @input-height;
+	color: #635C4D;
+
+	background-color: #fff;
+	border: 2px solid #fff;
+	border-radius: 13px;
+	
+	// .transition(border-color 150ms linear 0ms);
+	&:active, &:focus {
+		outline: none !important;
+		border-color: @color1;
+	}
+	&::-webkit-input-placeholder {color: @input-placeholder-color;}
+	&::-moz-placeholder {color: @input-placeholder-color;}
+	&:-moz-placeholder {color: @input-placeholder-color;}
+	&:-ms-input-placeholder {color: @input-placeholder-color;}
+
+	&.this-error {
+		border-color: red;
+	}
+}
+.sp_cmn-textarea {
+	display: block;
+	width: 100%;
+	padding: 20px 30px;
+
+	border: none;
+
+	font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	font-weight: 300;
+	color: @input-text-color;
+	height: 100px;
+
+	background-color: #C0C9E0;
+	border-radius: 11px;
+
+
+	.transition(border-color 150ms linear 0ms);
+	resize: none;
+	&:active, &:focus {
+		outline: none !important;
+		background-color: lighten(#C0C9E0, 10%)
+	}
+	&::-webkit-input-placeholder {color: @input-placeholder-color;}
+	&::-moz-placeholder {color: @input-placeholder-color;}
+	&:-moz-placeholder {color: @input-placeholder-color;}
+	&:-ms-input-placeholder {color: @input-placeholder-color;}
+}

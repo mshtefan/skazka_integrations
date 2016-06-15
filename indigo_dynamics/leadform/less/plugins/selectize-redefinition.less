@@ -1,0 +1,103 @@
+@cummon-selectize-height: 46px;
+@cummon-selectize-back-color: #E8E8E8;
+@cummon-selectize-back-color-active: darken(#EBEBEB, 2%);
+@cummon-selectize-border-color: #E8E8E8;
+
+
+@common-selectize-arrow-color: #E8E8E8;
+@common-selectize-arrow-width: 9px;
+@common-selectize-arrow-height: 14px;
+
+@option-hover: darken(#fff, 5%);
+@option-selected: darken(#fff, 15%);
+@option-active: darken(#fff, 10%);
+.selectize-control.sp_cmn-selectize {
+	height: @cummon-selectize-height;
+	border: 2px solid white;
+	border-radius: 13px;
+	background: white;
+	box-sizing: border-box;
+	&.this-error {
+		border-color: red;
+	}
+	.selectize-input {
+		display: block;
+		position: relative;
+		height: @cummon-selectize-height - 4;
+		padding: 12px 22px 0px 15px;
+		border: none;
+		background: #fff;
+		border-radius: 13px;
+		box-shadow: none;
+
+		font-size: 20px;
+		font-weight: 300;
+		color: #86888F;
+		font-family: 'Lato', sans-serif;
+
+		&:after {
+			content: "" !important;
+			display: block;
+			position: absolute;
+			top: 21px !important;
+			right: 15px !important;
+			border-left: @common-selectize-arrow-width solid transparent;
+			border-right: @common-selectize-arrow-width solid transparent;
+			border-top: @common-selectize-arrow-height solid @common-selectize-arrow-color;
+		}
+		&.has-items {
+			&:before {
+				display: none;
+			}
+		}
+		&.dropdown-active {
+			background: #fff;
+			&:after {
+				border-left: @common-selectize-arrow-width solid transparent;
+				border-right: @common-selectize-arrow-width solid transparent;
+				border-bottom: @common-selectize-arrow-height solid @common-selectize-arrow-color;
+				border-top: none;
+			}
+		}
+		input {
+			display: none !important;
+		}
+		.item {
+			vertical-align: top;
+			white-space: nowrap;
+		}
+	}
+	.selectize-dropdown {
+		.box-shadow(0px 2px 2px rgba(0,0,0,0.2));
+		border: none;
+		// border-radius: 11px;
+
+		font-size: 20px;
+		font-weight: 300;
+		color: #000;
+		background: #fff;
+
+		.selectize-dropdown-content {
+			max-height: 180px;
+		}
+		.option {
+			border-top: 1px solid @cummon-selectize-border-color;
+			padding: 12px 15px 13px;
+			&.selected {
+				background-color: @option-selected !important;
+				color: @color-text-main !important;
+			}
+			&.active {
+				background-color: @option-active;
+			}
+			&:hover {
+				background-color: @option-hover;
+			}
+			&:first-child {
+				border: none;
+			}
+			&:last-child {
+			}
+		}
+	}
+}
