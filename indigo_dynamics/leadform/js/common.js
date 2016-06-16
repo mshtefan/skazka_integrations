@@ -257,8 +257,8 @@ $(document).ready(function () {
 
   function _findByFieldValue(field, val) {
     return _states.filter(function (item) {
-      return item[field] == val;
-    })
+      return item[field] === val;
+    })[0]
   }
 
   SAILPLAY.send('init', _config);
