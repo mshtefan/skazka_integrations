@@ -12,20 +12,36 @@ body {
   z-index: 10000;
   background-color: rgba(0, 0, 0, 0.3);
   display: block;
+  overflow: auto;
   &.bns_overlay_edit_prof {
     .bns_overlay_iner {
       width: 520px;
       margin-left: -300px;
       margin-top: -207px;
+      margin-bottom: 50px;
       .bns_prof_form_main {
-        float: left;
         width: 100%;
         .bns_input_block {
-          float: left;
-          width: 40%;
+          width: 48%;
           margin-top: 15px;
-          &:nth-child(2n) {
-            float: right;
+          display: inline-block;
+          vertical-align: top;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+          &.full_width {
+            width: 100%;
+            .bns_check {
+              width: 50%;
+            }
+          }
+          input {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+          }
+          &.odd {
+            margin-right: 4%;
           }
           label {
             float: left;
@@ -33,6 +49,9 @@ body {
             font-size: 12px;
             color: #000;
             margin-bottom: 4px;
+          }
+          label:first-child {
+            //font-weight: bold;
           }
           input[type="text"] {
             float: left;
@@ -47,12 +66,14 @@ body {
             height: 25px;
           }
           .bns_check {
-            float: left;
-            width: 80px;
-            input[type="radio"] {
+            display: inline-block;
+            vertical-align: top;
+            .clearfix();
+
+            input[type="radio"], input[type="checkbox"] {
               display: none;
             }
-            input[type="radio"]:checked + label::before {
+            input[type="radio"]:checked + label::before, input[type="checkbox"]:checked + label::before {
               background-color: #FF551E;
             }
             label {
@@ -74,17 +95,15 @@ body {
                 border-radius: 12px;
                 position: absolute;
                 left: 0px;
-                top: 50%;
-                margin-top: -6px;
+                top: 7px;
               }
             }
           }
         }
         .bns_btn_done {
-          float: left;
           width: 100%;
           text-align: center;
-          a {
+          a, button {
             width: 140px;
             line-height: 28px;
             font-size: 12px;
@@ -95,6 +114,9 @@ body {
             text-decoration: none;
             margin-top: 15px;
             display: inline-block;
+            border: none;
+            outline: none;
+            cursor: pointer;
           }
         }
       }
@@ -160,7 +182,6 @@ body {
           }
         }
         .bns_check {
-          float: left;
           width: 33%;
           input[type="radio"] {
             display: none;
@@ -312,6 +333,7 @@ body {
     padding-right: 15px;
     padding-left: 11px;
     font-weight: 200;
+    display: inline-block;
   }
   .bns_hist_table td:nth-child(3) {
     color: #FF551E;
@@ -870,8 +892,6 @@ body {
         }
         .bns_prof_form_main {
           .bns_input_block {
-            float: left;
-            width: 46% !important;
             margin-top: 15px;
           }
         }
@@ -1020,6 +1040,14 @@ body {
 
   }
 
+}
+
+.clearfix(){
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
 }
 
 .clearfix:after {

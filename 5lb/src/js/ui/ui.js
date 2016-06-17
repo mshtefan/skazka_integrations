@@ -4,151 +4,449 @@
     'angularUtils.directives.dirPagination'
   ])
 
-    .directive('badgesTable', function(sp_api, $timeout, sp){
+
+    .constant('ProfileTag', 'Заполнил профиль')
+
+    .directive('fillProfile', function(SailPlay, $rootScope, $q, ProfileTag){
 
       return {
 
         restrict: 'A',
-        replace: false,
         scope: true,
         link: function(scope){
 
-          var badges = sp_api.data('load.badges.list');
-          var user = sp_api.data('load.user.info');
+          scope.profile_form = {
 
-          scope.badge_tags = [ 10293166, 10293167, 10293170 ];
+            user: {
 
-          scope.procents = 0;
-          scope.user_points = 0;
+              firstName: '',
+              lastName: '',
+              middleName: '',
+              phone: '',
+              email: ''
 
-          scope.get_next = function () {
-            var statuses = badges && badges() && badges().multilevel_badges && badges().multilevel_badges[0];
-            if (!statuses) return;
-            var received = statuses.filter(function (status) {
-              return status.is_received;
-            });
-            if (received.length == statuses.length) return null;
-            var result = statuses.filter(function (status) {
-              return !status.is_received;
-            });
-            return result[0] || statuses[0];
+            },
+            custom_vars: {
+
+              'Адрес': ''
+
+            },
+            tags: [
+              'В1 Как узнали', [ '' ],
+              'В2 Как давно', [ '' ],
+              'В3 Вид спорта', [ ],
+              'В4 Уровень', [ '' ],
+              'В5 Цели', [ ],
+              'В6 Выбор', [ ],
+              'В7 Информация', [ ],
+              'В8 Канал', [ ],
+              'В9 Дети', [ '' ]
+            ]
+
           };
 
-          scope.get_offset = function () {
-            var arr = badges;
-            var limit = user && user && user() ? user().user_points.confirmed + user().user_points.spent + user().user_points.spent_extra : 0;
-            var result = [];
-            for (var i = 0, len = arr.length; i < len; i++) {
-              var current_limit = arr[i];
-              if (limit < current_limit) {
-                result.push(current_limit);
-              }
+          scope.toggle_tag = function(arr, tag){
+
+            if(!tag) return;
+
+            var index = arr.indexOf(tag);
+
+            if(index > -1){
+
+              arr.splice(index, 1);
+
             }
-            return Math.round(result[0] ? result[0] - limit : 0);
-          };
-
-          scope.$watch(function(){
-
-            return angular.toJson([user() && user().user_points, badges()]);
-
-          }, function(){
-
-            var procents = 0;
-
-            var statuses = badges && badges() && badges().multilevel_badges && badges().multilevel_badges[0];
-
-            if(!statuses) procents = 0;
-
             else {
 
-              var current_badge_index;
+              arr.push(tag);
 
-              //var last_badge_id = user() && user().last_badge && user().last_badge.id;
-              var last_status_name = user() && user().user_status && user().user_status.name;
+            }
 
-              if(!last_status_name){
+          };
 
-                procents = 0;
-
+          scope.values = [
+            null,
+            [
+              {
+                key: 'через google/yandex',
+                value: 'В1 Поисковики'
+              },
+              {
+                key: 'через другие сайты',
+                value: 'В1 Другие сайты'
+              },
+              {
+                key: 'знакомые посоветовали',
+                value: 'В1 Знакомые'
+              },
+              {
+                key: 'через соц. сети',
+                value: 'В1 Соцсети'
+              },
+              {
+                key: 'через фитнес клуб',
+                value: 'В1 Фитнесклуб'
+              },
+              {
+                key: 'случайно',
+                value: 'В1 Случайно'
+              },
+              {
+                key: 'другое',
+                value: 'В1 Другое'
               }
-              else {
-                angular.forEach(statuses, function(status, index){
+            ],
+            null,
+            [
+              {
+                key: 'меньше месяца',
+                value: 'В2 < мес'
+              },
+              {
+                key: 'около полугода',
+                value: 'В2 полгода'
+              },
+              {
+                key: '1–2 года',
+                value: 'В2 1-2 года'
+              },
+              {
+                key: 'более двух лет',
+                value: 'В2 > 2 года'
+              },
+              {
+                key: 'не помню, давно покупаю у вас',
+                value: 'В2 давно'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'Альпинизм',
+                value: 'В3 Альпинизм'
+              },
+              {
+                key: 'АРМ спорт',
+                value: 'В3 АРМ спорт'
+              },
+              {
+                key: 'Баскетбол',
+                value: 'В3 Баскетбол'
+              },
+              {
+                key: 'Бейсбол',
+                value: 'В3 Бейсбол'
+              },
+              {
+                key: 'Бодибилдинг',
+                value: 'В3 Бодибилдинг'
+              },
+              {
+                key: 'Бокс',
+                value: 'В3 Бокс'
+              },
+              {
+                key: 'Борьба',
+                value: 'В3 Борьба'
+              },
+              {
+                key: 'Гимнастика спортивная',
+                value: 'В3 Гимнастика спортивная'
+              },
+              {
+                key: 'Гиревой спорт',
+                value: 'В3 Гиревой спорт'
+              },
+              {
+                key: 'Горнолыжный спорт',
+                value: 'В3 Горнолыжный спорт'
+              },
+              {
+                key: 'Боевые искусства',
+                value: 'В3 Боевые искусства'
+              },
+              {
+                key: 'Пауэрлифтинг',
+                value: 'В3 Пауэрлифтинг'
+              },
+              {
+                key: 'Плавание',
+                value: 'В3 Плавание'
+              },
+              {
+                key: 'Регби',
+                value: 'В3 Регби'
+              },
+              {
+                key: 'Сноуборд',
+                value: 'В3 Сноуборд'
+              },
+              {
+                key: 'Теннис',
+                value: 'В3 Теннис'
+              },
+              {
+                key: 'Тяжелая атлетика',
+                value: 'В3 Тяжелая атлетика'
+              },
+              {
+                key: 'Фитнес',
+                value: 'В3 Фитнес'
+              },
+              {
+                key: 'Футбол',
+                value: 'В3 Футбол'
+              },
+              {
+                key: 'Хоккей',
+                value: 'В3 Хоккей'
+              },
+              {
+                key: 'Другое',
+                value: 'В3 Другое'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'Начинающий',
+                value: 'В4 Начинающий'
+              },
+              {
+                key: 'Продвинутый',
+                value: 'В4 Продвинутый'
+              },
+              {
+                key: 'Профи',
+                value: 'В4 Профи'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'похудение',
+                value: 'В5 Похудение'
+              },
+              {
+                key: 'сжигание жира',
+                value: 'В5 Сжигание'
+              },
+              {
+                key: 'набор массы',
+                value: 'В5 Масса'
+              },
+              {
+                key: 'очищение организма',
+                value: 'В5 Очищение'
+              },
+              {
+                key: 'поддержание формы',
+                value: 'В5 Быть в форме'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'раскученность бренда',
+                value: 'В6 Бренд'
+              },
+              {
+                key: 'дизайн упаковки',
+                value: 'В6 Дизайн'
+              },
+              {
+                key: 'мнение экспертов',
+                value: 'В6 Эксперты'
+              },
+              {
+                key: 'рекомендации знакомых',
+                value: 'В6 Знакомые'
+              },
+              {
+                key: 'отзывы покупателей',
+                value: 'В6 Отзывы'
+              },
+              {
+                key: 'соотношение цены и качества',
+                value: 'В6 Цена-Качество'
+              },
+              {
+                key: 'важна только цена',
+                value: 'В6 Цена'
+              },
+              {
+                key: 'высокая степень информированности о продукте в СМИ',
+                value: 'В6 СМИ'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'новости компании',
+                value: 'В7 Новости'
+              },
+              {
+                key: 'новые поступления',
+                value: 'В7 Поступления'
+              },
+              {
+                key: 'скидки, сезонные распродажи',
+                value: 'В7 Скидки'
+              },
+              {
+                key: 'акции, конкурсы',
+                value: 'В7 Конкурсы'
+              },
+              {
+                key: 'не хочу получать информацию',
+                value: 'В7 Ничего'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'sms',
+                value: 'В8 SMS'
+              },
+              {
+                key: 'e-mail',
+                value: 'B8 Email'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'Есть',
+                value: 'В9 есть'
+              },
+              {
+                key: 'Нет',
+                value: 'В9 нет'
+              }
+            ]
+          ];
 
-                  //if(last_badge_id === status.id){
+          scope.submit_profile = function(callback){
 
-                  if(last_status_name === status.name){
+            console.dir(scope.profile_form);
 
-                    current_badge_index = index;
-                    procents = 100/statuses.length * (index);
+            scope.profile_form.user.auth_hash = SailPlay.config().auth_hash;
+
+            SailPlay.send('users.update', scope.profile_form.user, function(user_res){
+
+              if(user_res.status === 'ok'){
+
+                var req_tags = [ ProfileTag ];
+
+                var form_tags = scope.profile_form.tags;
+
+                for(var i = 0; i < form_tags.length; i+=2){
+
+                  var tag = form_tags[i];
+
+                  var tag_values = form_tags[i+1];
+
+                  if(tag_values.length > 0 && tag_values[0] !== ''){
+
+                    req_tags.push(tag);
+
+                    angular.forEach(tag_values, function(t){
+
+                      req_tags.push(t);
+
+                    });
 
                   }
 
+                }
+
+                function chunk(array, chunkSize) {
+                  return [].concat.apply([],
+                    array.map(function(elem,i) {
+                      return i%chunkSize ? [] : [array.slice(i,i+chunkSize)];
+                    })
+                  );
+                }
+
+                var chunked_tags = chunk(req_tags, 10);
+
+                var tag_promises = [];
+
+                angular.forEach(chunked_tags, function(chunk){
+
+                  var promise = $q(function(resolve, reject){
+
+                    SailPlay.send('tags.add', { tags: chunk }, function(tags_res){
+                      if(tags_res.status === 'ok') {
+
+                        resolve(tags_res);
+
+                        //sp.send('leads.submit.success', { lead: self, response: user_res, tags: res });
+                      }
+                      else {
+                        reject(tags_res);
+                        //sp.send('leads.submit.error', { lead: self, response: user_res, tags: res });
+                      }
+                    });
+
+                  });
+
+                  tag_promises.push(promise);
+
                 });
+
+                $q.all(tag_promises).then(function(tags_res){
+
+                  SailPlay.send('vars.add', { custom_vars: scope.profile_form.custom_vars }, function(vars_res){
+
+                    var response = {
+                      user: user_res,
+                      tags: tags_res,
+                      vars: vars_res
+                    };
+
+                    if(vars_res.status === 'ok') {
+
+
+
+                      callback && callback(response);
+                      scope.$apply();
+                      console.dir(response);
+
+
+                    }
+                    else {
+
+                      console.dir(response);
+                      $rootScope.$broadcast('notifier:notify', {
+
+                        header: 'Ошибка',
+                        body: user_res.message || 'К сожалению произошла ошибка'
+
+                      });
+                      scope.$apply();
+
+                    }
+
+                  });
+
+                });
+
+
+
               }
 
-            }
+              else {
+                $rootScope.$broadcast('notifier:notify', {
 
-            var points = user() && user().user_points && user().user_points.confirmed;
+                  header: 'Ошибка',
+                  body: user_res.message || 'К сожалению произошла ошибка'
 
-            scope.procents = 0;
-            scope.user_points = 0;
-
-            function count_procents(){
-
-              scope.procents = procents;
-
-            }
-
-            $timeout(count_procents, 40);
-
-            function count_points(){
-
-              if(scope.user_points < points){
-
-                scope.user_points++;
-                $timeout(count_points, 40);
-
+                });
+                $rootScope.$apply();
               }
 
-            }
-            count_points();
-
-          });
-
-          scope.arc_style = function(){
-
-            var deg_rotate = 0;
-
-            if(user()){
-
-              deg_rotate = -180+parseInt(scope.procents*2.6);
-
-            }
-
-            if(deg_rotate > 0) {
-              deg_rotate = 0;
-            }
-
-            //console.log(deg_rotate);
-
-            var style_object = {
-              'transform': 'rotate('+deg_rotate+'deg)',
-              '-moz-transform': 'rotate('+deg_rotate+'deg)',
-              '-webkit-transform': 'rotate('+deg_rotate+'deg)',
-              '-o-transform': 'rotate('+deg_rotate+'deg)',
-              '-ms-transform': 'rotate('+deg_rotate+'deg)'
-            };
-
-            var style_string = '';
-
-            for(var i in style_object){
-
-              style_string+=(i + ':' + style_object[i] + ';');
-
-            }
-
-            return style_string;
-
+            });
 
           };
 
@@ -177,61 +475,6 @@
         }
       };
 
-    })
-
-    .directive('slickCarouselSlide', function ($compile, $timeout) {
-      return {
-
-        link: function (scope, element, attrs) {
-          scope.hidden = true;
-          if (scope.$last) { // all are rendered
-            $(element).parent().slick({
-              infinite: false,
-              nextArrow: '<img class="slider_arrow right" src="dist/img/right_arrow.png"/>',
-              prevArrow: '<img class="slider_arrow left" src="dist/img/left_arrow.png"/>',
-              slidesToShow: 4,
-              slidesToScroll: 4,
-              responsive: [
-                {
-                  breakpoint: 1190,
-                  settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4
-                  }
-                },
-                {
-                  breakpoint: 880,
-                  settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3
-                  }
-                },
-                {
-                  breakpoint: 600,
-                  settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2
-                  }
-                },
-                {
-                  breakpoint: 480,
-                  settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                  }
-                }
-                // You can unslick at a given breakpoint now by adding:
-                // settings: "unslick"
-                // instead of a settings object
-              ]
-            });
-            $timeout(function(){
-              scope.hidden = false;
-            }, 1000)
-          }
-        }
-
-      };
     })
 
     .directive('notifier', function(){

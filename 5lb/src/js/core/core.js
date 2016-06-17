@@ -4,7 +4,7 @@
     'ipCookie'
   ])
 
-  .run(function(SailPlay, ipCookie, SailPlayApi, $rootScope, $window){
+  .run(function(SailPlay, ipCookie, SailPlayApi, $rootScope, $window, ProfileTag){
 
     $rootScope.config = $window._CONFIG || {};
 
@@ -25,6 +25,8 @@
       SailPlayApi.call('load.actions.list');
       SailPlayApi.call('load.user.history');
       SailPlayApi.call('load.gifts.list');
+      SailPlayApi.call('tags.exist', { tags: [ ProfileTag ] });
+
 
       $rootScope.$apply();
 

@@ -8,18 +8,18 @@ window._LOCALE = {
   history_items: {
     "purchase": "Покупка",
     "gift_purchase": "Подарок",
-    "badge": "Badge",
-    "registration": "Sign up",
-    "referral": "Invite friend",
-    "referred": "Registration from friend's invite",
-    "referred_purchase": "Friend's purchase",
-    "promocode": "Promocode activation",
-    "enter_group": "Joined our group on ",
-    "share_purchase": "Shared a purchase on ",
-    "social_share": "Shared our website on ",
-    "share_badge": "Shared a badge on ",
-    "earn_badge": 'Earn badge ',
-    "custom_action" : "Custom action"
+    "badge": "Бейджик",
+    "registration": "Регистрация",
+    "referral": "Регистрация друга",
+    "referred": "Регистрация по приглашению",
+    "referred_purchase": "Покупка приглашенного пользователя",
+    "promocode": "За ввод промокода",
+    "enter_group": "Вступление в группу ",
+    "share_purchase": "Рассказ о покупке в ",
+    "social_share": "Рассказ в ",
+    "share_badge": "Рассказ о бейджике в ",
+    "earn_badge": 'Получен бейджик ',
+    "custom_action": "Экстра"
   },
   errors: {
     '-2000': 'Недостаточно баллов.'
@@ -44,7 +44,7 @@ window._LOCALE = {
           pic: 'dist/img/actions/vk.png'
         },
         "partner_page": {
-          "name": "Поделитесь нашим магазином в VK",
+          "name": "Рассказать о нашем магазине в VK",
           pic: 'dist/img/actions/vk.png'
         },
         "purchase": {
@@ -58,7 +58,7 @@ window._LOCALE = {
           pic: 'dist/img/actions/facebook.png'
         },
         "partner_page": {
-          "name": "Поделитесь нашим магазином в Facebook",
+          "name": "Рассказать о нашем магазине в Facebook",
           pic: 'dist/img/actions/facebook.png'
         },
         "purchase": {
@@ -71,7 +71,7 @@ window._LOCALE = {
           "name": "Вступите в группу Google+"
         },
         "partner_page": {
-          "name": "Поделитесь нашим магазином в Google+"
+          "name": "Рассказать о нашем магазине в Google+"
         },
         "purchase": {
           "name": "Поделитесь вашей покупкой в Google+"
@@ -82,7 +82,7 @@ window._LOCALE = {
           "name": "Вступите в группу Одноклассники"
         },
         "partner_page": {
-          "name": "Поделитесь нашим магазином в Одноклассники"
+          "name": "Рассказать о нашем магазине в Одноклассники"
         },
         "purchase": {
           "name": "Поделитесь вашей покупкой в Одноклассники"
@@ -90,7 +90,7 @@ window._LOCALE = {
       },
       "tw": {
         "partner_page": {
-          "name": "Поделитесь нашим магазином в Twitter",
+          "name": "Рассказать о нашем магазине в Twitter",
           pic: 'dist/img/actions/twitter.png'
         },
         "purchase": {

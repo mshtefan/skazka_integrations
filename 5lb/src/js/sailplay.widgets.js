@@ -16,7 +16,8 @@
 
       _LOCALE && SailPlayActionsDataProvider.set_actions_data(_LOCALE.actions);
 
-      SailPlayBadgesProvider.set_limits([ 0, 200, 400, 800 ]);
+      //SailPlayBadgesProvider.set_limits([ 10000, 20000, 30000, 50000 ]);
+      SailPlayBadgesProvider.set_limits([ 3000, 6000, 9000, 12000 ]);
 
     })
 
@@ -32,7 +33,7 @@
 
     })
 
-    .directive('sailplayWidgets', function(){
+    .directive('sailplayWidgets', function(SailPlay, ProfileTag){
 
       return {
         restrict: 'E',
@@ -45,12 +46,32 @@
 
           scope.show_profile_info = false;
 
+          scope.show_profile_action = true;
+
           scope.fill_profile = function(){
 
             scope.show_profile_info = true;
 
           };
 
+          scope.close_profile = function(){
+
+            scope.show_profile_action = false;
+
+            scope.show_profile_info = false;
+
+          };
+
+          SailPlay.on('tags.exist.success', function(res){
+
+            if(res.status === 'ok' && res.tags[0].exist) {
+
+              //scope.show_profile_action = false;
+              scope.$apply();
+
+            }
+
+          });
         }
       }
 

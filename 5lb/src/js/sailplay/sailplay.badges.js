@@ -19,6 +19,8 @@
 
           self.limits = limits;
 
+          return self;
+
         }
 
       };
@@ -47,7 +49,7 @@
 
           scope.badges = SailPlayApi.data('load.badges.list');
 
-          var user = SailPlayApi.data('load.users.list');
+          var user = SailPlayApi.data('load.user.info');
 
           scope.get_next = function () {
 
@@ -103,6 +105,18 @@
             if(scope.get_offset)
 
             return streak;
+
+          };
+
+          scope.get_progress = function(){
+
+            var balance = user && user() ? user().user_points.confirmed + user().user_points.spent + user().user_points.spent_extra : 0;
+
+            var target = parseInt(angular.copy(SailPlayBadges.limits).pop());
+
+            var progress = balance/target*100;
+
+            return progress <= 100 ? progress : 100;
 
           };
 

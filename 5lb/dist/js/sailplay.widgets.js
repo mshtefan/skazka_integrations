@@ -2405,7 +2405,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/html/app.html',
-    '<div data-sailplay-profile="" data-sailplay-history="" data-sailplay-badges="" style="margin: 20px;"><div class="bns_wrapper"><div class="bns_top_main clearfix"><h2 class="bns_header">Бонусная программа</h2><h3 class="bns_subheader">Тренеруйтесь, выполняйте задания, копите баллы и меняйте их на подарки</h3><div class="bns_profile_info bns_profile_info_women"><div class="bpi_left"><img data-ng-src="{{ user().user.pic | sailplay_pic }}" class="bns_p_ava" alt=""> <span class="bns_p_hi">Здравствуйте,</span> <span class="bns_p_name">{{ user().user.name || \'Имя не указано\' }}</span> <span class="bns_p_stat">Ваш статус: <strong>{{ user().user_status.name }}</strong></span> <span class="bns_p_tonext" data-ng-if="get_next()">До статуса <strong>{{ get_next().name }}</strong> осталась {{ get_offset() }} {{ get_offset() | sailplay_pluralize:\'балл,балла,баллов\' }}</span></div><div class="bpi_center"><span class="bps_c_head">Последняя активность</span><div class="bns_sm_hist"><div class="bns_sm_h_item" data-ng-repeat="hist_item in history() | limitTo:4"><span class="bshi_date">{{ hist_item.action_date | date:\'d MMMM yyyy\' }}</span> <span class="bshi_action">{{ hist_item | history_item }}</span> <span class="bshi_bal">{{ hist_item.points_delta || 0 }} {{ hist_item.points_delta | sailplay_pluralize:\'балл,балла,баллов\' }}</span></div></div><a href="" class="bns_hist" data-ng-click="show_history = true;">История заказов</a></div><div class="bpi_right"><span class="bns_bal_n">{{ user().user_points.confirmed }} <strong class="bns_bal_n_text">{{ user().user_points.confirmed | sailplay_pluralize:\'бонусный балл,бонусных балла,бонусных баллов\' }}</strong></span></div></div><div class="bns_line_main"><div class="bns_line"><div class="bns_line_path" data-ng-style="{ width: get_streak(badges().multilevel_badges[0]).progress + \'%\' }"></div><div class="bns_point bns_point{{ $index+1 }}" data-ng-class="{ act: badge.is_received }" data-point="0" data-ng-repeat="badge in badges().multilevel_badges[0]"><img data-ng-src="{{ \'dist/img/line_point\' + ($index+1) + \'.png\' }}" alt=""> <span class="bns_point_text">{{ badge.name }}</span></div></div></div></div><div class="bns_status clearfix"><h2 class="bns_header">Бонусная программа</h2><h3 class="bns_subheader">Тренеруйтесь, выполняйте задания, копите баллы и меняйте их на подарки</h3><div class="bns_status_main"><div class="bns_status_item" data-ng-repeat="badge in badges().multilevel_badges[0]"><div class="bns_si_img"><img width="150px" data-ng-src="{{ badge.thumbs.url_250x250 | sailplay_pic }}" alt=""></div><span class="bns_status_text">{{ badge.name }}</span></div></div><div class="bns_status_action row" data-sailplay-actions=""><div class="col_5"><div class="bns_st_item bns_st_item_edit_prof"><div class="action_info"><img src="dist/img/action1.png" alt=""> <span class="bns_action_name">{{ locale.actions.system.fillProfile.name }}</span> <span class="bns_action_bal">40 {{ 40 | sailplay_pluralize:\'балл,балла,баллов\' }}</span></div><div class="action_tools"><div class="bns_earn_points" data-ng-click="fill_profile()">{{ locale.perform }}</div></div></div></div><div class="col_5" data-ng-repeat="action in actions().actions"><div class="bns_st_item bns_st_item_edit_prof"><div class="action_info"><img data-ng-src="{{ action_data(action).pic }}" alt=""> <span class="bns_action_name">{{ action_data(action).name }}</span> <span class="bns_action_bal">{{ action.points }} {{ action.points | sailplay_pluralize:\'балл,балла,баллов\' }}</span></div><div class="action_tools"><div class="bns_earn_points" data-sailplay-action="" data-action="action" data-text="Выполнить" data-styles="{{ config.social_styles }}">{{ locale.perform }}</div></div></div></div></div></div><div class="bns_gift clearfix"><h2 class="bns_header">Бонусная программа</h2><h3 class="bns_subheader">Тренеруйтесь, выполняйте задания, копите баллы и меняйте их на подарки</h3><div class="bns_gift_main" data-sailplay-gifts=""><div class="bns_gift_item" data-ng-repeat="gift in gifts()"><img data-ng-src="{{ gift.thumbs.url_250x250 | sailplay_pic }}" alt=""><div class="bns_gift_item_right"><span class="bns_gift_name">{{ gift.name }}</span> <span class="bns_gift_bal">{{ gift.points }} {{ gift.points | sailplay_pluralize:\'балл,балла,баллов\' }}</span> <a href="" class="bns_get_gift" data-ng-click="gift_purchase(gift)">Получить подарок</a></div></div></div></div></div><div class="bns_overlay bns_overlay_hist" data-ng-show="show_history" data-overlay-click="show_history = false;"><div class="bns_overlay_iner"><a href="" class="bns_close" data-overlay-click="show_history = false;"></a><table class="bns_hist_table"><h3>История заказов</h3><tbody><tr data-dir-paginate="item in history() | itemsPerPage:6" data-pagination-id="history_pages"><td><span>{{ item.action_date | date:\'d MMMM yyyy\' }}</span></td><td><span><b>{{ item | history_item }}</b></span></td><td><span>{{ item.points_delta || 0 }} {{ item.points_delta | sailplay_pluralize:\'балл,балла,баллов\' }}</span></td></tr></tbody></table><a href="" class="bns_hist_back" data-overlay-click="show_history = false;">Назад</a><dir-pagination-controls data-max-size="7" data-pagination-id="history_pages" data-template-url="/html/ui/ui.pagination.controls.html" data-auto-hide="true"></dir-pagination-controls></div></div><div class="bns_overlay bns_overlay_edit_prof" data-ng-show="show_profile_info" data-overlay-click="show_profile_info = false;"><div class="bns_overlay_iner"><a href="" class="bns_close" data-ng-click="show_profile_info = false;"></a><h3>Заполнить профиль</h3><div class="bns_prof_form_main"><div class="bns_input_block"><label>Фамилия</label> <input type="text"></div><div class="bns_input_block"><label>Контактный телефон</label> <input type="text"></div><div class="bns_input_block"><label>Имя</label> <input type="text"></div><div class="bns_input_block"><label>E-mail</label> <input type="text"></div><div class="bns_input_block"><label>Отчесво</label> <input type="text"></div><div class="bns_input_block"><label>Адресс проживания</label> <input type="text"></div><div class="bns_input_block"><label>Укажите вашу сферу работы</label><select><option value="0"></option><option value="0">сферу работы</option><option value="0">сферу работы</option></select></div><div class="bns_input_block"><label>Каким видом спорта вы занимаетесь</label><select><option value="0"></option><option value="0">спорта вы занимаетес</option><option value="0">спорта вы занимаетес</option></select></div><div class="bns_input_block"><label>Есть ли у вас дети?</label><div class="bns_check"><input type="radio" name="child" id="yes"> <label for="yes">Да</label></div><div class="bns_check"><input type="radio" name="child" id="no"> <label for="no">Нет</label></div></div><div class="bns_btn_done"><a href="#">Отправить</a></div></div></div></div><div class="bns_overlay bns_overlay_program_pit" data-ng-show="show_program" data-overlay-click="show_program = false;"><div class="bns_overlay_iner"><a href="#" class="bns_close"></a><h3>Заполнить программу питания</h3><h4>Страница 1/5</h4><div class="bns_prof_form_main"><div class="bns_qust"><h5>Какие бренды спортивного питания вы предпочитаете?</h5><h6>Можно выбирать несколько вариантов</h6><div class="bns_input_block"><select><option value="0"></option><option value="0">сферу работы</option><option value="0">сферу работы</option></select><select><option value="0"></option><option value="0">сферу работы</option><option value="0">сферу работы</option></select><a href="#" class="bns_add_more_pit">Добавить еще варианты</a></div></div><div class="bns_qust bns_qust_mt"><h5>Кого класса вы принимаете спортивного питания?</h5><div class="bns_check"><input type="radio" name="pit" id="pit1"> <label for="pit1">Протеин</label></div><div class="bns_check"><input type="radio" name="pit" id="pit2"> <label for="pit2">BCAA</label></div><div class="bns_check"><input type="radio" name="pit" id="pit3"> <label for="pit3">L-карнитин</label></div><div class="bns_check"><input type="radio" name="pit" id="pit4"> <label for="pit4">Жиросжигающие</label></div><div class="bns_check"><input type="radio" name="pit" id="pit5"> <label for="pit5">Гейнер</label></div><div class="bns_check"><input type="radio" name="pit" id="pit6"> <label for="pit6">Креатин</label></div><div class="bns_check"><input type="radio" name="pit" id="pit7"> <label for="pit7">Предтренировочные<br>комплексы</label></div><div class="bns_check"><input type="radio" name="pit" id="pit8"> <label for="pit8">Свой вариант ответа</label></div><textarea placeholder="Введите свой вариант ответа"></textarea></div><div class="bns_btn_done"><a href="#">Отправить</a></div></div></div></div><notifier></notifier></div>');
+    '<div data-sailplay-profile="" data-sailplay-history="" data-sailplay-badges="" style="margin: 20px;" data-ng-show="user()" data-ng-cloak=""><div class="bns_wrapper"><div class="bns_top_main clearfix"><h2 class="bns_header">Бонусная программа</h2><h3 class="bns_subheader">Тренеруйтесь, выполняйте задания, копите баллы и меняйте их на подарки</h3><div class="bns_profile_info bns_profile_info_women"><div class="bpi_left"><img data-ng-src="{{ user().user.pic | sailplay_pic }}" class="bns_p_ava" alt=""> <span class="bns_p_hi">Здравствуйте,</span> <span class="bns_p_name">{{ user().user.name || \'Имя не указано\' }}</span> <span class="bns_p_stat">Ваш статус: <strong>{{ user().user_status.name }}</strong></span> <span class="bns_p_tonext" data-ng-if="get_next()">До статуса <strong>{{ get_next().name }}</strong> осталась {{ get_offset() }} {{ get_offset() | sailplay_pluralize:\'балл,балла,баллов\' }}</span></div><div class="bpi_center"><span class="bps_c_head">Последняя активность</span><div class="bns_sm_hist"><div class="bns_sm_h_item" data-ng-repeat="hist_item in history() | limitTo:4"><span class="bshi_date">{{ hist_item.action_date | date:\'d MMMM yyyy\' }}</span> <span class="bshi_action">{{ hist_item | history_item }}</span> <span class="bshi_bal">{{ hist_item.points_delta || 0 }} {{ hist_item.points_delta | sailplay_pluralize:\'балл,балла,баллов\' }}</span></div></div><a href="" class="bns_hist" data-ng-click="show_history = true;">История заказов</a></div><div class="bpi_right"><span class="bns_bal_n">{{ user().user_points.confirmed }} <strong class="bns_bal_n_text">{{ user().user_points.confirmed | sailplay_pluralize:\'бонусный балл,бонусных балла,бонусных баллов\' }}</strong></span></div></div><div class="bns_line_main"><div class="bns_line"><div class="bns_line_path" data-ng-style="{ width: get_progress() + \'%\' }"></div><div class="bns_point bns_point{{ $index+1 }}" data-ng-class="{ act: badge.is_received }" data-point="0" data-ng-repeat="badge in badges().multilevel_badges[0]"><img data-ng-src="{{ \'dist/img/line_point\' + ($index+1) + \'.png\' }}" alt=""> <span class="bns_point_text">{{ badge.name }}</span></div></div></div></div><div class="bns_status clearfix"><h2 class="bns_header">Статусы и задания</h2><h3 class="bns_subheader">Выполняйте задания, чтобы открыть новый статус и заработать баллы</h3><div class="bns_status_main"><div class="bns_status_item" data-ng-repeat="badge in badges().multilevel_badges[0]"><div class="bns_si_img"><img width="150px" data-ng-src="{{ badge.thumbs.url_250x250 | sailplay_pic }}" alt=""></div><span class="bns_status_text">{{ badge.name }}</span></div></div><div class="bns_status_action row" data-sailplay-actions=""><div class="col_5" data-ng-show="show_profile_action"><div class="bns_st_item bns_st_item_edit_prof"><div class="action_info"><img src="dist/img/action1.png" alt=""> <span class="bns_action_name">{{ locale.actions.system.fillProfile.name }}</span> <span class="bns_action_bal">40 {{ 40 | sailplay_pluralize:\'балл,балла,баллов\' }}</span></div><div class="action_tools"><div class="bns_earn_points" data-ng-click="fill_profile()">{{ locale.perform }}</div></div></div></div><div class="col_5" data-ng-repeat="action in actions().actions"><div class="bns_st_item bns_st_item_edit_prof"><div class="action_info"><img data-ng-src="{{ action_data(action).pic }}" alt=""> <span class="bns_action_name">{{ action_data(action).name }}</span> <span class="bns_action_bal">{{ action.points }} {{ action.points | sailplay_pluralize:\'балл,балла,баллов\' }}</span></div><div class="action_tools"><div class="bns_earn_points" data-sailplay-action="" data-action="action" data-text="Выполнить" data-styles="{{ config.social_styles }}">{{ locale.perform }}</div></div></div></div></div></div><div class="bns_gift clearfix"><h2 class="bns_header">Подарки</h2><h3 class="bns_subheader">На которые вы можете потратить накопленные баллы</h3><div class="bns_gift_main" data-sailplay-gifts=""><div class="bns_gift_item" data-ng-repeat="gift in gifts()"><img data-ng-src="{{ gift.thumbs.url_250x250 | sailplay_pic }}" alt=""><div class="bns_gift_item_right"><span class="bns_gift_name">{{ gift.name }}</span> <span class="bns_gift_bal">{{ gift.points }} {{ gift.points | sailplay_pluralize:\'балл,балла,баллов\' }}</span> <a href="" class="bns_get_gift" data-ng-click="gift_purchase(gift)">Получить подарок</a></div></div></div></div></div><div class="bns_overlay bns_overlay_hist" data-ng-show="show_history" data-overlay-click="show_history = false;"><div class="bns_overlay_iner"><a href="" class="bns_close" data-overlay-click="show_history = false;"></a><table class="bns_hist_table"><h3>История заказов</h3><tbody><tr data-dir-paginate="item in history() | itemsPerPage:6" data-pagination-id="history_pages"><td><span>{{ item.action_date | date:\'d MMMM yyyy\' }}</span></td><td><span><b>{{ item | history_item }}</b></span></td><td><span>{{ item.points_delta || 0 }} {{ item.points_delta | sailplay_pluralize:\'балл,балла,баллов\' }}</span></td></tr></tbody></table><a href="" class="bns_hist_back" data-overlay-click="show_history = false;">Назад</a><dir-pagination-controls data-max-size="7" data-pagination-id="history_pages" data-template-url="/html/ui/ui.pagination.controls.html" data-auto-hide="true"></dir-pagination-controls></div></div><div class="bns_overlay bns_overlay_edit_prof" data-ng-show="show_profile_info" data-overlay-click="show_profile_info = false;"><div class="bns_overlay_iner"><a href="" class="bns_close" data-ng-click="show_profile_info = false;"></a><h3>Заполнить профиль</h3><form class="bns_prof_form_main" data-fill-profile="" data-ng-submit="submit_profile($parent.close_profile)"><div class="bns_input_block clearfix odd"><label>Фамилия</label> <input type="text" data-ng-model="profile_form.user.lastName"></div><div class="bns_input_block clearfix"><label>Контактный телефон</label> <input type="text" data-ng-model="profile_form.user.phone"></div><div class="bns_input_block clearfix odd"><label>Имя</label> <input type="text" data-ng-model="profile_form.user.firstName"></div><div class="bns_input_block clearfix"><label>E-mail</label> <input type="text" data-ng-model="profile_form.user.email"></div><div class="bns_input_block clearfix odd"><label>Отчество</label> <input type="text" data-ng-model="profile_form.user.middleName"></div><div class="bns_input_block clearfix"><label>Адрес проживания</label> <input type="text" data-ng-model="profile_form.custom_vars[\'Адрес\']"></div><div class="bns_input_block clearfix odd"><label>Как вы узнали о «5LB»?</label><select data-ng-model="profile_form.tags[1][0]" data-ng-options="value.value as value.key for value in values[1]"><option value="">Не выбрано</option></select></div><div class="bns_input_block clearfix"><label>Как давно вы клиент «5LB»?</label><select data-ng-model="profile_form.tags[3][0]" data-ng-options="value.value as value.key for value in values[3]"><option value="">Не выбрано</option></select></div><div class="bns_input_block clearfix full_width"><label>Каким видом спорта вы занимаетесь?</label><div class="bns_check" data-ng-repeat="value in values[5]"><input data-ng-init="inner_value = false;" data-ng-model="inner_value" type="checkbox" name="Q9" id="{{ \'sport_\' + $index }}" data-ng-change="toggle_tag(profile_form.tags[5], value.value)"> <label for="{{ \'sport_\' + $index }}">{{ value.key }}</label></div></div><div class="bns_input_block clearfix full_width"><label>Какие цели преследуете при покупке спортивного питания?</label><div class="bns_check" data-ng-repeat="value in values[9]"><input data-ng-init="inner_value = false;" data-ng-model="inner_value" type="checkbox" name="Q9" id="{{ \'target_\' + $index }}" data-ng-change="toggle_tag(profile_form.tags[9], value.value)"> <label for="{{ \'target_\' + $index }}">{{ value.key }}</label></div></div><div class="bns_input_block clearfix full_width"><label>Укажите события, информацию о которых хотели бы получать:</label><div class="bns_check" data-ng-repeat="value in values[13]"><input data-ng-init="inner_value = false;" data-ng-model="inner_value" type="checkbox" name="Q13" id="{{ \'subscribe_\' + $index }}" data-ng-change="toggle_tag(profile_form.tags[13], value.value)"> <label for="{{ \'subscribe_\' + $index }}">{{ value.key }}</label></div></div><div class="bns_input_block clearfix full_width"><label>Что более важно при выборе спортивного питания?</label><div class="bns_check" data-ng-repeat="value in values[11]"><input data-ng-init="inner_value = false;" data-ng-model="inner_value" type="checkbox" name="Q11" id="{{ \'important_\' + $index }}" data-ng-change="toggle_tag(profile_form.tags[11], value.value)"> <label for="{{ \'important_\' + $index }}">{{ value.key }}</label></div></div><div class="bns_input_block clearfix full_width"><label>Каким способом Вам удобно получать от нас информацию?</label><div class="bns_check" data-ng-repeat="value in values[15]"><input data-ng-init="inner_value = false;" data-ng-model="inner_value" type="checkbox" name="Q15" id="{{ \'sub_\' + $index }}" data-ng-change="toggle_tag(profile_form.tags[15], value.value)"> <label for="{{ \'sub_\' + $index }}">{{ value.key }}</label></div></div><div class="bns_input_block clearfix odd"><label>Ваш профессиональный уровень:</label><select data-ng-model="profile_form.tags[7][0]" data-ng-options="value.value as value.key for value in values[7]"><option value="">Не выбрано</option></select></div><div class="bns_input_block clearfix"><label>Есть ли у вас дети?</label><select data-ng-model="profile_form.tags[17][0]" data-ng-options="value.value as value.key for value in values[17]"><option value="">Не выбрано</option></select></div><div class="bns_btn_done clearfix"><button type="submit">Отправить</button></div></form></div></div><div class="bns_overlay bns_overlay_program_pit" data-ng-show="show_program" data-overlay-click="show_program = false;"><div class="bns_overlay_iner"><a href="#" class="bns_close"></a><h3>Заполнить программу питания</h3><h4>Страница 1/5</h4><div class="bns_prof_form_main"><div class="bns_qust"><h5>Какие бренды спортивного питания вы предпочитаете?</h5><h6>Можно выбирать несколько вариантов</h6><div class="bns_input_block"><select><option value="0"></option><option value="0">сферу работы</option><option value="0">сферу работы</option></select><select><option value="0"></option><option value="0">сферу работы</option><option value="0">сферу работы</option></select><a href="#" class="bns_add_more_pit">Добавить еще варианты</a></div></div><div class="bns_qust bns_qust_mt"><h5>Кого класса вы принимаете спортивного питания?</h5><div class="bns_check"><input type="radio" name="pit" id="pit1"> <label for="pit1">Протеин</label></div><div class="bns_check"><input type="radio" name="pit" id="pit2"> <label for="pit2">BCAA</label></div><div class="bns_check"><input type="radio" name="pit" id="pit3"> <label for="pit3">L-карнитин</label></div><div class="bns_check"><input type="radio" name="pit" id="pit4"> <label for="pit4">Жиросжигающие</label></div><div class="bns_check"><input type="radio" name="pit" id="pit5"> <label for="pit5">Гейнер</label></div><div class="bns_check"><input type="radio" name="pit" id="pit6"> <label for="pit6">Креатин</label></div><div class="bns_check"><input type="radio" name="pit" id="pit7"> <label for="pit7">Предтренировочные<br>комплексы</label></div><div class="bns_check"><input type="radio" name="pit" id="pit8"> <label for="pit8">Свой вариант ответа</label></div><textarea placeholder="Введите свой вариант ответа"></textarea></div><div class="bns_btn_done"><a href="#">Отправить</a></div></div></div></div><notifier></notifier></div>');
 }]);
 })();
 
@@ -2451,7 +2451,8 @@ module.run(['$templateCache', function($templateCache) {
 
       _LOCALE && SailPlayActionsDataProvider.set_actions_data(_LOCALE.actions);
 
-      SailPlayBadgesProvider.set_limits([ 0, 200, 400, 800 ]);
+      //SailPlayBadgesProvider.set_limits([ 10000, 20000, 30000, 50000 ]);
+      SailPlayBadgesProvider.set_limits([ 3000, 6000, 9000, 12000 ]);
 
     })
 
@@ -2467,7 +2468,7 @@ module.run(['$templateCache', function($templateCache) {
 
     })
 
-    .directive('sailplayWidgets', function(){
+    .directive('sailplayWidgets', function(SailPlay, ProfileTag){
 
       return {
         restrict: 'E',
@@ -2480,12 +2481,32 @@ module.run(['$templateCache', function($templateCache) {
 
           scope.show_profile_info = false;
 
+          scope.show_profile_action = true;
+
           scope.fill_profile = function(){
 
             scope.show_profile_info = true;
 
           };
 
+          scope.close_profile = function(){
+
+            scope.show_profile_action = false;
+
+            scope.show_profile_info = false;
+
+          };
+
+          SailPlay.on('tags.exist.success', function(res){
+
+            if(res.status === 'ok' && res.tags[0].exist) {
+
+              //scope.show_profile_action = false;
+              scope.$apply();
+
+            }
+
+          });
         }
       }
 
@@ -2507,7 +2528,7 @@ module.run(['$templateCache', function($templateCache) {
     'ipCookie'
   ])
 
-  .run(function(SailPlay, ipCookie, SailPlayApi, $rootScope, $window){
+  .run(function(SailPlay, ipCookie, SailPlayApi, $rootScope, $window, ProfileTag){
 
     $rootScope.config = $window._CONFIG || {};
 
@@ -2528,6 +2549,8 @@ module.run(['$templateCache', function($templateCache) {
       SailPlayApi.call('load.actions.list');
       SailPlayApi.call('load.user.history');
       SailPlayApi.call('load.gifts.list');
+      SailPlayApi.call('tags.exist', { tags: [ ProfileTag ] });
+
 
       $rootScope.$apply();
 
@@ -2792,6 +2815,8 @@ module.run(['$templateCache', function($templateCache) {
 
           self.limits = limits;
 
+          return self;
+
         }
 
       };
@@ -2820,7 +2845,7 @@ module.run(['$templateCache', function($templateCache) {
 
           scope.badges = SailPlayApi.data('load.badges.list');
 
-          var user = SailPlayApi.data('load.users.list');
+          var user = SailPlayApi.data('load.user.info');
 
           scope.get_next = function () {
 
@@ -2876,6 +2901,18 @@ module.run(['$templateCache', function($templateCache) {
             if(scope.get_offset)
 
             return streak;
+
+          };
+
+          scope.get_progress = function(){
+
+            var balance = user && user() ? user().user_points.confirmed + user().user_points.spent + user().user_points.spent_extra : 0;
+
+            var target = parseInt(angular.copy(SailPlayBadges.limits).pop());
+
+            var progress = balance/target*100;
+
+            return progress <= 100 ? progress : 100;
 
           };
 
@@ -3301,151 +3338,449 @@ module.run(['$templateCache', function($templateCache) {
     'angularUtils.directives.dirPagination'
   ])
 
-    .directive('badgesTable', function(sp_api, $timeout, sp){
+
+    .constant('ProfileTag', 'Заполнил профиль')
+
+    .directive('fillProfile', function(SailPlay, $rootScope, $q, ProfileTag){
 
       return {
 
         restrict: 'A',
-        replace: false,
         scope: true,
         link: function(scope){
 
-          var badges = sp_api.data('load.badges.list');
-          var user = sp_api.data('load.user.info');
+          scope.profile_form = {
 
-          scope.badge_tags = [ 10293166, 10293167, 10293170 ];
+            user: {
 
-          scope.procents = 0;
-          scope.user_points = 0;
+              firstName: '',
+              lastName: '',
+              middleName: '',
+              phone: '',
+              email: ''
 
-          scope.get_next = function () {
-            var statuses = badges && badges() && badges().multilevel_badges && badges().multilevel_badges[0];
-            if (!statuses) return;
-            var received = statuses.filter(function (status) {
-              return status.is_received;
-            });
-            if (received.length == statuses.length) return null;
-            var result = statuses.filter(function (status) {
-              return !status.is_received;
-            });
-            return result[0] || statuses[0];
+            },
+            custom_vars: {
+
+              'Адрес': ''
+
+            },
+            tags: [
+              'В1 Как узнали', [ '' ],
+              'В2 Как давно', [ '' ],
+              'В3 Вид спорта', [ ],
+              'В4 Уровень', [ '' ],
+              'В5 Цели', [ ],
+              'В6 Выбор', [ ],
+              'В7 Информация', [ ],
+              'В8 Канал', [ ],
+              'В9 Дети', [ '' ]
+            ]
+
           };
 
-          scope.get_offset = function () {
-            var arr = badges;
-            var limit = user && user && user() ? user().user_points.confirmed + user().user_points.spent + user().user_points.spent_extra : 0;
-            var result = [];
-            for (var i = 0, len = arr.length; i < len; i++) {
-              var current_limit = arr[i];
-              if (limit < current_limit) {
-                result.push(current_limit);
-              }
+          scope.toggle_tag = function(arr, tag){
+
+            if(!tag) return;
+
+            var index = arr.indexOf(tag);
+
+            if(index > -1){
+
+              arr.splice(index, 1);
+
             }
-            return Math.round(result[0] ? result[0] - limit : 0);
-          };
-
-          scope.$watch(function(){
-
-            return angular.toJson([user() && user().user_points, badges()]);
-
-          }, function(){
-
-            var procents = 0;
-
-            var statuses = badges && badges() && badges().multilevel_badges && badges().multilevel_badges[0];
-
-            if(!statuses) procents = 0;
-
             else {
 
-              var current_badge_index;
+              arr.push(tag);
 
-              //var last_badge_id = user() && user().last_badge && user().last_badge.id;
-              var last_status_name = user() && user().user_status && user().user_status.name;
+            }
 
-              if(!last_status_name){
+          };
 
-                procents = 0;
-
+          scope.values = [
+            null,
+            [
+              {
+                key: 'через google/yandex',
+                value: 'В1 Поисковики'
+              },
+              {
+                key: 'через другие сайты',
+                value: 'В1 Другие сайты'
+              },
+              {
+                key: 'знакомые посоветовали',
+                value: 'В1 Знакомые'
+              },
+              {
+                key: 'через соц. сети',
+                value: 'В1 Соцсети'
+              },
+              {
+                key: 'через фитнес клуб',
+                value: 'В1 Фитнесклуб'
+              },
+              {
+                key: 'случайно',
+                value: 'В1 Случайно'
+              },
+              {
+                key: 'другое',
+                value: 'В1 Другое'
               }
-              else {
-                angular.forEach(statuses, function(status, index){
+            ],
+            null,
+            [
+              {
+                key: 'меньше месяца',
+                value: 'В2 < мес'
+              },
+              {
+                key: 'около полугода',
+                value: 'В2 полгода'
+              },
+              {
+                key: '1–2 года',
+                value: 'В2 1-2 года'
+              },
+              {
+                key: 'более двух лет',
+                value: 'В2 > 2 года'
+              },
+              {
+                key: 'не помню, давно покупаю у вас',
+                value: 'В2 давно'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'Альпинизм',
+                value: 'В3 Альпинизм'
+              },
+              {
+                key: 'АРМ спорт',
+                value: 'В3 АРМ спорт'
+              },
+              {
+                key: 'Баскетбол',
+                value: 'В3 Баскетбол'
+              },
+              {
+                key: 'Бейсбол',
+                value: 'В3 Бейсбол'
+              },
+              {
+                key: 'Бодибилдинг',
+                value: 'В3 Бодибилдинг'
+              },
+              {
+                key: 'Бокс',
+                value: 'В3 Бокс'
+              },
+              {
+                key: 'Борьба',
+                value: 'В3 Борьба'
+              },
+              {
+                key: 'Гимнастика спортивная',
+                value: 'В3 Гимнастика спортивная'
+              },
+              {
+                key: 'Гиревой спорт',
+                value: 'В3 Гиревой спорт'
+              },
+              {
+                key: 'Горнолыжный спорт',
+                value: 'В3 Горнолыжный спорт'
+              },
+              {
+                key: 'Боевые искусства',
+                value: 'В3 Боевые искусства'
+              },
+              {
+                key: 'Пауэрлифтинг',
+                value: 'В3 Пауэрлифтинг'
+              },
+              {
+                key: 'Плавание',
+                value: 'В3 Плавание'
+              },
+              {
+                key: 'Регби',
+                value: 'В3 Регби'
+              },
+              {
+                key: 'Сноуборд',
+                value: 'В3 Сноуборд'
+              },
+              {
+                key: 'Теннис',
+                value: 'В3 Теннис'
+              },
+              {
+                key: 'Тяжелая атлетика',
+                value: 'В3 Тяжелая атлетика'
+              },
+              {
+                key: 'Фитнес',
+                value: 'В3 Фитнес'
+              },
+              {
+                key: 'Футбол',
+                value: 'В3 Футбол'
+              },
+              {
+                key: 'Хоккей',
+                value: 'В3 Хоккей'
+              },
+              {
+                key: 'Другое',
+                value: 'В3 Другое'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'Начинающий',
+                value: 'В4 Начинающий'
+              },
+              {
+                key: 'Продвинутый',
+                value: 'В4 Продвинутый'
+              },
+              {
+                key: 'Профи',
+                value: 'В4 Профи'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'похудение',
+                value: 'В5 Похудение'
+              },
+              {
+                key: 'сжигание жира',
+                value: 'В5 Сжигание'
+              },
+              {
+                key: 'набор массы',
+                value: 'В5 Масса'
+              },
+              {
+                key: 'очищение организма',
+                value: 'В5 Очищение'
+              },
+              {
+                key: 'поддержание формы',
+                value: 'В5 Быть в форме'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'раскученность бренда',
+                value: 'В6 Бренд'
+              },
+              {
+                key: 'дизайн упаковки',
+                value: 'В6 Дизайн'
+              },
+              {
+                key: 'мнение экспертов',
+                value: 'В6 Эксперты'
+              },
+              {
+                key: 'рекомендации знакомых',
+                value: 'В6 Знакомые'
+              },
+              {
+                key: 'отзывы покупателей',
+                value: 'В6 Отзывы'
+              },
+              {
+                key: 'соотношение цены и качества',
+                value: 'В6 Цена-Качество'
+              },
+              {
+                key: 'важна только цена',
+                value: 'В6 Цена'
+              },
+              {
+                key: 'высокая степень информированности о продукте в СМИ',
+                value: 'В6 СМИ'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'новости компании',
+                value: 'В7 Новости'
+              },
+              {
+                key: 'новые поступления',
+                value: 'В7 Поступления'
+              },
+              {
+                key: 'скидки, сезонные распродажи',
+                value: 'В7 Скидки'
+              },
+              {
+                key: 'акции, конкурсы',
+                value: 'В7 Конкурсы'
+              },
+              {
+                key: 'не хочу получать информацию',
+                value: 'В7 Ничего'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'sms',
+                value: 'В8 SMS'
+              },
+              {
+                key: 'e-mail',
+                value: 'B8 Email'
+              }
+            ],
+            null,
+            [
+              {
+                key: 'Есть',
+                value: 'В9 есть'
+              },
+              {
+                key: 'Нет',
+                value: 'В9 нет'
+              }
+            ]
+          ];
 
-                  //if(last_badge_id === status.id){
+          scope.submit_profile = function(callback){
 
-                  if(last_status_name === status.name){
+            console.dir(scope.profile_form);
 
-                    current_badge_index = index;
-                    procents = 100/statuses.length * (index);
+            scope.profile_form.user.auth_hash = SailPlay.config().auth_hash;
+
+            SailPlay.send('users.update', scope.profile_form.user, function(user_res){
+
+              if(user_res.status === 'ok'){
+
+                var req_tags = [ ProfileTag ];
+
+                var form_tags = scope.profile_form.tags;
+
+                for(var i = 0; i < form_tags.length; i+=2){
+
+                  var tag = form_tags[i];
+
+                  var tag_values = form_tags[i+1];
+
+                  if(tag_values.length > 0 && tag_values[0] !== ''){
+
+                    req_tags.push(tag);
+
+                    angular.forEach(tag_values, function(t){
+
+                      req_tags.push(t);
+
+                    });
 
                   }
 
+                }
+
+                function chunk(array, chunkSize) {
+                  return [].concat.apply([],
+                    array.map(function(elem,i) {
+                      return i%chunkSize ? [] : [array.slice(i,i+chunkSize)];
+                    })
+                  );
+                }
+
+                var chunked_tags = chunk(req_tags, 10);
+
+                var tag_promises = [];
+
+                angular.forEach(chunked_tags, function(chunk){
+
+                  var promise = $q(function(resolve, reject){
+
+                    SailPlay.send('tags.add', { tags: chunk }, function(tags_res){
+                      if(tags_res.status === 'ok') {
+
+                        resolve(tags_res);
+
+                        //sp.send('leads.submit.success', { lead: self, response: user_res, tags: res });
+                      }
+                      else {
+                        reject(tags_res);
+                        //sp.send('leads.submit.error', { lead: self, response: user_res, tags: res });
+                      }
+                    });
+
+                  });
+
+                  tag_promises.push(promise);
+
                 });
+
+                $q.all(tag_promises).then(function(tags_res){
+
+                  SailPlay.send('vars.add', { custom_vars: scope.profile_form.custom_vars }, function(vars_res){
+
+                    var response = {
+                      user: user_res,
+                      tags: tags_res,
+                      vars: vars_res
+                    };
+
+                    if(vars_res.status === 'ok') {
+
+
+
+                      callback && callback(response);
+                      scope.$apply();
+                      console.dir(response);
+
+
+                    }
+                    else {
+
+                      console.dir(response);
+                      $rootScope.$broadcast('notifier:notify', {
+
+                        header: 'Ошибка',
+                        body: user_res.message || 'К сожалению произошла ошибка'
+
+                      });
+                      scope.$apply();
+
+                    }
+
+                  });
+
+                });
+
+
+
               }
 
-            }
+              else {
+                $rootScope.$broadcast('notifier:notify', {
 
-            var points = user() && user().user_points && user().user_points.confirmed;
+                  header: 'Ошибка',
+                  body: user_res.message || 'К сожалению произошла ошибка'
 
-            scope.procents = 0;
-            scope.user_points = 0;
-
-            function count_procents(){
-
-              scope.procents = procents;
-
-            }
-
-            $timeout(count_procents, 40);
-
-            function count_points(){
-
-              if(scope.user_points < points){
-
-                scope.user_points++;
-                $timeout(count_points, 40);
-
+                });
+                $rootScope.$apply();
               }
 
-            }
-            count_points();
-
-          });
-
-          scope.arc_style = function(){
-
-            var deg_rotate = 0;
-
-            if(user()){
-
-              deg_rotate = -180+parseInt(scope.procents*2.6);
-
-            }
-
-            if(deg_rotate > 0) {
-              deg_rotate = 0;
-            }
-
-            //console.log(deg_rotate);
-
-            var style_object = {
-              'transform': 'rotate('+deg_rotate+'deg)',
-              '-moz-transform': 'rotate('+deg_rotate+'deg)',
-              '-webkit-transform': 'rotate('+deg_rotate+'deg)',
-              '-o-transform': 'rotate('+deg_rotate+'deg)',
-              '-ms-transform': 'rotate('+deg_rotate+'deg)'
-            };
-
-            var style_string = '';
-
-            for(var i in style_object){
-
-              style_string+=(i + ':' + style_object[i] + ';');
-
-            }
-
-            return style_string;
-
+            });
 
           };
 
@@ -3474,61 +3809,6 @@ module.run(['$templateCache', function($templateCache) {
         }
       };
 
-    })
-
-    .directive('slickCarouselSlide', function ($compile, $timeout) {
-      return {
-
-        link: function (scope, element, attrs) {
-          scope.hidden = true;
-          if (scope.$last) { // all are rendered
-            $(element).parent().slick({
-              infinite: false,
-              nextArrow: '<img class="slider_arrow right" src="dist/img/right_arrow.png"/>',
-              prevArrow: '<img class="slider_arrow left" src="dist/img/left_arrow.png"/>',
-              slidesToShow: 4,
-              slidesToScroll: 4,
-              responsive: [
-                {
-                  breakpoint: 1190,
-                  settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4
-                  }
-                },
-                {
-                  breakpoint: 880,
-                  settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3
-                  }
-                },
-                {
-                  breakpoint: 600,
-                  settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2
-                  }
-                },
-                {
-                  breakpoint: 480,
-                  settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                  }
-                }
-                // You can unslick at a given breakpoint now by adding:
-                // settings: "unslick"
-                // instead of a settings object
-              ]
-            });
-            $timeout(function(){
-              scope.hidden = false;
-            }, 1000)
-          }
-        }
-
-      };
     })
 
     .directive('notifier', function(){

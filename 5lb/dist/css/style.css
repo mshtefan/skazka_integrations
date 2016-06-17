@@ -11,23 +11,39 @@ body {
   z-index: 10000;
   background-color: rgba(0, 0, 0, 0.3);
   display: block;
+  overflow: auto;
 }
 .bns_overlay.bns_overlay_edit_prof .bns_overlay_iner {
   width: 520px;
   margin-left: -300px;
   margin-top: -207px;
+  margin-bottom: 50px;
 }
 .bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main {
-  float: left;
   width: 100%;
 }
 .bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block {
-  float: left;
-  width: 40%;
+  width: 48%;
   margin-top: 15px;
+  display: inline-block;
+  vertical-align: top;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
-.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block:nth-child(2n) {
-  float: right;
+.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block.full_width {
+  width: 100%;
+}
+.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block.full_width .bns_check {
+  width: 50%;
+}
+.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block.odd {
+  margin-right: 4%;
 }
 .bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block label {
   float: left;
@@ -49,13 +65,20 @@ body {
   height: 25px;
 }
 .bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block .bns_check {
-  float: left;
-  width: 80px;
+  display: inline-block;
+  vertical-align: top;
 }
-.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block .bns_check input[type="radio"] {
+.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block .bns_check:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block .bns_check input[type="radio"],
+.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block .bns_check input[type="checkbox"] {
   display: none;
 }
-.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block .bns_check input[type="radio"]:checked + label::before {
+.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block .bns_check input[type="radio"]:checked + label::before,
+.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block .bns_check input[type="checkbox"]:checked + label::before {
   background-color: #FF551E;
 }
 .bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_input_block .bns_check label {
@@ -78,15 +101,14 @@ body {
   border-radius: 12px;
   position: absolute;
   left: 0px;
-  top: 50%;
-  margin-top: -6px;
+  top: 7px;
 }
 .bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_btn_done {
-  float: left;
   width: 100%;
   text-align: center;
 }
-.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_btn_done a {
+.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_btn_done a,
+.bns_overlay.bns_overlay_edit_prof .bns_overlay_iner .bns_prof_form_main .bns_btn_done button {
   width: 140px;
   line-height: 28px;
   font-size: 12px;
@@ -97,6 +119,9 @@ body {
   text-decoration: none;
   margin-top: 15px;
   display: inline-block;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 .bns_overlay.bns_overlay_program_pit .bns_overlay_iner {
   width: 520px;
@@ -157,7 +182,6 @@ body {
   text-decoration: underline;
 }
 .bns_overlay.bns_overlay_program_pit .bns_prof_form_main .bns_qust .bns_check {
-  float: left;
   width: 33%;
 }
 .bns_overlay.bns_overlay_program_pit .bns_prof_form_main .bns_qust .bns_check input[type="radio"] {
@@ -306,6 +330,7 @@ body {
   padding-right: 15px;
   padding-left: 11px;
   font-weight: 200;
+  display: inline-block;
 }
 .bns_overlay .bns_hist_table td:nth-child(3) {
   color: #FF551E;
@@ -823,8 +848,6 @@ body {
     width: 50% !important;
   }
   body .bns_overlay .bns_overlay_iner .bns_prof_form_main .bns_input_block {
-    float: left;
-    width: 46% !important;
     margin-top: 15px;
   }
   body .bns_overlay .bns_overlay_iner .bns_hist_table td {

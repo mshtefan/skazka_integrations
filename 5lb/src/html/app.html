@@ -1,4 +1,4 @@
-<div data-sailplay-profile data-sailplay-history data-sailplay-badges style="margin: 20px;">
+<div data-sailplay-profile data-sailplay-history data-sailplay-badges style="margin: 20px;" data-ng-show="user()" data-ng-cloak>
 
   <div class="bns_wrapper">
     <div class="bns_top_main clearfix">
@@ -35,7 +35,7 @@
       </div>
       <div class="bns_line_main">
         <div class="bns_line">
-          <div class="bns_line_path" data-ng-style="{ width: get_streak(badges().multilevel_badges[0]).progress + '%' }"></div>
+          <div class="bns_line_path" data-ng-style="{ width: get_progress() + '%' }"></div>
           <div class="bns_point bns_point{{ $index+1 }}" data-ng-class="{ act: badge.is_received }" data-point="0" data-ng-repeat="badge in badges().multilevel_badges[0]">
             <img data-ng-src="{{ 'dist/img/line_point' + ($index+1) + '.png' }}" alt="">
             <span class="bns_point_text">{{ badge.name }}</span>
@@ -44,9 +44,9 @@
       </div>
     </div>
     <div class="bns_status clearfix">
-      <h2 class="bns_header">Бонусная программа</h2>
+      <h2 class="bns_header">Статусы и задания</h2>
 
-      <h3 class="bns_subheader">Тренеруйтесь, выполняйте задания, копите баллы и меняйте их на подарки</h3>
+      <h3 class="bns_subheader">Выполняйте задания, чтобы открыть новый статус и заработать баллы</h3>
 
       <div class="bns_status_main">
         <div class="bns_status_item" data-ng-repeat="badge in badges().multilevel_badges[0]">
@@ -56,7 +56,7 @@
       </div>
       <div class="bns_status_action row" data-sailplay-actions >
 
-        <div class="col_5">
+        <div class="col_5" data-ng-show="show_profile_action">
           <div class="bns_st_item bns_st_item_edit_prof ">
             <div class="action_info">
               <img src="dist/img/action1.png" alt="">
@@ -91,9 +91,9 @@
       </div>
     </div>
     <div class="bns_gift clearfix">
-      <h2 class="bns_header">Бонусная программа</h2>
+      <h2 class="bns_header">Подарки</h2>
 
-      <h3 class="bns_subheader">Тренеруйтесь, выполняйте задания, копите баллы и меняйте их на подарки</h3>
+      <h3 class="bns_subheader">На которые вы можете потратить накопленные баллы</h3>
 
       <div class="bns_gift_main" data-sailplay-gifts>
         <div class="bns_gift_item" data-ng-repeat="gift in gifts()">
@@ -143,63 +143,106 @@
 
       <h3>Заполнить профиль</h3>
 
-      <div class="bns_prof_form_main">
-        <div class="bns_input_block">
+      <form class="bns_prof_form_main" data-fill-profile data-ng-submit="submit_profile($parent.close_profile)">
+        <div class="bns_input_block clearfix odd">
           <label>Фамилия</label>
-          <input type="text">
+          <input type="text" data-ng-model="profile_form.user.lastName">
         </div>
-        <div class="bns_input_block">
+        <div class="bns_input_block clearfix">
           <label>Контактный телефон</label>
-          <input type="text">
+          <input type="text" data-ng-model="profile_form.user.phone">
         </div>
-        <div class="bns_input_block">
+        <div class="bns_input_block clearfix odd">
           <label>Имя</label>
-          <input type="text">
+          <input type="text" data-ng-model="profile_form.user.firstName">
         </div>
-        <div class="bns_input_block">
+        <div class="bns_input_block clearfix">
           <label>E-mail</label>
-          <input type="text">
+          <input type="text" data-ng-model="profile_form.user.email">
         </div>
-        <div class="bns_input_block">
-          <label>Отчесво</label>
-          <input type="text">
+        <div class="bns_input_block clearfix odd">
+          <label>Отчество</label>
+          <input type="text" data-ng-model="profile_form.user.middleName">
         </div>
-        <div class="bns_input_block">
-          <label>Адресс проживания</label>
-          <input type="text">
+        <div class="bns_input_block clearfix">
+          <label>Адрес проживания</label>
+          <input type="text" data-ng-model="profile_form.custom_vars['Адрес']">
         </div>
-        <div class="bns_input_block">
-          <label>Укажите вашу сферу работы</label>
-          <select>
-            <option value="0"></option>
-            <option value="0"> сферу работы</option>
-            <option value="0"> сферу работы</option>
+        <div class="bns_input_block clearfix odd">
+          <label>Как вы узнали о «5LB»?</label>
+          <select data-ng-model="profile_form.tags[1][0]" data-ng-options="value.value as value.key for value in values[1]">
+            <option value="">Не выбрано</option>
           </select>
         </div>
-        <div class="bns_input_block">
-          <label>Каким видом спорта вы занимаетесь</label>
-          <select>
-            <option value="0"></option>
-            <option value="0">спорта вы занимаетес</option>
-            <option value="0">спорта вы занимаетес</option>
+        <div class="bns_input_block clearfix">
+          <label>Как давно вы клиент «5LB»?</label>
+          <select data-ng-model="profile_form.tags[3][0]" data-ng-options="value.value as value.key for value in values[3]">
+            <option value="">Не выбрано</option>
           </select>
         </div>
-        <div class="bns_input_block">
-          <label>Есть ли у вас дети?</label>
+        <div class="bns_input_block clearfix full_width">
+          <label>Каким видом спорта вы занимаетесь?</label>
+          <!--<select data-ng-model="profile_form.tags[5][0]" data-ng-options="value.value as value.key for value in values[5]">-->
+            <!--<option value="">Не выбрано</option>-->
+          <!--</select>-->
+          <div class="bns_check" data-ng-repeat="value in values[5]">
+            <input data-ng-init="inner_value = false;" data-ng-model="inner_value" type="checkbox" name="Q9" id="{{ 'sport_' + $index }}" data-ng-change="toggle_tag(profile_form.tags[5], value.value)">
+            <label for="{{ 'sport_' + $index }}">{{ value.key }}</label>
+          </div>
+        </div>
 
-          <div class="bns_check">
-            <input type="radio" name="child" id="yes">
-            <label for="yes">Да</label>
+        <div class="bns_input_block clearfix full_width">
+          <label>Какие цели преследуете при покупке спортивного питания?</label>
+          <div class="bns_check" data-ng-repeat="value in values[9]">
+            <input data-ng-init="inner_value = false;" data-ng-model="inner_value" type="checkbox" name="Q9" id="{{ 'target_' + $index }}" data-ng-change="toggle_tag(profile_form.tags[9], value.value)">
+            <label for="{{ 'target_' + $index }}">{{ value.key }}</label>
           </div>
-          <div class="bns_check">
-            <input type="radio" name="child" id="no">
-            <label for="no">Нет</label>
+
+        </div>
+
+        <div class="bns_input_block clearfix full_width">
+          <label>Укажите события, информацию о которых хотели бы получать:</label>
+          <div class="bns_check" data-ng-repeat="value in values[13]">
+            <input data-ng-init="inner_value = false;" data-ng-model="inner_value" type="checkbox" name="Q13" id="{{ 'subscribe_' + $index }}" data-ng-change="toggle_tag(profile_form.tags[13], value.value)">
+            <label for="{{ 'subscribe_' + $index }}">{{ value.key }}</label>
+          </div>
+
+        </div>
+
+        <div class="bns_input_block clearfix full_width">
+          <label>Что более важно при выборе спортивного питания?</label>
+          <div class="bns_check" data-ng-repeat="value in values[11]">
+            <input data-ng-init="inner_value = false;" data-ng-model="inner_value" type="checkbox" name="Q11" id="{{ 'important_' + $index }}" data-ng-change="toggle_tag(profile_form.tags[11], value.value)">
+            <label for="{{ 'important_' + $index }}">{{ value.key }}</label>
           </div>
         </div>
-        <div class="bns_btn_done">
-          <a href="#">Отправить</a>
+
+        <div class="bns_input_block clearfix full_width">
+          <label>Каким способом Вам удобно получать от нас информацию?</label>
+          <div class="bns_check" data-ng-repeat="value in values[15]">
+            <input data-ng-init="inner_value = false;" data-ng-model="inner_value" type="checkbox" name="Q15" id="{{ 'sub_' + $index }}" data-ng-change="toggle_tag(profile_form.tags[15], value.value)">
+            <label for="{{ 'sub_' + $index }}">{{ value.key }}</label>
+          </div>
         </div>
-      </div>
+
+        <div class="bns_input_block clearfix odd">
+          <label>Ваш профессиональный уровень:</label>
+          <select data-ng-model="profile_form.tags[7][0]" data-ng-options="value.value as value.key for value in values[7]">
+            <option value="">Не выбрано</option>
+          </select>
+        </div>
+
+        <div class="bns_input_block clearfix">
+          <label>Есть ли у вас дети?</label>
+          <select data-ng-model="profile_form.tags[17][0]" data-ng-options="value.value as value.key for value in values[17]">
+            <option value="">Не выбрано</option>
+          </select>
+        </div>
+
+        <div class="bns_btn_done clearfix">
+          <button type="submit">Отправить</button>
+        </div>
+      </form>
     </div>
   </div>
 
