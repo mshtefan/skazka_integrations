@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="Indigo">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
+
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,100,700,300&subset=latin,latin-ext' rel='stylesheet'
+          type='text/css'>
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="js/vendor/jquery-1.10.1.min.js"></script>
+    <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+
+</head>
+<body>
+
+<div class="sp_wrapper">
+    <section class="sp_l-centered" style="display: none;">
+        <div class="sp_welcome">
+            <div class="sp_welcome__head">Welcome to <span class="p_name">$Partner_name</span>!</div>
+            <div class="sp_welcome__txt">
+                <p>Dear customer!</p>
+                <p>Don't miss out on the unique opportunity of becoming a member of our Loyalty Program! The
+                    registration process takes less than a minute and you'll be able to start earning bonus points, get
+                    great offers, and receive discounts right away. </p>
+            </div>
+            <a href="#" class="sp_cmn-btn sp_welcome__btn" data-do="reg">Get offers, bonus points, gifts and more!</a>
+            <div class="sp_welcome__txt">
+                <p>Already registered?</p>
+            </div>
+            <a href="#" class="sp_cmn-btn sp_welcome__btn" data-do="login">Check your status and bonus points
+                available</a>
+        </div>
+    </section>
+
+    <section class="sp_l-centered" style="display: none;">
+        <form class="sp_form">
+            <div class="sp_form__head">Please <span>f</span>&#8288;ill out the form:</div>
+            <div class="sp_form__inp-set">
+                <input type="text" class="sp_cmn-input" autocomplete="off" placeholder="1-(ххх)-ххх-хх-хх" name="phone" data-required="true" data-valid="phone">
+            </div>
+            <div class="sp_form__inp-set">
+                <input type="text" class="sp_cmn-input" autocomplete="off" placeholder="E-mail" name="addEmail" data-required="true" data-valid="email">
+            </div>
+            <div class="sp_form__inp-set">
+                <input type="text" class="sp_cmn-input" autocomplete="off" placeholder="First name" name="firstName" data-required="true">
+            </div>
+            <div class="sp_form__inp-set">
+                <input type="text" class="sp_cmn-input" autocomplete="off" placeholder="Last name" name="lastName" data-required="true">
+            </div>
+            <div class="sp_form__inp-set">
+                <input type="text" class="sp_cmn-input" autocomplete="off" placeholder="Adress 1" name="address1" data-required="true">
+            </div>
+            <div class="sp_form__inp-set">
+                <input type="text" class="sp_cmn-input" autocomplete="off" placeholder="Adress 2" name="address2">
+            </div>
+            <div class="sp_form__inp-set">
+                <select name="state" id="state" class="js-create-select sp_cmn-selectize" data-required="true"></select>
+            </div>
+            <div class="sp_form__inp-set">
+                <select name="city" id="city" class="js-create-select sp_cmn-selectize" data-required="true"></select>
+            </div>
+            <div class="sp_form__inp-set">
+                <input type="text" class="sp_cmn-input" autocomplete="off" placeholder="Zip" name="zip" data-required="true">
+            </div>
+
+            <div class="sp_cmn-block-param">
+                <input type="checkbox" class="js-create-checkbox" name="agree" data-tag="Agree">
+                <span class="sp_cmn-label js-satellite">I want to receive text messages about new locations, available discounts and personalized offerings</span>
+            </div>
+
+            <a href="#" class="sp_form__btn sp_cmn-btn" data-do="welcome">Back</a>
+            <input type="submit" class="sp_cmn-btn sp_form__submit sp_form__btn" value="Submit">
+
+        </form>
+    </section>
+
+    <section class="sp_l-centered" style="display: none;">
+        <div class="sp_form-success">
+            <div class="sp_form-success__head">You're almost there!</div>
+            <div class="sp_form-success__txt1">What to do next?</div>
+            <div class="sp_form-success__txt2">Please tell your name or phone number to our cashier before checking out
+                to activate your account
+            </div>
+            <div class="sp_form-success__txt3">Have a great shopping time at <span class="p_name">$Partner_name</span> !</div>
+            <a href="#" class="sp_cmn-btn sp_form-success__btn" data-do="welcome">Ok</a>
+        </div>
+    </section>
+
+    <section class="sp_l-centered" style="display: none;">
+        <div class="sp_form-phone">
+            <a href="#" class="sp_cmn-close"><img src="image/close-icon.png" alt="" data-do="welcome"></a>
+            <div class="sp_form-phone__head">Enter your phone</div>
+            <div class="sp_form__inp-set">
+                <input type="text" class="sp_cmn-input" autocomplete="off" placeholder="1-(ххх)-ххх-хх-хх" name="login_phone">
+            </div>
+            <a href="#" class="sp_form-phone__btn sp_cmn-btn btn_login">Go</a>
+        </div>
+    </section>
+
+    <section class="sp_l-centered" style="display: none;">
+        <div class="sp_user-info">
+            <a href="#" class="sp_cmn-close"><img src="image/close-icon.png" alt="" data-do="welcome"></a>
+            <div class="sp_user-info__head user_name">$Customer_name</div>
+            <div class="sp_user-info__txt">You have <span class="user_points"></span> bonus points in your account</div>
+            <div class="sp_user-info__btns">
+                <a href="#" class="sp_user-info__btn sp_cmn-btn" data-do="login">Back</a>
+                <a href="#" class="sp_user-info__btn sp_cmn-btn" data-do="welcome">Ok</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="sp_popup__wrapper sp_popup_blocks"></div>
+    <div class="sp_popup sp_popup_blocks">
+
+        <div class="sp_popup__head">Test Head</div>
+        <div class="sp_popup__txt">
+            <p>Test text</p>
+        </div>
+        <a href="#" class="sp_cmn-btn sp_popup__btn sp_popup__close">OK</a>
+
+    </div>
+
+    <div class="sp_l-prefooter"></div>
+</div>
+<!-- /sp_wrapper -->
+
+<script src="js/vendor/sailplay.hub.js"></script>
+<script src="js/common.min.js"></script>
+<script src="js/plugins/prettyCheckable.min.js"></script>
+<script src="js/plugins/selectize.min.js"></script>
+
+</body>
+</html>

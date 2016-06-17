@@ -1,0 +1,29 @@
+body,
+html {
+	height: 100%;
+}
+.sp_wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	position: relative;
+}
+.sp_l-centered, .sp_l-section {
+	position: relative;
+	margin-right: auto;
+	margin-left: auto;
+    max-width: 768px;
+    padding-right: 9px;
+    padding-left: 9px;
+}
+.sp_l-section {
+	overflow: hidden;
+}
+@footerHeight: 87px;
+.sp_l-prefooter {
+	padding-bottom: @footerHeight + 30px;
+}
+.sp_l-footer {
+	margin-top: -@footerHeight;
+	min-height: @footerHeight;
+}
