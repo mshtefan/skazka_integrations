@@ -2501,7 +2501,7 @@ module.run(['$templateCache', function($templateCache) {
 
             if(res.status === 'ok' && res.tags[0].exist) {
 
-              //scope.show_profile_action = false;
+              scope.show_profile_action = false;
               scope.$apply();
 
             }
