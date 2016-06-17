@@ -22,8 +22,8 @@
               firstName: '',
               lastName: '',
               middleName: '',
-              phone: '',
-              email: ''
+              addPhone: '',
+              addEmail: ''
 
             },
             custom_vars: {
