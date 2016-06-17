@@ -11,7 +11,7 @@
           <img data-ng-src="{{ user().user.pic | sailplay_pic }}" class="bns_p_ava" alt="">
           <span class="bns_p_hi">Здравствуйте,</span>
           <span class="bns_p_name">{{ user().user.name || 'Имя не указано' }}</span>
-          <span class="bns_p_stat">Ваш статус: <strong>{{ user().user_status.name }}</strong></span>
+          <span class="bns_p_stat" data-ng-if="user().user_status && user().user_status.name">Ваш статус: <strong>{{ user().user_status.name }}</strong></span>
           <span class="bns_p_tonext" data-ng-if="get_next()">До статуса <strong>{{ get_next().name }}</strong> осталась {{ get_offset() }} {{ get_offset() | sailplay_pluralize:'балл,балла,баллов' }}</span>
         </div>
         <div class="bpi_center">
