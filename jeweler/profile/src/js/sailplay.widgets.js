@@ -16,7 +16,7 @@
 
       _LOCALE && SailPlayActionsDataProvider.set_actions_data(_LOCALE.actions);
 
-      SailPlayBadgesProvider.set_limits([ 0, 50000 ]);
+      SailPlayBadgesProvider.set_limits([ 0, 5000 ]);
 
     })
 

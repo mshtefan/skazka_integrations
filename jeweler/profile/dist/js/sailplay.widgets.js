@@ -2500,7 +2500,7 @@ module.run(['$templateCache', function($templateCache) {
 
       _LOCALE && SailPlayActionsDataProvider.set_actions_data(_LOCALE.actions);
 
-      SailPlayBadgesProvider.set_limits([ 0, 50000 ]);
+      SailPlayBadgesProvider.set_limits([ 0, 5000 ]);
 
     })
 
@@ -3956,13 +3956,14 @@ module.run(['$templateCache', function($templateCache) {
             ]
           };
 
+          var parent = $(element).parent();
+          console.dir(parent);
+
           if (scope.$last) { // all are rendered
-            var parent = $(element).parent();
-            //parent.slick && parent.slick('unslick');
-            $(element).parent().slick(options);
             $timeout(function(){
+              parent.slick(options);
               scope.hidden = false;
-            }, 1000)
+            }, 1000);
           }
         }
 

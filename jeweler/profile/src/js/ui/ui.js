@@ -523,13 +523,14 @@
             ]
           };
 
+          var parent = $(element).parent();
+          console.dir(parent);
+
           if (scope.$last) { // all are rendered
-            var parent = $(element).parent();
-            //parent.slick && parent.slick('unslick');
-            $(element).parent().slick(options);
             $timeout(function(){
+              parent.slick(options);
               scope.hidden = false;
-            }, 1000)
+            }, 1000);
           }
         }
 
