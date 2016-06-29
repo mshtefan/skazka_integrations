@@ -22,7 +22,8 @@ window._LOCALE = {
     "custom_action": "Экстра"
   },
   errors: {
-    '-2000': 'Недостаточно баллов.'
+    'email is not valid': 'Введите правильный E-Mail',
+    '-200007': 'Пользователь с таким номером телефона уже зарегистрирован. Если аккаунт с этим номером принадлежит Вам, зайдите в личный кабинет, используя данные этого аккаунта'
   },
   actions: {
     "system": {
@@ -34,36 +35,36 @@ window._LOCALE = {
       },
       "inviteFriend":{
         name: "Пригласите друга",
-        pic: 'dist/img/actions/action2.png'
+        pic: 'dist/img/task-icon-07.svg'
       }
     },
     "social": {
       "vk": {
         "like": {
           "name": "Вступите в группу VK",
-          pic: 'dist/img/actions/vk.png'
+          pic: 'dist/img/task-icon-05.svg'
         },
         "partner_page": {
           "name": "Рассказать о нашем магазине в VK",
-          pic: 'dist/img/actions/vk.png'
+          pic: 'dist/img/task-icon-05.svg'
         },
         "purchase": {
           "name": "Поделитесь вашей покупкой в VK",
-          pic: 'dist/img/actions/vk.png'
+          pic: 'dist/img/task-icon-06.svg'
         }
       },
       "fb": {
         "like": {
           "name": "Вступите в группу Facebook",
-          pic: 'dist/img/actions/facebook.png'
+          pic: 'dist/img/task-icon-04.svg'
         },
         "partner_page": {
           "name": "Рассказать о нашем магазине в Facebook",
-          pic: 'dist/img/actions/facebook.png'
+          pic: 'dist/img/task-icon-04.svg'
         },
         "purchase": {
           "name": "Поделитесь вашей покупкой в Facebook",
-          pic: 'dist/img/actions/facebook.png'
+          pic: 'dist/img/task-icon-06.svg'
         }
       },
       "gp": {

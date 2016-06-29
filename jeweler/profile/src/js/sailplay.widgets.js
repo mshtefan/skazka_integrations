@@ -32,7 +32,7 @@
 
     })
 
-    .directive('sailplayWidgets', function(SailPlay, ProfileTag){
+    .directive('sailplayWidgets', function(SailPlay, ipCookie){
 
       return {
         restrict: 'E',
@@ -61,6 +61,12 @@
 
             scope.show_profile_info = false;
 
+            scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').hide_hist;
+
+          };
+
+          scope.open_profile = function(){
+            scope.show_profile_info = true;
           };
 
           SailPlay.on('tags.exist.success', function(res){
@@ -74,53 +80,7 @@
 
           });
 
-          scope.gift_slider_config = {
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            speed: 150,
-            infinite: false,
-            prevArrow: '<div class="slick-prev"></div>',
-            nextArrow: '<div class="slick-next"></div>',
-            swipeToSlide: true,
-            responsive: [
-              {
-                breakpoint: 1000,
-                settings: {
-                  slidesToShow: 2
-                }
-              },
-              {
-                breakpoint: 600,
-                settings: {
-                  slidesToShow: 1
-                }
-              }
-            ]
-          };
-
-          scope.action_slider_config = {
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            speed: 150,
-            infinite: false,
-            prevArrow: '<div class="slick-prev"></div>',
-            nextArrow: '<div class="slick-next"></div>',
-            swipeToSlide: true,
-            responsive: [
-              {
-                breakpoint: 800,
-                settings: {
-                  slidesToShow: 2
-                }
-              },
-              {
-                breakpoint: 600,
-                settings: {
-                  slidesToShow: 1
-                }
-              }
-            ]
-          };
+          scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').hide_hist;
 
         }
       }

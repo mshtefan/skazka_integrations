@@ -5,9 +5,9 @@
   ])
 
 
-    .constant('ProfileTag', 'Заполнил профиль')
+    .constant('ProfileTag', 'Клиент заполнил профиль')
 
-    .directive('fillProfile', function(SailPlay, $rootScope, $q, ProfileTag){
+    .directive('fillProfile', function(SailPlay, $rootScope, $q, ProfileTag, ipCookie){
 
       return {
 
@@ -15,35 +15,29 @@
         scope: true,
         link: function(scope){
 
-          scope.profile_form = {
+          var new_form = {
 
             user: {
 
-              firstName: '',
-              lastName: '',
-              middleName: '',
               addPhone: '',
-              addEmail: ''
+              addEmail: '',
+              birthDate: ''
 
             },
             custom_vars: {
 
-              'Адрес': ''
+              'В браке': '',
+              'Имя супруга(и)': '',
+              'ДР супруга(и)': '',
+              'Дети': ''
 
             },
-            tags: [
-              'В1 Как узнали', [ '' ],
-              'В2 Как давно', [ '' ],
-              'В3 Вид спорта', [ ],
-              'В4 Уровень', [ '' ],
-              'В5 Цели', [ ],
-              'В6 Выбор', [ ],
-              'В7 Информация', [ ],
-              'В8 Канал', [ ],
-              'В9 Дети', [ '' ]
-            ]
+            tags: [],
+            hide_hist: false
 
           };
+
+          scope.profile_form = angular.extend(angular.copy(new_form), ipCookie('profile_form'));
 
           scope.toggle_tag = function(arr, tag){
 
@@ -64,301 +58,38 @@
 
           };
 
-          scope.values = [
-            null,
-            [
-              {
-                key: 'через google/yandex',
-                value: 'В1 Поисковики'
-              },
-              {
-                key: 'через другие сайты',
-                value: 'В1 Другие сайты'
-              },
-              {
-                key: 'знакомые посоветовали',
-                value: 'В1 Знакомые'
-              },
-              {
-                key: 'через соц. сети',
-                value: 'В1 Соцсети'
-              },
-              {
-                key: 'через фитнес клуб',
-                value: 'В1 Фитнесклуб'
-              },
-              {
-                key: 'случайно',
-                value: 'В1 Случайно'
-              },
-              {
-                key: 'другое',
-                value: 'В1 Другое'
-              }
-            ],
-            null,
-            [
-              {
-                key: 'меньше месяца',
-                value: 'В2 < мес'
-              },
-              {
-                key: 'около полугода',
-                value: 'В2 полгода'
-              },
-              {
-                key: '1–2 года',
-                value: 'В2 1-2 года'
-              },
-              {
-                key: 'более двух лет',
-                value: 'В2 > 2 года'
-              },
-              {
-                key: 'не помню, давно покупаю у вас',
-                value: 'В2 давно'
-              }
-            ],
-            null,
-            [
-              {
-                key: 'Альпинизм',
-                value: 'В3 Альпинизм'
-              },
-              {
-                key: 'АРМ спорт',
-                value: 'В3 АРМ спорт'
-              },
-              {
-                key: 'Баскетбол',
-                value: 'В3 Баскетбол'
-              },
-              {
-                key: 'Бейсбол',
-                value: 'В3 Бейсбол'
-              },
-              {
-                key: 'Бодибилдинг',
-                value: 'В3 Бодибилдинг'
-              },
-              {
-                key: 'Бокс',
-                value: 'В3 Бокс'
-              },
-              {
-                key: 'Борьба',
-                value: 'В3 Борьба'
-              },
-              {
-                key: 'Гимнастика спортивная',
-                value: 'В3 Гимнастика спортивная'
-              },
-              {
-                key: 'Гиревой спорт',
-                value: 'В3 Гиревой спорт'
-              },
-              {
-                key: 'Горнолыжный спорт',
-                value: 'В3 Горнолыжный спорт'
-              },
-              {
-                key: 'Боевые искусства',
-                value: 'В3 Боевые искусства'
-              },
-              {
-                key: 'Пауэрлифтинг',
-                value: 'В3 Пауэрлифтинг'
-              },
-              {
-                key: 'Плавание',
-                value: 'В3 Плавание'
-              },
-              {
-                key: 'Регби',
-                value: 'В3 Регби'
-              },
-              {
-                key: 'Сноуборд',
-                value: 'В3 Сноуборд'
-              },
-              {
-                key: 'Теннис',
-                value: 'В3 Теннис'
-              },
-              {
-                key: 'Тяжелая атлетика',
-                value: 'В3 Тяжелая атлетика'
-              },
-              {
-                key: 'Фитнес',
-                value: 'В3 Фитнес'
-              },
-              {
-                key: 'Футбол',
-                value: 'В3 Футбол'
-              },
-              {
-                key: 'Хоккей',
-                value: 'В3 Хоккей'
-              },
-              {
-                key: 'Другое',
-                value: 'В3 Другое'
-              }
-            ],
-            null,
-            [
-              {
-                key: 'Начинающий',
-                value: 'В4 Начинающий'
-              },
-              {
-                key: 'Продвинутый',
-                value: 'В4 Продвинутый'
-              },
-              {
-                key: 'Профи',
-                value: 'В4 Профи'
-              }
-            ],
-            null,
-            [
-              {
-                key: 'похудение',
-                value: 'В5 Похудение'
-              },
-              {
-                key: 'сжигание жира',
-                value: 'В5 Сжигание'
-              },
-              {
-                key: 'набор массы',
-                value: 'В5 Масса'
-              },
-              {
-                key: 'очищение организма',
-                value: 'В5 Очищение'
-              },
-              {
-                key: 'поддержание формы',
-                value: 'В5 Быть в форме'
-              }
-            ],
-            null,
-            [
-              {
-                key: 'раскученность бренда',
-                value: 'В6 Бренд'
-              },
-              {
-                key: 'дизайн упаковки',
-                value: 'В6 Дизайн'
-              },
-              {
-                key: 'мнение экспертов',
-                value: 'В6 Эксперты'
-              },
-              {
-                key: 'рекомендации знакомых',
-                value: 'В6 Знакомые'
-              },
-              {
-                key: 'отзывы покупателей',
-                value: 'В6 Отзывы'
-              },
-              {
-                key: 'соотношение цены и качества',
-                value: 'В6 Цена-Качество'
-              },
-              {
-                key: 'важна только цена',
-                value: 'В6 Цена'
-              },
-              {
-                key: 'высокая степень информированности о продукте в СМИ',
-                value: 'В6 СМИ'
-              }
-            ],
-            null,
-            [
-              {
-                key: 'новости компании',
-                value: 'В7 Новости'
-              },
-              {
-                key: 'новые поступления',
-                value: 'В7 Поступления'
-              },
-              {
-                key: 'скидки, сезонные распродажи',
-                value: 'В7 Скидки'
-              },
-              {
-                key: 'акции, конкурсы',
-                value: 'В7 Конкурсы'
-              },
-              {
-                key: 'не хочу получать информацию',
-                value: 'В7 Ничего'
-              }
-            ],
-            null,
-            [
-              {
-                key: 'sms',
-                value: 'В8 SMS'
-              },
-              {
-                key: 'e-mail',
-                value: 'B8 Email'
-              }
-            ],
-            null,
-            [
-              {
-                key: 'Есть',
-                value: 'В9 есть'
-              },
-              {
-                key: 'Нет',
-                value: 'В9 нет'
-              }
-            ]
-          ];
-
-          scope.submit_profile = function(callback){
+          scope.submit_profile = function(form, callback){
 
             console.dir(scope.profile_form);
 
+            if(!form.$valid) {
+              return;
+            }
+
+            var old_state = ipCookie('profile_form');
+
+            var req_user = angular.copy(scope.profile_form.user);
+
+            if(old_state && old_state.user.addPhone == req_user.addPhone){
+              delete req_user.addPhone;
+            }
+
+            if(old_state && old_state.user.addEmail == req_user.addEmail){
+              delete req_user.addEmail;
+            }
+
+            ipCookie('profile_form', scope.profile_form);
+
             scope.profile_form.user.auth_hash = SailPlay.config().auth_hash;
 
-            SailPlay.send('users.update', scope.profile_form.user, function(user_res){
+            SailPlay.send('users.update', req_user, function(user_res){
 
               if(user_res.status === 'ok'){
 
-                var req_tags = [ ProfileTag ];
+                var req_tags = angular.copy(scope.profile_form.tags);
 
-                var form_tags = scope.profile_form.tags;
+                req_tags.push(ProfileTag);
 
-                for(var i = 0; i < form_tags.length; i+=2){
-
-                  var tag = form_tags[i];
-
-                  var tag_values = form_tags[i+1];
-
-                  if(tag_values.length > 0 && tag_values[0] !== ''){
-
-                    req_tags.push(tag);
-
-                    angular.forEach(tag_values, function(t){
-
-                      req_tags.push(t);
-
-                    });
-
-                  }
-
-                }
 
                 function chunk(array, chunkSize) {
                   return [].concat.apply([],
@@ -408,7 +139,12 @@
                     if(vars_res.status === 'ok') {
 
 
+                      $rootScope.$broadcast('notifier:notify', {
 
+                        header: 'Спасибо',
+                        body: 'Данные профиля сохранены'
+
+                      });
                       callback && callback(response);
                       scope.$apply();
                       console.dir(response);
@@ -440,7 +176,7 @@
                 $rootScope.$broadcast('notifier:notify', {
 
                   header: 'Ошибка',
-                  body: user_res.message || 'К сожалению произошла ошибка'
+                  body: $rootScope.locale.errors[user_res.status_code] || $rootScope.locale.errors[user_res.message] || 'К сожалению произошла ошибка'
 
                 });
                 $rootScope.$apply();
@@ -477,15 +213,82 @@
 
     })
 
-    .directive('slickCarouselSlide', function ($compile, $timeout) {
+    .controller('slick_config', function($scope){
+
+      $scope.gift_slider_config = {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        speed: 150,
+        infinite: false,
+        prevArrow: '<div class="slick-prev"></div>',
+        nextArrow: '<div class="slick-next"></div>',
+        swipeToSlide: true,
+        responsive: [
+          {
+            breakpoint: 1000,
+            settings: {
+              slidesToShow: 2
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 1
+            }
+          }
+        ]
+      };
+
+      $scope.action_slider_config = {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        speed: 150,
+        infinite: false,
+        prevArrow: '<div class="slick-prev"></div>',
+        nextArrow: '<div class="slick-next"></div>',
+        swipeToSlide: true,
+        responsive: [
+          {
+            breakpoint: 800,
+            settings: {
+              slidesToShow: 2
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 1
+            }
+          }
+        ]
+      };
+
+    })
+
+    .directive('slickCarousel', function ($compile, $timeout) {
       return {
+        restrict:'A',
         link: function (scope, element, attrs) {
+
           scope.hidden = true;
+
+          var $element = $(element);
+
+          function toggle(state){
+
+            if(state){
+              $element.css('opacity', 1);
+            }
+            else {
+              $element.css('opacity', 0);
+            }
+
+          }
 
           var options = scope.$eval(attrs.options) || {
             infinite: false,
-            nextArrow: '<img class="slider_arrow right" src="dist/img/right_arrow.png"/>',
-            prevArrow: '<img class="slider_arrow left" src="dist/img/left_arrow.png"/>',
+            nextArrow: '<img class="slider_arrow right" src="dist/img/right.png"/>',
+            prevArrow: '<img class="slider_arrow left" src="dist/img/left.png"/>',
             slidesToShow: 4,
             slidesToScroll: 4,
             responsive: [
@@ -523,15 +326,28 @@
             ]
           };
 
-          var parent = $(element).parent();
-          console.dir(parent);
-
-          if (scope.$last) { // all are rendered
+          scope.$watchCollection(function(){
+            return $element.find('[data-slick-slide]').not('.ng-hide');
+          }, function(){
+            toggle(false);
             $timeout(function(){
-              parent.slick(options);
-              scope.hidden = false;
-            }, 1000);
-          }
+              if($element.hasClass('slick-initialized')){
+                $element.slick('removeSlide', null, null, true);
+                $element.slick('unslick');
+              }
+              $element.slick(options);
+              $element.slick('slickUnfilter');
+              $element.slick('slickFilter', ':not(.ng-hide)');
+              toggle(true);
+            }, 0);
+
+          });
+
+          //var parent = $(element).parent();
+          //console.dir(parent);
+
+
+
         }
 
       };
@@ -572,6 +388,81 @@
          }
 
        }
+
+    })
+
+    .directive('phoneMask', function(){
+
+      return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, elm, attrs, ngModel){
+
+          ngModel.$validators.phone = function(modelValue, viewValue) {
+            var value = (modelValue || viewValue).replace(/\D/g,'');
+            if(!value) return true;
+            return /^[0-9]{11}$/.test(value);
+          };
+
+          $(elm).mask('+7(000) 000-00-00', {placeholder: "+7(___)___-__-__"});
+
+        }
+      };
+
+    })
+
+    .directive('selectize', function($timeout){
+
+      return {
+        restrict: 'A',
+        link: function(scope, elm){
+
+          $timeout(function(){
+            $(elm).selectize({});
+          }, 0);
+
+        }
+      };
+
+    })
+
+    .directive('dateSelector', function($parse){
+
+      return {
+        restrict: 'A',
+        require: 'ngModel',
+        scope: true,
+        link: function(scope, elm, attrs, ngModelCtrl){
+
+          scope.selected_date = [ '', '', '' ];
+
+          ngModelCtrl.$formatters.push(function(modelValue) {
+            return modelValue ? angular.copy(modelValue).split('-').reverse() : [ '', '', '' ];
+          });
+
+          ngModelCtrl.$render = function() {
+            scope.selected_date = angular.copy(ngModelCtrl.$viewValue);
+          };
+
+          ngModelCtrl.$parsers.push(function(viewValue) {
+
+            var new_date = scope.selected_date && scope.selected_date.some(function(value){
+              return value && value !== '';
+            }) ? angular.copy(scope.selected_date).reverse().join('-') : '';
+
+            return new_date;
+
+          });
+
+          scope.$watchCollection('selected_date', function(){
+
+            ngModelCtrl.$setViewValue(angular.copy(scope.selected_date));
+
+          });
+
+
+        }
+      };
 
     });
 

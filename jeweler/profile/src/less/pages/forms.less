@@ -10,114 +10,135 @@
 @input-placeholder-color: #808080;
 
 .sp_cmn-input {
-	display: block;
-	width: 100%;
-	height: @input-height;
-	padding: 0 @input-side-padding;
+  display: block;
+  width: 100%;
+  height: @input-height;
+  padding: 0 @input-side-padding;
 
-	border: 1px solid @input-border-color;
-	
+  border: 1px solid @input-border-color;
 
-	font-size: @input-font-size;
-	font-weight: normal;
-	color: @input-text-color;
+  font-size: @input-font-size;
+  font-weight: normal;
+  color: @input-text-color;
 
-	.coco();
-	font-weight: 300;
-	font-size: 13px;
-	
-	.transition(border-color 150ms linear 0ms);
-	&:active, &:focus {
-		outline: none !important;
-		border-color: @input-active-border-color;
-	}
-	&::-webkit-input-placeholder {color: @input-placeholder-color;}
-	&::-moz-placeholder {color: @input-placeholder-color;}
-	&:-moz-placeholder {color: @input-placeholder-color;}
-	&:-ms-input-placeholder {color: @input-placeholder-color;}
+  .coco();
+  font-weight: 300;
+  font-size: 13px;
+
+  .transition(border-color 150ms linear 0ms);
+  &:active, &:focus {
+    outline: none !important;
+    border-color: @input-active-border-color;
+  }
+  &::-webkit-input-placeholder {
+    color: @input-placeholder-color;
+  }
+  &::-moz-placeholder {
+    color: @input-placeholder-color;
+  }
+  &:-moz-placeholder {
+    color: @input-placeholder-color;
+  }
+  &:-ms-input-placeholder {
+    color: @input-placeholder-color;
+  }
 }
 
-
 .sp_cmn-radio-wrap {
-	display: block;
-	position: absolute;
-	left: 0px;
-	top: 1px;
-	a {
-		display: block;
-		position: relative;
-		width: 10px;
-		height: 10px;
-		border-radius: 50%;
-		border: 1px solid #000;
-		&:hover {
-			.box-shadow(0px 0px 5px rgba(0,0,0,0.3));
-		}
-		&.checked {
-			border-color: @red;
-			background-color: @red;
-		}
-	}
-	label {
-		display: none;
-	}
+  display: block;
+  position: absolute;
+  left: 0px;
+  top: 1px;
+  a {
+    display: block;
+    position: relative;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    &:hover {
+      .box-shadow(0px 0px 5px rgba(0, 0, 0, 0.3));
+    }
+    &.checked {
+      border-color: @red;
+      background-color: @red;
+    }
+  }
+  label {
+    display: none;
+  }
 }
 
 .sp_cmn-checkbox-wrap {
-	display: block;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	a {
-		display: block;
-		position: relative;
-		width: 12px;
-		height: 12px;
-		border-radius: 2px;
-		border: 1px solid #000;
-		&:hover {
-			.box-shadow(0px 0px 5px rgba(0,0,0,0.3));
-		}
-		&.checked {
-			border-color: @red;
-			background-color: @red;
-			background-image: url("@{burl}check.png");
-			background-repeat: no-repeat;
-			background-position: center;
-			background-size: 9px 6px;
-		}
-	}
-	label {
-		display: none;
-	}
+  display: block;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  a {
+    display: block;
+    position: relative;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    border: 1px solid #000;
+    &:hover {
+      .box-shadow(0px 0px 5px rgba(0, 0, 0, 0.3));
+    }
+    &.checked {
+      border-color: @red;
+      background-color: @red;
+      background-image: url("@{burl}check.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 9px 6px;
+    }
+  }
+  label {
+    display: none;
+  }
 }
 
 .sp_cmn-label {
-	cursor: pointer;
+  cursor: pointer;
 }
 
-
 .sp_cmn-inline-param {
-	display: inline-block;
-	position: relative;
-	padding-left: 16px;
+  display: inline-block;
+  position: relative;
+  padding-left: 0px;
 
-	font-size: 13px;
-	line-height: 1;
-	font-weight: 300;
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 300;
 
-	margin-right: 55px;
-	&:last-child {
-		margin-bottom: 0;
-	}
-	@media (max-width: (@screen-lg-min - 1px)) {//1199px
-	}
-	@media (max-width: (@screen-md-min - 1px)) {//991px
-	}
-	@media (max-width: (@screen-sm-min - 1px)) {//767px
-		display: block;
-		margin-bottom: 7px;
-	}
-	@media (max-width: (@screen-xs-min - 1px)) {//479px
-	}
+  margin-right: 55px;
+  .outer_label {
+    display: inline-block;
+    padding: 4px;
+    border-radius: 4px;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+  @media (max-width: (@screen-lg-min - 1px)) {
+    //1199px
+  }
+  @media (max-width: (@screen-md-min - 1px)) {
+    //991px
+  }
+  @media (max-width: (@screen-sm-min - 1px)) {
+    //767px
+    display: block;
+    margin-bottom: 7px;
+  }
+  @media (max-width: (@screen-xs-min - 1px)) {
+    //479px
+  }
+}
+
+.checked_input {
+
+  background-color: @red;
+  color: #fff;
+
 }

@@ -145,7 +145,9 @@
         'load.gifts.list',
         'load.user.history',
         'load.actions.list',
-        'load.badges.list'
+        'load.badges.list',
+        'tags.exist',
+        'tags.add'
 
       ];
 
