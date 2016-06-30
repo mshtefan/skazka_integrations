@@ -7,7 +7,7 @@
 
     .constant('ProfileTag', 'Клиент заполнил профиль')
 
-    .directive('fillProfile', function(SailPlay, $rootScope, $q, ProfileTag, ipCookie){
+    .directive('fillProfile', function(SailPlay, $rootScope, $q, ProfileTag, ipCookie, SailPlayApi){
 
       return {
 
@@ -29,7 +29,8 @@
               'В браке': '',
               'Имя супруга(и)': '',
               'ДР супруга(и)': '',
-              'Дети': ''
+              'Дети': '',
+              'hide_hist': 'Нет'
 
             },
             tags: [],
@@ -37,7 +38,23 @@
 
           };
 
-          scope.profile_form = angular.extend(angular.copy(new_form), ipCookie('profile_form'));
+          scope.$watch(function(){
+            return angular.toJson([ SailPlayApi.data('load.user.info')() ]);
+          }, function(){
+
+            var user = SailPlayApi.data('load.user.info')();
+
+            if(!user) return;
+            scope.profile_form = angular.copy(new_form);
+            scope.profile_form.user.auth_hash = SailPlay.config().auth_hash;
+            //angular.extend(scope.profile_form.user, user.user);
+            scope.profile_form.user.addPhone = user.user.phone;
+            scope.profile_form.user.addEmail = user.user.email;
+            scope.profile_form.user.birthDate = user.user.birth_date || '';
+            if(ipCookie('profile_form') && SailPlay.config().auth_hash === ipCookie('profile_form').user.auth_hash ){
+              angular.extend(scope.profile_form, ipCookie('profile_form'));
+            }
+          });
 
           scope.toggle_tag = function(arr, tag){
 
@@ -60,27 +77,22 @@
 
           scope.submit_profile = function(form, callback){
 
-            console.dir(scope.profile_form);
-
             if(!form.$valid) {
               return;
             }
 
-            var old_state = ipCookie('profile_form');
+            var data_user = SailPlayApi.data('load.user.info')() && SailPlayApi.data('load.user.info')().user;
 
             var req_user = angular.copy(scope.profile_form.user);
+            //console.log(data_user.phone, req_user.addPhone);
 
-            if(old_state && old_state.user.addPhone == req_user.addPhone){
+            if(data_user && data_user.phone == req_user.addPhone){
               delete req_user.addPhone;
             }
 
-            if(old_state && old_state.user.addEmail == req_user.addEmail){
+            if(data_user && data_user.email == req_user.addEmail){
               delete req_user.addEmail;
             }
-
-            ipCookie('profile_form', scope.profile_form);
-
-            scope.profile_form.user.auth_hash = SailPlay.config().auth_hash;
 
             SailPlay.send('users.update', req_user, function(user_res){
 
@@ -138,6 +150,7 @@
 
                     if(vars_res.status === 'ok') {
 
+                      ipCookie('profile_form', scope.profile_form);
 
                       $rootScope.$broadcast('notifier:notify', {
 
@@ -145,15 +158,16 @@
                         body: 'Данные профиля сохранены'
 
                       });
+
+                      SailPlayApi.call('load.user.info', { all: 1 });
+
                       callback && callback(response);
                       scope.$apply();
-                      console.dir(response);
 
 
                     }
                     else {
 
-                      console.dir(response);
                       $rootScope.$broadcast('notifier:notify', {
 
                         header: 'Ошибка',
@@ -391,7 +405,7 @@
 
     })
 
-    .directive('phoneMask', function(){
+    .directive('phoneMask', function($timeout){
 
       return {
         restrict: 'A',
@@ -399,12 +413,14 @@
         link: function(scope, elm, attrs, ngModel){
 
           ngModel.$validators.phone = function(modelValue, viewValue) {
-            var value = (modelValue || viewValue).replace(/\D/g,'');
+            var value = (modelValue || viewValue || '').replace(/\D/g,'');
             if(!value) return true;
             return /^[0-9]{11}$/.test(value);
           };
 
-          $(elm).mask('+7(000) 000-00-00', {placeholder: "+7(___)___-__-__"});
+          $timeout(function(){
+            $(elm).mask('+7(000) 000-00-00', {placeholder: "+7(___)___-__-__"});
+          }, 10);
 
         }
       };

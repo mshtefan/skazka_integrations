@@ -8,7 +8,7 @@
     'sailplay.badges'
   ])
 
-    .run(function(SailPlay, sailplay_config, $rootScope){
+    .run(function(SailPlay, $rootScope, ipCookie){
 
       SailPlay.send('init', SailPlay.CONFIG);
 
@@ -96,7 +96,7 @@
 
                 var params = sp.url_params();
 
-                if (params && params.auth_hash) {
+                if (params) {
                   sp.send('login', params.auth_hash);
                 }
                 else {
@@ -123,6 +123,8 @@
 
 
           }
+
+          sp.auth_hash_cookie_name = auth_hash_cookie_name;
 
           return sp;
 

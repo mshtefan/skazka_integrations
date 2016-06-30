@@ -8,6 +8,8 @@
       //url,cookie,remote
       SailPlayProvider.set_auth_type('url');
 
+      SailPlayProvider.set_cookie_name('auth_hash');
+
       _CONFIG && SailPlayProvider.set_config({
         partner_id: _CONFIG.SAILPLAY.partner_id,
         domain: _CONFIG.SAILPLAY.domain,
@@ -32,7 +34,7 @@
 
     })
 
-    .directive('sailplayWidgets', function(SailPlay, ipCookie){
+    .directive('sailplayWidgets', function(SailPlay, ipCookie, $document){
 
       return {
         restrict: 'E',
@@ -55,18 +57,32 @@
 
           };
 
+          scope.body_lock = function(state){
+
+            if(state) {
+              $('body').addClass('body_lock');
+            }
+            else {
+              $('body').removeClass('body_lock');
+            }
+
+          };
+
           scope.close_profile = function(){
 
             scope.show_profile_action = false;
 
             scope.show_profile_info = false;
 
-            scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').hide_hist;
+            scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').custom_vars.hide_hist === 'Да';
+
+            scope.body_lock(false);
 
           };
 
           scope.open_profile = function(){
             scope.show_profile_info = true;
+            scope.body_lock(true);
           };
 
           SailPlay.on('tags.exist.success', function(res){
@@ -80,7 +96,7 @@
 
           });
 
-          scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').hide_hist;
+          scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').custom_vars.hide_hist === 'Да';
 
         }
       }

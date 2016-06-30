@@ -110,8 +110,6 @@
         scope: true,
         link: function(scope){
 
-          console.dir(SailPlayActionsData);
-
           scope.actions = SailPlayApi.data('load.actions.list');
 
           scope.perform_action = function(action){

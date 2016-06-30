@@ -136,9 +136,34 @@
   }
 }
 
-.checked_input {
+.outer_label {
 
-  background-color: @red;
-  color: #fff;
+  padding-left: 20px !important;
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 15px 15px;
+
+  &.radio {
+
+    background-image: url('../img/checkboxes/1.png');
+    &.checked {
+      background-image: url('../img/checkboxes/2.png');
+
+    }
+
+  }
+
+  &.checkbox {
+
+    background-image: url('../img/checkboxes/3.png');
+    &.checked {
+      background-image: url('../img/checkboxes/4.png');
+
+    }
+
+  }
+  input {
+    display:none;
+  }
 
 }

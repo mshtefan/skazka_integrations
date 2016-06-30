@@ -2454,7 +2454,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/html/app.html',
-    '<div data-sailplay-profile="" data-sailplay-history="" data-sailplay-badges="" style="margin: 20px;" data-ng-show="user()" data-ng-cloak=""><div class="sp_widget"><section class="sp_l-centered sp_person-sec"><div class="sp_person-sec__col1"><div class="sp_person-sec__hd">Добро пожаловать</div><div class="sp_person-sec__ttl">в клуб покупателей "Бронницкий ювелир"</div></div><div class="sp_person-sec__col2"><div class="sp_person-cell"><div class="sp_person-cell__photo" style="background-image: url(\'{{ user().user.pic | sailplay_pic }}\');"></div><a href="#" class="sp_cmn-btn person-cell__btn js-open-profile-popup" data-ng-click="show_profile_info = true;">Изменить профиль</a></div></div><div class="sp_person-sec__col3"><div class="sp_person-info"><div class="sp_person-info__hd">Здравствуйте,</div><div class="sp_person-info__name">{{ user().user.name || \'Уважаемый покупатель\' }}</div><div class="sp_person-info__cont"><div data-ng-show="user().user.email">{{ user().user.email }}</div><div data-ng-show="user().user.phone">{{ user().user.phone }}</div></div><div class="sp_person-info__status"><div class="sp_person-info__stat-hd">Ваш статус: {{ user().user_status.name }}</div><div data-ng-if="get_next()">До статуса <b>{{ get_next().name }}</b> осталось {{ get_offset() }} {{ get_offset() | sailplay_pluralize:\'балл,балла,баллов\' }}</div></div></div><a href="http://www.bronnitsy.com/delivery/" class="sp_person-sec__more">условия доставки</a></div></section><section class="sp_l-centered sp_info-sec"><div class="sp_info-sec__l"><div class="sp_points-cell"><div class="sp_points-cell__hd">Ваши баллы</div><div class="status-info-counter"><div class="status-info-counter__val">{{ user().user_points.confirmed }}</div><div class="status-info-counter__remain">+{{ user().user_points.unconfirmed }}<div class="status-info-counter__popup">Неподтвержденные баллы, которые начислятся после оплаты</div></div></div><div class="sp_points-cell__ttl">{{ user().user_points.confirmed | sailplay_pluralize:\'бонусный балл,бонусных балла,бонусных баллов\' }}</div><a href="" data-ng-hide="hide_hist" data-ng-click="show_history = true;" class="sp_cmn-btn sp_cmn-btn_red sp_points-cell__btn js-open-history-popup">История транзакций</a></div></div><div class="sp_info-sec__r"><div class="sp_status-cell"><div class="sp_status-cell__hd">Ваш статус:</div><div class="sp_status-cell__img" style="background-image: url({{ user().user_status.pic || \'dist/img/status-02.svg\' }});"></div><div class="sp_status-cell__ttl">{{ user().user_status.name || \'Нет статуса\' }}</div><a href="" class="sp_cmn-btn sp_cmn-btn_red sp_status-cell__btn js-open-status-popup" data-ng-click="show_statuses_list = true;">Список статусов</a></div></div></section><section class="sp_l-centered sp_progr-sec"><div class="sp_progr-sec__l" data-ng-if="get_next()"><div class="sp_progr-sec__txt">До следющего статуса осталось <b>{{ get_offset() }} {{ get_offset() | sailplay_pluralize:\'балл,балла,баллов\' }}</b></div></div><div class="sp_progr-sec__r"><div class="sp_progr-cell"><div class="sp_progr-bar js-status-bar" data-width="90"><div class="sp_progr-bar__inner"><div class="sp_progr-bar__inner-bar this-inner1 js-status-bar__inner" data-ng-style="{ width: get_progress() + \'%\' }"></div></div><div class="sp_progr-bar__point this-point-{{ $index+1 }}" data-ng-repeat="badge in badges().multilevel_badges[0]"><div class="sp_progr-bar__point-img" style="background-image: url(\'{{ badge.thumbs.url_250x250 | sailplay_pic }}\');"></div><div class="sp_progr-bar__point-name">{{ badge.name }}</div></div></div></div></div></section><section class="sp_l-section sp_gift-sec" data-sailplay-gifts="" data-ng-show="gifts().length > 0" data-ng-controller="slick_config" data-ng-init="selected_gift = false;"><div class="sp_cmn-sec-head">Подарки</div><div class="sp_gift-slider js-gift-slider" data-slick-carousel="" data-options="gift_slider_config"><div data-ng-repeat="gift in gifts()" data-slick-slide=""><div class="sp_gift-slider__slide"><div class="sp_gift-slider__img" style="background-image: url(\'{{ gift.thumbs.url_250x250 | sailplay_pic }}\');"></div><div class="sp_gift-slider__hd">{{ gift.name }}</div><div class="sp_gift-slider__ttl">{{ gift.descr }}</div><div class="sp_gift-slider__price">{{ gift.points }} {{ gift.points | sailplay_pluralize:\'балл,балла,баллов\' }}</div><button style="line-height: 36px;" type="button" class="sp_cmn-btn-sm sp_gift-slider__btn js-open-gift-popup" data-ng-click="$parent.selected_gift = gift" data-ng-disabled="gift.points > user().user_points.confirmed">Получить</button></div></div></div><div class="sp_overlay" data-ng-show="selected_gift" data-overlay-click="selected_gift = false;"><div class="sp_gift-popup js-gift-popup"><div class="sp_gift-popup__hd">{{ selected_gift.points }} бонусных баллов будут списаны с вашего счета</div><div class="sp_gift-popup__img" style="background-image: url(\'{{ selected_gift.thumbs.url_250x250 | sailplay_pic }}\');"></div><div class="sp_gift-popup__ttl">Вы уверены?</div><div class="sp_gift-popup__btns"><div class="sp_gift-popup__btn sp_cmn-btn-sm js-close-popup" data-ng-click="gift_purchase(selected_gift); selected_gift = false;">Да</div><div class="sp_gift-popup__btn sp_cmn-btn-sm js-close-popup" data-ng-click="selected_gift = false;">Отмена</div></div></div></div></section><section class="sp_task-sec-wrap" data-sailplay-actions=""><div class="sp_l-section sp_task-sec" data-ng-controller="slick_config"><div class="sp_cmn-sec-head">Задания</div><div class="sp_task-slider js-task-slider" data-slick-carousel="" data-options="action_slider_config"><div data-slick-slide="" data-ng-show="show_profile_action"><div class="sp_task-slider__slide"><div class="sp_task-slider__ico" style="background-image: url(\'dist/img/task-icon-02.svg\');"></div><div class="sp_task-slider__hd">Заполнить профиль</div><div class="sp_task-slider__price">{{ 100 }} {{ 100 | sailplay_pluralize:\'балл,балла,баллов\' }}</div><div class="sp_task-slider__cover"><a class="sp_cmn-btn-sm sp_task-slider__btn" data-ng-click="open_profile()">Выполнить</a></div></div></div><div data-ng-repeat="action in actions().actions" data-slick-slide=""><div class="sp_task-slider__slide"><div class="sp_task-slider__ico" style="background-image: url({{ action_data(action).pic }});"></div><div class="sp_task-slider__hd">{{ action_data(action).name }}</div><div class="sp_task-slider__price">{{ action.points }} {{ action.points | sailplay_pluralize:\'балл,балла,баллов\' }}</div><div class="sp_task-slider__cover"><a href="" class="sp_cmn-btn-sm sp_task-slider__btn" data-sailplay-action="" data-action="action" data-text="Выполнить" data-styles="{{ config.social_styles }}">Выполнить</a></div></div></div></div></div></section></div><div class="sp_overlay" data-ng-show="show_history" data-overlay-click="show_history = false;"><div class="sp_hist-popup js-history-popup"><div class="sp_cmn-popup-close js-close-popup" data-ng-click="show_history = false;"></div><div class="sp_hist-popup__hd">История транзакций</div><div class="sp_hist-list"><div class="sp_hist-list__itm" data-dir-paginate="item in history() | itemsPerPage:10" data-pagination-id="history_pages" data-ng-class="{ \'this-dec\': item.points_delta < 0 }"><div class="sp_hist-list__val">{{ item.points_delta || 0 }} {{ item.points_delta | sailplay_pluralize:\'балл,балла,баллов\' }}</div>{{ item | history_item }}</div></div><dir-pagination-controls data-max-size="5" data-pagination-id="history_pages" data-template-url="/html/ui/ui.pagination.controls.html" data-auto-hide="true"></dir-pagination-controls></div></div><div class="sp_overlay" data-ng-show="show_statuses_list" data-overlay-click="show_statuses_list = false;"><div class="sp_stat-popup js-status-popup"><div class="sp_stat-popup__hd">Описание статусов</div><div class="sp_stat-pop-itm" data-ng-repeat="badge in badges().multilevel_badges[0]"><div class="sp_stat-pop-itm__img"><img data-ng-src="{{ badge.thumbs.url_250x250 | sailplay_pic }}" alt=""></div><div class="sp_stat-pop-itm__text">{{ badge.descr }}</div></div><div class="sp_stat-popup__btns"><div class="sp_stat-popup__btn sp_cmn-btn-sm js-close-popup" data-ng-click="show_statuses_list = false;">ОК</div></div></div></div><div class="sp_overlay" data-ng-show="show_profile_info" data-overlay-click="show_profile_info = false;"><div class="sp_profile-popup js-profile-popup" data-fill-profile=""><div class="sp_profile-popup__hd">Изменить профиль</div><form class="sp_profile-form" name="fill_profile" novalidate="" data-ng-submit="$event.preventDefault(); submit_profile(fill_profile, $parent.close_profile)"><div class="sp_profile-form__set"><input type="email" name="email" class="sp_cmn-input" placeholder="Email" data-ng-model="profile_form.user.addEmail" data-ng-model-options="{ updateOn: \'default change blur\' }"></div><div class="sp_profile-form__set"><input type="text" name="phone" class="sp_cmn-input js-create-mask" data-phone-mask="" data-ng-model="profile_form.user.addPhone"></div><div class="sp_profile-form__set"><div class="sp_profile-form__ttl">Дата рождения</div><div class="sp_profile-form__dates" data-date-selector="" data-ng-model="profile_form.user.birthDate"><div class="sp_profile-form__dates-col"><select name="birth_date" data-ng-model="selected_date[0]" data-selectize="" class="js-create-select sp_cmn-selectize"><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option></select></div><div class="sp_profile-form__dates-col"><select name="birth_date" data-ng-model="selected_date[1]" data-selectize="" class="js-create-select sp_cmn-selectize"><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></div><div class="sp_profile-form__dates-col"><select name="birth_date" data-ng-model="selected_date[2]" data-selectize="" class="js-create-select sp_cmn-selectize"><option value="1924">1924</option><option value="1925">1925</option><option value="1926">1926</option><option value="1927">1927</option><option value="1928">1928</option><option value="1929">1929</option><option value="1930">1930</option><option value="1931">1931</option><option value="1932">1932</option><option value="1933">1933</option><option value="1934">1934</option><option value="1935">1935</option><option value="1936">1936</option><option value="1937">1937</option><option value="1938">1938</option><option value="1939">1939</option><option value="1940">1940</option><option value="1941">1941</option><option value="1942">1942</option><option value="1943">1943</option><option value="1944">1944</option><option value="1945">1945</option><option value="1946">1946</option><option value="1947">1947</option><option value="1948">1948</option><option value="1949">1949</option><option value="1950">1950</option><option value="1951">1951</option><option value="1952">1952</option><option value="1953">1953</option><option value="1954">1954</option><option value="1955">1955</option><option value="1956">1956</option><option value="1957">1957</option><option value="1958">1958</option><option value="1959">1959</option><option value="1960">1960</option><option value="1961">1961</option><option value="1962">1962</option><option value="1963">1963</option><option value="1964">1964</option><option value="1965">1965</option><option value="1966">1966</option><option value="1967">1967</option><option value="1968">1968</option><option value="1969">1969</option><option value="1970">1970</option><option value="1971">1971</option><option value="1972">1972</option><option value="1973">1973</option><option value="1974">1974</option><option value="1975">1975</option><option value="1976">1976</option><option value="1977">1977</option><option value="1978">1978</option><option value="1979">1979</option><option value="1980">1980</option><option value="1981">1981</option><option value="1982">1982</option><option value="1983">1983</option><option value="1984">1984</option><option value="1985">1985</option><option value="1986">1986</option><option value="1987">1987</option><option value="1988">1988</option><option value="1989">1989</option><option value="1990">1990</option><option value="1991">1991</option><option value="1992">1992</option><option value="1993">1993</option><option value="1994">1994</option><option value="1995">1995</option><option value="1996">1996</option><option value="1997">1997</option><option value="1998">1998</option><option value="1999">1999</option><option value="2000">2000</option><option value="2001">2001</option><option value="2002">2002</option><option value="2003">2003</option><option value="2004">2004</option><option value="2005">2005</option><option value="2006">2006</option><option value="2007">2007</option><option value="2008">2008</option><option value="2009">2009</option></select></div></div></div><div class="sp_profile-form__set"><div class="sp_cmn-inline-param"><label class="outer_label" data-ng-class="{ checked_input: profile_form.custom_vars[\'В браке\'] === \'да\' }"><input name="married" type="radio" class="js-create-radio" data-ng-value="\'да\'" data-ng-model="profile_form.custom_vars[\'В браке\']"> <span class="sp_cmn-label js-satellite">Замужем/женат</span></label></div><div class="sp_cmn-inline-param"><label class="outer_label" data-ng-class="{ checked_input: profile_form.custom_vars[\'В браке\'] === \'нет\' }"><input name="married" type="radio" class="js-create-radio" data-ng-value="\'нет\'" data-ng-model="profile_form.custom_vars[\'В браке\']"> <span class="sp_cmn-label js-satellite">Не замужем/Холост</span></label></div></div><div class="sp_profile-form__set"><input type="text" class="sp_cmn-input" placeholder="Имя супруга/супруги" data-ng-model="profile_form.custom_vars[\'Имя супруга(и)\']"></div><div class="sp_profile-form__set"><div class="sp_profile-form__ttl">Дата рождения супруга/супруги</div><div class="sp_profile-form__dates" data-date-selector="" data-ng-model="profile_form.custom_vars[\'ДР супруга(и)\']"><div class="sp_profile-form__dates-col"><select name="married_date" data-ng-model="selected_date[0]" data-selectize="" class="js-create-select sp_cmn-selectize"><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option></select></div><div class="sp_profile-form__dates-col"><select name="married_date" data-ng-model="selected_date[1]" data-selectize="" class="js-create-select sp_cmn-selectize"><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></div><div class="sp_profile-form__dates-col"><select name="married_date" data-ng-model="selected_date[2]" data-selectize="" class="js-create-select sp_cmn-selectize"><option value="1924">1924</option><option value="1925">1925</option><option value="1926">1926</option><option value="1927">1927</option><option value="1928">1928</option><option value="1929">1929</option><option value="1930">1930</option><option value="1931">1931</option><option value="1932">1932</option><option value="1933">1933</option><option value="1934">1934</option><option value="1935">1935</option><option value="1936">1936</option><option value="1937">1937</option><option value="1938">1938</option><option value="1939">1939</option><option value="1940">1940</option><option value="1941">1941</option><option value="1942">1942</option><option value="1943">1943</option><option value="1944">1944</option><option value="1945">1945</option><option value="1946">1946</option><option value="1947">1947</option><option value="1948">1948</option><option value="1949">1949</option><option value="1950">1950</option><option value="1951">1951</option><option value="1952">1952</option><option value="1953">1953</option><option value="1954">1954</option><option value="1955">1955</option><option value="1956">1956</option><option value="1957">1957</option><option value="1958">1958</option><option value="1959">1959</option><option value="1960">1960</option><option value="1961">1961</option><option value="1962">1962</option><option value="1963">1963</option><option value="1964">1964</option><option value="1965">1965</option><option value="1966">1966</option><option value="1967">1967</option><option value="1968">1968</option><option value="1969">1969</option><option value="1970">1970</option><option value="1971">1971</option><option value="1972">1972</option><option value="1973">1973</option><option value="1974">1974</option><option value="1975">1975</option><option value="1976">1976</option><option value="1977">1977</option><option value="1978">1978</option><option value="1979">1979</option><option value="1980">1980</option><option value="1981">1981</option><option value="1982">1982</option><option value="1983">1983</option><option value="1984">1984</option><option value="1985">1985</option><option value="1986">1986</option><option value="1987">1987</option><option value="1988">1988</option><option value="1989">1989</option><option value="1990">1990</option><option value="1991">1991</option><option value="1992">1992</option><option value="1993">1993</option><option value="1994">1994</option><option value="1995">1995</option><option value="1996">1996</option><option value="1997">1997</option><option value="1998">1998</option><option value="1999">1999</option><option value="2000">2000</option><option value="2001">2001</option><option value="2002">2002</option><option value="2003">2003</option><option value="2004">2004</option><option value="2005">2005</option><option value="2006">2006</option><option value="2007">2007</option><option value="2008">2008</option><option value="2009">2009</option></select></div></div></div><div class="sp_profile-form__set"><div class="sp_cmn-inline-param"><label class="outer_label" data-ng-class="{ checked_input: profile_form.custom_vars[\'Дети\'] === \'Да\' }"><input name="checkboxname" type="checkbox" class="js-create-checkbox" data-ng-model="profile_form.custom_vars[\'Дети\']" data-ng-true-value="\'Да\'" data-ng-false-value="\'Нет\'"> <span class="sp_cmn-label js-satellite">Есть дети</span></label></div></div><div class="sp_profile-form__set"><div class="sp_profile-form__ttl">Скрывать историю транзакции</div><div class="sp_cmn-inline-param"><label class="outer_label" data-ng-class="{ checked_input: profile_form.hide_hist }"><input name="hide_hist" type="radio" class="js-create-radio" data-ng-value="true" data-ng-model="profile_form.hide_hist"> <span class="sp_cmn-label js-satellite">Да</span></label></div><div class="sp_cmn-inline-param"><label class="outer_label" data-ng-class="{ checked_input: !profile_form.hide_hist }"><input name="hide_hist" type="radio" class="js-create-radio" data-ng-value="false" data-ng-model="profile_form.hide_hist"> <span class="sp_cmn-label js-satellite">Нет</span></label></div></div><div class="sp_profile-form__btns"><button type="submit" class="sp_cmn-btn-sm sp_profile-form__btn" data-ng-disabled="!fill_profile.$valid">Отправить</button> <a href="#" class="sp_cmn-btn-sm sp_profile-form__btn js-close-popup" data-ng-click="$parent.show_profile_info = false;">Отмена</a></div></form></div></div><div class="sp_task-popup js-task-popup" style="display: none;"><div class="sp_cmn-popup-close js-close-popup"></div><div class="sp_task-popup__hd">Рассказать о покупке</div><div class="sp_task-popup__inner"><div class="sp_task-popup__l"><img class="sp_task-popup__img" src="dist/img/task-icon-06.svg" alt=""></div><div class="sp_task-popup__r"><p>Lorem ipsum dolor sit amet, mea no consul euismod meliore. Ei detracto detraxit vim, an augue accusam temporibus eum. Cum illum augue moderatius no. Pro duis ludus ne, eam enim alterum liberavisse at.</p><p>Cum vide scaevola ut, vis viris mandamus in. Et ius vidit assentior mnesarchum. Est id fugit sonet democritum. Sit ad utroque accommodare.</p></div></div><div class="sp_cmn-btn-sm sp_task-popup__btn js-close-popup">ОК</div></div><notifier></notifier></div>');
+    '<div data-sailplay-profile="" data-sailplay-history="" data-sailplay-badges="" style="margin: 20px;" data-ng-show="user()" data-ng-cloak=""><div class="sp_widget"><section class="sp_l-centered sp_person-sec"><div class="sp_person-sec__col1"><div class="sp_person-sec__hd">Добро пожаловать</div><div class="sp_person-sec__ttl">в клуб покупателей "Бронницкий ювелир"</div></div><div class="sp_person-sec__col2"><div class="sp_person-cell"><div class="sp_person-cell__photo" style="background-image: url(\'{{ user().user.pic | sailplay_pic }}\');"></div><a href="#" class="sp_cmn-btn person-cell__btn js-open-profile-popup" data-ng-click="open_profile()">Изменить профиль</a></div></div><div class="sp_person-sec__col3"><div class="sp_person-info"><div class="sp_person-info__hd">Здравствуйте,</div><div class="sp_person-info__name">{{ user().user.name || \'Уважаемый покупатель\' }}</div><div class="sp_person-info__cont"><div data-ng-show="user().user.email">{{ user().user.email }}</div><div data-ng-show="user().user.phone">{{ user().user.phone }}</div></div><div class="sp_person-info__status"><div class="sp_person-info__stat-hd">Ваш статус: {{ user().user_status.name }}</div><div data-ng-if="get_next()">До статуса <b>{{ get_next().name }}</b> осталось {{ get_offset() }} {{ get_offset() | sailplay_pluralize:\'балл,балла,баллов\' }}</div></div></div><a href="http://www.bronnitsy.com/delivery/" class="sp_person-sec__more">условия доставки</a></div></section><section class="sp_l-centered sp_info-sec"><div class="sp_info-sec__l"><div class="sp_points-cell"><div class="sp_points-cell__hd">Ваши баллы</div><div class="status-info-counter"><div class="status-info-counter__val">{{ user().user_points.confirmed }}</div><div class="status-info-counter__remain">+{{ user().user_points.unconfirmed }}<div class="status-info-counter__popup">Неподтвержденные баллы, которые начислятся после оплаты</div></div></div><div class="sp_points-cell__ttl">{{ user().user_points.confirmed | sailplay_pluralize:\'бонусный балл,бонусных балла,бонусных баллов\' }}</div><a href="" data-ng-hide="hide_hist" data-ng-click="show_history = true;" class="sp_cmn-btn sp_cmn-btn_red sp_points-cell__btn js-open-history-popup">История транзакций</a></div></div><div class="sp_info-sec__r"><div class="sp_status-cell"><div class="sp_status-cell__hd">Ваш статус:</div><div class="sp_status-cell__img" style="background-image: url({{ user().user_status.pic || \'dist/img/status-02.svg\' }});"></div><div class="sp_status-cell__ttl">{{ user().user_status.name || \'Нет статуса\' }}</div><a href="" class="sp_cmn-btn sp_cmn-btn_red sp_status-cell__btn js-open-status-popup" data-ng-click="show_statuses_list = true;">Список статусов</a></div></div></section><section class="sp_l-centered sp_progr-sec"><div class="sp_progr-sec__l" data-ng-if="get_next()"><div class="sp_progr-sec__txt">До следющего статуса осталось <b>{{ get_offset() }} {{ get_offset() | sailplay_pluralize:\'балл,балла,баллов\' }}</b></div></div><div class="sp_progr-sec__r"><div class="sp_progr-cell"><div class="sp_progr-bar js-status-bar" data-width="90"><div class="sp_progr-bar__inner"><div class="sp_progr-bar__inner-bar this-inner1 js-status-bar__inner" data-ng-style="{ width: get_progress() + \'%\' }"></div></div><div class="sp_progr-bar__point this-point-{{ $index+1 }}" data-ng-repeat="badge in badges().multilevel_badges[0]"><div class="sp_progr-bar__point-img" style="background-image: url(\'{{ badge.thumbs.url_250x250 | sailplay_pic }}\');"></div><div class="sp_progr-bar__point-name">{{ badge.name }}</div></div></div></div></div></section><section class="sp_l-section sp_gift-sec" data-sailplay-gifts="" data-ng-show="gifts().length > 0" data-ng-controller="slick_config" data-ng-init="selected_gift = false;"><div class="sp_cmn-sec-head">Подарки</div><div class="sp_gift-slider js-gift-slider" data-slick-carousel="" data-options="gift_slider_config"><div data-ng-repeat="gift in gifts()" data-slick-slide=""><div class="sp_gift-slider__slide"><div class="sp_gift-slider__img" style="background-image: url(\'{{ gift.thumbs.url_250x250 | sailplay_pic }}\');"></div><div class="sp_gift-slider__hd">{{ gift.name }}</div><div class="sp_gift-slider__ttl">{{ gift.descr }}</div><div class="sp_gift-slider__price">{{ gift.points }} {{ gift.points | sailplay_pluralize:\'балл,балла,баллов\' }}</div><button style="line-height: 36px;" type="button" class="sp_cmn-btn-sm sp_gift-slider__btn js-open-gift-popup" data-ng-click="$parent.selected_gift = gift" data-ng-disabled="gift.points > user().user_points.confirmed">Получить</button></div></div></div><div class="sp_overlay display_table" data-ng-show="selected_gift"><div class="display_table_cell" data-overlay-click="selected_gift = false;"><div class="sp_gift-popup js-gift-popup"><div class="sp_gift-popup__hd">{{ selected_gift.points }} бонусных баллов будут списаны с вашего счета</div><div class="sp_gift-popup__img" style="background-image: url(\'{{ selected_gift.thumbs.url_250x250 | sailplay_pic }}\');"></div><div class="sp_gift-popup__ttl">Вы уверены?</div><div class="sp_gift-popup__btns"><div class="sp_gift-popup__btn sp_cmn-btn-sm js-close-popup" data-ng-click="gift_purchase(selected_gift); selected_gift = false;">Да</div><div class="sp_gift-popup__btn sp_cmn-btn-sm js-close-popup" data-ng-click="selected_gift = false;">Отмена</div></div></div></div></div></section><section class="sp_task-sec-wrap" data-sailplay-actions=""><div class="sp_l-section sp_task-sec" data-ng-controller="slick_config"><div class="sp_cmn-sec-head">Задания</div><div class="sp_task-slider js-task-slider" data-slick-carousel="" data-options="action_slider_config"><div data-slick-slide="" data-ng-show="show_profile_action"><div class="sp_task-slider__slide"><div class="sp_task-slider__ico" style="background-image: url(\'dist/img/task-icon-02.svg\');"></div><div class="sp_task-slider__hd">Заполнить профиль</div><div class="sp_task-slider__price">{{ 100 }} {{ 100 | sailplay_pluralize:\'балл,балла,баллов\' }}</div><div class="sp_task-slider__cover"><a class="sp_cmn-btn-sm sp_task-slider__btn" data-ng-click="open_profile()">Выполнить</a></div></div></div><div data-ng-repeat="action in actions().actions" data-slick-slide=""><div class="sp_task-slider__slide"><div class="sp_task-slider__ico" style="background-image: url({{ action_data(action).pic }});"></div><div class="sp_task-slider__hd">{{ action_data(action).name }}</div><div class="sp_task-slider__price">{{ action.points }} {{ action.points | sailplay_pluralize:\'балл,балла,баллов\' }}</div><div class="sp_task-slider__cover"><a href="" class="sp_cmn-btn-sm sp_task-slider__btn" data-sailplay-action="" data-action="action" data-text="Выполнить" data-styles="{{ config.social_styles }}">Выполнить</a></div></div></div></div></div></section></div><div class="sp_overlay display_table" data-ng-show="show_history"><div class="display_table_cell" data-overlay-click="show_history = false;"><div class="sp_hist-popup js-history-popup"><div class="sp_cmn-popup-close js-close-popup" data-ng-click="show_history = false;"></div><div class="sp_hist-popup__hd">История транзакций</div><div class="sp_hist-list"><div class="sp_hist-list__itm" data-dir-paginate="item in history() | itemsPerPage:10" data-pagination-id="history_pages" data-ng-class="{ \'this-dec\': item.points_delta < 0 }"><div class="sp_hist-list__val">{{ item.points_delta || 0 }} {{ item.points_delta | sailplay_pluralize:\'балл,балла,баллов\' }}</div>{{ item | history_item }}</div></div><dir-pagination-controls data-max-size="5" data-pagination-id="history_pages" data-template-url="/html/ui/ui.pagination.controls.html" data-auto-hide="true"></dir-pagination-controls></div></div></div><div class="sp_overlay" data-ng-show="show_statuses_list"><div class="sp_stat-popup js-status-popup"><div class="sp_stat-popup__hd">Описание статусов</div><div class="sp_stat-pop-itm" data-ng-repeat="badge in badges().multilevel_badges[0]"><div class="sp_stat-pop-itm__img"><img data-ng-src="{{ badge.thumbs.url_250x250 | sailplay_pic }}" alt=""></div><div class="sp_stat-pop-itm__text">{{ badge.descr }}</div></div><div class="sp_stat-popup__btns"><div class="sp_stat-popup__btn sp_cmn-btn-sm js-close-popup" data-ng-click="show_statuses_list = false;">ОК</div></div></div></div><div class="sp_overlay" data-ng-show="show_profile_info" data-overlay-click="show_profile_info = false; body_lock(false)"><div class="sp_profile-popup js-profile-popup" data-fill-profile=""><div class="sp_profile-popup__hd">Изменить профиль</div><form class="sp_profile-form" name="fill_profile" novalidate="" data-ng-submit="$event.preventDefault(); submit_profile(fill_profile, $parent.close_profile)"><div class="sp_profile-form__set"><input type="email" name="email" class="sp_cmn-input" placeholder="Email" data-ng-model="profile_form.user.addEmail" data-ng-model-options="{ updateOn: \'default change blur\' }" required=""></div><div class="sp_profile-form__set"><input type="text" name="phone" class="sp_cmn-input js-create-mask" data-phone-mask="" data-ng-model="profile_form.user.addPhone" maxlength="17" data-ng-model-options="{ updateOn: \'default change blur\' }" required=""></div><div class="sp_profile-form__set"><div class="sp_profile-form__ttl">Дата рождения</div><div class="sp_profile-form__dates" data-date-selector="" data-ng-model="profile_form.user.birthDate"><div class="sp_profile-form__dates-col"><select name="birth_date" data-ng-model="selected_date[0]" data-selectize="" class="js-create-select sp_cmn-selectize"><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option></select></div><div class="sp_profile-form__dates-col"><select name="birth_date" data-ng-model="selected_date[1]" data-selectize="" class="js-create-select sp_cmn-selectize"><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></div><div class="sp_profile-form__dates-col"><select name="birth_date" data-ng-model="selected_date[2]" data-selectize="" class="js-create-select sp_cmn-selectize"><option value="1924">1924</option><option value="1925">1925</option><option value="1926">1926</option><option value="1927">1927</option><option value="1928">1928</option><option value="1929">1929</option><option value="1930">1930</option><option value="1931">1931</option><option value="1932">1932</option><option value="1933">1933</option><option value="1934">1934</option><option value="1935">1935</option><option value="1936">1936</option><option value="1937">1937</option><option value="1938">1938</option><option value="1939">1939</option><option value="1940">1940</option><option value="1941">1941</option><option value="1942">1942</option><option value="1943">1943</option><option value="1944">1944</option><option value="1945">1945</option><option value="1946">1946</option><option value="1947">1947</option><option value="1948">1948</option><option value="1949">1949</option><option value="1950">1950</option><option value="1951">1951</option><option value="1952">1952</option><option value="1953">1953</option><option value="1954">1954</option><option value="1955">1955</option><option value="1956">1956</option><option value="1957">1957</option><option value="1958">1958</option><option value="1959">1959</option><option value="1960">1960</option><option value="1961">1961</option><option value="1962">1962</option><option value="1963">1963</option><option value="1964">1964</option><option value="1965">1965</option><option value="1966">1966</option><option value="1967">1967</option><option value="1968">1968</option><option value="1969">1969</option><option value="1970">1970</option><option value="1971">1971</option><option value="1972">1972</option><option value="1973">1973</option><option value="1974">1974</option><option value="1975">1975</option><option value="1976">1976</option><option value="1977">1977</option><option value="1978">1978</option><option value="1979">1979</option><option value="1980">1980</option><option value="1981">1981</option><option value="1982">1982</option><option value="1983">1983</option><option value="1984">1984</option><option value="1985">1985</option><option value="1986">1986</option><option value="1987">1987</option><option value="1988">1988</option><option value="1989">1989</option><option value="1990">1990</option><option value="1991">1991</option><option value="1992">1992</option><option value="1993">1993</option><option value="1994">1994</option><option value="1995">1995</option><option value="1996">1996</option><option value="1997">1997</option><option value="1998">1998</option><option value="1999">1999</option><option value="2000">2000</option><option value="2001">2001</option><option value="2002">2002</option><option value="2003">2003</option><option value="2004">2004</option><option value="2005">2005</option><option value="2006">2006</option><option value="2007">2007</option><option value="2008">2008</option><option value="2009">2009</option></select></div></div></div><div class="sp_profile-form__set"><div class="sp_cmn-inline-param"><label class="outer_label radio" data-ng-class="{ checked: profile_form.custom_vars[\'В браке\'] === \'да\' }"><input name="married" type="radio" class="js-create-radio" data-ng-value="\'да\'" data-ng-model="profile_form.custom_vars[\'В браке\']"> <span class="sp_cmn-label js-satellite">Замужем/женат</span></label></div><div class="sp_cmn-inline-param"><label class="outer_label radio" data-ng-class="{ checked: profile_form.custom_vars[\'В браке\'] === \'нет\' }"><input name="married" type="radio" class="js-create-radio" data-ng-value="\'нет\'" data-ng-model="profile_form.custom_vars[\'В браке\']"> <span class="sp_cmn-label js-satellite">Не замужем/Холост</span></label></div></div><div class="sp_profile-form__set"><input type="text" class="sp_cmn-input" placeholder="Имя супруга/супруги" data-ng-model="profile_form.custom_vars[\'Имя супруга(и)\']"></div><div class="sp_profile-form__set"><div class="sp_profile-form__ttl">Дата рождения супруга/супруги</div><div class="sp_profile-form__dates" data-date-selector="" data-ng-model="profile_form.custom_vars[\'ДР супруга(и)\']"><div class="sp_profile-form__dates-col"><select name="married_date" data-ng-model="selected_date[0]" data-selectize="" class="js-create-select sp_cmn-selectize"><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option></select></div><div class="sp_profile-form__dates-col"><select name="married_date" data-ng-model="selected_date[1]" data-selectize="" class="js-create-select sp_cmn-selectize"><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></div><div class="sp_profile-form__dates-col"><select name="married_date" data-ng-model="selected_date[2]" data-selectize="" class="js-create-select sp_cmn-selectize"><option value="1924">1924</option><option value="1925">1925</option><option value="1926">1926</option><option value="1927">1927</option><option value="1928">1928</option><option value="1929">1929</option><option value="1930">1930</option><option value="1931">1931</option><option value="1932">1932</option><option value="1933">1933</option><option value="1934">1934</option><option value="1935">1935</option><option value="1936">1936</option><option value="1937">1937</option><option value="1938">1938</option><option value="1939">1939</option><option value="1940">1940</option><option value="1941">1941</option><option value="1942">1942</option><option value="1943">1943</option><option value="1944">1944</option><option value="1945">1945</option><option value="1946">1946</option><option value="1947">1947</option><option value="1948">1948</option><option value="1949">1949</option><option value="1950">1950</option><option value="1951">1951</option><option value="1952">1952</option><option value="1953">1953</option><option value="1954">1954</option><option value="1955">1955</option><option value="1956">1956</option><option value="1957">1957</option><option value="1958">1958</option><option value="1959">1959</option><option value="1960">1960</option><option value="1961">1961</option><option value="1962">1962</option><option value="1963">1963</option><option value="1964">1964</option><option value="1965">1965</option><option value="1966">1966</option><option value="1967">1967</option><option value="1968">1968</option><option value="1969">1969</option><option value="1970">1970</option><option value="1971">1971</option><option value="1972">1972</option><option value="1973">1973</option><option value="1974">1974</option><option value="1975">1975</option><option value="1976">1976</option><option value="1977">1977</option><option value="1978">1978</option><option value="1979">1979</option><option value="1980">1980</option><option value="1981">1981</option><option value="1982">1982</option><option value="1983">1983</option><option value="1984">1984</option><option value="1985">1985</option><option value="1986">1986</option><option value="1987">1987</option><option value="1988">1988</option><option value="1989">1989</option><option value="1990">1990</option><option value="1991">1991</option><option value="1992">1992</option><option value="1993">1993</option><option value="1994">1994</option><option value="1995">1995</option><option value="1996">1996</option><option value="1997">1997</option><option value="1998">1998</option><option value="1999">1999</option><option value="2000">2000</option><option value="2001">2001</option><option value="2002">2002</option><option value="2003">2003</option><option value="2004">2004</option><option value="2005">2005</option><option value="2006">2006</option><option value="2007">2007</option><option value="2008">2008</option><option value="2009">2009</option></select></div></div></div><div class="sp_profile-form__set"><div class="sp_cmn-inline-param"><label class="outer_label checkbox" data-ng-class="{ checked: profile_form.custom_vars[\'Дети\'] === \'Да\' }"><input name="checkboxname" type="checkbox" class="js-create-checkbox" data-ng-model="profile_form.custom_vars[\'Дети\']" data-ng-true-value="\'Да\'" data-ng-false-value="\'Нет\'"> <span class="sp_cmn-label js-satellite">Есть дети</span></label></div></div><div class="sp_profile-form__set"><div class="sp_profile-form__ttl">Скрывать историю транзакции</div><div class="sp_cmn-inline-param"><label class="outer_label radio" data-ng-class="{ checked: profile_form.custom_vars.hide_hist === \'Да\' }"><input name="hide_hist" type="radio" class="js-create-radio" data-ng-value="\'Да\'" data-ng-model="profile_form.custom_vars.hide_hist"> <span class="sp_cmn-label js-satellite">Да</span></label></div><div class="sp_cmn-inline-param"><label class="outer_label radio" data-ng-class="{ checked: profile_form.custom_vars.hide_hist === \'Нет\' }"><input name="hide_hist" type="radio" class="js-create-radio" data-ng-value="\'Нет\'" data-ng-model="profile_form.custom_vars.hide_hist"> <span class="sp_cmn-label js-satellite">Нет</span></label></div></div><div class="sp_profile-form__btns"><button type="submit" class="sp_cmn-btn-sm sp_profile-form__btn" data-ng-disabled="!fill_profile.$valid">Отправить</button> <a href="#" class="sp_cmn-btn-sm sp_profile-form__btn js-close-popup" data-ng-click="$parent.show_profile_info = false; $parent.body_lock(false);">Отмена</a></div></form></div></div><notifier></notifier></div>');
 }]);
 })();
 
@@ -2466,7 +2466,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/html/ui/ui.notifier.html',
-    '<div class="sp_overlay" data-ng-show="show_notifier" data-overlay-click="reset_notifier()"><div class="sp_hist-popup js-history-popup" style="margin-top: 100px;"><div class="sp_cmn-popup-close js-close-popup" data-ng-click="reset_notifier()"></div><div class="sp_hist-popup__hd">{{ data.header }}</div><div class="sp_hist-list__itm"><div style="font-size: 18px; text-align: center;">{{ data.body }}</div></div></div></div>');
+    '<div class="sp_overlay display_table" data-ng-show="show_notifier" data-overlay-click="reset_notifier()"><div class="display_table_cell"><div class="sp_hist-popup js-history-popup" style="margin-top: 0px;"><div class="sp_cmn-popup-close js-close-popup" data-ng-click="reset_notifier()"></div><div class="sp_hist-popup__hd">{{ data.header }}</div><div class="sp_hist-list__itm"><div style="font-size: 18px; text-align: center;">{{ data.body }}</div></div></div></div></div>');
 }]);
 })();
 
@@ -2492,6 +2492,8 @@ module.run(['$templateCache', function($templateCache) {
       //url,cookie,remote
       SailPlayProvider.set_auth_type('url');
 
+      SailPlayProvider.set_cookie_name('auth_hash');
+
       _CONFIG && SailPlayProvider.set_config({
         partner_id: _CONFIG.SAILPLAY.partner_id,
         domain: _CONFIG.SAILPLAY.domain,
@@ -2516,7 +2518,7 @@ module.run(['$templateCache', function($templateCache) {
 
     })
 
-    .directive('sailplayWidgets', function(SailPlay, ipCookie){
+    .directive('sailplayWidgets', function(SailPlay, ipCookie, $document){
 
       return {
         restrict: 'E',
@@ -2539,18 +2541,32 @@ module.run(['$templateCache', function($templateCache) {
 
           };
 
+          scope.body_lock = function(state){
+
+            if(state) {
+              $('body').addClass('body_lock');
+            }
+            else {
+              $('body').removeClass('body_lock');
+            }
+
+          };
+
           scope.close_profile = function(){
 
             scope.show_profile_action = false;
 
             scope.show_profile_info = false;
 
-            scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').hide_hist;
+            scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').custom_vars.hide_hist === 'Да';
+
+            scope.body_lock(false);
 
           };
 
           scope.open_profile = function(){
             scope.show_profile_info = true;
+            scope.body_lock(true);
           };
 
           SailPlay.on('tags.exist.success', function(res){
@@ -2564,7 +2580,7 @@ module.run(['$templateCache', function($templateCache) {
 
           });
 
-          scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').hide_hist;
+          scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').custom_vars.hide_hist === 'Да';
 
         }
       }
@@ -2578,6 +2594,575 @@ module.run(['$templateCache', function($templateCache) {
     app_container && angular.bootstrap(app_container, [ 'sailplay.widgets' ]);
 
   });
+
+}());
+
+(function () {
+
+  angular.module('core', [
+    'ipCookie'
+  ])
+
+  .run(function(SailPlay, ipCookie, SailPlayApi, $rootScope, $window, ProfileTag){
+
+    $rootScope.config = $window._CONFIG || {};
+
+    SailPlay.on('login.error', function(){
+
+      $rootScope.loaded = true;
+      $rootScope.$apply();
+
+    });
+
+    SailPlay.on('login.success', function(){
+
+      $rootScope.loaded = true;
+
+      //load data for widgets
+      SailPlayApi.call('load.user.info', { all: 1 });
+      SailPlayApi.call('load.badges.list');
+      SailPlayApi.call('load.actions.list');
+      SailPlayApi.call('load.user.history');
+      SailPlayApi.call('load.gifts.list');
+      SailPlayApi.call('tags.exist', { tags: [ ProfileTag ] });
+
+
+      $rootScope.$apply();
+
+    });
+
+    SailPlay.on('actions.perform.success', function(){
+      SailPlayApi.call('load.actions.list');
+    });
+
+    SailPlay.on('actions.perform.error', function(){
+      SailPlayApi.call('load.actions.list');
+    });
+
+    SailPlay.on('actions.perform.complete', function(){
+      SailPlayApi.call('load.actions.list');
+    });
+
+    SailPlay.on('gifts.purchase.success', function(res){
+
+      $rootScope.$broadcast('notifier:notify', {
+
+        header: $rootScope.locale.gift_received,
+        body: res.coupon_number ? $rootScope.locale.coupon_number + ' ' + res.coupon_number : res.success_message
+
+      });
+
+      SailPlayApi.call('load.user.info', { all: 1 });
+      SailPlayApi.call('load.user.history');
+
+      $rootScope.$apply();
+
+    });
+
+    SailPlay.on('gift.purchase.error', function(res){
+
+      $rootScope.$broadcast('notifier:notify', {
+
+        header: $rootScope.locale.gift_error,
+        body: $rootScope.locale.errors[res.status_code] || $rootScope.locale.error
+
+      });
+
+      $rootScope.$apply();
+
+    });
+
+    //SailPlay.on('actions.social.connect.complete', function(){
+    //  SailPlayApi.call('load.actions.list');
+    //});
+
+  });
+
+}());
+
+(function () {
+
+  angular.module('ui', [
+    'angularUtils.directives.dirPagination'
+  ])
+
+
+    .constant('ProfileTag', 'Клиент заполнил профиль')
+
+    .directive('fillProfile', function(SailPlay, $rootScope, $q, ProfileTag, ipCookie, SailPlayApi){
+
+      return {
+
+        restrict: 'A',
+        scope: true,
+        link: function(scope){
+
+          var new_form = {
+
+            user: {
+
+              addPhone: '',
+              addEmail: '',
+              birthDate: ''
+
+            },
+            custom_vars: {
+
+              'В браке': '',
+              'Имя супруга(и)': '',
+              'ДР супруга(и)': '',
+              'Дети': '',
+              'hide_hist': 'Нет'
+
+            },
+            tags: [],
+            hide_hist: false
+
+          };
+
+          scope.$watch(function(){
+            return angular.toJson([ SailPlayApi.data('load.user.info')() ]);
+          }, function(){
+
+            var user = SailPlayApi.data('load.user.info')();
+
+            if(!user) return;
+            scope.profile_form = angular.copy(new_form);
+            scope.profile_form.user.auth_hash = SailPlay.config().auth_hash;
+            //angular.extend(scope.profile_form.user, user.user);
+            scope.profile_form.user.addPhone = user.user.phone;
+            scope.profile_form.user.addEmail = user.user.email;
+            scope.profile_form.user.birthDate = user.user.birth_date || '';
+            if(ipCookie('profile_form') && SailPlay.config().auth_hash === ipCookie('profile_form').user.auth_hash ){
+              angular.extend(scope.profile_form, ipCookie('profile_form'));
+            }
+          });
+
+          scope.toggle_tag = function(arr, tag){
+
+            if(!tag) return;
+
+            var index = arr.indexOf(tag);
+
+            if(index > -1){
+
+              arr.splice(index, 1);
+
+            }
+            else {
+
+              arr.push(tag);
+
+            }
+
+          };
+
+          scope.submit_profile = function(form, callback){
+
+            if(!form.$valid) {
+              return;
+            }
+
+            var data_user = SailPlayApi.data('load.user.info')() && SailPlayApi.data('load.user.info')().user;
+
+            var req_user = angular.copy(scope.profile_form.user);
+            //console.log(data_user.phone, req_user.addPhone);
+
+            if(data_user && data_user.phone == req_user.addPhone){
+              delete req_user.addPhone;
+            }
+
+            if(data_user && data_user.email == req_user.addEmail){
+              delete req_user.addEmail;
+            }
+
+            SailPlay.send('users.update', req_user, function(user_res){
+
+              if(user_res.status === 'ok'){
+
+                var req_tags = angular.copy(scope.profile_form.tags);
+
+                req_tags.push(ProfileTag);
+
+
+                function chunk(array, chunkSize) {
+                  return [].concat.apply([],
+                    array.map(function(elem,i) {
+                      return i%chunkSize ? [] : [array.slice(i,i+chunkSize)];
+                    })
+                  );
+                }
+
+                var chunked_tags = chunk(req_tags, 10);
+
+                var tag_promises = [];
+
+                angular.forEach(chunked_tags, function(chunk){
+
+                  var promise = $q(function(resolve, reject){
+
+                    SailPlay.send('tags.add', { tags: chunk }, function(tags_res){
+                      if(tags_res.status === 'ok') {
+
+                        resolve(tags_res);
+
+                        //sp.send('leads.submit.success', { lead: self, response: user_res, tags: res });
+                      }
+                      else {
+                        reject(tags_res);
+                        //sp.send('leads.submit.error', { lead: self, response: user_res, tags: res });
+                      }
+                    });
+
+                  });
+
+                  tag_promises.push(promise);
+
+                });
+
+                $q.all(tag_promises).then(function(tags_res){
+
+                  SailPlay.send('vars.add', { custom_vars: scope.profile_form.custom_vars }, function(vars_res){
+
+                    var response = {
+                      user: user_res,
+                      tags: tags_res,
+                      vars: vars_res
+                    };
+
+                    if(vars_res.status === 'ok') {
+
+                      ipCookie('profile_form', scope.profile_form);
+
+                      $rootScope.$broadcast('notifier:notify', {
+
+                        header: 'Спасибо',
+                        body: 'Данные профиля сохранены'
+
+                      });
+
+                      SailPlayApi.call('load.user.info', { all: 1 });
+
+                      callback && callback(response);
+                      scope.$apply();
+
+
+                    }
+                    else {
+
+                      $rootScope.$broadcast('notifier:notify', {
+
+                        header: 'Ошибка',
+                        body: user_res.message || 'К сожалению произошла ошибка'
+
+                      });
+                      scope.$apply();
+
+                    }
+
+                  });
+
+                });
+
+
+
+              }
+
+              else {
+                $rootScope.$broadcast('notifier:notify', {
+
+                  header: 'Ошибка',
+                  body: $rootScope.locale.errors[user_res.status_code] || $rootScope.locale.errors[user_res.message] || 'К сожалению произошла ошибка'
+
+                });
+                $rootScope.$apply();
+              }
+
+            });
+
+          };
+
+        }
+
+      };
+
+    })
+
+    .directive('overlayClick', function(){
+
+      return {
+        restrict: 'A',
+        replace: false,
+        scope: false,
+        link: function(scope, elm, attrs){
+
+          elm.on('click', function(e){
+            if(e.target === elm[0]){
+              scope.$apply(function () {
+                scope.$eval(attrs.overlayClick);
+              });
+            }
+          });
+
+        }
+      };
+
+    })
+
+    .controller('slick_config', function($scope){
+
+      $scope.gift_slider_config = {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        speed: 150,
+        infinite: false,
+        prevArrow: '<div class="slick-prev"></div>',
+        nextArrow: '<div class="slick-next"></div>',
+        swipeToSlide: true,
+        responsive: [
+          {
+            breakpoint: 1000,
+            settings: {
+              slidesToShow: 2
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 1
+            }
+          }
+        ]
+      };
+
+      $scope.action_slider_config = {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        speed: 150,
+        infinite: false,
+        prevArrow: '<div class="slick-prev"></div>',
+        nextArrow: '<div class="slick-next"></div>',
+        swipeToSlide: true,
+        responsive: [
+          {
+            breakpoint: 800,
+            settings: {
+              slidesToShow: 2
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 1
+            }
+          }
+        ]
+      };
+
+    })
+
+    .directive('slickCarousel', function ($compile, $timeout) {
+      return {
+        restrict:'A',
+        link: function (scope, element, attrs) {
+
+          scope.hidden = true;
+
+          var $element = $(element);
+
+          function toggle(state){
+
+            if(state){
+              $element.css('opacity', 1);
+            }
+            else {
+              $element.css('opacity', 0);
+            }
+
+          }
+
+          var options = scope.$eval(attrs.options) || {
+            infinite: false,
+            nextArrow: '<img class="slider_arrow right" src="dist/img/right.png"/>',
+            prevArrow: '<img class="slider_arrow left" src="dist/img/left.png"/>',
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            responsive: [
+              {
+                breakpoint: 1190,
+                settings: {
+                  slidesToShow: 4,
+                  slidesToScroll: 4
+                }
+              },
+              {
+                breakpoint: 880,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3
+                }
+              },
+              {
+                breakpoint: 600,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2
+                }
+              },
+              {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1
+                }
+              }
+              // You can unslick at a given breakpoint now by adding:
+              // settings: "unslick"
+              // instead of a settings object
+            ]
+          };
+
+          scope.$watchCollection(function(){
+            return $element.find('[data-slick-slide]').not('.ng-hide');
+          }, function(){
+            toggle(false);
+            $timeout(function(){
+              if($element.hasClass('slick-initialized')){
+                $element.slick('removeSlide', null, null, true);
+                $element.slick('unslick');
+              }
+              $element.slick(options);
+              $element.slick('slickUnfilter');
+              $element.slick('slickFilter', ':not(.ng-hide)');
+              toggle(true);
+            }, 0);
+
+          });
+
+          //var parent = $(element).parent();
+          //console.dir(parent);
+
+
+
+        }
+
+      };
+    })
+
+    .directive('notifier', function(){
+
+       return {
+
+         restrict: 'E',
+         replace: true,
+         scope: true,
+         templateUrl: '/html/ui/ui.notifier.html',
+         link: function(scope){
+
+           var new_data = {
+
+             header: '',
+             body: ''
+
+           };
+
+           scope.$on('notifier:notify', function(e, data){
+
+            scope.data = data;
+            scope.show_notifier = true;
+            console.log('notifier: ' + data.body);
+
+           });
+
+           scope.reset_notifier = function(){
+             scope.data = angular.copy(new_data);
+             scope.show_notifier = false;
+           };
+
+           scope.reset_notifier();
+
+         }
+
+       }
+
+    })
+
+    .directive('phoneMask', function($timeout){
+
+      return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, elm, attrs, ngModel){
+
+          ngModel.$validators.phone = function(modelValue, viewValue) {
+            var value = (modelValue || viewValue || '').replace(/\D/g,'');
+            if(!value) return true;
+            return /^[0-9]{11}$/.test(value);
+          };
+
+          $timeout(function(){
+            $(elm).mask('+7(000) 000-00-00', {placeholder: "+7(___)___-__-__"});
+          }, 10);
+
+        }
+      };
+
+    })
+
+    .directive('selectize', function($timeout){
+
+      return {
+        restrict: 'A',
+        link: function(scope, elm){
+
+          $timeout(function(){
+            $(elm).selectize({});
+          }, 0);
+
+        }
+      };
+
+    })
+
+    .directive('dateSelector', function($parse){
+
+      return {
+        restrict: 'A',
+        require: 'ngModel',
+        scope: true,
+        link: function(scope, elm, attrs, ngModelCtrl){
+
+          scope.selected_date = [ '', '', '' ];
+
+          ngModelCtrl.$formatters.push(function(modelValue) {
+            return modelValue ? angular.copy(modelValue).split('-').reverse() : [ '', '', '' ];
+          });
+
+          ngModelCtrl.$render = function() {
+            scope.selected_date = angular.copy(ngModelCtrl.$viewValue);
+          };
+
+          ngModelCtrl.$parsers.push(function(viewValue) {
+
+            var new_date = scope.selected_date && scope.selected_date.some(function(value){
+              return value && value !== '';
+            }) ? angular.copy(scope.selected_date).reverse().join('-') : '';
+
+            return new_date;
+
+          });
+
+          scope.$watchCollection('selected_date', function(){
+
+            ngModelCtrl.$setViewValue(angular.copy(scope.selected_date));
+
+          });
+
+
+        }
+      };
+
+    });
 
 }());
 
@@ -2692,8 +3277,6 @@ module.run(['$templateCache', function($templateCache) {
         replace: false,
         scope: true,
         link: function(scope){
-
-          console.dir(SailPlayActionsData);
 
           scope.actions = SailPlayApi.data('load.actions.list');
 
@@ -3034,7 +3617,7 @@ module.run(['$templateCache', function($templateCache) {
     'sailplay.badges'
   ])
 
-    .run(function(SailPlay, sailplay_config, $rootScope){
+    .run(function(SailPlay, $rootScope, ipCookie){
 
       SailPlay.send('init', SailPlay.CONFIG);
 
@@ -3122,7 +3705,7 @@ module.run(['$templateCache', function($templateCache) {
 
                 var params = sp.url_params();
 
-                if (params && params.auth_hash) {
+                if (params) {
                   sp.send('login', params.auth_hash);
                 }
                 else {
@@ -3149,6 +3732,8 @@ module.run(['$templateCache', function($templateCache) {
 
 
           }
+
+          sp.auth_hash_cookie_name = auth_hash_cookie_name;
 
           return sp;
 
@@ -3307,559 +3892,6 @@ module.run(['$templateCache', function($templateCache) {
 
         }
 
-      };
-
-    });
-
-}());
-
-(function () {
-
-  angular.module('core', [
-    'ipCookie'
-  ])
-
-  .run(function(SailPlay, ipCookie, SailPlayApi, $rootScope, $window, ProfileTag){
-
-    $rootScope.config = $window._CONFIG || {};
-
-    SailPlay.on('login.error', function(){
-
-      $rootScope.loaded = true;
-      $rootScope.$apply();
-
-    });
-
-    SailPlay.on('login.success', function(){
-
-      $rootScope.loaded = true;
-
-      //load data for widgets
-      SailPlayApi.call('load.user.info', { all: 1 });
-      SailPlayApi.call('load.badges.list');
-      SailPlayApi.call('load.actions.list');
-      SailPlayApi.call('load.user.history');
-      SailPlayApi.call('load.gifts.list');
-      SailPlayApi.call('tags.exist', { tags: [ ProfileTag ] });
-
-
-      $rootScope.$apply();
-
-    });
-
-    SailPlay.on('actions.perform.success', function(){
-      SailPlayApi.call('load.actions.list');
-    });
-
-    SailPlay.on('actions.perform.error', function(){
-      SailPlayApi.call('load.actions.list');
-    });
-
-    SailPlay.on('actions.perform.complete', function(){
-      SailPlayApi.call('load.actions.list');
-    });
-
-    SailPlay.on('gifts.purchase.success', function(res){
-
-      $rootScope.$broadcast('notifier:notify', {
-
-        header: $rootScope.locale.gift_received,
-        body: res.coupon_number ? $rootScope.locale.coupon_number + ' ' + res.coupon_number : res.success_message
-
-      });
-
-      SailPlayApi.call('load.user.info', { all: 1 });
-      SailPlayApi.call('load.user.history');
-
-      $rootScope.$apply();
-
-    });
-
-    SailPlay.on('gift.purchase.error', function(res){
-
-      $rootScope.$broadcast('notifier:notify', {
-
-        header: $rootScope.locale.gift_error,
-        body: $rootScope.locale.errors[res.status_code] || $rootScope.locale.error
-
-      });
-
-      $rootScope.$apply();
-
-    });
-
-    //SailPlay.on('actions.social.connect.complete', function(){
-    //  SailPlayApi.call('load.actions.list');
-    //});
-
-  });
-
-}());
-
-(function () {
-
-  angular.module('ui', [
-    'angularUtils.directives.dirPagination'
-  ])
-
-
-    .constant('ProfileTag', 'Клиент заполнил профиль')
-
-    .directive('fillProfile', function(SailPlay, $rootScope, $q, ProfileTag, ipCookie){
-
-      return {
-
-        restrict: 'A',
-        scope: true,
-        link: function(scope){
-
-          var new_form = {
-
-            user: {
-
-              addPhone: '',
-              addEmail: '',
-              birthDate: ''
-
-            },
-            custom_vars: {
-
-              'В браке': '',
-              'Имя супруга(и)': '',
-              'ДР супруга(и)': '',
-              'Дети': ''
-
-            },
-            tags: [],
-            hide_hist: false
-
-          };
-
-          scope.profile_form = angular.extend(angular.copy(new_form), ipCookie('profile_form'));
-
-          scope.toggle_tag = function(arr, tag){
-
-            if(!tag) return;
-
-            var index = arr.indexOf(tag);
-
-            if(index > -1){
-
-              arr.splice(index, 1);
-
-            }
-            else {
-
-              arr.push(tag);
-
-            }
-
-          };
-
-          scope.submit_profile = function(form, callback){
-
-            console.dir(scope.profile_form);
-
-            if(!form.$valid) {
-              return;
-            }
-
-            var old_state = ipCookie('profile_form');
-
-            var req_user = angular.copy(scope.profile_form.user);
-
-            if(old_state && old_state.user.addPhone == req_user.addPhone){
-              delete req_user.addPhone;
-            }
-
-            if(old_state && old_state.user.addEmail == req_user.addEmail){
-              delete req_user.addEmail;
-            }
-
-            ipCookie('profile_form', scope.profile_form);
-
-            scope.profile_form.user.auth_hash = SailPlay.config().auth_hash;
-
-            SailPlay.send('users.update', req_user, function(user_res){
-
-              if(user_res.status === 'ok'){
-
-                var req_tags = angular.copy(scope.profile_form.tags);
-
-                req_tags.push(ProfileTag);
-
-
-                function chunk(array, chunkSize) {
-                  return [].concat.apply([],
-                    array.map(function(elem,i) {
-                      return i%chunkSize ? [] : [array.slice(i,i+chunkSize)];
-                    })
-                  );
-                }
-
-                var chunked_tags = chunk(req_tags, 10);
-
-                var tag_promises = [];
-
-                angular.forEach(chunked_tags, function(chunk){
-
-                  var promise = $q(function(resolve, reject){
-
-                    SailPlay.send('tags.add', { tags: chunk }, function(tags_res){
-                      if(tags_res.status === 'ok') {
-
-                        resolve(tags_res);
-
-                        //sp.send('leads.submit.success', { lead: self, response: user_res, tags: res });
-                      }
-                      else {
-                        reject(tags_res);
-                        //sp.send('leads.submit.error', { lead: self, response: user_res, tags: res });
-                      }
-                    });
-
-                  });
-
-                  tag_promises.push(promise);
-
-                });
-
-                $q.all(tag_promises).then(function(tags_res){
-
-                  SailPlay.send('vars.add', { custom_vars: scope.profile_form.custom_vars }, function(vars_res){
-
-                    var response = {
-                      user: user_res,
-                      tags: tags_res,
-                      vars: vars_res
-                    };
-
-                    if(vars_res.status === 'ok') {
-
-
-                      $rootScope.$broadcast('notifier:notify', {
-
-                        header: 'Спасибо',
-                        body: 'Данные профиля сохранены'
-
-                      });
-                      callback && callback(response);
-                      scope.$apply();
-                      console.dir(response);
-
-
-                    }
-                    else {
-
-                      console.dir(response);
-                      $rootScope.$broadcast('notifier:notify', {
-
-                        header: 'Ошибка',
-                        body: user_res.message || 'К сожалению произошла ошибка'
-
-                      });
-                      scope.$apply();
-
-                    }
-
-                  });
-
-                });
-
-
-
-              }
-
-              else {
-                $rootScope.$broadcast('notifier:notify', {
-
-                  header: 'Ошибка',
-                  body: $rootScope.locale.errors[user_res.status_code] || $rootScope.locale.errors[user_res.message] || 'К сожалению произошла ошибка'
-
-                });
-                $rootScope.$apply();
-              }
-
-            });
-
-          };
-
-        }
-
-      };
-
-    })
-
-    .directive('overlayClick', function(){
-
-      return {
-        restrict: 'A',
-        replace: false,
-        scope: false,
-        link: function(scope, elm, attrs){
-
-          elm.on('click', function(e){
-            if(e.target === elm[0]){
-              scope.$apply(function () {
-                scope.$eval(attrs.overlayClick);
-              });
-            }
-          });
-
-        }
-      };
-
-    })
-
-    .controller('slick_config', function($scope){
-
-      $scope.gift_slider_config = {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        speed: 150,
-        infinite: false,
-        prevArrow: '<div class="slick-prev"></div>',
-        nextArrow: '<div class="slick-next"></div>',
-        swipeToSlide: true,
-        responsive: [
-          {
-            breakpoint: 1000,
-            settings: {
-              slidesToShow: 2
-            }
-          },
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 1
-            }
-          }
-        ]
-      };
-
-      $scope.action_slider_config = {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        speed: 150,
-        infinite: false,
-        prevArrow: '<div class="slick-prev"></div>',
-        nextArrow: '<div class="slick-next"></div>',
-        swipeToSlide: true,
-        responsive: [
-          {
-            breakpoint: 800,
-            settings: {
-              slidesToShow: 2
-            }
-          },
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 1
-            }
-          }
-        ]
-      };
-
-    })
-
-    .directive('slickCarousel', function ($compile, $timeout) {
-      return {
-        restrict:'A',
-        link: function (scope, element, attrs) {
-
-          scope.hidden = true;
-
-          var $element = $(element);
-
-          function toggle(state){
-
-            if(state){
-              $element.css('opacity', 1);
-            }
-            else {
-              $element.css('opacity', 0);
-            }
-
-          }
-
-          var options = scope.$eval(attrs.options) || {
-            infinite: false,
-            nextArrow: '<img class="slider_arrow right" src="dist/img/right.png"/>',
-            prevArrow: '<img class="slider_arrow left" src="dist/img/left.png"/>',
-            slidesToShow: 4,
-            slidesToScroll: 4,
-            responsive: [
-              {
-                breakpoint: 1190,
-                settings: {
-                  slidesToShow: 4,
-                  slidesToScroll: 4
-                }
-              },
-              {
-                breakpoint: 880,
-                settings: {
-                  slidesToShow: 3,
-                  slidesToScroll: 3
-                }
-              },
-              {
-                breakpoint: 600,
-                settings: {
-                  slidesToShow: 2,
-                  slidesToScroll: 2
-                }
-              },
-              {
-                breakpoint: 480,
-                settings: {
-                  slidesToShow: 1,
-                  slidesToScroll: 1
-                }
-              }
-              // You can unslick at a given breakpoint now by adding:
-              // settings: "unslick"
-              // instead of a settings object
-            ]
-          };
-
-          scope.$watchCollection(function(){
-            return $element.find('[data-slick-slide]').not('.ng-hide');
-          }, function(){
-            toggle(false);
-            $timeout(function(){
-              if($element.hasClass('slick-initialized')){
-                $element.slick('removeSlide', null, null, true);
-                $element.slick('unslick');
-              }
-              $element.slick(options);
-              $element.slick('slickUnfilter');
-              $element.slick('slickFilter', ':not(.ng-hide)');
-              toggle(true);
-            }, 0);
-
-          });
-
-          //var parent = $(element).parent();
-          //console.dir(parent);
-
-
-
-        }
-
-      };
-    })
-
-    .directive('notifier', function(){
-
-       return {
-
-         restrict: 'E',
-         replace: true,
-         scope: true,
-         templateUrl: '/html/ui/ui.notifier.html',
-         link: function(scope){
-
-           var new_data = {
-
-             header: '',
-             body: ''
-
-           };
-
-           scope.$on('notifier:notify', function(e, data){
-
-            scope.data = data;
-            scope.show_notifier = true;
-            console.log('notifier: ' + data.body);
-
-           });
-
-           scope.reset_notifier = function(){
-             scope.data = angular.copy(new_data);
-             scope.show_notifier = false;
-           };
-
-           scope.reset_notifier();
-
-         }
-
-       }
-
-    })
-
-    .directive('phoneMask', function(){
-
-      return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, elm, attrs, ngModel){
-
-          ngModel.$validators.phone = function(modelValue, viewValue) {
-            var value = (modelValue || viewValue).replace(/\D/g,'');
-            if(!value) return true;
-            return /^[0-9]{11}$/.test(value);
-          };
-
-          $(elm).mask('+7(000) 000-00-00', {placeholder: "+7(___)___-__-__"});
-
-        }
-      };
-
-    })
-
-    .directive('selectize', function($timeout){
-
-      return {
-        restrict: 'A',
-        link: function(scope, elm){
-
-          $timeout(function(){
-            $(elm).selectize({});
-          }, 0);
-
-        }
-      };
-
-    })
-
-    .directive('dateSelector', function($parse){
-
-      return {
-        restrict: 'A',
-        require: 'ngModel',
-        scope: true,
-        link: function(scope, elm, attrs, ngModelCtrl){
-
-          scope.selected_date = [ '', '', '' ];
-
-          ngModelCtrl.$formatters.push(function(modelValue) {
-            return modelValue ? angular.copy(modelValue).split('-').reverse() : [ '', '', '' ];
-          });
-
-          ngModelCtrl.$render = function() {
-            scope.selected_date = angular.copy(ngModelCtrl.$viewValue);
-          };
-
-          ngModelCtrl.$parsers.push(function(viewValue) {
-
-            var new_date = scope.selected_date && scope.selected_date.some(function(value){
-              return value && value !== '';
-            }) ? angular.copy(scope.selected_date).reverse().join('-') : '';
-
-            return new_date;
-
-          });
-
-          scope.$watchCollection('selected_date', function(){
-
-            ngModelCtrl.$setViewValue(angular.copy(scope.selected_date));
-
-          });
-
-
-        }
       };
 
     });

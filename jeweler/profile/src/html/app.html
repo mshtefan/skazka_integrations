@@ -11,7 +11,7 @@
       <div class="sp_person-sec__col2">
         <div class="sp_person-cell">
           <div class="sp_person-cell__photo" style="background-image: url('{{ user().user.pic | sailplay_pic }}');"></div>
-          <a href="#" class="sp_cmn-btn person-cell__btn js-open-profile-popup" data-ng-click="show_profile_info = true;">Изменить профиль</a>
+          <a href="#" class="sp_cmn-btn person-cell__btn js-open-profile-popup" data-ng-click="open_profile()">Изменить профиль</a>
         </div>
       </div>
       <div class="sp_person-sec__col3">
@@ -98,17 +98,20 @@
 
       </div>
 
-      <div class="sp_overlay" data-ng-show="selected_gift" data-overlay-click="selected_gift = false;">
-        <div class="sp_gift-popup js-gift-popup">
-          <div class="sp_gift-popup__hd">{{ selected_gift.points }} бонусных баллов будут списаны с вашего счета</div>
-          <div class="sp_gift-popup__img" style="background-image: url('{{ selected_gift.thumbs.url_250x250 | sailplay_pic }}');"></div>
-          <div class="sp_gift-popup__ttl">Вы уверены?</div>
-          <div class="sp_gift-popup__btns">
-            <div class="sp_gift-popup__btn sp_cmn-btn-sm js-close-popup" data-ng-click="gift_purchase(selected_gift); selected_gift = false;">Да</div>
-            <div class="sp_gift-popup__btn sp_cmn-btn-sm js-close-popup" data-ng-click="selected_gift = false;">Отмена</div>
-          </div>
+      <div class="sp_overlay display_table" data-ng-show="selected_gift">
+        <div class="display_table_cell" data-overlay-click="selected_gift = false;">
+          <div class="sp_gift-popup js-gift-popup">
+            <div class="sp_gift-popup__hd">{{ selected_gift.points }} бонусных баллов будут списаны с вашего счета</div>
+            <div class="sp_gift-popup__img" style="background-image: url('{{ selected_gift.thumbs.url_250x250 | sailplay_pic }}');"></div>
+            <div class="sp_gift-popup__ttl">Вы уверены?</div>
+            <div class="sp_gift-popup__btns">
+              <div class="sp_gift-popup__btn sp_cmn-btn-sm js-close-popup" data-ng-click="gift_purchase(selected_gift); selected_gift = false;">Да</div>
+              <div class="sp_gift-popup__btn sp_cmn-btn-sm js-close-popup" data-ng-click="selected_gift = false;">Отмена</div>
+            </div>
 
+          </div>
         </div>
+
       </div>
 
     </section>
@@ -150,50 +153,53 @@
 
   </div>
   <!-- /sp_widget -->
-  <div class="sp_overlay" data-ng-show="show_history" data-overlay-click="show_history = false;">
-    <div class="sp_hist-popup js-history-popup">
-      <div class="sp_cmn-popup-close js-close-popup" data-ng-click="show_history = false;"></div>
-      <div class="sp_hist-popup__hd">История транзакций</div>
-      <div class="sp_hist-list">
-        <div class="sp_hist-list__itm" data-dir-paginate="item in history() | itemsPerPage:10" data-pagination-id="history_pages" data-ng-class="{ 'this-dec': item.points_delta < 0 }">
-          <div class="sp_hist-list__val">{{ item.points_delta || 0 }} {{ item.points_delta | sailplay_pluralize:'балл,балла,баллов' }}</div>
-          {{ item | history_item }}
+  <div class="sp_overlay display_table" data-ng-show="show_history">
+    <div class="display_table_cell" data-overlay-click="show_history = false;">
+      <div class="sp_hist-popup js-history-popup">
+        <div class="sp_cmn-popup-close js-close-popup" data-ng-click="show_history = false;"></div>
+        <div class="sp_hist-popup__hd">История транзакций</div>
+        <div class="sp_hist-list">
+          <div class="sp_hist-list__itm" data-dir-paginate="item in history() | itemsPerPage:10" data-pagination-id="history_pages" data-ng-class="{ 'this-dec': item.points_delta < 0 }">
+            <div class="sp_hist-list__val">{{ item.points_delta || 0 }} {{ item.points_delta | sailplay_pluralize:'балл,балла,баллов' }}</div>
+            {{ item | history_item }}
+          </div>
         </div>
+        <!-- /list -->
+
+        <dir-pagination-controls data-max-size="5" data-pagination-id="history_pages" data-template-url="/html/ui/ui.pagination.controls.html" data-auto-hide="true"></dir-pagination-controls>
+
       </div>
-      <!-- /list -->
-
-      <dir-pagination-controls data-max-size="5" data-pagination-id="history_pages" data-template-url="/html/ui/ui.pagination.controls.html" data-auto-hide="true"></dir-pagination-controls>
-
     </div>
+
   </div>
   <!-- /hist popup -->
 
-  <div class="sp_overlay" data-ng-show="show_statuses_list" data-overlay-click="show_statuses_list = false;">
-    <div class="sp_stat-popup js-status-popup">
-      <div class="sp_stat-popup__hd">Описание статусов</div>
-      <div class="sp_stat-pop-itm" data-ng-repeat="badge in badges().multilevel_badges[0]">
-        <div class="sp_stat-pop-itm__img"><img data-ng-src="{{ badge.thumbs.url_250x250 | sailplay_pic }}" alt=""></div>
-        <div class="sp_stat-pop-itm__text">
-          {{ badge.descr }}
+  <div class="sp_overlay" data-ng-show="show_statuses_list">
+      <div class="sp_stat-popup js-status-popup">
+        <div class="sp_stat-popup__hd">Описание статусов</div>
+        <div class="sp_stat-pop-itm" data-ng-repeat="badge in badges().multilevel_badges[0]">
+          <div class="sp_stat-pop-itm__img"><img data-ng-src="{{ badge.thumbs.url_250x250 | sailplay_pic }}" alt=""></div>
+          <div class="sp_stat-pop-itm__text">
+            {{ badge.descr }}
+          </div>
+        </div>
+        <div class="sp_stat-popup__btns">
+          <div class="sp_stat-popup__btn sp_cmn-btn-sm js-close-popup" data-ng-click="show_statuses_list = false;">ОК</div>
         </div>
       </div>
-      <div class="sp_stat-popup__btns">
-        <div class="sp_stat-popup__btn sp_cmn-btn-sm js-close-popup" data-ng-click="show_statuses_list = false;">ОК</div>
-      </div>
-    </div>
 
   </div>
 
-  <div class="sp_overlay" data-ng-show="show_profile_info" data-overlay-click="show_profile_info = false;">
+  <div class="sp_overlay" data-ng-show="show_profile_info" data-overlay-click="show_profile_info = false;  body_lock(false)">
     <div class="sp_profile-popup js-profile-popup" data-fill-profile>
       <div class="sp_profile-popup__hd">Изменить профиль</div>
 
       <form class="sp_profile-form" name="fill_profile" novalidate data-ng-submit="$event.preventDefault(); submit_profile(fill_profile, $parent.close_profile)">
         <div class="sp_profile-form__set">
-          <input type="email" name="email" class="sp_cmn-input" placeholder="Email" data-ng-model="profile_form.user.addEmail" data-ng-model-options="{ updateOn: 'default change blur' }">
+          <input type="email" name="email" class="sp_cmn-input" placeholder="Email" data-ng-model="profile_form.user.addEmail" data-ng-model-options="{ updateOn: 'default change blur' }" required>
         </div>
         <div class="sp_profile-form__set">
-          <input type="text" name="phone" class="sp_cmn-input js-create-mask" data-phone-mask data-ng-model="profile_form.user.addPhone">
+          <input type="text" name="phone" class="sp_cmn-input js-create-mask" data-phone-mask data-ng-model="profile_form.user.addPhone" maxlength="17" data-ng-model-options="{ updateOn: 'default change blur' }" required>
         </div>
         <div class="sp_profile-form__set">
           <div class="sp_profile-form__ttl">Дата рождения</div>
@@ -345,15 +351,15 @@
 
         <div class="sp_profile-form__set">
           <div class="sp_cmn-inline-param">
-            <label class="outer_label" data-ng-class="{ checked_input: profile_form.custom_vars['В браке'] === 'да' }">
-              <input name="married" type="radio" class="js-create-radio" data-ng-value="'да'" data-ng-model="profile_form.custom_vars['В браке']">
+            <label class="outer_label radio" data-ng-class="{ checked: profile_form.custom_vars['В браке'] === 'да' }">
+              <input name="married" type="radio" class="js-create-radio" data-ng-value="'да'" data-ng-model="profile_form.custom_vars['В браке']" >
 
               <span class="sp_cmn-label js-satellite">Замужем/женат</span>
             </label>
 
           </div>
           <div class="sp_cmn-inline-param">
-            <label class="outer_label" data-ng-class="{ checked_input: profile_form.custom_vars['В браке'] === 'нет' }">
+            <label class="outer_label radio" data-ng-class="{ checked: profile_form.custom_vars['В браке'] === 'нет' }">
               <input name="married" type="radio" class="js-create-radio"  data-ng-value="'нет'" data-ng-model="profile_form.custom_vars['В браке']">
 
               <span class="sp_cmn-label js-satellite">Не замужем/Холост</span>
@@ -517,7 +523,7 @@
         <!-- /set -->
         <div class="sp_profile-form__set">
           <div class="sp_cmn-inline-param">
-            <label class="outer_label" data-ng-class="{ checked_input: profile_form.custom_vars['Дети'] === 'Да' }">
+            <label class="outer_label checkbox" data-ng-class="{ checked: profile_form.custom_vars['Дети'] === 'Да' }">
               <input name="checkboxname" type="checkbox" class="js-create-checkbox"  data-ng-model="profile_form.custom_vars['Дети']" data-ng-true-value="'Да'" data-ng-false-value="'Нет'">
 
               <span class="sp_cmn-label js-satellite">Есть дети</span>
@@ -527,15 +533,15 @@
         <div class="sp_profile-form__set">
           <div class="sp_profile-form__ttl">Скрывать историю транзакции</div>
           <div class="sp_cmn-inline-param">
-            <label class="outer_label" data-ng-class="{ checked_input: profile_form.hide_hist }">
-              <input name="hide_hist" type="radio" class="js-create-radio" data-ng-value="true" data-ng-model="profile_form.hide_hist">
+            <label class="outer_label radio" data-ng-class="{ checked: profile_form.custom_vars.hide_hist === 'Да' }">
+              <input name="hide_hist" type="radio" class="js-create-radio" data-ng-value="'Да'" data-ng-model="profile_form.custom_vars.hide_hist">
 
               <span class="sp_cmn-label js-satellite">Да</span>
             </label>
           </div>
           <div class="sp_cmn-inline-param">
-            <label class="outer_label" data-ng-class="{ checked_input: !profile_form.hide_hist }">
-              <input name="hide_hist" type="radio" class="js-create-radio" data-ng-value="false" data-ng-model="profile_form.hide_hist">
+            <label class="outer_label radio" data-ng-class="{ checked: profile_form.custom_vars.hide_hist === 'Нет' }">
+              <input name="hide_hist" type="radio" class="js-create-radio" data-ng-value="'Нет'" data-ng-model="profile_form.custom_vars.hide_hist">
 
               <span class="sp_cmn-label js-satellite">Нет</span>
             </label>
@@ -545,30 +551,12 @@
 
         <div class="sp_profile-form__btns">
           <button type="submit" class="sp_cmn-btn-sm sp_profile-form__btn" data-ng-disabled="!fill_profile.$valid">Отправить</button>
-          <a href="#" class="sp_cmn-btn-sm sp_profile-form__btn js-close-popup" data-ng-click="$parent.show_profile_info = false;">Отмена</a>
+          <a href="#" class="sp_cmn-btn-sm sp_profile-form__btn js-close-popup" data-ng-click="$parent.show_profile_info = false; $parent.body_lock(false);">Отмена</a>
         </div>
       </form>
     </div>
   </div>
   <!-- /profile popup -->
-
-  <div class="sp_task-popup js-task-popup" style="display: none;">
-    <div class="sp_cmn-popup-close js-close-popup"></div>
-    <div class="sp_task-popup__hd">Рассказать о покупке</div>
-    <div class="sp_task-popup__inner">
-      <div class="sp_task-popup__l">
-        <img class="sp_task-popup__img" src="dist/img/task-icon-06.svg" alt="">
-      </div>
-      <div class="sp_task-popup__r">
-        <p>Lorem ipsum dolor sit amet, mea no consul euismod meliore. Ei detracto detraxit vim, an augue accusam
-          temporibus eum. Cum illum augue moderatius no. Pro duis ludus ne, eam enim alterum liberavisse at.</p>
-
-        <p>Cum vide scaevola ut, vis viris mandamus in. Et ius vidit assentior mnesarchum. Est id fugit sonet democritum.
-          Sit ad utroque accommodare.</p>
-      </div>
-    </div>
-    <div class="sp_cmn-btn-sm sp_task-popup__btn js-close-popup">ОК</div>
-  </div>
 
   <notifier></notifier>
 

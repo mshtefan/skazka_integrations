@@ -45,6 +45,10 @@ input.ng-invalid.ng-touched {
 button {
   outline: none;
 }
+.body_lock {
+  overflow: hidden;
+  margin-right: 15px;
+}
 .sp_cmn-btn {
   display: block;
   height: 55px;
@@ -333,9 +337,26 @@ button {
 }
 @media (max-width: 479px) {
 }
-.checked_input {
-  background-color: #AE0F4A;
-  color: #fff;
+.outer_label {
+  padding-left: 20px !important;
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 15px 15px;
+}
+.outer_label.radio {
+  background-image: url('../img/checkboxes/1.png');
+}
+.outer_label.radio.checked {
+  background-image: url('../img/checkboxes/2.png');
+}
+.outer_label.checkbox {
+  background-image: url('../img/checkboxes/3.png');
+}
+.outer_label.checkbox.checked {
+  background-image: url('../img/checkboxes/4.png');
+}
+.outer_label input {
+  display: none;
 }
 .test-fonts-sec {
   -webkit-box-sizing: border-box;
@@ -914,7 +935,7 @@ button {
 .sp_progr-sec__l {
   float: left;
   width: 30%;
-  padding-top: 30px;
+  padding-top: 34px;
   padding-right: 15px;
 }
 @media (max-width: 991px) {
@@ -1447,6 +1468,7 @@ button {
   width: 392px;
   max-width: 90%;
   margin: 40px auto 40px auto;
+  max-height: 90%;
   background-color: #fff;
   -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
@@ -2041,6 +2063,13 @@ button {
   width: 100px;
   max-width: 60%;
   height: auto;
+}
+.display_table {
+  display: table;
+}
+.display_table_cell {
+  display: table-cell;
+  vertical-align: middle;
 }
 /* Slider */
 .slick-slider {
