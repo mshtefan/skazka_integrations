@@ -340,20 +340,27 @@
             ]
           };
 
+          scope.process = false;
+
           scope.$watchCollection(function(){
             return $element.find('[data-slick-slide]').not('.ng-hide');
           }, function(){
-            toggle(false);
-            $timeout(function(){
+            if(!scope.process){
+              scope.process = true;
+              //toggle(false);
               if($element.hasClass('slick-initialized')){
                 $element.slick('removeSlide', null, null, true);
                 $element.slick('unslick');
               }
-              $element.slick(options);
-              $element.slick('slickUnfilter');
-              $element.slick('slickFilter', ':not(.ng-hide)');
-              toggle(true);
-            }, 0);
+              $timeout(function(){
+
+                $element.slick(options);
+                $element.slick('slickUnfilter');
+                $element.slick('slickFilter', ':not(.ng-hide)');
+                //toggle(true);
+                scope.process = false;
+              }, 10);
+            }
 
           });
 
