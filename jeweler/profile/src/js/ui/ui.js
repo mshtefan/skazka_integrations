@@ -347,7 +347,7 @@
           }, function(){
             if(!scope.process){
               scope.process = true;
-              //toggle(false);
+              toggle(false);
               if($element.hasClass('slick-initialized')){
                 $element.slick('removeSlide', null, null, true);
                 $element.slick('unslick');
@@ -357,9 +357,9 @@
                 $element.slick(options);
                 $element.slick('slickUnfilter');
                 $element.slick('slickFilter', ':not(.ng-hide)');
-                //toggle(true);
+                toggle(true);
                 scope.process = false;
-              }, 10);
+              }, 500);
             }
 
           });
