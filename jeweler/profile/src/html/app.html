@@ -58,8 +58,8 @@
       </div>
     </section>
 
-    <section class="sp_l-centered sp_progr-sec">
-      <div class="sp_progr-sec__l" data-ng-if="get_next()">
+    <section class="sp_l-centered sp_progr-sec" data-ng-if="get_next()">
+      <div class="sp_progr-sec__l">
         <div class="sp_progr-sec__txt">
           До следющего статуса осталось <b>{{ get_offset() }} {{ get_offset() | sailplay_pluralize:'балл,балла,баллов' }}</b>
         </div>
