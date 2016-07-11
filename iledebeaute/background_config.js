@@ -1,1 +1,1 @@
-func({"background": "https://d3sailplay.cdnvideo.ru/media/assets/assetfile/e0801ac7c9d72e3a308283ff96c94824.jpg"});
+func({"background": "http://iledebeaute.ru/files/images/pub/part_3/73620/src/background_iledebeaute.jpg"});
