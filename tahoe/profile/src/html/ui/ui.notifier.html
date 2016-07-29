@@ -1,0 +1,14 @@
+<div class="bns_overlay bns_error" data-ng-show="show_notifier" data-overlay-click="reset_notifier()">
+  <div class="bns_over_iner">
+    <h3>{{ data.header }}</h3>
+    <a href="#" class="bns_close" data-ng-click="$event.preventDefault(); reset_notifier();"></a>
+			<span class="bns_pass_info">
+				{{ data.body }}
+			</span>
+    <div class="bns_sign_form">
+      <div class="bns_input_block">
+        <a href="#" class="bns_over_cancel_btn" data-ng-click="$event.preventDefault(); reset_notifier();">Ok</a>
+      </div>
+    </div>
+  </div>
+</div>

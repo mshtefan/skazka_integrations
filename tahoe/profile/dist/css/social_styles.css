@@ -1,0 +1,59 @@
+body {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.fb_share_btn,
+.vk_share_btn,
+.gp_share_btn {
+  width: auto;
+  line-height: 30px;
+  display: inline-block;
+  background-color: #043162;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 3px;
+  float: left;
+  cursor: pointer;
+  padding: 0 20px;
+  font-family: sans-serif;
+}
+.fb_share_btn:link,
+.vk_share_btn:link,
+.gp_share_btn:link {
+  color: #fff;
+}
+.fb_share_btn:visited,
+.vk_share_btn:visited,
+.gp_share_btn:visited {
+  color: #fff;
+}
+.fb_share_btn:hover,
+.vk_share_btn:hover,
+.gp_share_btn:hover {
+  color: #fff;
+}
+.fb_share_btn:active,
+.vk_share_btn:active,
+.gp_share_btn:active {
+  color: #fff;
+}
+.fb_share_btn:hover,
+.vk_share_btn:hover,
+.gp_share_btn:hover {
+  background-color: #053d7b;
+}
+.fb_share_btn:active,
+.vk_share_btn:active,
+.gp_share_btn:active {
+  background-color: #032a53;
+}
+td {
+  text-align: left !important;
+}
+.twitter-share-button {
+  margin-top: 3px;
+  float: left;
+}

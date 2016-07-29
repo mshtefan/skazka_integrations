@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet/less" type="text/css" href="css/style.less">
+	<script type="text/javascript" src="js/jquery-1.12.3.js"></script>
+	<script type="text/javascript" src="js/less.min.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Raleway:400,600,700,300,100' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,300' rel='stylesheet' type='text/css'>
+
+	<script type="text/javascript" src="config/local.js"></script>
+	<script type="text/javascript" src="config/locale.ru.js"></script>
+	<script type="text/javascript" src="dist/js/sailplay.widgets.js"></script>
+
+</head>
+<body>
+
+<script>
+	$( document ).ready(function() {
+		$('.bns_reedem_more').click(function(){
+			$('.bns_redeem_main').toggleClass('bns_open');
+			return false;
+		})
+		$('.bns_hist').click(function(){
+			$('.bns_over_hist').fadeIn();
+			return false;
+		})
+		$('.bns_overlay, .bns_close').click(function(){
+			$('.bns_overlay').fadeOut();
+			return false;
+		})
+		$('.bns_over_iner').click(function(event){
+			event.stopPropagation()
+		})
+	})
+</script>
+
+</body>
+</html>

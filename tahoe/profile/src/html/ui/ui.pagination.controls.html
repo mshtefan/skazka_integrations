@@ -1,0 +1,11 @@
+<div class="bns_hist_page" data-ng-if="1 < pages.length || !autoHide">
+  <a data-ng-if="directionLinks" data-ng-class="{ disabled : pagination.current == 1 }" href="" data-ng-click="setCurrent(pagination.current - 1)">
+    &#60;prev
+  </a>
+  <a data-ng-repeat="pageNumber in pages track by tracker(pageNumber, $index)" data-ng-class="{ act : pagination.current == pageNumber, disabled : pageNumber == '...' }" href="" data-ng-click="setCurrent(pageNumber)">
+    {{ pageNumber }}
+  </a>
+  <a data-ng-if="directionLinks" data-ng-class="{ disabled : pagination.current == pagination.last }" href="" data-ng-click="setCurrent(pagination.current + 1)">
+    next>
+  </a>
+</div>

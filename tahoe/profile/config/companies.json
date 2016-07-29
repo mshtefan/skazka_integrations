@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Kiwi Photography",
+    "description": "10% Off Retail Price",
+    "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/77b5cc18fa3608eea1ae1a2169d693f4.gif",
+    "link": "http://www.kiwicamera.com/"
+  },
+  {
+    "name": "Jake's On The Lake",
+    "description": "Free Artichoe Heart Appetizer or Hula Pie Dessert",
+    "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/85457cea85992e4da64fcfa9dce1f8ce.png",
+    "link": "http://www.jakestahoe.com/"
+  },
+  {
+    "name": "Willard's Sport Shop",
+    "description": "10% Off Retail, excludes rentals and clearance items",
+    "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/603085f5e77dca9c0f7162cdf5c25b47.png",
+    "link": "http://willardsportshop.com/"
+  },
+  {
+    "name": "Tahoe Dave’s",
+    "description": "10% Off Full Priced Items",
+    "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/bbd609cf16211a0c5723f4018866718c.jpg",
+    "link": "http://www.tahoedaves.com/"
+  },
+  {
+    "name": "Trunk Show",
+    "description": "10% Off",
+    "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/eb2daf015476972633468f8ad3041ba5.png",
+    "link": "https://www.tahoetrunkshow.com/"
+  },
+  {
+    "name": "Alpenglow Sports",
+    "description": "Receive a FREE National Geographic Lake Tahoe adventure map with a purchase of $100 or more",
+    "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/e43c640191f0a6f1db64f7b33d07ce83.jpg",
+    "link": "http://www.alpenglowsports.com/"
+  },
+  {
+    "name": "Incline Village Golf Courses",
+    "description": "Call or Email TLUXP Office for Coupons, valid for discounted golf & rental rates, plus one free beer",
+    "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/cd9df80bb9d2d4f07ba0b43970abd47a.jpg",
+    "link": "https://www.yourtahoeplace.com/golf-incline/"
+  }
+]
