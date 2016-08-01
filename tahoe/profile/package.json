@@ -9,10 +9,11 @@
     "angular-cookie": "latest",
     "angular-i18n": "^1.5.6",
     "angular-utils-pagination": "^0.11.1",
-    "sailplay-hub": "latest",
-    "sailplay-hub-actions": "latest",
     "jquery": "1.12.4",
-    "jquery-mask-plugin": "1.13.3"
+    "jquery-mask-plugin": "1.13.3",
+    "jspdf": "^1.2.61",
+    "sailplay-hub": "latest",
+    "sailplay-hub-actions": "latest"
   },
   "devDependencies": {
     "browser-sync": "latest",
