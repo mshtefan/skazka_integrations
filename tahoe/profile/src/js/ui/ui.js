@@ -78,6 +78,8 @@
             //angular.extend(scope.profile_form.user, user.user);
             scope.profile_form.user.addPhone = user.user.phone;
             scope.profile_form.user.addEmail = user.user.email;
+            scope.profile_form.user.firstName = user.user.first_name;
+            scope.profile_form.user.lastName = user.user.last_name;
             scope.profile_form.user.birthDate = user.user.birth_date || '';
             if(ipCookie(FillProfile.cookie_name) && SailPlay.config().auth_hash === ipCookie(FillProfile.cookie_name).user.auth_hash ){
               angular.extend(scope.profile_form, ipCookie(FillProfile.cookie_name));
@@ -451,19 +453,62 @@
         require: 'ngModel',
         link: function(scope, elm, attrs, ngModel){
 
-          ngModel.$validators.phone = function(modelValue, viewValue) {
-            var value = (modelValue || viewValue || '').replace(/\D/g,'');
-            if(!value) return true;
-            return /^[0-9]{11}$/.test(value);
+          ngModel.$render = function(){
+            $(elm).unmask();
+            $(elm).val(ngModel.$modelValue);
+            $(elm).mask(attrs.phoneMask || '+7(000) 000-00-00',
+              {
+                placeholder: attrs.placeholder || "+7(___)___-__-__",
+                onComplete: function(cep) {
+                  ngModel.$setViewValue(cep);
+                  ngModel.$setValidity('phone', true);
+                  scope.$digest();
+                },
+                onChange: function(cep){
+                  var value = (cep || '').replace(/\D/g,'');
+                  if(!/^[0-9]{11}$/.test(value)){
+                    ngModel.$setViewValue('');
+                    ngModel.$setValidity('phone', false);
+                    scope.$digest();
+                  }
+                },
+                onInvalid: function(val, e, f, invalid, options){
+                  ngModel.$setViewValue('');
+                  ngModel.$setValidity('phone', false);
+                  scope.$digest();
+                }
+              });
           };
-
-          $timeout(function(){
-            $(elm).mask(attrs.phoneMask || '+7(000) 000-00-00', {placeholder: attrs.placeholder || "+7(___)___-__-__"});
-          }, 10);
 
         }
       };
 
+    })
+
+    .directive('maskedPhoneNumber', function(){
+      return {
+        restrict: 'A',
+        scope: {
+          phone: '=?'
+        },
+        link: function(scope, elm, attrs){
+
+          scope.$watch('phone', function(new_value){
+
+            if(new_value){
+              $(elm).text(new_value);
+              $(elm).unmask();
+              $(elm).mask(attrs.maskedPhoneNumber || '+7(000) 000-00-00');
+            }
+            else {
+              $(elm).text(attrs.noValue || '');
+            }
+
+
+          });
+
+        }
+      }
     })
 
     .directive('selectize', function($timeout){

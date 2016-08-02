@@ -87,7 +87,7 @@
           <div class="bns_info_block">
             <span class="bns_name">{{ user().user.name || '&nbsp;' }}</span>
             <span class="bns_email">{{ user().user.email }}</span>
-            <span class="bns_phone">{{ user().user.phone }}</span>
+            <span class="bns_phone" data-masked-phone-number="+1 (000) 000-00-00" data-phone="user().user.phone"></span>
             <a href="#" class="bns_edit_prof" data-ng-click="$event.preventDefault(); open_profile();">edit your profile</a>
             <a href="#" class="bns_info_btn bns_logout" data-ng-click="$event.preventDefault(); logout();">Log out</a>
           </div>
@@ -387,7 +387,7 @@
         </div>
         <div class="bns_input_block bns_input_block_prof">
           <input type="text" name="phone" data-phone-mask="+1 (999) 999-99-99" placeholder="+1 (___) ___-__-__" data-ng-model="profile_form.user.addPhone" required>
-          <span class="bns_span_over">{{ profile_form.user.addPhone || 'Phone number' }}</span>
+          <span class="bns_span_over" data-masked-phone-number="+1 (000) 000-00-00" data-phone="profile_form.user.addPhone" data-no-value="Phone number"></span>
           <span class="bib_er" data-ng-show="profile.phone.$invalid && profile.phone.$touched">Field is required</span>
         </div>
         <div class="bns_input_block bns_input_block_prof">
