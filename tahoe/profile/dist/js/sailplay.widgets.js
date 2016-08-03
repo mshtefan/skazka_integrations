@@ -4311,7 +4311,16 @@ module.run(['$templateCache', function($templateCache) {
         require: 'ngModel',
         link: function(scope, elm, attrs, ngModel){
 
+          function valid_phone(value){
+
+            return value && /^[0-9]{11}$/.test(value);
+
+          }
+
           ngModel.$render = function(){
+
+            ngModel.$setValidity('phone', valid_phone(ngModel.$modelValue));
+
             $(elm).unmask();
             $(elm).val(ngModel.$modelValue);
             $(elm).mask(attrs.phoneMask || '+7(000) 000-00-00',
@@ -4324,7 +4333,7 @@ module.run(['$templateCache', function($templateCache) {
                 },
                 onChange: function(cep){
                   var value = (cep || '').replace(/\D/g,'');
-                  if(!/^[0-9]{11}$/.test(value)){
+                  if(!valid_phone(cep)){
                     ngModel.$setViewValue('');
                     ngModel.$setValidity('phone', false);
                     scope.$digest();
