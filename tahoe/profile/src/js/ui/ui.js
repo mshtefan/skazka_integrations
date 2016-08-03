@@ -96,7 +96,6 @@
               form.$setPristine();
               form.$setUntouched();
             }
-            console.dir(saved_form);
             scope.profile_form = angular.copy(saved_form);
           };
 
