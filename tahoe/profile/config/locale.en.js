@@ -26,7 +26,8 @@ window._LOCALE = {
     default_error: 'К сожалению произошла ошибка'
   },
   errors: {
-    '-200007': 'phone is already in use'
+    '-200007': 'phone is already in use',
+    '-200010': 'E-Mail is already in use'
   },
   history_items: {
     "purchase": "Purchase",

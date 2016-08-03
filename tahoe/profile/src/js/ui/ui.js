@@ -46,6 +46,8 @@
         scope: true,
         link: function(scope){
 
+          var saved_form = false;
+
           var new_form = {
 
             user: {
@@ -84,7 +86,19 @@
             if(ipCookie(FillProfile.cookie_name) && SailPlay.config().auth_hash === ipCookie(FillProfile.cookie_name).user.auth_hash ){
               angular.extend(scope.profile_form, ipCookie(FillProfile.cookie_name));
             }
+
+            saved_form = angular.copy(scope.profile_form);
+
           });
+
+          scope.revert_profile_form = function(form){
+            if (form) {
+              form.$setPristine();
+              form.$setUntouched();
+            }
+            console.dir(saved_form);
+            scope.profile_form = angular.copy(saved_form);
+          };
 
           scope.toggle_tag = function(arr, tag){
 
@@ -221,6 +235,7 @@
               }
 
               else {
+
                 $rootScope.$broadcast('notifier:notify', {
 
                   header: $rootScope.locale.error,
@@ -228,6 +243,7 @@
 
                 });
                 $rootScope.$apply();
+
               }
 
             });

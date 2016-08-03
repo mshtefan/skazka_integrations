@@ -421,17 +421,17 @@
         </div>
         <div class="bns_input_block bns_input_block_check">
           <div class="bns_radio">
-            <input type="radio" name="sex" value="1" id="man" data-ng-model="profile_form.user.sex">
+            <input type="radio" name="sex" data-ng-value="1" id="man" data-ng-model="profile_form.user.sex">
             <label for="man">Male</label>
           </div>
           <div class="bns_radio">
-            <input type="radio" name="sex" value="2" id="fam" data-ng-model="profile_form.user.sex">
+            <input type="radio" name="sex" data-ng-value="2" id="fam" data-ng-model="profile_form.user.sex">
             <label for="fam">Female</label>
           </div>
         </div>
         <div class="bns_input_block">
           <button type="submit" class="bns_input_block_prof_btn" data-ng-disabled="profile.$invalid">Submit</button>
-          <a href="#" class="bns_over_cancel_btn" data-ng-click="$event.preventDefault(); close_profile();">Cancel</a>
+          <a href="#" class="bns_over_cancel_btn" data-ng-click="$event.preventDefault(); close_profile(); revert_profile_form(profile)">Cancel</a>
         </div>
       </form>
     </div>

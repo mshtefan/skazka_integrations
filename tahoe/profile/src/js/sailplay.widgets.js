@@ -57,7 +57,6 @@
       $http.get('config/companies.json').then(function(res){
 
         $scope.companies = res.data;
-        console.dir($scope.companies);
 
       });
 
