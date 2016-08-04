@@ -121,7 +121,7 @@
 					</span>
             <div class="bns_card_btn">
               <a href="#" class="bns_info_btn bns_downl" data-ng-click="$event.preventDefault(); show_download = true;">Save as PDF</a>
-              <a href="#" class="bns_info_btn bns_sent" data-ng-click="$event.preventDefault(); tags_add({ tags: ['KC card emailed'] }, on_email_sent)">Sent to my email</a>
+              <a href="#" class="bns_info_btn bns_sent" data-ng-click="$event.preventDefault(); tags_add({ tags: ['KC card emailed'] }, on_email_sent)">Send to my email</a>
             </div>
           </div>
         </div>
@@ -361,11 +361,11 @@
   </div>
 
   <!--PROFILE FORM-->
-  <div class="bns_overlay bns_compl_prof" data-ng-class="{ hidden: !show_profile_info }" data-overlay-click="close_profile();">
-    <div class="bns_over_iner" data-fill-profile>
+  <div data-fill-profile class="bns_overlay bns_compl_prof" data-ng-class="{ hidden: !show_profile_info }" data-overlay-click="close_profile(); revert_profile_form();">
+    <div class="bns_over_iner">
       <h3>Complete Your
         Profile</h3>
-      <a href="#" class="bns_close" data-ng-click="$event.preventDefault(); close_profile();"></a>
+      <a href="#" class="bns_close" data-ng-click="$event.preventDefault(); close_profile(); revert_profile_form();"></a>
 			<span class="bns_pass_info">
 				Click on the field you'd like to edit
 			</span>
