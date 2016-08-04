@@ -1431,7 +1431,10 @@
   left: 0 !important;
   width: 100% !important;
   height: 100% !important;
-  overflow: hidden !important;
+  overflow: visible !important;
+}
+.sailplay_action_frame:hover {
+  height: 240px !important;
 }
 .bns_card_popup {
   width: 385px;

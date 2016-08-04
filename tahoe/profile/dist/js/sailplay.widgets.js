@@ -2682,11 +2682,11 @@ module.run(['$templateCache', function($templateCache) {
 
       $rootScope.locale = _LOCALE || {};
 
-      $rootScope.$on('sailplay-init-success', function(){
-        console.log('auth!');
-        //SailPlay.authorize();
-
-      });
+      //$rootScope.$on('sailplay-init-success', function(){
+      //  console.log('auth!');
+      //  //SailPlay.authorize();
+      //
+      //});
 
     })
 
@@ -2869,6 +2869,14 @@ module.run(['$templateCache', function($templateCache) {
             return has_avatar;
 
           };
+
+          SailPlay.on('actions.social.connect.error', function(e){
+            console.dir(e);
+          });
+
+          SailPlay.on('actions.social.connect.success', function(e){
+            console.dir(e);
+          });
 
         }
       }

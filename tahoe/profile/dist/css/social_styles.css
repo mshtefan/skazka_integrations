@@ -52,6 +52,7 @@ body {
 }
 td {
   text-align: left !important;
+  vertical-align: top !important;
 }
 .twitter-share-button {
   margin-top: 3px;
