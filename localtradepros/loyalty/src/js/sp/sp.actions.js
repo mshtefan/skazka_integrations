@@ -281,13 +281,14 @@
           scope.open_profile = function () {
 
             //scope.form = angular.copy(_empty);
-
+            var offset_top = parseInt($('body').height() - $('.js-profile-popup').height());
             $('.js-profile-popup').bPopup({
               speed: 450,
               transition: 'fadeIn',
               closeClass: 'js-close-popup',
               positionStyle: 'absolute',
               follow: [true, false],
+              position: ['auto', offset_top],
               modal: true,
               modalClose: true,
               modalColor: '#000',
@@ -311,13 +312,14 @@
           scope.open_action = function (action) {
 
             scope.custom_action = action;
-
+            var offset_top = $('.sp_tasks-sec').offset().top;
             $('.js-action-popup').bPopup({
               speed: 450,
               transition: 'fadeIn',
               closeClass: 'js-close-popup',
               positionStyle: 'absolute',
               follow: [true, false],
+              position: ['auto', offset_top],
               modal: true,
               modalClose: true,
               modalColor: '#000',

@@ -24,12 +24,14 @@
           };
 
           scope.open_history = function () {
+            var offset_top = $('.sp_status-prog-sec').offset().top;
             $('.js-history-popup').bPopup({
               speed: 450,
               transition: 'fadeIn',
               closeClass: 'js-close-popup',
               positionStyle: 'absolute',
               follow: [true, false],
+              position: ['auto', offset_top],
               modal: true,
               modalClose: true,
               modalColor: '#000',
