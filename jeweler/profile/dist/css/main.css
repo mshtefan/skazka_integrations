@@ -73,6 +73,9 @@ button {
   overflow: hidden;
   margin-right: 15px;
 }
+.uppercase {
+  text-transform: uppercase;
+}
 .sp_cmn-btn {
   display: block;
   height: 55px;
@@ -173,10 +176,11 @@ button {
   border: 1px solid #E6E6E6;
 }
 .sp_cmn-sec-head {
-  font-family: 'a_antiquetradyregular', serif;
+  font-family: 'Muller', sans-serif;
   font-size: 40px;
   text-align: center;
   margin-bottom: 25px;
+  text-transform: uppercase;
 }
 .sp_cmn-breadcr {
   text-align: center;
