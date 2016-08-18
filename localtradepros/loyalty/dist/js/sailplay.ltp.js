@@ -2283,7 +2283,7 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('ltp', ['core', 'ui', 'sp', 'templates'])
 
-    .directive('sailplayLtp', ["$rootScope", "$locale", "sp_api", function ($rootScope, $locale, sp_api) {
+    .directive('sailplayLtp', function ($rootScope, $locale, sp_api) {
 
       return {
         restrict: 'E',
@@ -2305,12 +2305,14 @@ module.run(['$templateCache', function($templateCache) {
           };
 
           scope.open_history = function () {
+            var offset_top = $('.sp_status-prog-sec').offset().top;
             $('.js-history-popup').bPopup({
               speed: 450,
               transition: 'fadeIn',
               closeClass: 'js-close-popup',
               positionStyle: 'absolute',
               follow: [true, false],
+              position: ['auto', offset_top],
               modal: true,
               modalClose: true,
               modalColor: '#000',
@@ -2321,7 +2323,7 @@ module.run(['$templateCache', function($templateCache) {
         }
       }
 
-    }]);
+    });
 
   window.addEventListener('DOMContentLoaded', function () {
 
@@ -2339,7 +2341,7 @@ module.run(['$templateCache', function($templateCache) {
       'ipCookie'
     ])
 
-    .run(["sp", "ipCookie", "sp_api", "$rootScope", "$location", function (sp, ipCookie, sp_api, $rootScope, $location) {
+    .run(function (sp, ipCookie, sp_api, $rootScope, $location) {
 
       $rootScope.config = window._ltp_config || {};
 
@@ -2429,7 +2431,7 @@ module.run(['$templateCache', function($templateCache) {
       //});
 
 
-    }]);
+    });
 
 }());
 
@@ -2511,7 +2513,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
       }
     ])
 
-    .directive('sailplayActions', ["sp_api", "sp", "actions_data", "custom_actions_data", "$timeout", "user_service", function (sp_api, sp, actions_data, custom_actions_data, $timeout, user_service) {
+    .directive('sailplayActions', function (sp_api, sp, actions_data, custom_actions_data, $timeout, user_service) {
 
       return {
 
@@ -2727,13 +2729,14 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
           scope.open_profile = function () {
 
             //scope.form = angular.copy(_empty);
-
+            var offset_top = parseInt($('body').height() - $('.js-profile-popup').height());
             $('.js-profile-popup').bPopup({
               speed: 450,
               transition: 'fadeIn',
               closeClass: 'js-close-popup',
               positionStyle: 'absolute',
               follow: [true, false],
+              position: ['auto', offset_top],
               modal: true,
               modalClose: true,
               modalColor: '#000',
@@ -2757,13 +2760,14 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
           scope.open_action = function (action) {
 
             scope.custom_action = action;
-
+            var offset_top = $('.sp_tasks-sec').offset().top;
             $('.js-action-popup').bPopup({
               speed: 450,
               transition: 'fadeIn',
               closeClass: 'js-close-popup',
               positionStyle: 'absolute',
               follow: [true, false],
+              position: ['auto', offset_top],
               modal: true,
               modalClose: true,
               modalColor: '#000',
@@ -2821,9 +2825,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }])
+    })
 
-    .directive('sailplayAction', ["sp", "$rootScope", function (sp, $rootScope) {
+    .directive('sailplayAction', function (sp, $rootScope) {
 
       return {
 
@@ -2842,7 +2846,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }]);
+    });
 
 }());
 
@@ -2850,7 +2854,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
   angular.module('sp.gifts', [])
 
-    .directive('sailplayGifts', ["sp", "sp_api", "$timeout", "$rootScope", function (sp, sp_api, $timeout, $rootScope) {
+    .directive('sailplayGifts', function (sp, sp_api, $timeout, $rootScope) {
 
       return {
 
@@ -2896,6 +2900,8 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
             if (scope.user().user_points.confirmed < gift.points) return;
 
+            var offset_top = $('.sp_gift-slider').offset().top;
+
             scope.gift = angular.copy(gift);
             $('.js-gift-popup').bPopup({
               speed: 450,
@@ -2903,6 +2909,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
               closeClass: 'js-close-popup',
               positionStyle: 'absolute',
               follow: [true, false],
+              position: ['auto', offset_top],
               modal: true,
               modalClose: true,
               modalColor: '#000',
@@ -2934,7 +2941,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }]);
+    });
 
 }());
 
@@ -2942,7 +2949,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
   angular.module('sp.history', [])
 
-    .directive('sailplayHistory', ["sp_api", function(sp_api){
+    .directive('sailplayHistory', function(sp_api){
 
       return {
 
@@ -2967,7 +2974,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }])
+    })
 
     .constant('history_texts', {
       "purchase": "Purchase",
@@ -2985,7 +2992,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
       "earn_badge": 'Earn badge '
     })
 
-    .filter('history_item', ["history_texts", function(history_texts) {
+    .filter('history_item', function(history_texts) {
 
       return function(historyItem) {
         switch (historyItem.action) {
@@ -3009,7 +3016,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
         }
         return history_texts[historyItem.action];
       }
-    }]);
+    });
 
 }());
 
@@ -3024,13 +3031,13 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
     ])
 
-    .service('sp', ["$window", function ($window) {
+    .service('sp', function ($window) {
 
       return $window.SAILPLAY || {};
 
-    }])
+    })
 
-    .service('user_service', ["$window", function ($window) {
+    .service('user_service', function ($window) {
 
       var self = this;
 
@@ -3049,9 +3056,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       return self;
 
-    }])
+    })
 
-    .service('status_service', ["$window", function ($window) {
+    .service('status_service', function ($window) {
 
       var self = this;
 
@@ -3086,9 +3093,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       return self;
 
-    }])
+    })
 
-    .service('sp_api', ["$q", "sp", "$rootScope", function ($q, sp, $rootScope) {
+    .service('sp_api', function ($q, sp, $rootScope) {
 
       var self = this;
 
@@ -3146,9 +3153,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }])
+    })
 
-    .filter('sailplay_pic', ["sp", function (sp) {
+    .filter('sailplay_pic', function (sp) {
 
       function repair_pic_url(url) {
         if (/^((http|https|ftp):\/\/)/.test(url)) {
@@ -3170,7 +3177,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }]);
+    });
 
 }());
 
@@ -3178,7 +3185,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
   angular.module('sp.profile', [])
 
-    .directive('sailplayProfile', ["sp_api", "sp", "status_service", function (sp_api, sp, status_service) {
+    .directive('sailplayProfile', function (sp_api, sp, status_service) {
 
       return {
 
@@ -3234,7 +3241,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }]);
+    });
 
 }());
 
@@ -3242,7 +3249,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
   angular.module('sp.statuses', [])
 
-    .directive('sailplayStatuses', ["sp_api", "status_service", "$compile", function (sp_api, status_service, $compile) {
+    .directive('sailplayStatuses', function (sp_api, status_service, $compile) {
 
       return {
 
@@ -3269,7 +3276,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }]);
+    });
 
 }());
 
@@ -3325,7 +3332,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
     })
 
-    .directive('datePicker', ["dateService", function (dateService) {
+    .directive('datePicker', function (dateService) {
       return {
         restrict: 'E',
         replace: true,
@@ -3351,7 +3358,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
         }
       }
 
-    }]);
+    });
 
 
 }());
@@ -3384,7 +3391,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
     })
 
-    .directive('giftsSlider', ["$compile", "$timeout", function ($compile, $timeout) {
+    .directive('giftsSlider', function ($compile, $timeout) {
       return {
         restrict: 'A',
         replace: false,
@@ -3402,9 +3409,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
         }
 
       };
-    }])
+    })
 
-    .directive('statusSlider', ["$compile", "$timeout", function ($compile, $timeout) {
+    .directive('statusSlider', function ($compile, $timeout) {
       return {
         restrict: 'A',
         replace: false,
@@ -3458,9 +3465,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
         }
 
       };
-    }])
+    })
 
-    .directive('notifier', ["$timeout", function ($timeout) {
+    .directive('notifier', function ($timeout) {
 
       return {
 
@@ -3510,7 +3517,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       }
 
-    }]);
+    });
 
 }());
 

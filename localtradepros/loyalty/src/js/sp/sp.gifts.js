@@ -48,6 +48,8 @@
 
             if (scope.user().user_points.confirmed < gift.points) return;
 
+            var offset_top = $('.sp_gift-slider').offset().top;
+
             scope.gift = angular.copy(gift);
             $('.js-gift-popup').bPopup({
               speed: 450,
@@ -55,6 +57,7 @@
               closeClass: 'js-close-popup',
               positionStyle: 'absolute',
               follow: [true, false],
+              position: ['auto', offset_top],
               modal: true,
               modalClose: true,
               modalColor: '#000',
