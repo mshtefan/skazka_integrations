@@ -8,8 +8,27 @@
 
     $rootScope.config = $window._CONFIG || {};
 
+    var auth = false;
+
+    $rootScope.$on('sailplay-login-success', function(){
+
+      auth = true;
+
+    });
+
+    $rootScope.$on('sailplay-logout-success', function(){
+
+      if(!auth) {
+        SailPlayApi.call('load.gifts.list');
+      }
+
+      auth = false;
+
+    });
+
     SailPlay.on('login.error', function(){
 
+      console.log('login error');
       $rootScope.loaded = true;
       $rootScope.$apply();
 

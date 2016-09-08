@@ -38,6 +38,144 @@
 
     })
 
+    .directive('moreInfo', function(SailPlay, $rootScope, $q, ipCookie, SailPlayApi, FillProfile){
+
+      return {
+
+        restrict: 'A',
+        scope: true,
+        link: function(scope){
+
+          var saved_form = false;
+
+          var new_form = {
+
+            user: {
+
+              birthDate: '',
+              firstName: '',
+              lastName: ''
+
+            },
+            custom_vars: {
+              'Address': ''
+            }
+          };
+
+          scope.$watch(function(){
+            return angular.toJson([ SailPlayApi.data('load.user.info')() ]);
+          }, function(){
+
+            var user = SailPlayApi.data('load.user.info')();
+
+            if(!user) return;
+            scope.profile_form = angular.copy(new_form);
+            scope.profile_form.user.auth_hash = SailPlay.config().auth_hash;
+            scope.profile_form.user.firstName = user.user.first_name;
+            scope.profile_form.user.lastName = user.user.last_name;
+            scope.profile_form.user.birthDate = user.user.birth_date || '';
+            if(ipCookie(FillProfile.cookie_name) && SailPlay.config().auth_hash === ipCookie(FillProfile.cookie_name).user.auth_hash ){
+              angular.extend(scope.profile_form, ipCookie(FillProfile.cookie_name));
+            }
+
+            if(!scope.profile_form.user.firstName || !scope.profile_form.user.lastName || !scope.profile_form.user.birthDate || !scope.profile_form.custom_vars.Address) {
+              scope.show_more_info = true;
+            } else {
+              scope.show_more_info = false;
+            }
+
+            saved_form = angular.copy(scope.profile_form);
+
+          });
+
+          scope.revert_profile_form = function(form){
+            if (form) {
+              form.$setPristine();
+              form.$setUntouched();
+            }
+            scope.profile_form = angular.copy(saved_form);
+          };
+
+
+          scope.submit_profile = function(form, callback){
+
+            if(!form || !form.$valid) {
+              return;
+            }
+
+            var data_user = SailPlayApi.data('load.user.info')() && SailPlayApi.data('load.user.info')().user;
+
+            var req_user = angular.copy(scope.profile_form.user);
+
+            SailPlay.send('users.update', req_user, function(user_res){
+
+              if(user_res.status === 'ok'){
+
+                SailPlay.send('vars.add', { custom_vars: scope.profile_form.custom_vars }, function(vars_res){
+
+                  var response = {
+                    user: user_res,
+                    vars: vars_res
+                  };
+
+                  if(vars_res.status === 'ok') {
+
+                    ipCookie(FillProfile.cookie_name, scope.profile_form);
+
+                    $rootScope.$broadcast('notifier:notify', {
+
+                      header: $rootScope.locale.thanks,
+                      body: $rootScope.locale.notifications.fill_profile_success
+
+                    });
+
+                    SailPlayApi.call('load.user.info', { all: 1 });
+
+                    callback && callback(response);
+                    scope.$apply();
+
+
+                  }
+                  else {
+
+                    $rootScope.$broadcast('notifier:notify', {
+
+                      header: $rootScope.locale.error,
+                      body: user_res.message || $rootScope.locale.notifications.default_error
+
+                    });
+                    scope.$apply();
+
+                  }
+
+                });
+
+
+
+              }
+
+              else {
+
+                $rootScope.$broadcast('notifier:notify', {
+
+                  header: $rootScope.locale.error,
+                  body: ($rootScope.locale.errors && $rootScope.locale.errors[user_res.status_code] || $rootScope.locale.errors[user_res.message]) || $rootScope.locale.notifications.default_error
+
+                });
+                $rootScope.$apply();
+
+              }
+
+            });
+
+          };
+
+        }
+
+      };
+
+    })
+
     .directive('fillProfile', function(SailPlay, $rootScope, $q, ipCookie, SailPlayApi, FillProfile){
 
       return {

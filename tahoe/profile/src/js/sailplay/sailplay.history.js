@@ -43,6 +43,13 @@
 
     .filter('history_item', function(history_texts) {
 
+      var names = {
+        vk : 'Vkontakte',
+        fb : 'Facebook',
+        gp : 'Google +',
+        tw : 'Twitter'
+      };
+
       return function(historyItem) {
         switch (historyItem.action) {
           case 'gift_purchase':
@@ -54,13 +61,13 @@
           case 'sharing':
             switch (historyItem.social_action) {
               case 'like':
-                return history_texts.enter_group + historyItem.social_type;
+                return history_texts.enter_group + (names[historyItem.social_type] || historyItem.social_type);
               case 'purchase':
-                return history_texts.share_purchase + historyItem.social_type;
+                return history_texts.share_purchase + names[historyItem.social_type] || historyItem.social_type;
               case 'partner_page':
-                return history_texts.social_share + historyItem.social_type;
+                return history_texts.social_share + names[historyItem.social_type] || historyItem.social_type;
               case 'badge':
-                return history_texts.share_badge + historyItem.social_type;
+                return history_texts.share_badge + names[historyItem.social_type] || historyItem.social_type;
             }
         }
         return history_texts[historyItem.action];

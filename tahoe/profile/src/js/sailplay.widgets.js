@@ -136,6 +136,14 @@
 
           };
 
+          scope.close_more_info = function(){
+
+            scope.show_more_info = false;
+
+            scope.body_lock(false);
+
+          };
+
           scope.close_profile = function(){
 
             scope.show_profile_info = false;
@@ -146,6 +154,7 @@
 
           scope.on_submit_profile = function(){
             scope.show_profile_action = false;
+            scope.close_more_info();
             scope.close_profile();
           };
 

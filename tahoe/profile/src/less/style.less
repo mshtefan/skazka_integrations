@@ -1,8 +1,11 @@
+@import url('../font/MrsEavesSmallCaps/styles.css');
+
 * {
   margin:0px;
 }
 .iner_block {
   width: 1170px;
+  max-width: 100%;
   margin: 0 auto;
 }
 .bns_wrap {
@@ -10,24 +13,47 @@
   .bns_top {
     float: left;
     width: 100%;
-    background-image: url(../img/top_bg.png);
+    box-sizing: border-box;
+    padding: 0 20px;
+    background-image: url(../img/top_bg_auth.png);
     background-position: top center;
     background-repeat: no-repeat;
     &.bns_top_nologin {
+      background-image: url(../img/top_bg_unauth.png);
       height: 200px;
       h2 {
         width: 480px;
       }
+      strong, span {
+        float: none;
+        display: inline-block;
+      }
+      img {
+        float: right;
+        margin-right: -40px;
+      }
     }
     h2 {
       float: left;
-      width: 350px;
+      width: 450px;
       font-size: 46px;
       font-weight: 600;
       color: #FFFFFF;
       margin-top: 60px;
       strong {
+        float: left;
+        display: block;
+        text-shadow: 2px 3px 10px rgba(0,0,0,0.5);
         font-size: 60px;
+      }
+      span {
+        display: block;
+        text-shadow: 2px 3px 10px rgba(0,0,0,0.7);
+      }
+      img {
+        display: block;
+        float: left;
+        margin-left: 30px;
       }
     }
     .bns_top_right {
@@ -60,12 +86,25 @@
           float: left;
         }
       }
+
+      &.full {
+        width: 75%;
+
+        .bns_top_item {
+          box-sizing: border-box;
+          width: 50%;
+          padding-right: 10px;
+        }
+
+      }
+
     }
     .bns_top_right_btn {
       float: right;
       margin-top: 86px;
       a {
         float: left;
+        background-color: #002e5d;
         line-height: 28px;
         border: 1px solid #fff;
         border-radius: 4px;
@@ -283,6 +322,16 @@
           height: 50px;
           overflow: hidden;
         }
+        &_nologin {
+          .bns_nlpage_item_img {
+            height: auto;
+            a {
+              padding-top: 30px;
+              height: auto;
+            }
+          }
+        }
+
       }
 
     }
@@ -301,6 +350,7 @@
             font-size: 22px;
             margin-top: 88px;
             line-height: 26px;
+            font-family: 'MrsEavesSmallCaps';
           }
           .bns_c_text2 {
             font-size: 17px;
@@ -324,6 +374,7 @@
           font-size: 13px;
           line-height: 15px;
           margin-top:54px;
+          font-family: 'MrsEavesSmallCaps';
         }
         .bns_c_text2 {
           float: left;
@@ -349,7 +400,8 @@
         width: 100%;
         text-align: center;
         .bns_info_btn {
-          margin: 0px 35px;
+          margin: 0px 15px;
+          width: 180px;
         }
       }
     }
@@ -1152,6 +1204,13 @@
   }
 }
 
+.bns_tell_about_main {
+  a {
+    max-width: 70%;
+    display: inline-block;
+  }
+}
+
 @media screen and (max-width: 1170px){
   .iner_block {
     width: 90%;
@@ -1160,7 +1219,7 @@
   .bns_wrap {
     .bns_top {
       h2 {
-        width: 350px;
+        //width: 350px;
       }
       .bns_top_right {
         width: 344px;
@@ -1275,6 +1334,12 @@
         h2 {
           width: 100%;
         }
+        img {
+          float: right;
+        }
+        .bns_top_right_btn {
+          margin-top: 0;
+        }
       }
       .bns_top_right {
         width: 90%;
@@ -1347,12 +1412,36 @@
   .bns_wrap {
 
     .bns_top {
+      .bns_top_right {
+        &.full {
+          width: 100%;
+          float: left;
+          margin-left: 0;
+        }
+      }
       h2 {
         text-align: center;
         font-size: 36px;
         strong {
           font-size: 46px;
+          width: 100%;
+          float: none;
         }
+        img {
+          float: none;
+          margin: 0 auto;
+        }
+      }
+      &.bns_top_nologin {
+        height: auto;
+
+        h2 {
+          img {
+            float: none;
+            margin: 0 auto;
+          }
+        }
+
       }
     }
     .bns_content {
@@ -1618,6 +1707,7 @@
     font-size: 20px;
     line-height: 24px;
     margin-top: 90px;
+    font-family: 'MrsEavesSmallCaps';
   }
   .bns_c_text2 {
     float: left;
@@ -1667,10 +1757,14 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  border-top: 1px solid darken(#E5EBEE, 10%);
   text-align: center;
   padding: 40px 0;
   width: 100%;
+  color: #3c708f;
+  border: 1px solid #c6d3da;
+  font-weight: bold;
+  font-size: 32px;
+  margin-bottom: 30px;
 }
 
 @import "style_new";
