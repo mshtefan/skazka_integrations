@@ -131,6 +131,8 @@
 
                     SailPlayApi.call('load.user.info', { all: 1 });
 
+                    scope.show_more_info = false;
+
                     callback && callback(response);
                     scope.$apply();
 

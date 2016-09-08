@@ -47,8 +47,7 @@
                 <div data-sailplay-gifts data-ng-init="selected_gift = false; gift_confirmation = false;">
                     <h3 class="bns_head">Earn Rewards!</h3>
                     <div class="bns_redeem_main">
-                        <div class="bns_reedem_item" data-ng-repeat="gift in gifts()">
-                            <img data-ng-src="{{ gift.thumbs.url_250x250 | sailplay_pic }}" alt="">
+                        <div class="bns_reedem_item" data-ng-repeat="gift in gifts()" style="background-image: url({{ gift.thumbs.url_250x250 | sailplay_pic }})">
                             <div class="bns_reedem_item_over">
                                 <span class="bns_name">{{ gift.name }}</span>
                                 <span class="bns_point">{{ gift.points }} {{ gift.points | sailplay_pluralize:locale.points_pluralize }}</span>
@@ -167,8 +166,7 @@
                 <div data-sailplay-gifts data-ng-init="selected_gift = false; gift_confirmation = false;">
                     <h3 class="bns_head">Redeem Your Points</h3>
                     <div class="bns_redeem_main">
-                        <div class="bns_reedem_item" data-ng-repeat="gift in gifts()">
-                            <img data-ng-src="{{ gift.thumbs.url_250x250 | sailplay_pic }}" alt="">
+                        <div class="bns_reedem_item" data-ng-repeat="gift in gifts()" style="background-image: url({{ gift.thumbs.url_250x250 | sailplay_pic }})">
                             <div class="bns_reedem_item_over">
                                 <span class="bns_name">{{ gift.name }}</span>
                                 <span class="bns_point">{{ gift.points }} {{ gift.points | sailplay_pluralize:locale.points_pluralize }}</span>
@@ -186,7 +184,7 @@
                         <div class="bns_over_iner">
                             <a href="#" class="bns_close"
                                data-ng-click="$event.preventDefault(); selected_gift = false; body_lock(false);"></a>
-                            <img data-ng-src="{{ selected_gift.pic_full | sailplay_pic }}" alt="">
+                            <img data-ng-src="{{ (selected_gift.pic_full || selected_gift.thumbs.url_250x250) | sailplay_pic }}" alt="">
                             <h4>{{ selected_gift.name }}</h4>
               <span class="bns_over_get_gift_info">
                 {{ selected_gift.descr | descr }}
@@ -220,7 +218,7 @@
                             <a href="#" class="bns_close"
                                data-ng-click="$event.preventDefault(); selected_gift = false; gift_confirmation = false; body_lock(false);"></a>
                             <h3>
-                                You are about to spent
+                                You are about to spend
                                 {{ selected_gift.points }} {{ selected_gift.points |
                                 sailplay_pluralize:locale.points_pluralize }} on
                             </h3>
@@ -292,7 +290,7 @@
                         </div>
 
                         <div class="bns_earn_more_item"
-                             data-ng-init="review_action = { name: 'Review your vacation rental on TLUXP.com', pic: 'dist/img/actions/3.png', descr: 'http://www.tluxp.com/lake-tahoe-vacation-rentals', url: 'http://www.tluxp.com/lake-tahoe-vacation-rentals' }">
+                             data-ng-init="review_action = { name: 'Review your vacation rental on TLUXP.com', button: 'Review', pic: 'dist/img/actions/3.png', descr: 'http://www.tluxp.com/lake-tahoe-vacation-rentals', url: 'http://www.tluxp.com/lake-tahoe-vacation-rentals' }">
                             <div class="bemi_left">
                                 <img data-ng-src="{{ review_action.pic }}" alt="">
                             </div>
@@ -307,7 +305,7 @@
                         </div>
 
                         <div class="bns_earn_more_item"
-                             data-ng-init="review_action_yelp = { name: 'Review Us on Yelp', pic: 'dist/img/actions/3.png', descr: 'https://www.yelp.com/biz/tahoe-luxury-properties-tahoe-city', url: 'https://www.yelp.com/biz/tahoe-luxury-properties-tahoe-city' }">
+                             data-ng-init="review_action_yelp = { name: 'Review Us on Yelp', button: 'Review', pic: 'dist/img/actions/3.png', descr: 'https://www.yelp.com/biz/tahoe-luxury-properties-tahoe-city', url: 'https://www.yelp.com/biz/tahoe-luxury-properties-tahoe-city' }">
                             <div class="bemi_left">
                                 <img data-ng-src="{{ review_action_yelp.pic }}" alt="">
                             </div>
@@ -323,7 +321,7 @@
 
 
                         <div class="bns_earn_more_item"
-                             data-ng-init="review_action_gp = { name: 'Review Us on Google', pic: 'dist/img/actions/3.png', descr: 'https://plus.google.com/+Tluxp/about', url: 'https://plus.google.com/+Tluxp/about' }">
+                             data-ng-init="review_action_gp = { name: 'Review Us on Google', button: 'Review', pic: 'dist/img/actions/3.png', descr: 'https://www.google.com/maps/place/Tahoe+Luxury+Properties/@39.1670432,-120.1475247,17z/data=!4m7!3m6!1s0x80997d9d67a0270f:0x2af05c19d6ef38f4!8m2!3d39.1670432!4d-120.145336!9m1!1b1', url: 'https://www.google.com/maps/place/Tahoe+Luxury+Properties/@39.1670432,-120.1475247,17z/data=!4m7!3m6!1s0x80997d9d67a0270f:0x2af05c19d6ef38f4!8m2!3d39.1670432!4d-120.145336!9m1!1b1' }">
                             <div class="bemi_left">
                                 <img data-ng-src="{{ review_action_gp.pic }}" alt="">
                             </div>
@@ -385,7 +383,7 @@
                                     <img data-ng-src="{{ link_action.pic }}" alt="">
                                 </div>
                                 <div style="margin-top: 20px;">
-                                    <a class="" href="{{ link_action.url }}" target="_blank">{{ link_action.descr }}</a>
+                                    <a class="" href="{{ link_action.url }}" target="_blank" class="bns_tell_about_main_button">{{ link_action.button }}</a>
                                     <!--<a href="#">Ok</a>-->
                                 </div>
                             </div>
@@ -405,7 +403,7 @@
                                 </div>
                                 <div class="bns_tell_about_main_right">
                                     <!--<p class="btamr_text">Lorem ipsum dolor sit amet, usu viris vituperatoribus id, ex principes gloriatur pri, ad usu oratio eligendi. Impetus fabellas dissentiet in sed. No vel semper veritus, vix at prima malis dicta.</p>-->
-                                    <div style="position: relative; height: 32px; float: left; width: 100%; margin-top: 6px; overflow: visible;"
+                                    <div style="position: relative; height: 32px; float: left; width: 100%; margin-top: 6px;"
                                          href="#" data-sailplay-action data-action="selected_action"
                                          data-text="Get bonus points!" data-styles="{{ config.social_styles }}">
                                         <a class="sp_cmn-btn-sm sp_task-slider__btn"
@@ -655,7 +653,7 @@
                 <div class="bns_nlpage_content">
                     <div class="bns_card_popup">
                         <span class="bns_c_text1">Tahoe Luxury Properties<br> Key Club</span>
-                        <span class="bns_c_text2">Join the Key Club</span>
+                        <span class="bns_c_text2">Download the Key Card</span>
                     </div>
                 </div>
             </div>

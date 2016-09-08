@@ -317,7 +317,7 @@
   box-sizing: border-box;
   padding: 0px 20px;
   text-align: center;
-  height: 50px;
+  height: 70px;
   overflow: hidden;
 }
 .bns_wrap .bns_content .bns_nlpage_content .bns_nlpage_item_nologin .bns_nlpage_item_img {
@@ -424,6 +424,9 @@
   margin-right: 3.5%;
   margin-bottom: 40px;
   background-color: #E5EBEE;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .bns_wrap .bns_content .bns_redeem_main .bns_reedem_item:nth-child(4n) {
   margin-right: 0;
@@ -1112,7 +1115,7 @@
   left: 0px;
   right: 0px;
   background-color: #fff;
-  border-radius: 0 0 3px 3px ;
+  border-radius: 0 0 3px 3px;
   border: 1px solid #6C6966;
   text-align: center;
   max-height: 80px;
@@ -1174,8 +1177,20 @@
   margin-top: 13px;
 }
 .bns_tell_about_main a {
-  max-width: 70%;
+  width: 140px;
+  line-height: 32px;
   display: inline-block;
+  vertical-align: middle;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 3px;
+  margin-top: 10px;
+}
+.bns_tell_about_main a:hover {
+  background-color: #043162;
 }
 @media screen and (max-width: 1170px) {
   .iner_block {
@@ -1222,6 +1237,9 @@
   }
   .bns_wrap .bns_content .bns_right_content .bns_card_btn .bns_info_btn {
     margin: 0px 5px;
+  }
+  .bns_wrap .bns_content .bns_nlpage_content .bns_nlpage_item .bns_left_content_text {
+    height: 100px;
   }
 }
 @media screen and (max-width: 870px) {
@@ -1336,7 +1354,9 @@
     text-align: center;
   }
   .bns_wrap .bns_content .bns_left_content_text {
-    padding-left: 0;
+    padding-left: 0 !important;
+    height: auto !important;
+    padding-bottom: 30px !important;
   }
   .bns_wrap .bns_content .bns_nlpage_content .bns_nlpage_item {
     width: 100%;
@@ -1481,7 +1501,7 @@
   }
   .bns_wrap .bns_content .bns_earn_more_main .bns_earn_more_item {
     width: 100%;
-    margin-right: 0  !important;
+    margin-right: 0 !important;
   }
 }
 .pn {

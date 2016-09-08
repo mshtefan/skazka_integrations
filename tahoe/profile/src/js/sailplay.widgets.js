@@ -138,8 +138,6 @@
 
           scope.close_more_info = function(){
 
-            scope.show_more_info = false;
-
             scope.body_lock(false);
 
           };
@@ -208,7 +206,7 @@
 
           scope.on_email_sent = function(){
 
-            $rootScope.$broadcast('notifier:notify', { header: 'Thank you!', body: 'You KeyClub Card was sent to ' + SailPlayApi.data('load.user.info')().user.email });
+            $rootScope.$broadcast('notifier:notify', { header: 'Thank you!', body: 'Your KeyClub Card was sent to ' + SailPlayApi.data('load.user.info')().user.email });
 
           };
 
