@@ -110,6 +110,30 @@
         scope: true,
         link: function(scope){
 
+          // HARDCODE
+          SailPlay.on('actions.social.gp.like.mouseenter', function(){
+            var elms = document.querySelectorAll('iframe[iframe-action-gp-like], iframe.gp.like');
+            var originWidth,
+              w= 400,
+              h = 500;
+            for(var i = 0, len = elms.length; i < len; i++){
+              elms[i].removeAttribute("style");
+              elms[i].style.cssText = 'width: ' + w + 'px !important;height: ' + h + 'px !important;margin-left: auto !important;z-index: 10 !important;';
+              elms[i].parentNode.style.setProperty ("overflow", "visible", "important");
+            }
+          });
+
+          SailPlay.on('actions.social.gp.like.mouseleave', function(){
+            var elms = document.querySelectorAll('iframe[iframe-action-gp-like], iframe.gp.like');
+            var w = 150,
+              h = 27;
+            for(var i = 0, len = elms.length; i < len; i++){
+              elms[i].removeAttribute("style");
+              elms[i].style.cssText = 'width: ' + w + 'px !important;height: ' + h + 'px !important;margin-left: auto !important;';
+              elms[i].parentNode.style.setProperty ("overflow", "hidden", "important");
+            }
+          });
+
           scope.actions = SailPlayApi.data('load.actions.list');
 
           scope.perform_action = function(action){

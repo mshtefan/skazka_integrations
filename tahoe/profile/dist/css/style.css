@@ -25,6 +25,7 @@
 }
 .bns_wrap .bns_top.bns_top_nologin h2 {
   width: 480px;
+  margin-top: 60px;
 }
 .bns_wrap .bns_top.bns_top_nologin strong,
 .bns_wrap .bns_top.bns_top_nologin span {
@@ -41,7 +42,7 @@
   font-size: 46px;
   font-weight: 600;
   color: #FFFFFF;
-  margin-top: 60px;
+  margin-top: 20px;
 }
 .bns_wrap .bns_top h2 strong {
   float: left;
@@ -1236,7 +1237,7 @@
     margin-top: 22px;
   }
   .bns_wrap .bns_content .bns_right_content .bns_card_btn .bns_info_btn {
-    margin: 0px 5px;
+    margin: 0 5px 5px;
   }
   .bns_wrap .bns_content .bns_nlpage_content .bns_nlpage_item .bns_left_content_text {
     height: 100px;
@@ -1360,9 +1361,6 @@
   }
   .bns_wrap .bns_content .bns_nlpage_content .bns_nlpage_item {
     width: 100%;
-  }
-  .bns_wrap .bns_content .bns_right_content .bns_card_btn .bns_info_btn {
-    margin-bottom: 10px;
   }
 }
 @media screen and (max-width: 600px) {
