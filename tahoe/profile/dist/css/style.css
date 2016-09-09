@@ -97,6 +97,10 @@
   box-sizing: border-box;
   width: 50%;
   padding-right: 10px;
+  min-height: 40px;
+}
+.bns_wrap .bns_top .bns_top_right.full .bns_top_item.inline span {
+  padding-top: 14px;
 }
 .bns_wrap .bns_top .bns_top_right_btn {
   float: right;
