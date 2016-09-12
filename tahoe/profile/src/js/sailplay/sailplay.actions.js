@@ -166,7 +166,7 @@
 
           scope.link_action_click = function (action) {
 
-            if (!action || scope.check_to_exist(action.tag)) return;
+            if (!action) return;
 
             var tag = action.tag;
 
