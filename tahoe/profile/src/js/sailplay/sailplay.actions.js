@@ -2,7 +2,7 @@
 
   angular.module('sailplay.actions', [])
 
-    .provider('SailPlayActionsData', function(){
+    .provider('SailPlayActionsData', function () {
 
       var actions_data = {
 
@@ -10,10 +10,10 @@
           "emailBinding": {
             name: "Enter email"
           },
-          "fillProfile":{
+          "fillProfile": {
             name: "Fill profile"
           },
-          "inviteFriend":{
+          "inviteFriend": {
             name: "Invite friend"
           }
         },
@@ -75,13 +75,13 @@
 
       return {
 
-        set_actions_data: function(data){
+        set_actions_data: function (data) {
 
           angular.merge(actions_data, data);
 
         },
 
-        $get: function(){
+        $get: function () {
 
           return actions_data;
 
@@ -101,50 +101,51 @@
      * SailPlay profile directive used for rendering sailplay actions, sush as: fill profile, invite friend and social sharing. =)
      *
      */
-    .directive('sailplayActions', function(SailPlayApi, SailPlay, SailPlayActionsData){
+    .directive('sailplayActions', function (SailPlayApi, SailPlay, SailPlayActionsData) {
 
       return {
 
         restrict: 'A',
         replace: false,
         scope: true,
-        link: function(scope){
+        link: function (scope) {
 
           // HARDCODE
-          SailPlay.on('actions.social.gp.like.mouseenter', function(){
+          SailPlay.on('actions.social.gp.like.mouseenter', function () {
             var elms = document.querySelectorAll('iframe[iframe-action-gp-like], iframe.gp.like');
             var originWidth,
-              w= 400,
+              w = 400,
               h = 500;
-            for(var i = 0, len = elms.length; i < len; i++){
+            for (var i = 0, len = elms.length; i < len; i++) {
               elms[i].removeAttribute("style");
               elms[i].style.cssText = 'width: ' + w + 'px !important;height: ' + h + 'px !important;margin-left: auto !important;z-index: 10 !important;';
-              elms[i].parentNode.style.setProperty ("overflow", "visible", "important");
+              elms[i].parentNode.style.setProperty("overflow", "visible", "important");
             }
           });
 
-          SailPlay.on('actions.social.gp.like.mouseleave', function(){
+          SailPlay.on('actions.social.gp.like.mouseleave', function () {
             var elms = document.querySelectorAll('iframe[iframe-action-gp-like], iframe.gp.like');
             var w = 150,
               h = 27;
-            for(var i = 0, len = elms.length; i < len; i++){
+            for (var i = 0, len = elms.length; i < len; i++) {
               elms[i].removeAttribute("style");
               elms[i].style.cssText = 'width: ' + w + 'px !important;height: ' + h + 'px !important;margin-left: auto !important;';
-              elms[i].parentNode.style.setProperty ("overflow", "hidden", "important");
+              elms[i].parentNode.style.setProperty("overflow", "hidden", "important");
             }
           });
 
           scope.actions = SailPlayApi.data('load.actions.list');
+          scope.exist = SailPlayApi.data('tags.exist');
 
-          scope.perform_action = function(action){
+          scope.perform_action = function (action) {
 
             SailPlay.send('actions.perform', action);
 
           };
 
-          SailPlay.on('actions.perform.success', function(res){
+          SailPlay.on('actions.perform.success', function (res) {
 
-            scope.$apply(function(){
+            scope.$apply(function () {
 
               scope.on_perform && scope.on_perform(res);
 
@@ -153,17 +154,39 @@
 
           });
 
-          scope.action_data = function(action){
+          scope.check_to_exist = function (tag, array) {
+
+            if (!tag || !array) return false;
+
+            return array.tags.filter(function (item) {
+              return item.name == tag && item.exist
+            }).length
+
+          };
+
+          scope.link_action_click = function (action) {
+
+            if (!action || scope.check_to_exist(action.tag)) return;
+
+            var tag = action.tag;
+
+            scope.link_action = false;
+
+            SailPlayApi.call('tags.add', {tags: [tag]});
+
+          };
+
+          scope.action_data = function (action) {
 
             var data = {};
 
-            if(!action) return data;
+            if (!action) return data;
 
             data = action;
 
-            if(action.socialType) data = SailPlayActionsData.social[action.socialType] && SailPlayActionsData.social[action.socialType][action.action];
+            if (action.socialType) data = SailPlayActionsData.social[action.socialType] && SailPlayActionsData.social[action.socialType][action.action];
 
-            if(SailPlayActionsData.system[action.type]) data = SailPlayActionsData.system[action.type];
+            if (SailPlayActionsData.system[action.type]) data = SailPlayActionsData.system[action.type];
 
             return data;
 
@@ -189,7 +212,7 @@
      * @param {string}  text   Not required attribute, used for custom text in iframe buttons.
      *
      */
-    .directive('sailplayAction', function(SailPlay, $timeout, $compile){
+    .directive('sailplayAction', function (SailPlay, $timeout, $compile) {
 
       var init_state;
 
@@ -200,24 +223,24 @@
         scope: {
           action: '='
         },
-        link: function(scope, elm, attrs){
+        link: function (scope, elm, attrs) {
 
           init_state = elm[0].innerHTML;
 
-          elm.on('click', function(e){
+          elm.on('click', function (e) {
             e.preventDefault();
           });
 
-          function parse_action(action){
-            $timeout(function(){
+          function parse_action(action) {
+            $timeout(function () {
               attrs.styles && elm.attr('data-styles', attrs.styles);
               attrs.text && elm.attr('data-text', attrs.text);
               SailPlay.actions && action && SailPlay.actions.parse(elm[0], action);
             }, 0);
           }
 
-          scope.$watch('action', function(new_value){
-            if(new_value){
+          scope.$watch('action', function (new_value) {
+            if (new_value) {
               elm.html(init_state);
               parse_action(new_value);
             }
