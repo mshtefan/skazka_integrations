@@ -166,13 +166,13 @@
 
           scope.link_action_click = function (action) {
 
-            if (!action) return;
-
             var tag = action.tag;
 
             scope.link_action = false;
 
             SailPlayApi.call('tags.add', {tags: [tag]});
+
+            window.open(action.url)
 
           };
 

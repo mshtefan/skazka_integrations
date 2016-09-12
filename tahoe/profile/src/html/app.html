@@ -389,7 +389,7 @@
                                     <img data-ng-src="{{ link_action.pic }}" alt="">
                                 </div>
                                 <div style="margin-top: 20px;">
-                                    <a data-ng-click="link_action_click(link_action);" href="{{ link_action.url }}" target="_blank"
+                                    <a data-ng-click="$event.preventDefault();link_action_click(link_action);" href="{{ link_action.url }}" target="_blank"
                                        class="bns_tell_about_main_button">{{ link_action.button }}</a>
                                     <!--<a href="#">Ok</a>-->
                                 </div>
