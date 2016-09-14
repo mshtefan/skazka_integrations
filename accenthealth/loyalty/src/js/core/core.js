@@ -8,7 +8,7 @@
 
       $rootScope.config = window._ltp_config || {};
 
-      var _cookie_name = 'auth_hash';
+      //var _cookie_name = 'auth_hash';
 
       var _redirect_url = 'https://sailplay.net';
 
@@ -47,7 +47,7 @@
 
       sp.on('login.success', function () {
 
-        ipCookie(_cookie_name, sp.config().auth_hash);
+        //ipCookie(_cookie_name, sp.config().auth_hash);
         $rootScope.loaded = true;
 
         //load data for widgets

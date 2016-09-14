@@ -392,6 +392,7 @@
 }
 .bns_main_block .bns_ern_point .bns_ern_point_item img {
   float: left;
+  max-width: 70px;
   margin-right: 20px;
 }
 .bns_main_block .bns_ern_point .bns_ern_point_item .bep_right {
