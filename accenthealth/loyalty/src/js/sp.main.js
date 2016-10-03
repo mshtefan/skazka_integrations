@@ -15,7 +15,10 @@
 
           $(el).find('.bns_view_hist').click(function () {
 
+            var top = $(this).position().top - 20;
+
             $(el).find('.bns_overlay_hist').fadeIn();
+            $(el).find('.bns_overlay_hist .bns_overlay_iner').css('top', top);
 
             return false;
 

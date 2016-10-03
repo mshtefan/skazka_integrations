@@ -25,6 +25,7 @@
         templateUrl: '/html/ui/ui.gifts.group.html',
         scope: {
           gifts: '=',
+          user: '=',
           limit: '='
         },
         link: function (scope, el) {
@@ -71,10 +72,15 @@
 
           var gift = null;
 
-          $("body").delegate(".bns_choice_gift_main.act .bgi_right a", "click", function () {
+          $("body").delegate(".bns_choice_gift_main .bgi_right a", "click", function () {
+
+            if ($(this).hasClass('disabled')) {
+              $('.bns_overlay_error_gift').fadeIn();
+              return;
+            }
             var item = $(this).closest('.bns_gift_item');
             gift = $(this).data('gift');
-            $('.bns_load_block_gift h2').html("You're about to spent " + gift.points +  " bonus points on " + gift.name);
+            $('.bns_load_block_gift h2').html("You're about to spent " + gift.points + " bonus points on " + gift.name);
             $('.bns_overlay_get_gift').fadeIn();
             return false;
           });
@@ -94,7 +100,9 @@
 
           scope.gift_purchase = function () {
             if (!gift) return;
-            if (scope.user().user_points.confirmed < gift.points) return;
+            if (scope.user().user_points.confirmed < gift.points) {
+              return;
+            }
             sp.send('gifts.purchase', {gift: gift});
             $(el).find('.bns_overlay_get_gift').fadeOut();
           };

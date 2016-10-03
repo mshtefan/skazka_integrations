@@ -40,7 +40,7 @@
                          class="bns_reit_point bns_reit_point_{{ limits[$index] }}" data-points-act="{{ limits[$index] }}">
 						<span>
 							{{ status.name }}
-							<strong>{{ limits[$index] | number }} <span> points</span></strong>
+							<!--<strong>{{ limits[$index] | number }} <span> points</span></strong>-->
 						</span>
                     </div>
 
@@ -53,7 +53,7 @@
             <h3>STATUS</h3>
             <div class="bns_right_stat" style="background-image: url({{ user().user_status.pic | sailplay_pic }});"
                  data-ng-bind="user().user_status.name || 'NO STATUS'"></div>
-            <h3>POINTS BALANCE</h3>
+            <h3>AVAILABLE POINTS</h3>
             <div class="bns_point_num" data-ng-bind="user().user_points.confirmed | number"></div>
             <a href="#" class="bns_view_hist">view points history »</a>
         </div>
@@ -118,13 +118,13 @@
 know you have enough points!
 				</span>
 
-                <div data-sailplay-gifts-group data-gifts="gifts()" data-limit="750"></div>
+                <div data-sailplay-gifts-group data-user="user()" data-gifts="gifts()" data-limit="750"></div>
 
-                <div data-sailplay-gifts-group data-gifts="gifts()" data-limit="1500"></div>
+                <div data-sailplay-gifts-group data-user="user()" data-gifts="gifts()" data-limit="1500"></div>
 
-                <div data-sailplay-gifts-group data-gifts="gifts()" data-limit="5000"></div>
+                <div data-sailplay-gifts-group data-user="user()" data-gifts="gifts()" data-limit="5000"></div>
 
-                <div data-sailplay-gifts-group data-gifts="gifts()" data-limit="10000"></div>
+                <div data-sailplay-gifts-group data-user="user()" data-gifts="gifts()" data-limit="10000"></div>
 
             </div>
             <div class="bns_qust_com">
@@ -140,6 +140,16 @@ know you have enough points!
                         <h3>Are you sure?</h3>
                         <a href="#" data-ng-click="gift_purchase();$event.preventDefault();">Yes</a>
                         <a href="#" class="bns_close_event">Cancel</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bns_overlay bns_overlay_error_gift">
+                <div class="bns_overlay_iner">
+                    <a href="#" class="bns_close bns_close_event"></a>
+                    <div class="bns_load_block bns_load_block_gift">
+                        <h3>Oops, you don’t have enough points available to redeem this gift. Complete more activities to rack up points!</h3>
+                        <a href="#" class="bns_close_event" style="margin-top: 10px;">Cancel</a>
                     </div>
                 </div>
             </div>
@@ -167,7 +177,7 @@ know you have enough points!
                 </td>
                 <td>
                     <span data-ng-class="{ bns_minus: item.points_delta < 0 }"
-                          data-ng-show="item.points_delta">{{ ((item.points_delta > 0) ? '+' : '-') +  (abs(item.points_delta) | number) || 0 }} KE </span>
+                          data-ng-show="item.points_delta">{{ ((item.points_delta > 0) ? '+' : '-') +  (abs(item.points_delta) | number) || 0 }} points </span>
                 </td>
             </tr>
 

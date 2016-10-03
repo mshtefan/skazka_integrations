@@ -2251,7 +2251,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/html/main.html',
-    '<div class="bns_wrapper" data-ng-cloak=""><div class="bns_top_block"><div class="bns_left"><h2>Easy Activities, Fun Rewards.</h2><h3>Complete Activities. Earn Points. Get Rewarded. It’s that easy!</h3><div class="bns_left_info"><div class="col"><span class="bns_num">1</span> <span class="bns_lb_text"><strong>Complete activities to earn points.</strong> <em>psst - you got points just for signing up!</em></span></div><div class="col"><span class="bns_num">2</span> <span class="bns_lb_text"><strong>Redeem points for a gift</strong> of your choice — or save them for a big reward.</span></div><div class="col"><span class="bns_num">3</span> <span class="bns_lb_text"><strong>Keep an eye out for email promotions</strong> <em>to rev up your points balance!</em></span></div></div><div class="bns_reit"><div class="bns_reit_line_main" data-sailplay-statuses="" data-ng-cloak=""><div class="bns_reit_line" data-points="{{ user().user_points.confirmed + user().user_points.spent }}"></div><div class="bns_reit_point bns_reit_point_null act" data-points-act="0"></div><div data-sp-status-list="" data-ng-cloak="" data-ng-repeat="status in statuses().multilevel_badges[0]" class="bns_reit_point bns_reit_point_{{ limits[$index] }}" data-points-act="{{ limits[$index] }}"><span>{{ status.name }} <strong>{{ limits[$index] | number }} <span>points</span></strong></span></div><div class="bns_reit_point bns_reit_point_max" data-points-act="20000"></div></div></div></div><div class="bns_right" data-sailplay-profile="" data-ng-cloak=""><h2>MyRewards:</h2><h3>STATUS</h3><div class="bns_right_stat" style="background-image: url({{ user().user_status.pic | sailplay_pic }});" data-ng-bind="user().user_status.name || \'NO STATUS\'"></div><h3>POINTS BALANCE</h3><div class="bns_point_num" data-ng-bind="user().user_points.confirmed | number"></div><a href="#" class="bns_view_hist">view points history »</a></div></div><div class="bns_main_block"><div class="bns_left" data-sailplay-actions="" data-ng-cloak=""><div class="bns_main_info"><h2>Earn Points</h2><h3>Complete the activities below to rack up points!</h3></div><div class="bns_ern_point"><span class="bns_ern_point_head">Earn 10 Points:</span><div class="bns_ern_point_item" data-ng-repeat="action in actions().actions | orderBy:\'-_actionId\'" data-ng-cloak=""><img data-ng-src="{{ action_data(action).pic }}" alt="{{ action_data(action).name }}"><div class="bep_right"><span data-ng-bind="action_data(action).name"></span> <span class="bepi_text" data-ng-bind="action_data(action).text"></span> <a href="#" class="bns_open_compl" data-sailplay-action="" data-action="action" data-text="COMPLETE <em>»</em>">COMPLETE <em>»</em></a> <strong data-ng-show="action_data(action).points" data-ng-bind="(action_data(action).points | number) + \' points\' + (action_data(action).plus ? \' (plus \' + (action_data(action).plus | number) + \')\' : \'\')"></strong></div></div><div data-custom-action="" data-ng-repeat="action in custom_actions_data | filter:{type : 10}" data-data="action"></div></div><div class="bns_ern_point"><span class="bns_ern_point_head">Earn 25 Points:</span><div data-custom-action="" data-ng-repeat="action in custom_actions_data | filter:{type : 25}" data-data="action"></div></div><div class="bns_ern_point"><span class="bns_ern_point_head">Earn More:</span><div data-custom-action="" data-ng-repeat="action in custom_actions_data | filter:{type : \'more\'}" data-data="action"></div></div><div class="bns_overlay bns_overlay_compl"><div class="bns_overlay_iner"><a href="#" class="bns_close bns_close_event"></a><div class="bns_load_block bns_load_block_up"><img src="" alt=""><h2></h2><span style="width: 80%;display: inline-block;"></span><div class="bns_for_ajax"></div><strong></strong> <a href="#">COMPLETE <em>»</em></a></div></div></div></div><div class="bns_right" data-sailplay-gifts="" data-ng-cloak=""><div class="bns_main_info"><h2>GET REWARDED</h2><h3>Choose your gift!</h3></div><div class="bns_choice_gift"><span class="bnc_note">note: look for the orange REDEEM button to know you have enough points!</span><div data-sailplay-gifts-group="" data-gifts="gifts()" data-limit="750"></div><div data-sailplay-gifts-group="" data-gifts="gifts()" data-limit="1500"></div><div data-sailplay-gifts-group="" data-gifts="gifts()" data-limit="5000"></div><div data-sailplay-gifts-group="" data-gifts="gifts()" data-limit="10000"></div></div><div class="bns_qust_com">Questions or Comments? Contact us at <a href="mailto:rewards@accenthealth.com">rewards@accenthealth.com</a></div><div class="bns_overlay bns_overlay_get_gift"><div class="bns_overlay_iner"><a href="#" class="bns_close bns_close_event"></a><div class="bns_load_block bns_load_block_gift"><h2>You\'re about to spent your bonus points</h2><h3>Are you sure?</h3><a href="#" data-ng-click="gift_purchase();$event.preventDefault();">Yes</a> <a href="#" class="bns_close_event">Cancel</a></div></div></div></div></div></div><div class="bns_overlay bns_overlay_hist" data-sailplay-history="" data-ng-cloak=""><div class="bns_overlay_iner"><a href="#" class="bns_close bns_close_event"></a><table class="bns_hist_table"><h3>History</h3><tbody><tr data-dir-paginate="item in history() | itemsPerPage:10" data-pagination-id="history_pages"><td><span data-ng-bind="item.action_date | date:\'d MMMM yyyy\'"></span></td><td><span><b data-ng-bind="item | history_item"></b></span> <span data-ng-if="item.action === \'gift_purchase\'"><b data-ng-bind="item.name"></b></span> <span data-ng-if="item.action === \'purchase\'"><b data-ng-bind="\'Order num: \' + item.order_num"></b></span></td><td><span data-ng-class="{ bns_minus: item.points_delta < 0 }" data-ng-show="item.points_delta">{{ ((item.points_delta > 0) ? \'+\' : \'-\') + (abs(item.points_delta) | number) || 0 }} KE</span></td></tr></tbody></table><div class="bns_hist_pager"><dir-pagination-controls data-max-size="10" data-pagination-id="history_pages" data-template-url="/html/ui/ui.pagination.controls.html" data-auto-hide="true"></dir-pagination-controls></div></div></div>');
+    '<div class="bns_wrapper" data-ng-cloak=""><div class="bns_top_block"><div class="bns_left"><h2>Easy Activities, Fun Rewards.</h2><h3>Complete Activities. Earn Points. Get Rewarded. It’s that easy!</h3><div class="bns_left_info"><div class="col"><span class="bns_num">1</span> <span class="bns_lb_text"><strong>Complete activities to earn points.</strong> <em>psst - you got points just for signing up!</em></span></div><div class="col"><span class="bns_num">2</span> <span class="bns_lb_text"><strong>Redeem points for a gift</strong> of your choice — or save them for a big reward.</span></div><div class="col"><span class="bns_num">3</span> <span class="bns_lb_text"><strong>Keep an eye out for email promotions</strong> <em>to rev up your points balance!</em></span></div></div><div class="bns_reit"><div class="bns_reit_line_main" data-sailplay-statuses="" data-ng-cloak=""><div class="bns_reit_line" data-points="{{ user().user_points.confirmed + user().user_points.spent }}"></div><div class="bns_reit_point bns_reit_point_null act" data-points-act="0"></div><div data-sp-status-list="" data-ng-cloak="" data-ng-repeat="status in statuses().multilevel_badges[0]" class="bns_reit_point bns_reit_point_{{ limits[$index] }}" data-points-act="{{ limits[$index] }}"><span>{{ status.name }}</span></div><div class="bns_reit_point bns_reit_point_max" data-points-act="20000"></div></div></div></div><div class="bns_right" data-sailplay-profile="" data-ng-cloak=""><h2>MyRewards:</h2><h3>STATUS</h3><div class="bns_right_stat" style="background-image: url({{ user().user_status.pic | sailplay_pic }});" data-ng-bind="user().user_status.name || \'NO STATUS\'"></div><h3>AVAILABLE POINTS</h3><div class="bns_point_num" data-ng-bind="user().user_points.confirmed | number"></div><a href="#" class="bns_view_hist">view points history »</a></div></div><div class="bns_main_block"><div class="bns_left" data-sailplay-actions="" data-ng-cloak=""><div class="bns_main_info"><h2>Earn Points</h2><h3>Complete the activities below to rack up points!</h3></div><div class="bns_ern_point"><span class="bns_ern_point_head">Earn 10 Points:</span><div class="bns_ern_point_item" data-ng-repeat="action in actions().actions | orderBy:\'-_actionId\'" data-ng-cloak=""><img data-ng-src="{{ action_data(action).pic }}" alt="{{ action_data(action).name }}"><div class="bep_right"><span data-ng-bind="action_data(action).name"></span> <span class="bepi_text" data-ng-bind="action_data(action).text"></span> <a href="#" class="bns_open_compl" data-sailplay-action="" data-action="action" data-text="COMPLETE <em>»</em>">COMPLETE <em>»</em></a> <strong data-ng-show="action_data(action).points" data-ng-bind="(action_data(action).points | number) + \' points\' + (action_data(action).plus ? \' (plus \' + (action_data(action).plus | number) + \')\' : \'\')"></strong></div></div><div data-custom-action="" data-ng-repeat="action in custom_actions_data | filter:{type : 10}" data-data="action"></div></div><div class="bns_ern_point"><span class="bns_ern_point_head">Earn 25 Points:</span><div data-custom-action="" data-ng-repeat="action in custom_actions_data | filter:{type : 25}" data-data="action"></div></div><div class="bns_ern_point"><span class="bns_ern_point_head">Earn More:</span><div data-custom-action="" data-ng-repeat="action in custom_actions_data | filter:{type : \'more\'}" data-data="action"></div></div><div class="bns_overlay bns_overlay_compl"><div class="bns_overlay_iner"><a href="#" class="bns_close bns_close_event"></a><div class="bns_load_block bns_load_block_up"><img src="" alt=""><h2></h2><span style="width: 80%;display: inline-block;"></span><div class="bns_for_ajax"></div><strong></strong> <a href="#">COMPLETE <em>»</em></a></div></div></div></div><div class="bns_right" data-sailplay-gifts="" data-ng-cloak=""><div class="bns_main_info"><h2>GET REWARDED</h2><h3>Choose your gift!</h3></div><div class="bns_choice_gift"><span class="bnc_note">note: look for the orange REDEEM button to know you have enough points!</span><div data-sailplay-gifts-group="" data-user="user()" data-gifts="gifts()" data-limit="750"></div><div data-sailplay-gifts-group="" data-user="user()" data-gifts="gifts()" data-limit="1500"></div><div data-sailplay-gifts-group="" data-user="user()" data-gifts="gifts()" data-limit="5000"></div><div data-sailplay-gifts-group="" data-user="user()" data-gifts="gifts()" data-limit="10000"></div></div><div class="bns_qust_com">Questions or Comments? Contact us at <a href="mailto:rewards@accenthealth.com">rewards@accenthealth.com</a></div><div class="bns_overlay bns_overlay_get_gift"><div class="bns_overlay_iner"><a href="#" class="bns_close bns_close_event"></a><div class="bns_load_block bns_load_block_gift"><h2>You\'re about to spent your bonus points</h2><h3>Are you sure?</h3><a href="#" data-ng-click="gift_purchase();$event.preventDefault();">Yes</a> <a href="#" class="bns_close_event">Cancel</a></div></div></div><div class="bns_overlay bns_overlay_error_gift"><div class="bns_overlay_iner"><a href="#" class="bns_close bns_close_event"></a><div class="bns_load_block bns_load_block_gift"><h3>Oops, you don’t have enough points available to redeem this gift. Complete more activities to rack up points!</h3><a href="#" class="bns_close_event" style="margin-top: 10px;">Cancel</a></div></div></div></div></div></div><div class="bns_overlay bns_overlay_hist" data-sailplay-history="" data-ng-cloak=""><div class="bns_overlay_iner"><a href="#" class="bns_close bns_close_event"></a><table class="bns_hist_table"><h3>History</h3><tbody><tr data-dir-paginate="item in history() | itemsPerPage:10" data-pagination-id="history_pages"><td><span data-ng-bind="item.action_date | date:\'d MMMM yyyy\'"></span></td><td><span><b data-ng-bind="item | history_item"></b></span> <span data-ng-if="item.action === \'gift_purchase\'"><b data-ng-bind="item.name"></b></span> <span data-ng-if="item.action === \'purchase\'"><b data-ng-bind="\'Order num: \' + item.order_num"></b></span></td><td><span data-ng-class="{ bns_minus: item.points_delta < 0 }" data-ng-show="item.points_delta">{{ ((item.points_delta > 0) ? \'+\' : \'-\') + (abs(item.points_delta) | number) || 0 }} points</span></td></tr></tbody></table><div class="bns_hist_pager"><dir-pagination-controls data-max-size="10" data-pagination-id="history_pages" data-template-url="/html/ui/ui.pagination.controls.html" data-auto-hide="true"></dir-pagination-controls></div></div></div>');
 }]);
 })();
 
@@ -2275,7 +2275,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/html/ui/ui.gifts.group.html',
-    '<div class="bns_choice_gift_main" data-point-from="{{ limit }}" data-ng-show="needToShow()"><span class="bns_nead_point">{{ limit | number }} points</span><div class="bns_gift_item" data-ng-repeat="gift in gifts | giftsGroup: getLimits(limit)"><div class="bgi_icon" style="background-image: url({{ gift.thumbs.url_100x100 | sailplay_pic }});"></div><div class="bgi_right"><span data-ng-bind="(gift.points | number) + \' – \' + gift.name"></span> <a href="#" data-gift="{{ gift }}">REDEEM <em>»</em></a></div></div><a href="#" class="bns_show_more" data-ng-show="(gifts | giftsGroup: getLimits(limit)).length > 1">show more</a></div>');
+    '<div class="bns_choice_gift_main" data-point-from="{{ limit }}" data-ng-show="needToShow()"><span class="bns_nead_point">{{ limit | number }} points</span><div class="bns_gift_item" data-ng-repeat="gift in gifts | giftsGroup: getLimits(limit)"><div class="bgi_icon" style="background-image: url({{ gift.thumbs.url_100x100 | sailplay_pic }});"></div><div class="bgi_right"><span data-ng-bind="gift.name"></span> <a href="#" data-gift="{{ gift }}" data-ng-class="{ disabled : user.user_points.confirmed < gift.points }">REDEEM <em>»</em></a></div></div><a href="#" class="bns_show_more" data-ng-show="(gifts | giftsGroup: getLimits(limit)).length > 1">show more</a></div>');
 }]);
 })();
 
@@ -2287,7 +2287,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/html/ui/ui.notifier.html',
-    '<div class="sp_notify-popup js-notify-popup" style="display: none;" data-ng-cloak=""><div class="sp_notify-popup__close js-close-popup"></div><div class="sp_notify-popup__header" data-ng-bind="data.header"></div><div class="sp_notify-popup__body" data-ng-bind="data.body"></div><a href="#" class="sp_common-btn sp_notify-popup__btn" data-ng-click="reset_notifier();$event.preventDefault();">OK</a></div>');
+    '<div class="sp_notify-popup js-notify-popup" style="display: none;" data-ng-cloak=""><div class="sp_notify-popup__close js-close-popup"></div><div class="sp_notify-popup__header" data-ng-bind="data.header"></div><div class="sp_notify-popup__body" data-ng-bind="data.body"></div><a href="#" class="sp_common-btn sp_notify-popup__btn" data-ng-click="reset_notifier();$event.preventDefault();">OK</a></div><div class="bns_overlay bns_overlay_get_gift" style="display: none;" data-ng-cloak=""><div class="bns_overlay_iner"><a href="#" class="bns_close bns_close_event"></a><div class="bns_load_block bns_load_block_gift"><h2 data-ng-bind="data.header"></h2><h3>Are you sure?</h3><a href="#" data-ng-click="gift_purchase();$event.preventDefault();">Yes</a> <a href="#" class="bns_close_event">Cancel</a></div></div></div>');
 }]);
 })();
 
@@ -2307,7 +2307,7 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('ah', ['core', 'ui', 'sp', 'templates'])
 
-    .directive('sailplayAh', ["$rootScope", "$locale", "sp_api", "sp", function ($rootScope, $locale, sp_api, sp) {
+    .directive('sailplayAh', function ($rootScope, $locale, sp_api, sp) {
 
       return {
         restrict: 'E',
@@ -2320,7 +2320,10 @@ module.run(['$templateCache', function($templateCache) {
 
           $(el).find('.bns_view_hist').click(function () {
 
+            var top = $(this).position().top - 20;
+
             $(el).find('.bns_overlay_hist').fadeIn();
+            $(el).find('.bns_overlay_hist .bns_overlay_iner').css('top', top);
 
             return false;
 
@@ -2344,7 +2347,7 @@ module.run(['$templateCache', function($templateCache) {
         }
       }
 
-    }]);
+    });
 
   window.addEventListener('DOMContentLoaded', function () {
 
@@ -2362,7 +2365,7 @@ module.run(['$templateCache', function($templateCache) {
       'ipCookie'
     ])
 
-    .run(["sp", "ipCookie", "sp_api", "$rootScope", "$location", function (sp, ipCookie, sp_api, $rootScope, $location) {
+    .run(function (sp, ipCookie, sp_api, $rootScope, $location) {
 
       $rootScope.config = window._ltp_config || {};
 
@@ -2450,7 +2453,7 @@ module.run(['$templateCache', function($templateCache) {
       //});
 
 
-    }]);
+    });
 
 }());
 
@@ -2578,7 +2581,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
     })
 
-    .directive('sailplayActions', ["sp_api", "sp", "actions_data", "custom_actions_data", function (sp_api, sp, actions_data, custom_actions_data) {
+    .directive('sailplayActions', function (sp_api, sp, actions_data, custom_actions_data) {
 
       return {
 
@@ -2669,9 +2672,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }])
+    })
 
-    .directive('sailplayAction', ["sp", "$rootScope", function (sp, $rootScope) {
+    .directive('sailplayAction', function (sp, $rootScope) {
 
       return {
 
@@ -2682,7 +2685,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
         },
         link: function (scope, elm) {
 
-          elm.attr('data-styles', $rootScope.config.social_styles || 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/7cfef4caa7583847f8e6389a06a21d03.css');
+          elm.attr('data-styles', $rootScope.config.social_styles || 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/d6e3e0982319ff48594d5f1befc37ef8.css');
 
           sp.actions && sp.actions.parse(elm[0], scope.action);
 
@@ -2690,7 +2693,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }]);
+    });
 
 }());
 
@@ -2712,7 +2715,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
       }
     })
 
-    .directive('sailplayGiftsGroup', ["status_service", "$filter", function (status_service, $filter) {
+    .directive('sailplayGiftsGroup', function (status_service, $filter) {
 
       return {
 
@@ -2721,6 +2724,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
         templateUrl: '/html/ui/ui.gifts.group.html',
         scope: {
           gifts: '=',
+          user: '=',
           limit: '='
         },
         link: function (scope, el) {
@@ -2751,9 +2755,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       }
 
-    }])
+    })
 
-    .directive('sailplayGifts', ["sp", "sp_api", "$timeout", "$rootScope", function (sp, sp_api, $timeout, $rootScope) {
+    .directive('sailplayGifts', function (sp, sp_api, $timeout, $rootScope) {
 
       return {
 
@@ -2767,10 +2771,15 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
           var gift = null;
 
-          $("body").delegate(".bns_choice_gift_main.act .bgi_right a", "click", function () {
+          $("body").delegate(".bns_choice_gift_main .bgi_right a", "click", function () {
+
+            if ($(this).hasClass('disabled')) {
+              $('.bns_overlay_error_gift').fadeIn();
+              return;
+            }
             var item = $(this).closest('.bns_gift_item');
             gift = $(this).data('gift');
-            $('.bns_load_block_gift h2').html("You're about to spent " + gift.points +  " bonus points on " + gift.name);
+            $('.bns_load_block_gift h2').html("You're about to spent " + gift.points + " bonus points on " + gift.name);
             $('.bns_overlay_get_gift').fadeIn();
             return false;
           });
@@ -2790,7 +2799,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
           scope.gift_purchase = function () {
             if (!gift) return;
-            if (scope.user().user_points.confirmed < gift.points) return;
+            if (scope.user().user_points.confirmed < gift.points) {
+              return;
+            }
             sp.send('gifts.purchase', {gift: gift});
             $(el).find('.bns_overlay_get_gift').fadeOut();
           };
@@ -2807,7 +2818,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }]);
+    });
 
 }());
 
@@ -2815,7 +2826,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
   angular.module('sp.history', [])
 
-    .directive('sailplayHistory', ["sp_api", function(sp_api){
+    .directive('sailplayHistory', function(sp_api){
 
       return {
 
@@ -2839,7 +2850,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }])
+    })
 
     .constant('history_texts', {
       "purchase": "Purchase",
@@ -2857,7 +2868,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
       "earn_badge": 'Earn badge '
     })
 
-    .filter('history_item', ["history_texts", function(history_texts) {
+    .filter('history_item', function(history_texts) {
 
       return function(historyItem) {
         switch (historyItem.action) {
@@ -2881,7 +2892,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
         }
         return history_texts[historyItem.action];
       }
-    }]);
+    });
 
 }());
 
@@ -2896,13 +2907,13 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
     ])
 
-    .service('sp', ["$window", function ($window) {
+    .service('sp', function ($window) {
 
       return $window.SAILPLAY || {};
 
-    }])
+    })
 
-    .service('user_service', ["$window", function ($window) {
+    .service('user_service', function ($window) {
 
       var self = this;
 
@@ -2921,9 +2932,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       return self;
 
-    }])
+    })
 
-    .service('status_service', ["$window", function ($window) {
+    .service('status_service', function ($window) {
 
       var self = this;
 
@@ -2958,9 +2969,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       return self;
 
-    }])
+    })
 
-    .service('sp_api', ["$q", "sp", "$rootScope", function ($q, sp, $rootScope) {
+    .service('sp_api', function ($q, sp, $rootScope) {
 
       var self = this;
 
@@ -3022,7 +3033,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }])
+    })
 
     .filter('html', ['$sce', function ($sce) {
       return function (text) {
@@ -3030,7 +3041,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
       };
     }])
 
-    .filter('sailplay_pic', ["sp", function (sp) {
+    .filter('sailplay_pic', function (sp) {
 
       function repair_pic_url(url) {
         if (/^((http|https|ftp):\/\/)/.test(url)) {
@@ -3052,7 +3063,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }]);
+    });
 
 }());
 
@@ -3060,7 +3071,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
   angular.module('sp.profile', [])
 
-    .directive('sailplayProfile', ["sp_api", "sp", "status_service", function (sp_api, sp, status_service) {
+    .directive('sailplayProfile', function (sp_api, sp, status_service) {
 
       return {
 
@@ -3110,7 +3121,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }]);
+    });
 
 }());
 
@@ -3118,7 +3129,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
   angular.module('sp.statuses', [])
 
-    .directive('spStatusList', ["$compile", function ($compile) {
+    .directive('spStatusList', function ($compile) {
 
       return {
 
@@ -3169,9 +3180,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
         }
       }
 
-    }])
+    })
 
-    .directive('sailplayStatuses', ["sp_api", "status_service", function (sp_api, status_service) {
+    .directive('sailplayStatuses', function (sp_api, status_service) {
 
       return {
 
@@ -3188,7 +3199,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       };
 
-    }]);
+    });
 
 }());
 
@@ -3244,7 +3255,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
     })
 
-    .directive('datePicker', ["dateService", function (dateService) {
+    .directive('datePicker', function (dateService) {
       return {
         restrict: 'E',
         replace: true,
@@ -3270,7 +3281,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
         }
       }
 
-    }]);
+    });
 
 
 }());
@@ -3303,7 +3314,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
     })
 
-    .directive('giftsSlider', ["$compile", "$timeout", function ($compile, $timeout) {
+    .directive('giftsSlider', function ($compile, $timeout) {
       return {
         restrict: 'A',
         replace: false,
@@ -3321,9 +3332,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
         }
 
       };
-    }])
+    })
 
-    .directive('statusSlider', ["$compile", "$timeout", function ($compile, $timeout) {
+    .directive('statusSlider', function ($compile, $timeout) {
       return {
         restrict: 'A',
         replace: false,
@@ -3377,9 +3388,9 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
         }
 
       };
-    }])
+    })
 
-    .directive('notifier', ["$timeout", function ($timeout) {
+    .directive('notifier', function ($timeout) {
 
       return {
 
@@ -3429,7 +3440,7 @@ window.matchMedia=window.matchMedia||(function(e,f){var c,a=e.documentElement,b=
 
       }
 
-    }]);
+    });
 
 }());
 

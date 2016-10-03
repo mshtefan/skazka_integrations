@@ -522,11 +522,14 @@
   float: left;
   line-height: 28px;
   padding: 0px 20px;
-  background-color: #A69F97;
+  background-color: #f5591f;
   color: #fff;
   font-size: 12px;
   font-family: 'Avenir';
   text-decoration: none;
+}
+.bns_choice_gift .bns_choice_gift_main .bns_gift_item .bgi_right a.disabled {
+  background-color: #A69F97;
 }
 .bns_choice_gift .bns_choice_gift_main .bns_gift_item .bgi_right a em {
   position: relative;
