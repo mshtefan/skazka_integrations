@@ -3,7 +3,8 @@
     <div class="bep_right">
         <span data-ng-bind="data.name"></span>
         <span class="bepi_text" data-ng-bind-html="data.text | html"></span>
-        <a href="#" class="bns_open_compl bns_custom_action" data-action="{{ data }}" data-ng-hide="data.hide_button">COMPLETE <em>»</em></a>
+        <a href="#" data-ng-if="!data.href" class="bns_open_compl bns_custom_action" data-action="{{ data }}" data-ng-hide="data.hide_button">COMPLETE <em>»</em></a>
+        <a data-ng-href="{{ data.href }}" target="_blank" data-ng-if="data.href" class="bns_open_compl bns_custom_action" data-ng-hide="data.hide_button">COMPLETE <em>»</em></a>
         <strong data-ng-if="data.points"
                 data-ng-bind="(data.points | number) + ' points' + (data.plus ? ' (plus ' + (data.plus | number) + ')' : '')"></strong>
     </div>

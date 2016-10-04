@@ -40,6 +40,7 @@
         text: 'We want to hear from you - tell us what you think!',
         pic: 'dist/img/lb_ms.png',
         points: 10,
+        href: 'http://myaccenthealth.com/clientcare/testimonials/',
         tag: 'Submit a Testimonial'
       },
       {
@@ -48,22 +49,25 @@
         text: 'Use the MyProgram Customizer to tailor your AccentHealth programming for your patients.',
         pic: 'dist/img/lb_set.png',
         points: 25,
+        href: 'http://myaccenthealth.com/program-settings/',
         tag: 'Customize Your Programming'
       },
       {
         type: 25,
         name: 'Create a Practice Message',
-        text: 'Communicate with your patients by leveraging our library of 90+ custom messages.',
+        text: 'Log into the Practice Messaging Editor to create a message and earn 25 points. Note: your points balance will update within 48 hours.',
         pic: 'dist/img/lb_mon.png',
         points: 25,
+        link: 'https://scm.ahwrn.net/ScmEditor/loginPage.do',
         tag: 'Create a Practice Message'
       },
       {
         type: 25,
         name: 'Attend a Webinar',
-        text: 'Join us for monthly webinars where we provide tips and advice on ways to increase patient satisfaction.',
+        text: 'Pop-up Message: Attend a webinar and earn 25 points. To receive an invitation, email webinar@accenthealth.com. Note: your points balance will update within 48 hours.',
         pic: 'dist/img/lb_web.png',
         points: 25,
+        link: 'mailto:webinar@accenthealth.com',
         tag: 'Attend a Webinar'
       },
       {
@@ -81,6 +85,7 @@
         text: 'We’ll provide custom solutions to ensure your patients continue to be provided the best in educational health and wellness tv.',
         pic: 'dist/img/lb_gr.png',
         points: 250,
+        href: 'http://myaccenthealth.com/clientcare/relocation/',
         tag: 'Renovating or Relocating?'
       },
       {
