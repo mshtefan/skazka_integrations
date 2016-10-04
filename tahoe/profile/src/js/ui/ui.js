@@ -38,7 +38,9 @@
 
     })
 
-    .directive('moreInfo', function(SailPlay, $rootScope, $q, ipCookie, SailPlayApi, FillProfile){
+    .constant('RegCompleteTag', 'Registration completed')
+
+    .directive('moreInfo', function(SailPlay, $rootScope, $q, ipCookie, SailPlayApi, FillProfile, RegCompleteTag){
 
       return {
 
@@ -58,33 +60,42 @@
 
             },
             custom_vars: {
-              'Address': ''
+              'Address': '',
+              'City': '',
+              'State': '',
+              'Zip_code': ''
             }
           };
 
           scope.$watch(function(){
-            return angular.toJson([ SailPlayApi.data('load.user.info')() ]);
+            return angular.toJson([ SailPlayApi.data('load.user.info')(), SailPlayApi.data('tags.exist')()]);
           }, function(){
 
             var user = SailPlayApi.data('load.user.info')();
+            var tags = SailPlayApi.data('tags.exist')();
 
-            if(!user) return;
-            scope.profile_form = angular.copy(new_form);
-            scope.profile_form.user.auth_hash = SailPlay.config().auth_hash;
-            scope.profile_form.user.firstName = user.user.first_name;
-            scope.profile_form.user.lastName = user.user.last_name;
-            scope.profile_form.user.birthDate = user.user.birth_date || '';
+            if(!user || !tags) return;
+
+            scope.more_info_form = angular.copy(new_form);
+            scope.more_info_form.user.auth_hash = SailPlay.config().auth_hash;
+            scope.more_info_form.user.firstName = user.user.first_name;
+            scope.more_info_form.user.lastName = user.user.last_name;
+            scope.more_info_form.user.birthDate = user.user.birth_date || '';
             if(ipCookie(FillProfile.cookie_name) && SailPlay.config().auth_hash === ipCookie(FillProfile.cookie_name).user.auth_hash ){
-              angular.extend(scope.profile_form, ipCookie(FillProfile.cookie_name));
+              angular.extend(scope.more_info_form, ipCookie(FillProfile.cookie_name));
             }
 
-            if(!scope.profile_form.user.firstName || !scope.profile_form.user.lastName || !scope.profile_form.user.birthDate || !scope.profile_form.custom_vars.Address) {
-              scope.show_more_info = true;
-            } else {
+            var result = tags.tags.filter(function (item) {
+              return item.name == RegCompleteTag && item.exist
+            }).length;
+
+            if(result) {
               scope.show_more_info = false;
+            } else {
+              scope.show_more_info = true;
             }
 
-            saved_form = angular.copy(scope.profile_form);
+            saved_form = angular.copy(scope.more_info_form);
 
           });
 
@@ -93,7 +104,7 @@
               form.$setPristine();
               form.$setUntouched();
             }
-            scope.profile_form = angular.copy(saved_form);
+            scope.more_info_form = angular.copy(saved_form);
           };
 
 
@@ -105,13 +116,15 @@
 
             var data_user = SailPlayApi.data('load.user.info')() && SailPlayApi.data('load.user.info')().user;
 
-            var req_user = angular.copy(scope.profile_form.user);
+            var req_user = angular.copy(scope.more_info_form.user);
 
             SailPlay.send('users.update', req_user, function(user_res){
 
               if(user_res.status === 'ok'){
 
-                SailPlay.send('vars.add', { custom_vars: scope.profile_form.custom_vars }, function(vars_res){
+                SailPlay.send('tags.add', { tags: [RegCompleteTag] }, function(){
+
+                  SailPlay.send('vars.add', { custom_vars: scope.more_info_form.custom_vars }, function(vars_res){
 
                   var response = {
                     user: user_res,
@@ -120,7 +133,7 @@
 
                   if(vars_res.status === 'ok') {
 
-                    ipCookie(FillProfile.cookie_name, scope.profile_form);
+                    ipCookie(FillProfile.cookie_name, scope.more_info_form);
 
                     $rootScope.$broadcast('notifier:notify', {
 
@@ -152,11 +165,11 @@
 
                 });
 
+                  scope.$apply();
 
+                });
 
-              }
-
-              else {
+              } else {
 
                 $rootScope.$broadcast('notifier:notify', {
 
@@ -201,7 +214,10 @@
 
             },
             custom_vars: {
-              'Address': ''
+              'Address': '',
+              'City': '',
+              'State': '',
+              'Zip_code': ''
             },
             tags: [],
             hide_hist: false

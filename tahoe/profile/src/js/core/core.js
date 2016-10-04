@@ -4,14 +4,14 @@
       'ipCookie'
     ])
 
-    .run(function (SailPlay, ipCookie, SailPlayApi, $rootScope, $window, FillProfile) {
+    .run(function (SailPlay, ipCookie, SailPlayApi, $rootScope, $window, FillProfile, RegCompleteTag, $timeout) {
 
       $rootScope.config = $window._CONFIG || {};
 
       var auth = false;
 
       // TODO: перенести действия в отдельный массив из вьюхи
-      var tags = [FillProfile.tag, 'TLUXP Review', 'Yelp Review', 'Google Review'];
+      var tags = [FillProfile.tag, 'TLUXP Review', 'Yelp Review', 'Google Review', RegCompleteTag];
 
       $rootScope.$on('sailplay-login-success', function () {
 
@@ -55,7 +55,11 @@
       });
 
       SailPlay.on('tags.add.success', function () {
-        SailPlayApi.call('tags.exist', {tags: tags});
+
+        $timeout(function(){
+          SailPlayApi.call('tags.exist', {tags: tags});
+        }, 2000)
+
       });
 
       SailPlay.on('actions.perform.success', function () {

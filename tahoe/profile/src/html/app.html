@@ -508,6 +508,21 @@
                     <span class="bns_span_over">{{ profile_form.custom_vars.Address || 'Address' }}</span>
                     <span class="bib_er" data-ng-show="profile.address.$invalid && profile.address.$touched">Field is required</span>
                 </div>
+                <div class="bns_input_block bns_input_block_prof">
+                    <input type="text" name="city" data-ng-model="profile_form.custom_vars.City">
+                    <span class="bns_span_over">{{ profile_form.custom_vars.City || 'City' }}</span>
+                    <span class="bib_er" data-ng-show="profile.city.$invalid && profile.city.$touched">Field is required</span>
+                </div>
+                <div class="bns_input_block bns_input_block_prof">
+                    <input type="text" name="state" data-ng-model="profile_form.custom_vars.State">
+                    <span class="bns_span_over">{{ profile_form.custom_vars.State || 'State' }}</span>
+                    <span class="bib_er" data-ng-show="profile.state.$invalid && profile.state.$touched">Field is required</span>
+                </div>
+                <div class="bns_input_block bns_input_block_prof">
+                    <input type="text" name="zip_code" data-ng-model="profile_form.custom_vars.Zip_code">
+                    <span class="bns_span_over">{{ profile_form.custom_vars.Zip_code || 'Zip code' }}</span>
+                    <span class="bib_er" data-ng-show="profile.zip_code.$invalid && profile.zip_code.$touched">Field is required</span>
+                </div>
                 <div class="bns_input_block" data-date-selector data-ng-model="$parent.profile_form.user.birthDate"
                      required>
                     <label>Birthdate</label>
@@ -564,24 +579,39 @@
         <div class="bns_over_iner">
             <h3>Complete Your
                 Profile</h3>
-            <form novalidate name="profile" class="bns_sign_form padded"
-                  data-ng-submit="$event.preventDefault(); submit_profile(profile, $parent.close_more_info)">
+            <form novalidate name="more_info" class="bns_sign_form padded"
+                  data-ng-submit="$event.preventDefault(); submit_profile(more_info, $parent.close_more_info)">
                 <div class="bns_input_block bns_input_block_prof">
-                    <input type="text" name="first_name" data-ng-model="profile_form.user.firstName" required>
-                    <span class="bns_span_over">{{ profile_form.user.firstName || 'Name' }}</span>
-                    <span class="bib_er" data-ng-show="profile.first_name.$invalid && profile.first_name.$touched">Field is required</span>
+                    <input type="text" name="first_name" data-ng-model="more_info_form.user.firstName" required>
+                    <span class="bns_span_over">{{ more_info_form.user.firstName || 'Name' }}</span>
+                    <span class="bib_er" data-ng-show="more_info.first_name.$invalid && more_info.first_name.$touched">Field is required</span>
                 </div>
                 <div class="bns_input_block bns_input_block_prof">
-                    <input type="text" name="last_name" data-ng-model="profile_form.user.lastName" required>
-                    <span class="bns_span_over">{{ profile_form.user.lastName || 'Surname' }}</span>
-                    <span class="bib_er" data-ng-show="profile.last_name.$invalid && profile.last_name.$touched">Field is required</span>
+                    <input type="text" name="last_name" data-ng-model="more_info_form.user.lastName" required>
+                    <span class="bns_span_over">{{ more_info_form.user.lastName || 'Surname' }}</span>
+                    <span class="bib_er" data-ng-show="more_info.last_name.$invalid && more_info.last_name.$touched">Field is required</span>
                 </div>
                 <div class="bns_input_block bns_input_block_prof">
-                    <input type="text" name="address" data-ng-model="profile_form.custom_vars.Address" required>
-                    <span class="bns_span_over">{{ profile_form.custom_vars.Address || 'Address' }}</span>
-                    <span class="bib_er" data-ng-show="profile.address.$invalid && profile.address.$touched">Field is required</span>
+                    <input type="text" name="address" data-ng-model="more_info_form.custom_vars.Address">
+                    <span class="bns_span_over">{{ more_info_form.custom_vars.Address || 'Address' }}</span>
+                    <span class="bib_er" data-ng-show="more_info.address.$invalid && more_info.address.$touched">Field is required</span>
                 </div>
-                <div class="bns_input_block" data-date-selector data-ng-model="$parent.profile_form.user.birthDate"
+                <div class="bns_input_block bns_input_block_prof">
+                    <input type="text" name="city" data-ng-model="more_info_form.custom_vars.City">
+                    <span class="bns_span_over">{{ more_info_form.custom_vars.City || 'City' }}</span>
+                    <span class="bib_er" data-ng-show="more_info.city.$invalid && more_info.city.$touched">Field is required</span>
+                </div>
+                <div class="bns_input_block bns_input_block_prof">
+                    <input type="text" name="state" data-ng-model="more_info_form.custom_vars.State">
+                    <span class="bns_span_over">{{ more_info_form.custom_vars.State || 'State' }}</span>
+                    <span class="bib_er" data-ng-show="more_info.state.$invalid && more_info.state.$touched">Field is required</span>
+                </div>
+                <div class="bns_input_block bns_input_block_prof">
+                    <input type="text" name="zip_code" data-ng-model="more_info_form.custom_vars.Zip_code">
+                    <span class="bns_span_over">{{ more_info_form.custom_vars.Zip_code || 'Zip code' }}</span>
+                    <span class="bib_er" data-ng-show="more_info.zip_code.$invalid && more_info.zip_code.$touched">Field is required</span>
+                </div>
+                <div class="bns_input_block" data-date-selector data-ng-model="$parent.more_info_form.user.birthDate"
                      required>
                     <label>Birthdate</label>
                     <div class="bns_select bns_select_date">
@@ -613,7 +643,7 @@
                     </div>
                 </div>
                 <div class="bns_input_block">
-                    <button type="submit" class="bns_input_block_prof_btn" data-ng-disabled="profile.$invalid">
+                    <button type="submit" class="bns_input_block_prof_btn" data-ng-disabled="more_info.$invalid">
                         Submit
                     </button>
                 </div>
