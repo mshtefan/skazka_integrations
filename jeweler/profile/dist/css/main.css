@@ -1,21 +1,21 @@
 @font-face {
   font-family: 'coco_gothic';
-  src: url('../font/cocogothic-webfont.eot');
-  src: url('../font/cocogothic-webfont.eot?#iefix') format('embedded-opentype'), url('../font/cocogothic-webfont.woff2') format('woff2'), url('../font/cocogothic-webfont.woff') format('woff'), url('../font/cocogothic-webfont.ttf') format('truetype');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eb5907e5b8a8c16d8bd746c08aae7ae0.eot');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eb5907e5b8a8c16d8bd746c08aae7ae0.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eea299fe1a86571538f48a69c0d91bea.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/94ba4858f5801daeb689e759193ba0ff.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/dcb5df3da7d570620ef674e863b0a6a6.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: 'coco_gothic';
-  src: url('../font/cocogothic-bold-webfont.eot');
-  src: url('../font/cocogothic-bold-webfont.eot?#iefix') format('embedded-opentype'), url('../font/cocogothic-bold-webfont.woff2') format('woff2'), url('../font/cocogothic-bold-webfont.woff') format('woff'), url('../font/cocogothic-bold-webfont.ttf') format('truetype');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/69ba4269a5a866de4408712b4916cb47.eot');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/69ba4269a5a866de4408712b4916cb47.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/c71aa5a0bfc853a07657b7583fac6afd.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/079abd9b98d4d3cfcd612386df435016.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/ea4aa13378c938624417de13045a6e4b.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
 }
 @font-face {
   font-family: 'coco_gothic';
-  src: url('../font/cocogothic-light-webfont.eot');
-  src: url('../font/cocogothic-light-webfont.eot?#iefix') format('embedded-opentype'), url('../font/cocogothic-light-webfont.woff2') format('woff2'), url('../font/cocogothic-light-webfont.woff') format('woff'), url('../font/cocogothic-light-webfont.ttf') format('truetype');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/a05f526f2fc4b690006c0a1e4614abf4.eot');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/a05f526f2fc4b690006c0a1e4614abf4.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/d8ec60a555f5f491647f542e2402ae84.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/c8531a767c4a2cac3db2e1354c35ff2a.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/20fad5cd3789d63569dbe79bc809da4e.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
 }
@@ -24,29 +24,29 @@
 }
 @font-face {
   font-family: 'a_antiquetradyregular';
-  src: url('../font/gybrabil-webfont.eot');
-  src: url('../font/gybrabil-webfont.eot?#iefix') format('embedded-opentype'), url('../font/gybrabil-webfont.woff2') format('woff2'), url('../font/gybrabil-webfont.woff') format('woff'), url('../font/gybrabil-webfont.ttf') format('truetype');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/03c5660fc5dbbc84ef6d2dd0b61a1dab.eot');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/03c5660fc5dbbc84ef6d2dd0b61a1dab.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/e903cd6dec20f70f98928ffdeae2d381.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/a2e4e356d5fa98fe35a626f7135e6da3.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/85cd6f498ba57b2cd9637ef084966910.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Muller';
-  src: url('../font/MullerRegular.eot');
-  src: url('../font/MullerRegular.eot?#iefix') format('embedded-opentype'), url('../font/MullerRegular.woff2') format('woff2'), url('../font/MullerRegular.woff') format('woff'), url('../font/MullerRegular.ttf') format('truetype');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/14b10cded46c5f3dc004d75b253bde72.eot');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/14b10cded46c5f3dc004d75b253bde72.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/1881e8ca0a54c95b111c478ec9fa8837.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/75a444030389ee5c90ee23c7fde3f618.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/5ea4412a38bf286c8f67fa8386b32d61.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: 'Muller';
-  src: url('../font/MullerBold.eot');
-  src: url('../font/MullerBold.eot?#iefix') format('embedded-opentype'), url('../font/MullerBold.woff2') format('woff2'), url('../font/MullerBold.woff') format('woff'), url('../font/MullerBold.ttf') format('truetype');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/95ed8e52096a72758fc957c91c4561a7.eot');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/95ed8e52096a72758fc957c91c4561a7.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eaa790e041ed8fe8c1f51299eea69d9d.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/e173d29c2fd6c461477920b87a2dacfb.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/4b82a8f83af63b5e2e7ad41b7488d5be.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
 }
 @font-face {
   font-family: 'Muller';
-  src: url('../font/MullerLight.eot');
-  src: url('../font/MullerLight.eot?#iefix') format('embedded-opentype'), url('../font/MullerLight.woff2') format('woff2'), url('../font/MullerLight.woff') format('woff'), url('../font/MullerLight.ttf') format('truetype');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/9c975cc1696bd20420c7e6db2e19639e.eot');
+  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/9c975cc1696bd20420c7e6db2e19639e.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/41cf83fcb0ecbe2f44f7000193a8a81b.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/01df7e8c5e27042e9363d755c876ec07.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/1731022c0a614a603e62f24762bfc291.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
 }
@@ -227,11 +227,11 @@ button {
 }
 .sp_cmn-breadcr__arrow.this-left {
   left: -14px;
-  background: url("../img/bread-left.png") no-repeat center;
+  background: url("https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eead5542c9e188907d185192b16da8b4.png") no-repeat center;
 }
 .sp_cmn-breadcr__arrow.this-right {
   right: -14px;
-  background: url("../img/bread-right.png") no-repeat center;
+  background: url("https://d3sailplay.cdnvideo.ru/media/assets/assetfile/54191274c2ac2f95281907c0836f183c.png") no-repeat center;
 }
 .sp_cmn-breadcr__arrow:hover {
   opacity: 1;
@@ -242,7 +242,7 @@ button {
   position: absolute;
   right: 15px;
   top: 15px;
-  background: url("../img/cross-icon.svg") no-repeat center;
+  background: url("https://d3sailplay.cdnvideo.ru/media/assets/assetfile/9d9c35daa6ad76b5b26b7a190dc85457.svg") no-repeat center;
   background-size: contain;
   cursor: pointer;
 }
@@ -316,7 +316,7 @@ button {
   width: 12px;
   height: 12px;
   border-radius: 2px;
-  border: 1px solid #000;
+  border: 1px solidН #000;
 }
 .sp_cmn-checkbox-wrap a:hover {
   -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
@@ -325,7 +325,7 @@ button {
 .sp_cmn-checkbox-wrap a.checked {
   border-color: #820d41;
   background-color: #820d41;
-  background-image: url("../img/check.png");
+  background-image: url("https://d3sailplay.cdnvideo.ru/media/assets/assetfile/58c932599f2ac4a949d6c02cb35c8c3d.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 9px 6px;
@@ -372,16 +372,16 @@ button {
   background-size: 15px 15px;
 }
 .outer_label.radio {
-  background-image: url('../img/checkboxes/1.png');
+  background-image: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/983ed13b88728b6e3cd1515d0cd02065.png');
 }
 .outer_label.radio.checked {
-  background-image: url('../img/checkboxes/2.png');
+  background-image: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/0a4056ee69b2c116a90879dad1c057f8.png');
 }
 .outer_label.checkbox {
-  background-image: url('../img/checkboxes/3.png');
+  background-image: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/7bc83e69d13bd06a8e3a92a1a9561221.png');
 }
 .outer_label.checkbox.checked {
-  background-image: url('../img/checkboxes/4.png');
+  background-image: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/4444eb710d3576c02f34c6ad3f3f9184.png');
 }
 .outer_label input {
   display: none;
@@ -464,7 +464,7 @@ button {
   font-weight: 400;
   line-height: 1.42857143;
   color: #000;
-  background: url("../img/back-01.jpg") no-repeat 0 0;
+  background: url("https://d3sailplay.cdnvideo.ru/media/assets/assetfile/6716947a502a7f27365c5ea00234084c.jpg") no-repeat 0 0;
   background-size: cover;
   padding: 70px 60px 50px;
 }
@@ -829,7 +829,7 @@ button {
   }
 }
 .sp_points-cell {
-  background-color: #BFD4FC;
+  background-color: #e1ebf2;
   padding: 50px 20px 20px;
   min-height: 393px;
   text-align: center;
@@ -854,7 +854,7 @@ button {
   width: auto;
 }
 .sp_status-cell {
-  background-color: #FEE9CE;
+  background-color: #f5e6d2;
   padding: 50px 20px 20px;
   min-height: 393px;
   text-align: center;
@@ -1310,11 +1310,11 @@ button {
 }
 .sp_gift-slider .slick-prev {
   left: -35px;
-  background-image: url("../img/left.png");
+  background-image: url("https://d3sailplay.cdnvideo.ru/media/assets/assetfile/0a6b55e204cb27ad24799aa634a5a89f.png");
 }
 .sp_gift-slider .slick-next {
   right: -35px;
-  background-image: url("../img/right.png");
+  background-image: url("https://d3sailplay.cdnvideo.ru/media/assets/assetfile/bbe8e74981f17405a856c029f6e1548d.png");
 }
 .sp_task-sec-wrap {
   -webkit-box-sizing: border-box;
@@ -1327,7 +1327,7 @@ button {
   color: #000;
   position: relative;
   margin-top: 14px;
-  background-color: #E3F5EC;
+  background-color: #e8f5ec;
 }
 .sp_task-sec-wrap:before,
 .sp_task-sec-wrap:after {
@@ -1457,11 +1457,11 @@ button {
 }
 .sp_task-slider .slick-prev {
   left: -30px;
-  background-image: url("../img/left.png");
+  background-image: url("https://d3sailplay.cdnvideo.ru/media/assets/assetfile/0a6b55e204cb27ad24799aa634a5a89f.png");
 }
 .sp_task-slider .slick-next {
   right: -30px;
-  background-image: url("../img/right.png");
+  background-image: url("https://d3sailplay.cdnvideo.ru/media/assets/assetfile/bbe8e74981f17405a856c029f6e1548d.png");
 }
 .sailplay_action_frame {
   width: 100px !important;
@@ -1474,7 +1474,6 @@ button {
   width: 100%;
   height: 100%;
   z-index: 10000;
-  background-color: rgba(0, 0, 0, 0.3);
   display: block;
   overflow: auto;
 }
@@ -1487,12 +1486,12 @@ button {
   font-weight: 400;
   line-height: 1.42857143;
   color: #000;
-  position: relative;
   width: 392px;
   max-width: 90%;
   margin: 40px auto 40px auto;
   max-height: 90%;
   background-color: #fff;
+  position: relative;
   -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
   padding: 35px 35px;
@@ -1585,7 +1584,6 @@ button {
   font-weight: 400;
   line-height: 1.42857143;
   color: #000;
-  position: relative;
   width: 650px;
   max-width: 90%;
   margin: 40px auto 40px auto;
@@ -1836,10 +1834,10 @@ button {
   font-weight: 400;
   line-height: 1.42857143;
   color: #000;
-  position: relative;
   width: 556px;
   max-width: 90%;
   margin: 40px auto 40px auto;
+  position: relative;
   -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
   padding: 30px 60px;
@@ -2505,7 +2503,7 @@ button {
   top: 50%;
   margin-top: -3px;
   right: 10px;
-  background: url("../img/arrow.svg") no-repeat center;
+  background: url("https://d3sailplay.cdnvideo.ru/media/assets/assetfile/667725ff1c00f30f88bf7d5eb7caec20.svg") no-repeat center;
   background-size: contain;
   border: none;
 }
@@ -2516,7 +2514,7 @@ button {
   background-color: #e6e6e6;
 }
 .selectize-control.sp_cmn-selectize .selectize-input.dropdown-active:after {
-  background-image: url("../img/arrow-up.svg");
+  background-image: url("https://d3sailplay.cdnvideo.ru/media/assets/assetfile/8eac85a31cafe2dda0337266f6c173c9.svg");
 }
 .selectize-control.sp_cmn-selectize .selectize-input input {
   vertical-align: top;
@@ -2568,4 +2566,48 @@ button {
 }
 .selectize-control.sp_cmn-selectize .sp_cmn-selectize .option:first-child {
   border: none;
+}
+.tooltip {
+  display: inline-block;
+  margin-left: 5px;
+  position: relative;
+  font-family: Muller;
+}
+.tooltip_icon {
+  border-radius: 50%;
+  width: 18px;
+  display: inline-block;
+  height: 18px;
+  line-height: 18px;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+  color: #820d41;
+  border: 1px solid #000;
+}
+.tooltip_text {
+  display: none;
+  width: 300px;
+  height: 50px;
+  padding: 7px;
+  line-height: 18px;
+  font-size: 14px;
+  background: white;
+  border-radius: 5px;
+  position: absolute;
+  left: -130px;
+  top: -50px;
+  box-sizing: border-box;
+}
+.tooltip_text a {
+  color: #820d41;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.tooltip_text a:hover {
+  text-decoration: none;
+}
+.tooltip:hover .tooltip_text {
+  display: block;
 }
