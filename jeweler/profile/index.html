@@ -15,21 +15,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-  <link rel="stylesheet" type="text/css" href="dist/css/main.css">
+  <!--<link rel="stylesheet" type="text/css" href="dist/css/main.css">-->
 
-  <script src="lib/js/vendor/jquery-1.10.1.min.js"></script>
-  <script src="lib/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-  <script src="lib/js/plugins/slick.min.js"></script>
-  <script src="lib/js/plugins/jquery.bpopup.min.js"></script>
-  <script src="lib/js/plugins/prettyCheckable.min.js"></script>
-  <script src="lib/js/plugins/selectize.min.js"></script>
-  <script src="lib/js/plugins/jquery.mask.min.js"></script>
+  <!--<script src="lib/js/vendor/jquery-1.10.1.min.js"></script>-->
+  <!--<script src="lib/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
+  <!--<script src="lib/js/plugins/slick.min.js"></script>-->
+  <!--<script src="lib/js/plugins/jquery.bpopup.min.js"></script>-->
+  <!--<script src="lib/js/plugins/prettyCheckable.min.js"></script>-->
+  <!--<script src="lib/js/plugins/selectize.min.js"></script>-->
+  <!--<script src="lib/js/plugins/jquery.mask.min.js"></script>-->
 
-  <!--<script src="js/common.js"></script>-->
+  <!--&lt;!&ndash;<script src="js/common.js"></script>&ndash;&gt;-->
 
-  <script type="text/javascript" src="config/local.js"></script>
-  <script type="text/javascript" src="config/locale.ru.js"></script>
-  <script type="text/javascript" src="dist/js/sailplay.widgets.js"></script>
+  <!--<script type="text/javascript" src="config/local.js"></script>-->
+  <!--<script type="text/javascript" src="config/locale.ru.js"></script>-->
+  <!--<script type="text/javascript" src="dist/js/sailplay.widgets.js"></script>-->
+
+  <script type="text/javascript">
+
+    window._CONFIG = {
+      SAILPLAY: {
+        partner_id: 1569,
+        auth_hash: '7b02b4838d93a3a141dd43de71ec2f48bbb5e2b6'
+      }
+    };
+
+    var _links = {
+      js: 'dist/js/sailplay.widgets.js',
+      css: 'dist/css/main.css'
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+      var _s = document.createElement("link");
+      _s.type = "text/css";
+      _s.rel = "stylesheet";
+      _s.href = _links.css;
+      document.getElementsByTagName("head")[0].appendChild(_s);
+
+      var _j = document.createElement("script");
+      _j.type = "text/javascript";
+      _j.src = _links.js;
+      document.getElementsByTagName("head")[0].appendChild(_j);
+
+    });
+
+  </script>
 
 </head>
 <body>
