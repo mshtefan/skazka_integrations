@@ -33,7 +33,7 @@
 
             scope.$apply(function(){
 
-              SailPlayApi.call('load.user.info');
+              SailPlayApi.call('load.user.info', {all: 1, purchases: 1});
               SailPlayApi.call('load.user.history');
 
             });

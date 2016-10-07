@@ -35,7 +35,7 @@
                         <div class="sp_person-info__stat-hd">Ваш статус: {{ user().user_status.name }}</div>
                         <div data-ng-if="get_next()">До статуса <b>{{ get_next().name }}</b> осталось {{
                             get_offset() }}
-                            {{ get_offset() | sailplay_pluralize:'балл,балла,баллов' }}
+                            {{ get_offset() | sailplay_pluralize:'рубль,рубля,рублей' }}
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
             <div class="sp_progr-sec__l">
                 <div class="sp_progr-sec__txt">
                     До следющего статуса осталось <b>{{ get_offset() }} {{ get_offset() |
-                    sailplay_pluralize:'балл,балла,баллов' }}</b>
+                    sailplay_pluralize:'рубль,рубля,рублей' }}</b>
                 </div>
             </div>
             <div class="sp_progr-sec__r">

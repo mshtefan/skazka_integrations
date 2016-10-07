@@ -72,7 +72,7 @@
 
             var arr = SailPlayBadges.limits;
 
-            var limit = user && user() ? user().user_points.confirmed + user().user_points.spent + user().user_points.spent_extra : 0;
+            var limit = user && user() ? user().purchases.sum : 0;
             var result = [];
             for (var i = 0, len = arr.length; i < len; i++) {
               var current_limit = arr[i];

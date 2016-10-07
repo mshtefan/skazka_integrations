@@ -24,7 +24,7 @@
 
           $rootScope.loaded = true;
           //load data for widgets
-          SailPlayApi.call('load.user.info', {all: 1});
+          SailPlayApi.call('load.user.info', {all: 1, purchases: 1});
           SailPlayApi.call('load.badges.list');
           SailPlayApi.call('load.actions.list');
           SailPlayApi.call('load.user.history');
@@ -56,7 +56,7 @@
 
         });
 
-        SailPlayApi.call('load.user.info', {all: 1});
+        SailPlayApi.call('load.user.info', {all: 1, purchases: 1});
         SailPlayApi.call('load.user.history');
 
         $rootScope.$apply();
