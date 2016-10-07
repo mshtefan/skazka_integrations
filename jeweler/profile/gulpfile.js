@@ -1,4 +1,4 @@
-(function(){
+(function () {
 
   'use strict';
 
@@ -21,7 +21,7 @@
 
   });
 
-  gulp.task('watch', function(){
+  gulp.task('watch', function () {
     gulp.watch(__dirname + '/src/js/**/*.js', ['build.javascript']);
     gulp.watch(__dirname + '/src/html/**/*.html', ['build.javascript']);
     gulp.watch(__dirname + '/src/less/**/*.less', ['build.less']);
@@ -29,23 +29,42 @@
     gulp.watch(__dirname + '/src/img/**/*', ['build.img']);
   });
 
-  gulp.task('build.javascript', [ 'javascript.concat', 'javascript.ngAnnotate' ]);
+  gulp.task('build.javascript', ['javascript.concat', 'javascript.ngAnnotate']);
 
-  gulp.task('javascript.concat',['build.templates'], function() {
+  gulp.task('javascript.concat', ['build.templates'], function () {
     return gulp.src([
-      __dirname + '/node_modules/sailplay-hub/sailplay.hub.js',
-      __dirname + '/node_modules/sailplay-hub-actions/sailplay.hub.actions.js',
-      __dirname + '/node_modules/angular/angular.min.js',
-      __dirname + '/node_modules/angular-i18n/angular-locale_ru-ru.js',
-      __dirname + '/node_modules/angular-cookie/angular-cookie.min.js',
-      __dirname + '/node_modules/angular-utils-pagination/dirPagination.js',
-      __dirname + '/src/js/**/*.js'
-    ])
+
+        // Libs
+        __dirname + '/node_modules/jquery/dist/jquery.min.js',
+        __dirname + '/lib/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js',
+        __dirname + '/lib/js/plugins/slick.min.js',
+        __dirname + '/lib/js/plugins/jquery.bpopup.min.js',
+        __dirname + '/lib/js/plugins/prettyCheckable.min.js',
+        __dirname + '/lib/js/plugins/selectize.min.js',
+        __dirname + '/lib/js/plugins/jquery.mask.min.js',
+
+        // Sailplay HUB
+        __dirname + '/node_modules/sailplay-hub/sailplay.hub.js',
+        __dirname + '/node_modules/sailplay-hub-actions/sailplay.hub.actions.js',
+
+        // Angular Modules
+        __dirname + '/node_modules/angular/angular.min.js',
+        __dirname + '/node_modules/angular-i18n/angular-locale_ru-ru.js',
+        __dirname + '/node_modules/angular-cookie/angular-cookie.min.js',
+        __dirname + '/node_modules/angular-utils-pagination/dirPagination.js',
+
+        // Configs
+        //__dirname + '/config/local.js',
+        __dirname + '/config/locale.ru.js',
+
+        // Application
+        __dirname + '/src/js/**/*.js'
+      ])
       .pipe(concat('sailplay.widgets.js'))
       .pipe(gulp.dest(__dirname + '/dist/js/'));
   });
 
-  gulp.task('javascript.ngAnnotate',[ 'javascript.concat' ], function () {
+  gulp.task('javascript.ngAnnotate', ['javascript.concat'], function () {
     return gulp.src(__dirname + '/dist/sailplay.widgets.js')
       .pipe(ngAnnotate({
         add: true
@@ -73,7 +92,7 @@
   gulp.task('build.less', function () {
     return gulp.src(__dirname + '/src/less/*.less')
       .pipe(less({
-        paths: [ path.join(__dirname, 'less', 'includes') ]
+        paths: [path.join(__dirname, 'less', 'includes')]
       }))
       .pipe(gulp.dest(__dirname + '/dist/css'));
   });
@@ -93,7 +112,7 @@
     return gulp.src(__dirname + '/src/js/sailplay/**/*.js')
       .pipe(gulpDocs.process({
         html5Mode: false,
-        scripts: ['https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-animate.min.js','https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js'],
+        scripts: ['https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-animate.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js'],
         loadDefaults: {
           angularAnimate: false,
           marked: false

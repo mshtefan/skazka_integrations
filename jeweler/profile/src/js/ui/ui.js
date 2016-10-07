@@ -48,12 +48,15 @@
             scope.profile_form = angular.copy(new_form);
             scope.profile_form.user.auth_hash = SailPlay.config().auth_hash;
             //angular.extend(scope.profile_form.user, user.user);
-            scope.profile_form.user.addPhone = user.user.phone;
+            //scope.profile_form.user.addPhone = user.user.phone;
             scope.profile_form.user.addEmail = user.user.email;
-            scope.profile_form.user.birthDate = user.user.birth_date || '';
+            scope.profile_form.user.birthDate = user.user.birth_date || '0000-00-00';
             if(ipCookie('profile_form') && SailPlay.config().auth_hash === ipCookie('profile_form').user.auth_hash ){
               angular.extend(scope.profile_form, ipCookie('profile_form'));
+            } else {
+              scope.profile_form.custom_vars['ДР супруга(и)'] = ipCookie('profile_form') ? ipCookie('profile_form').custom_vars['ДР супруга(и)'] : '0000-00-00';
             }
+
           });
 
           scope.toggle_tag = function(arr, tag){
@@ -206,6 +209,51 @@
 
     })
 
+    .filter('tel', function () {
+      return function (tel) {
+        if (!tel) { return ''; }
+
+        var value = tel.toString().trim().replace(/^\+/, '');
+
+        if (value.match(/[^0-9]/)) {
+          return tel;
+        }
+
+        var country, city, number;
+
+        switch (value.length) {
+          case 10: // +1PPP####### -> C (PPP) ###-####
+            country = 1;
+            city = value.slice(0, 3);
+            number = value.slice(3);
+            break;
+
+          case 11: // +CPPP####### -> CCC (PP) ###-####
+            country = value[0];
+            city = value.slice(1, 4);
+            number = value.slice(4);
+            break;
+
+          case 12: // +CCCPP####### -> CCC (PP) ###-####
+            country = value.slice(0, 3);
+            city = value.slice(3, 5);
+            number = value.slice(5);
+            break;
+
+          default:
+            return tel;
+        }
+
+        if (country == 1) {
+          country = "";
+        }
+
+        number = number.slice(0, 3) + '-' + number.slice(3, 5) + '-' + number.slice(5);
+
+        return (country + " (" + city + ") " + number).trim();
+      };
+    })
+
     .directive('overlayClick', function(){
 
       return {
@@ -301,8 +349,8 @@
 
           var options = scope.$eval(attrs.options) || {
             infinite: false,
-            nextArrow: '<img class="slider_arrow right" src="dist/img/right.png"/>',
-            prevArrow: '<img class="slider_arrow left" src="dist/img/left.png"/>',
+            nextArrow: '<img class="slider_arrow right" src="https://d3sailplay.cdnvideo.ru/media/assets/assetfile/0a6b55e204cb27ad24799aa634a5a89f.png"/>',
+            prevArrow: '<img class="slider_arrow left" src="https://d3sailplay.cdnvideo.ru/media/assets/assetfile/bbe8e74981f17405a856c029f6e1548d.png"/>',
             slidesToShow: 4,
             slidesToScroll: 4,
             responsive: [
@@ -438,7 +486,7 @@
 
       return {
         restrict: 'A',
-        link: function(scope, elm){
+        link: function(scope, elm, attrs){
 
           $timeout(function(){
             $(elm).selectize({});

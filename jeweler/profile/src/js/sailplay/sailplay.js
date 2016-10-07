@@ -56,8 +56,8 @@
       var auth_hash_cookie_name = 'sailplay_auth_hash';
 
       var config = {
-        partner_id: 1,
-        domain: 'https://sailplay.net'
+        partner_id: 1569,
+        domain: 'https://sailplay.ru'
       };
 
       return {
@@ -89,6 +89,21 @@
           sp.CONFIG = config;
 
           switch (auth_type){
+
+            case 'config':
+
+              sp.authorize = function() {
+                var auth_hash = $rootScope.config.SAILPLAY && $rootScope.config.SAILPLAY.auth_hash;
+
+                if (auth_hash) {
+                  sp.send('login', auth_hash);
+                }
+                else {
+                  $rootScope.$broadcast('sailplay-login-error', {status: 'error', message: 'No auth_hash found'});
+                }
+              };
+
+              break;
 
             case 'url':
 

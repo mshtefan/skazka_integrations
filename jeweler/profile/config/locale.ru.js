@@ -36,36 +36,36 @@ window._LOCALE = {
       },
       "inviteFriend":{
         name: "Пригласите друга",
-        pic: 'dist/img/task-icon-07.svg'
+        pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/364047a1a25a4dfaf0964382a23908d5.svg'
       }
     },
     "social": {
       "vk": {
         "like": {
           "name": "Вступите в группу VK",
-          pic: 'dist/img/task-icon-05.svg'
+          pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/80bfe068b09d99a22ce81e46ae4d8243.svg'
         },
         "partner_page": {
           "name": "Рассказать о нашем магазине в VK",
-          pic: 'dist/img/task-icon-05.svg'
+          pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/80bfe068b09d99a22ce81e46ae4d8243.svg'
         },
         "purchase": {
           "name": "Поделитесь вашей покупкой в VK",
-          pic: 'dist/img/task-icon-06.svg'
+          pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/f8acb4763cb49eaaa454d5f928372413.svg'
         }
       },
       "fb": {
         "like": {
           "name": "Вступите в группу Facebook",
-          pic: 'dist/img/task-icon-04.svg'
+          pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/3d203916db24a1ee62d20393c591652e.svg'
         },
         "partner_page": {
           "name": "Рассказать о нашем магазине в Facebook",
-          pic: 'dist/img/task-icon-04.svg'
+          pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/3d203916db24a1ee62d20393c591652e.svg'
         },
         "purchase": {
           "name": "Поделитесь вашей покупкой в Facebook",
-          pic: 'dist/img/task-icon-06.svg'
+          pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/f8acb4763cb49eaaa454d5f928372413.svg'
         }
       },
       "gp": {
