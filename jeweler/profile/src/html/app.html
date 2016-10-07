@@ -418,6 +418,7 @@
                         <label class="outer_label radio"
                                data-ng-class="{ checked: profile_form.custom_vars['В браке'] === 'да' }">
                             <input name="married" type="radio" class="js-create-radio" data-ng-value="'да'"
+                                   required
                                    data-ng-model="profile_form.custom_vars['В браке']">
 
                             <span class="sp_cmn-label js-satellite">Замужем/женат</span>
@@ -428,6 +429,7 @@
                         <label class="outer_label radio"
                                data-ng-class="{ checked: profile_form.custom_vars['В браке'] === 'нет' }">
                             <input name="married" type="radio" class="js-create-radio" data-ng-value="'нет'"
+                                   required
                                    data-ng-model="profile_form.custom_vars['В браке']">
 
                             <span class="sp_cmn-label js-satellite">Не замужем/Холост</span>
