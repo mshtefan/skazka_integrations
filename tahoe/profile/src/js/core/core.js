@@ -79,7 +79,7 @@
         $rootScope.$broadcast('notifier:notify', {
 
           header: $rootScope.locale.congratulations,
-          body: (res.coupon_number && ($rootScope.locale.coupon_number + ' ' + res.coupon_number)) || res.success_message || $rootScope.locale.gift_received
+          body: res.success_message || $rootScope.locale.gift_received
 
         });
 
