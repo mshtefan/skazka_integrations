@@ -79,7 +79,7 @@
         $rootScope.$broadcast('notifier:notify', {
 
           header: $rootScope.locale.congratulations,
-          body: res.success_message || $rootScope.locale.gift_received
+          body: res.gift_success_message || $rootScope.locale.gift_received
 
         });
 
