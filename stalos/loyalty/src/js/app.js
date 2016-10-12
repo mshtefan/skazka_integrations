@@ -32,6 +32,7 @@
       });
 
       sp.send('login.remote', {
+        node: document.getElementById('sailplay_auth'),
         lang: window.config.sailplay.lang || 'ru',
         domain: window.config.sailplay.domain || '//sailplay.ru',
         disabled_options: ['socials', 'agreement']
