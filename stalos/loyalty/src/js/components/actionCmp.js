@@ -121,6 +121,7 @@
                 house : formData.house,
                 apartment: formData.apartment
               };
+              data.auth_hash = sp.config().auth_hash;
               sp.send('user.update', data);
               sp.on('user.update.error', function (res) {
                 var mes;
