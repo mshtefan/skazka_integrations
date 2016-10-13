@@ -48,6 +48,7 @@
     for (var i = 0; i < elems.length; i += 1) {
       angular.bootstrap(elems[i], ['stalos']);
     }
+    document.getElementById('sailplay_auth').remove();
   }
 
   startApp();
