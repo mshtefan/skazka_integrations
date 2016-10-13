@@ -106,7 +106,7 @@
         </section>
 
         <section class="sp_l-section sp_gift-sec" data-sailplay-gifts data-ng-cloak data-ng-controller="slick_config"
-                 data-ng-init="selected_gift = false;">
+                 data-ng-init="selected_gift = false;" data-ng-show="gifts && gifts() && gifts().length">
             <div class="sp_cmn-sec-head">Подарки</div>
             <div class="sp_gift-slider js-gift-slider" data-ng-if="gifts && gifts() && gifts().length" data-slick-carousel data-options="$parent.gift_slider_config">
                 <div data-ng-repeat="gift in $parent.gifts()" data-slick-slide>
