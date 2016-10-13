@@ -2764,6 +2764,12 @@ module.run(['$templateCache', function($templateCache) {
           };
 
           scope.open_profile = function () {
+            var profile = $('.sp_profile-popup.js-profile-popup');
+            if($('.menu._fixed._open').length) {
+              profile.css('top', $('.menu._fixed._open').length && $('.menu._fixed._open').height() || 0)
+            } else {
+              profile.css('top', $('header').length && $('header').height() || 0)
+            }
             scope.show_profile_info = true;
             scope.body_lock(true);
           };
@@ -2794,92 +2800,6 @@ module.run(['$templateCache', function($templateCache) {
     app_container && angular.bootstrap(app_container, ['sailplay.widgets']);
 
   }, 100)
-
-}());
-
-(function () {
-
-  angular.module('core', [
-      'ipCookie'
-    ])
-
-    .run(function (SailPlay, ipCookie, SailPlayApi, $rootScope, $window, ProfileTag) {
-
-      $rootScope.config = $window._CONFIG || {};
-
-      SailPlay.on('login.error', function () {
-
-        $rootScope.$apply(function(){
-
-          $rootScope.loaded = true;
-
-        });
-
-      });
-
-      SailPlay.on('login.success', function () {
-
-        $rootScope.$apply(function () {
-
-          $rootScope.loaded = true;
-          //load data for widgets
-          SailPlayApi.call('load.user.info', {all: 1, purchases: 1});
-          SailPlayApi.call('load.badges.list');
-          SailPlayApi.call('load.actions.list');
-          SailPlayApi.call('load.user.history');
-          SailPlayApi.call('load.gifts.list');
-          SailPlayApi.call('tags.exist', {tags: [ProfileTag]});
-
-        });
-
-      });
-
-      SailPlay.on('actions.perform.success', function () {
-        SailPlayApi.call('load.actions.list');
-      });
-
-      SailPlay.on('actions.perform.error', function () {
-        SailPlayApi.call('load.actions.list');
-      });
-
-      SailPlay.on('actions.perform.complete', function () {
-        SailPlayApi.call('load.actions.list');
-      });
-
-      SailPlay.on('gifts.purchase.success', function (res) {
-
-        $rootScope.$broadcast('notifier:notify', {
-
-          header: $rootScope.locale.gift_received,
-          body: res.coupon_number ? $rootScope.locale.coupon_number + ' ' + res.coupon_number : res.success_message
-
-        });
-
-        SailPlayApi.call('load.user.info', {all: 1, purchases: 1});
-        SailPlayApi.call('load.user.history');
-
-        $rootScope.$apply();
-
-      });
-
-      SailPlay.on('gift.purchase.error', function (res) {
-
-        $rootScope.$broadcast('notifier:notify', {
-
-          header: $rootScope.locale.gift_error,
-          body: $rootScope.locale.errors[res.status_code] || $rootScope.locale.error
-
-        });
-
-        $rootScope.$apply();
-
-      });
-
-      //SailPlay.on('actions.social.connect.complete', function(){
-      //  SailPlayApi.call('load.actions.list');
-      //});
-
-    });
 
 }());
 
@@ -3625,6 +3545,92 @@ module.run(['$templateCache', function($templateCache) {
         }
 
       };
+
+    });
+
+}());
+
+(function () {
+
+  angular.module('core', [
+      'ipCookie'
+    ])
+
+    .run(function (SailPlay, ipCookie, SailPlayApi, $rootScope, $window, ProfileTag) {
+
+      $rootScope.config = $window._CONFIG || {};
+
+      SailPlay.on('login.error', function () {
+
+        $rootScope.$apply(function(){
+
+          $rootScope.loaded = true;
+
+        });
+
+      });
+
+      SailPlay.on('login.success', function () {
+
+        $rootScope.$apply(function () {
+
+          $rootScope.loaded = true;
+          //load data for widgets
+          SailPlayApi.call('load.user.info', {all: 1, purchases: 1});
+          SailPlayApi.call('load.badges.list');
+          SailPlayApi.call('load.actions.list');
+          SailPlayApi.call('load.user.history');
+          SailPlayApi.call('load.gifts.list');
+          SailPlayApi.call('tags.exist', {tags: [ProfileTag]});
+
+        });
+
+      });
+
+      SailPlay.on('actions.perform.success', function () {
+        SailPlayApi.call('load.actions.list');
+      });
+
+      SailPlay.on('actions.perform.error', function () {
+        SailPlayApi.call('load.actions.list');
+      });
+
+      SailPlay.on('actions.perform.complete', function () {
+        SailPlayApi.call('load.actions.list');
+      });
+
+      SailPlay.on('gifts.purchase.success', function (res) {
+
+        $rootScope.$broadcast('notifier:notify', {
+
+          header: $rootScope.locale.gift_received,
+          body: res.coupon_number ? $rootScope.locale.coupon_number + ' ' + res.coupon_number : res.success_message
+
+        });
+
+        SailPlayApi.call('load.user.info', {all: 1, purchases: 1});
+        SailPlayApi.call('load.user.history');
+
+        $rootScope.$apply();
+
+      });
+
+      SailPlay.on('gift.purchase.error', function (res) {
+
+        $rootScope.$broadcast('notifier:notify', {
+
+          header: $rootScope.locale.gift_error,
+          body: $rootScope.locale.errors[res.status_code] || $rootScope.locale.error
+
+        });
+
+        $rootScope.$apply();
+
+      });
+
+      //SailPlay.on('actions.social.connect.complete', function(){
+      //  SailPlayApi.call('load.actions.list');
+      //});
 
     });
 

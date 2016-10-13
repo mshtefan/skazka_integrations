@@ -83,6 +83,12 @@
           };
 
           scope.open_profile = function () {
+            var profile = $('.sp_profile-popup.js-profile-popup');
+            if($('.menu._fixed._open').length) {
+              profile.css('top', $('.menu._fixed._open').length && $('.menu._fixed._open').height() || 0)
+            } else {
+              profile.css('top', $('header').length && $('header').height() || 0)
+            }
             scope.show_profile_info = true;
             scope.body_lock(true);
           };
