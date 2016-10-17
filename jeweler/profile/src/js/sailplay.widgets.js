@@ -83,14 +83,67 @@
           };
 
           scope.open_profile = function () {
-            var profile = $('.sp_profile-popup.js-profile-popup');
+
+            var popup = $('.js-profile-popup');
+
             if($('.menu._fixed._open').length) {
-              profile.css('top', $('.menu._fixed._open').length && $('.menu._fixed._open').height() || 0)
+              popup.css('top', $('.menu._fixed._open').length && $('.menu._fixed._open').height() || 0)
             } else {
-              profile.css('top', $('header').length && $('header').height() || 0)
+              popup.css('top', $('header').length && $('header').height() || 0)
             }
+
             scope.show_profile_info = true;
+
             scope.body_lock(true);
+
+          };
+
+          scope.open_history = function(){
+
+            var popup = $('.js-history-popup');
+
+            if($('.menu._fixed._open').length) {
+              popup.css('top', $('.menu._fixed._open').length && $('.menu._fixed._open').height() || 0)
+            } else {
+              popup.css('top', $('header').length && $('header').height() || 0)
+            }
+
+            scope.show_history = true;
+
+            scope.body_lock(true);
+
+          };
+
+          scope.close_history = function(){
+
+            scope.show_history = false;
+
+            scope.body_lock(false);
+
+          };
+
+          scope.open_status_list = function(){
+
+            var popup = $('.js-status-popup');
+
+            if($('.menu._fixed._open').length) {
+              popup.css('top', $('.menu._fixed._open').length && $('.menu._fixed._open').height() || 0)
+            } else {
+              popup.css('top', $('header').length && $('header').height() || 0)
+            }
+
+            scope.show_statuses_list = true;
+
+            scope.body_lock(true);
+
+          };
+
+          scope.close_status_list = function(){
+
+            scope.show_statuses_list = false;
+
+            scope.body_lock(false);
+
           };
 
           SailPlay.on('tags.exist.success', function (res) {

@@ -59,7 +59,7 @@
                     <div class="sp_points-cell__ttl">{{ user().user_points.confirmed | sailplay_pluralize:'бонусный
                         балл,бонусных балла,бонусных баллов' }}
                     </div>
-                    <a href="" data-ng-hide="hide_hist" data-ng-click="$event.preventDefault();show_history = true;"
+                    <a href="" data-ng-hide="hide_hist" data-ng-click="$event.preventDefault();open_history()"
                        class="sp_cmn-btn sp_cmn-btn_red sp_points-cell__btn js-open-history-popup">История
                         транзакций</a>
                 </div>
@@ -71,7 +71,7 @@
                          style="background-image: url({{ user().user_status.pic || 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/e979ec44819f37ff84795afb2179a256.svg' }});"></div>
                     <div class="sp_status-cell__ttl">{{ user().user_status.name || 'Нет статуса' }}</div>
                     <a href="" class="sp_cmn-btn sp_cmn-btn_red sp_status-cell__btn js-open-status-popup"
-                       data-ng-click="$event.preventDefault();show_statuses_list = true;">Список статусов</a>
+                       data-ng-click="$event.preventDefault();open_status_list();">Список статусов</a>
                 </div>
             </div>
         </section>
@@ -202,9 +202,9 @@
     </div>
     <!-- /sp_widget -->
     <div class="sp_overlay display_table" data-ng-show="show_history">
-        <div class="display_table_cell" data-overlay-click="show_history = false;">
+        <div class="display_table_cell" data-overlay-click="close_history()">
             <div class="sp_hist-popup js-history-popup">
-                <div class="sp_cmn-popup-close js-close-popup" data-ng-click="show_history = false;"></div>
+                <div class="sp_cmn-popup-close js-close-popup" data-ng-click="close_history()"></div>
                 <div class="sp_hist-popup__hd">История транзакций</div>
                 <div class="sp_hist-list">
                     <div class="sp_hist-list__itm" data-dir-paginate="item in history() | itemsPerPage:10"
@@ -239,7 +239,7 @@
             </div>
             <div class="sp_stat-popup__btns">
                 <div class="sp_stat-popup__btn sp_cmn-btn-sm js-close-popup"
-                     data-ng-click="show_statuses_list = false;">ОК
+                     data-ng-click="close_status_list();">ОК
                 </div>
             </div>
         </div>
