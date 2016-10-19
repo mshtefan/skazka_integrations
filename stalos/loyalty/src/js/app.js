@@ -18,6 +18,7 @@
 
   function startApp() {
     if (!window.config) window.config = {};
+    var _auth = false;
     sp.send('init',
       {
         partner_id: window.config.sailplay.partner_id || 1528,
@@ -29,7 +30,17 @@
 
       sp.on('login.success', function () {
         bootstrap();
+        _auth = true;
       });
+
+      sp.on('logout.success', function(){
+        if(_auth){
+          window.location.reload();
+        } else {
+          document.getElementById('sailplay_auth').style.display = 'block';
+        }
+      });
+
 
       sp.send('login.remote', {
         node: document.getElementById('sailplay_auth'),
@@ -41,6 +52,8 @@
     });
 
   }
+
+  document.getElementById('sailplay_auth').style.display = 'none';
 
   function bootstrap() {
     document.createElement('app');

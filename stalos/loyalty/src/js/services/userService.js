@@ -20,6 +20,9 @@
         });
       };
 
+      self.logout = function () {
+        sp.send('logout');
+      };
 
       self.getInfo = function () {
         if (self.info) {
@@ -114,11 +117,11 @@
         var to = new Date().getTime() / 1000;
         //console.log('date', d, date);
         if (t == 'week') {
-          to = to - 60*60*24*7;
+          to = to - 60 * 60 * 24 * 7;
           //console.log('to', to, new Date(to));
           return date > to ? true : false;
         } else if (t == 'month') {
-          to = to - 60*60*24*30;
+          to = to - 60 * 60 * 24 * 30;
           //console.log('to', to, new Date(to));
           return date > to ? true : false;
         } else {
