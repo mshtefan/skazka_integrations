@@ -620,6 +620,7 @@
 .bns_overlay.bns_over_signin .bns_over_iner {
   width: 420px;
   min-height: 405px;
+  vertical-align: top;
 }
 .bns_overlay.bns_set_pass .bns_over_iner {
   width: 400px;
