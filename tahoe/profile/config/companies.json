@@ -25,7 +25,7 @@
   },
   {
     "name": "Trunk Show",
-    "description": "10% Off",
+    "description": "Spend $40 in store and receive a free pair of pinecone earrings",
     "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/eb2daf015476972633468f8ad3041ba5.png",
     "link": "https://www.tahoetrunkshow.com/"
   },
@@ -46,5 +46,17 @@
     "description": "10% Off Full Priced Items",
     "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/19b96f155b5a4716829cfd1e9a5f0c81.png",
     "link": "http://www.shopfinenfunky.com/"
+  },
+  {
+    "name": "Tahoe Art Haus",
+    "description": "$1 Off Beer or Soda", 
+    "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/b933fac4fc8ff035054ab0605d545b33.png",
+    "link": "http://tahoearthauscinema.com/"
+  }, 
+  {
+    "name": "Ruffles & Ruffnecks",
+    "description": "10% Off", 
+    "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/74d515d196d7127f201eb8094d15fdae.jpg",
+    "link": "http://www.rufflesandruffnecks.com/"
   }
 ]
