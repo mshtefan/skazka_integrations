@@ -1,5 +1,5 @@
 <div class="bns_overlay bns_error" data-ng-show="show_notifier" data-overlay-click="reset_notifier()">
-  <div class="bns_over_iner">
+  <div class="bns_over_iner"  style="margin-top: {{ offset || 20 }}px">
     <h3>{{ data.header }}</h3>
     <a href="#" class="bns_close" data-ng-click="$event.preventDefault(); reset_notifier();"></a>
 			<span class="bns_pass_info">

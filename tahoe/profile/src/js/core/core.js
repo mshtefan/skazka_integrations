@@ -79,7 +79,8 @@
         $rootScope.$broadcast('notifier:notify', {
 
           header: $rootScope.locale.congratulations,
-          body: res.gift_help_text || $rootScope.locale.gift_received
+          body: res.gift_help_text || $rootScope.locale.gift_received,
+          offset: $('.page-block__gifts').offset().top + $('.page-block__gifts').height()/2
 
         });
 
@@ -92,10 +93,13 @@
 
       SailPlay.on('gift.purchase.error', function (res) {
 
+
+
         $rootScope.$broadcast('notifier:notify', {
 
           header: $rootScope.locale.gift_error,
-          body: $rootScope.locale.errors[res.status_code] || $rootScope.locale.error
+          body: $rootScope.locale.errors[res.status_code] || $rootScope.locale.error,
+          offset: $('.page-block__gifts').offset().top + $('.page-block__gifts').height()/2
 
         });
 

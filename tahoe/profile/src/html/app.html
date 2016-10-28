@@ -125,7 +125,7 @@
                         <span class="bns_num_point">{{ user().user_points.confirmed }}</span>
                         <span class="bns_text">bonus points available</span>
                         <a href="#" class="bns_info_btn bns_hist"
-                           data-ng-click="$event.preventDefault(); show_history = true;">History</a>
+                           data-ng-click="$event.preventDefault(); open_history();">History</a>
                     </div>
                     <div class="bns_info_block">
                         <span class="bns_num_point">{{ user().user_points.confirmed + user().user_points.spent }}</span>
@@ -164,7 +164,7 @@
                     </div>
                 </div>
 
-                <div data-sailplay-gifts data-ng-init="selected_gift = false; gift_confirmation = false;">
+                <div data-sailplay-gifts class="page-block__gifts" data-ng-init="selected_gift = false; gift_confirmation = false;">
                     <h3 class="bns_head">Redeem Your Points</h3>
                     <div class="bns_redeem_main">
                         <div class="bns_reedem_item" data-ng-repeat="gift in gifts()"
@@ -173,7 +173,7 @@
                                 <span class="bns_name">{{ gift.name }}</span>
                                 <span class="bns_point">{{ gift.points }} {{ gift.points | sailplay_pluralize:locale.points_pluralize }}</span>
                                 <a href="#"
-                                   data-ng-click="$event.preventDefault(); $parent.selected_gift = gift; body_lock(true);">Get</a>
+                                   data-ng-click="$event.preventDefault(); $parent.selected_gift = gift; body_lock(true);open_gift();">Get</a>
                             </div>
                         </div>
                     </div>
@@ -249,6 +249,7 @@
                 </div>
 
                 <div data-sailplay-actions
+                     class="page-block__actions"
                      data-ng-init="selected_action = false; custom_action = false; link_action = false;">
                     <h3 class="bns_head">Earn More Points</h3>
                     <div class="bns_earn_more_main">
@@ -273,7 +274,7 @@
                                 <span class="bnmi_point">{{ action.points }} {{ action.points | sailplay_pluralize:locale.points_pluralize }}</span>
                             </div>
                             <div class="bns_emm_over">
-                                <a href="#" data-ng-click="$event.preventDefault(); $parent.selected_action = action;">Get
+                                <a href="#" data-ng-click="$event.preventDefault(); $parent.selected_action = action; open_actions();">Get
                                     bonus points!</a>
                             </div>
                         </div>
@@ -288,7 +289,7 @@
                                 <span class="bnmi_point">100 {{ 100 | sailplay_pluralize:locale.points_pluralize }}</span>
                             </div>
                             <div class="bns_emm_over">
-                                <a href="#" data-ng-click="$event.preventDefault(); custom_action = night_action;">Get
+                                <a href="#" data-ng-click="$event.preventDefault(); custom_action = night_action; open_actions();">Get
                                     bonus points!</a>
                             </div>
                         </div>
@@ -303,7 +304,7 @@
                                 <span class="bnmi_point">100 {{ 100 | sailplay_pluralize:locale.points_pluralize }}</span>
                             </div>
                             <div class="bns_emm_over">
-                                <a href="#" data-ng-click="$event.preventDefault(); link_action = review_action;">Get
+                                <a href="#" data-ng-click="$event.preventDefault(); link_action = review_action; open_actions();">Get
                                     bonus points!</a>
                             </div>
                         </div>
@@ -319,7 +320,7 @@
                                 <span class="bnmi_point">100 {{ 100 | sailplay_pluralize:locale.points_pluralize }}</span>
                             </div>
                             <div class="bns_emm_over">
-                                <a href="#" data-ng-click="$event.preventDefault(); link_action = review_action_yelp;">Get
+                                <a href="#" data-ng-click="$event.preventDefault(); link_action = review_action_yelp; open_actions();">Get
                                     bonus points!</a>
                             </div>
                         </div>
@@ -336,7 +337,7 @@
                                 <span class="bnmi_point">100 {{ 100 | sailplay_pluralize:locale.points_pluralize }}</span>
                             </div>
                             <div class="bns_emm_over">
-                                <a href="#" data-ng-click="$event.preventDefault(); link_action = review_action_gp;">Get
+                                <a href="#" data-ng-click="$event.preventDefault(); link_action = review_action_gp; open_actions();">Get
                                     bonus points!</a>
                             </div>
                         </div>
@@ -351,7 +352,7 @@
                                 <span class="bnmi_point">500 {{ 500 | sailplay_pluralize:locale.points_pluralize }}</span>
                             </div>
                             <div class="bns_emm_over">
-                                <a href="#" data-ng-click="$event.preventDefault(); custom_action = refer_action;">Get
+                                <a href="#" data-ng-click="$event.preventDefault(); custom_action = refer_action; open_actions();">Get
                                     bonus points!</a>
                             </div>
                         </div>
@@ -437,10 +438,10 @@
 
     <!--history popup-->
     <div class="bns_overlay bns_over_hist" data-ng-class="{ hidden: !show_history }"
-         data-overlay-click="show_history = false;">
+         data-overlay-click="show_history = false;body_lock(false)">
         <div class="bns_over_iner" data-sailplay-history>
             <h3>History</h3>
-            <a href="#" class="bns_close" data-ng-click="$event.preventDefault(); $parent.show_history = false;"></a>
+            <a href="#" class="bns_close" data-ng-click="$event.preventDefault(); $parent.show_history = false;body_lock(false)"></a>
             <div class="bns_hist_table">
                 <div class="bns_hist_table_item" data-dir-paginate="item in history() | itemsPerPage:9"
                      data-pagination-id="history_pages">
@@ -469,7 +470,7 @@
     </div>
 
     <!--PROFILE FORM-->
-    <div data-fill-profile class="bns_overlay bns_compl_prof" data-ng-class="{ hidden: !show_profile_info }"
+    <div data-fill-profile class="bns_overlay bns_compl_prof edit_profile" data-ng-class="{ hidden: !show_profile_info }"
          data-overlay-click="close_profile(); revert_profile_form();">
         <div class="bns_over_iner">
             <h3>Complete Your
@@ -575,7 +576,7 @@
     </div>
 
     <!--MORE INFO FORM-->
-    <div data-more-info class="bns_overlay bns_compl_prof" data-ng-class="{ hidden: !show_more_info }">
+    <div data-more-info class="bns_overlay bns_compl_prof more_info" data-ng-class="{ hidden: !show_more_info }">
         <div class="bns_over_iner">
             <h3>Complete Your
                 Profile</h3>

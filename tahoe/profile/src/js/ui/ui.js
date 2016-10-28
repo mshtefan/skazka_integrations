@@ -92,7 +92,22 @@
             if(result) {
               scope.show_more_info = false;
             } else {
+
               scope.show_more_info = true;
+
+              var popup = $('.bns_compl_prof.more_info .bns_over_iner');
+
+              scope.$emit('body_lock', true);
+
+              setTimeout(function(){
+
+
+                popup.css({
+                  'margin-top': $('.bns_edit_prof').length && $('.bns_edit_prof').offset().top - popup.height()/2 || 0
+                });
+
+              }, 10);
+
             }
 
             saved_form = angular.copy(scope.more_info_form);
@@ -145,6 +160,7 @@
                     SailPlayApi.call('load.user.info', { all: 1 });
 
                     scope.show_more_info = false;
+                    scope.$emit('body_lock', false);
 
                     callback && callback(response);
                     scope.$apply();
@@ -596,10 +612,13 @@
 
            };
 
+           scope.offset = null;
+
            scope.$on('notifier:notify', function(e, data){
 
             scope.data = data;
             scope.show_notifier = true;
+            scope.offset = data.offset;
             console.log('notifier: ' + data.body);
 
            });
