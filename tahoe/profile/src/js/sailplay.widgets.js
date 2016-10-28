@@ -152,13 +152,29 @@
 
           scope.open_gift = function () {
 
-            var overlays = $('.page-page-block__actions .bns_overlay');
+            var overlays = $('.page-block__gifts .bns_overlay');
 
             scope.offset = $('.page-block__gifts').length && $('.page-block__gifts').offset().top;
 
             overlays.css({
               'padding-top': scope.offset || 0
             });
+
+          };
+
+          scope.open_download = function () {
+
+            var overlays = $('.bns_overlay.card_popup');
+
+            setTimeout(function () {
+
+              scope.offset = $('.bns_downl').length && $('.bns_downl').offset().top - $('.bns_overlay.card_popup .bns_over_iner').height() / 2;
+
+              overlays.css({
+                'padding-top': scope.offset || 0
+              });
+
+            }, 10);
 
           };
 
@@ -277,7 +293,7 @@
             $rootScope.$broadcast('notifier:notify', {
               header: 'Thank you!',
               body: 'Your KeyClub Card was sent to ' + SailPlayApi.data('load.user.info')().user.email,
-              offset: $('.page-block__gifts').offset().top + $('.page-block__gifts').height()/2
+              offset: $('.bns_sent').offset().top
             });
 
           };
