@@ -620,12 +620,14 @@
             scope.show_notifier = true;
             scope.offset = data.offset;
             console.log('notifier: ' + data.body);
+            scope.$emit('body_lock', true);
 
            });
 
            scope.reset_notifier = function(){
              scope.data = angular.copy(new_data);
              scope.show_notifier = false;
+             scope.$emit('body_lock', false);
            };
 
            scope.reset_notifier();
