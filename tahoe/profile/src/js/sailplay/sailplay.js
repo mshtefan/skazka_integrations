@@ -50,7 +50,7 @@
     
     .service('sailplay_config', function($window){
       
-      return typeof $window._CONFIG !== 'undefined' && $window._CONFIG.SAILPLAY || { partner_id: 1, domain: 'https://sailplay.net' };
+      return typeof $window._CONFIG !== 'undefined' && $window._CONFIG.SAILPLAY || { partner_id: 1, domain: 'http://crm.tluxp.com' };
       
     })
 
@@ -64,7 +64,7 @@
 
       var config = {
         partner_id: 1,
-        domain: 'https://sailplay.net'
+        domain: 'http://crm.tluxp.com'
       };
 
       return {
