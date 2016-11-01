@@ -125,7 +125,7 @@
 
           };
 
-          $rootScope.$on('body_lock', function (bool) {
+          $rootScope.$on('body_lock', function (e, bool) {
 
             scope.body_lock(bool);
 
@@ -133,7 +133,9 @@
 
           scope.body_lock = function (state) {
 
-            if (state) {
+            console.log('body_lock', state);
+
+            if (state && typeof state == 'boolean') {
               $document[0].body.classList.add('body_lock');
             }
             else {
@@ -152,13 +154,18 @@
 
           scope.open_gift = function () {
 
+            console.log('open_gift 1');
+
             var overlays = $('.page-block__gifts .bns_overlay');
 
-            scope.offset = $('.page-block__gifts').length && $('.page-block__gifts').offset().top;
+            setTimeout(function(){
+              console.log('open_gift 2');
+              scope.offset = $('.page-block__gifts').length && $('.page-block__gifts').offset().top - $(window).scrollTop();
 
-            overlays.css({
-              'padding-top': scope.offset || 0
-            });
+              overlays.css({
+                'padding-top': scope.offset || 0
+              });
+            },100)
 
           };
 
@@ -168,7 +175,7 @@
 
             setTimeout(function () {
 
-              scope.offset = $('.bns_downl').length && $('.bns_downl').offset().top - $('.bns_overlay.card_popup .bns_over_iner').height() / 2;
+              scope.offset = $('.bns_downl').length && $('.bns_downl').offset().top - $('.bns_overlay.card_popup .bns_over_iner').height() / 2 - $(window).scrollTop();
 
               overlays.css({
                 'padding-top': scope.offset || 0
@@ -182,7 +189,7 @@
 
             var overlays = $('.page-block__actions .bns_overlay');
 
-            scope.offset = $('.page-block__actions').length && $('.page-block__actions').offset().top;
+            scope.offset = $('.page-block__actions').length && $('.page-block__actions').offset().top - $(window).scrollTop();
 
             overlays.css({
               'padding-top': scope.offset || 0
@@ -208,13 +215,15 @@
 
           scope.open_history = function () {
 
-            scope.show_history = true;
+            scope.show_history = true
+
+            scope.body_lock(true);
 
             var popup = $('.bns_over_hist .bns_over_iner');
 
             setTimeout(function () {
 
-              scope.offset = $('.bns_hist').length && $('.bns_hist').offset().top || 0;
+              scope.offset = $('.bns_hist').length && $('.bns_hist').offset().top - $(window).scrollTop() || 0;
 
               popup.css({
                 'margin-top': scope.offset - popup.height() / 2 || 0
@@ -232,7 +241,7 @@
 
             setTimeout(function () {
 
-              scope.offset = $('.bns_edit_prof').length && $('.bns_edit_prof').offset().top || 0;
+              scope.offset = $('.bns_edit_prof').length && $('.bns_edit_prof').offset().top - $(window).scrollTop() || 0;
 
               popup.css({
                 'margin-top': scope.offset - popup.height() / 2 || 0
@@ -293,7 +302,7 @@
             $rootScope.$broadcast('notifier:notify', {
               header: 'Thank you!',
               body: 'Your KeyClub Card was sent to ' + SailPlayApi.data('load.user.info')().user.email,
-              offset: $('.bns_sent').offset().top
+              offset: $('.bns_sent').offset().top - $(window).scrollTop()
             });
 
           };
@@ -302,7 +311,7 @@
             $rootScope.$broadcast('notifier:notify', {
               header: '',
               body: 'You do not currently have enough points to redeem this gift. Earn additional points by staying with us or taking the actions below!',
-              offset: $('.page-block__gifts').offset().top + $('.page-block__gifts').height()/2
+              offset: $('.page-block__gifts').offset().top + $('.page-block__gifts').height()/2 - $(window).scrollTop()
             });
           };
 

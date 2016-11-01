@@ -2649,7 +2649,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/html/app.html',
-    '<div data-sailplay-profile="" data-sailplay-history="" data-ng-cloak=""><div class="bns_wrap clearfix" data-ng-show="!user()"><div class="bns_top bns_top_nologin" data-ng-class="{ type_auth : auth }"><div class="iner_block"><h2><span>Join the</span> <strong>KEY CLUB</strong> <img src="dist/img/key.png" alt="key"></h2><div class="bns_top_right_btn"><a href="#" class="bns_logun" data-ng-click="$event.preventDefault(); show_login = true;">Login/Sign Up</a></div></div></div><div class="bns_content"><div class="iner_block clearfix"><div class="bns_top_right"><div class="bns_top_item" style="background-image: url(dist/img/top_icon1_bl.png);"><span>Download a virtual membership card that is good for discounts at local shops and restaurants</span></div><div class="bns_top_item" style="background-image: url(dist/img/top_icon4_bl.png);"><span>Earn points for every night you stay</span></div><div class="bns_top_item" style="background-image: url(dist/img/top_icon2_bl.png);"><span>Review your vacation home, share on social media, and learn other ways to earn bonus points</span></div><div class="bns_top_item" style="background-image: url(dist/img/top_icon3_bl.png);"><span>Redeem your points for gifts and services that will make your Tahoe stay exceptional!</span></div></div><div class="bns_right_content bns_right_content_nl"><div class="bns_card" style="cursor: pointer;" data-ng-click="show_login = true;"><span class="bns_c_text1">Tahoe Luxury Properties<br>Key Club</span> <span class="bns_c_text2">Join the Key Club</span></div></div><div data-sailplay-gifts="" data-ng-init="selected_gift = false; gift_confirmation = false;"><h3 class="bns_head">Earn Rewards!</h3><div class="bns_redeem_main"><div class="bns_reedem_item" data-ng-repeat="gift in gifts()" style="background-image: url({{ gift.thumbs.url_250x250 | sailplay_pic }})"><div class="bns_reedem_item_over"><span class="bns_name">{{ gift.name }}</span> <span class="bns_point">{{ gift.points }} {{ gift.points | sailplay_pluralize:locale.points_pluralize }}</span></div></div></div></div><h3 class="bns_head">Plus, Enjoy Discounts Around Town</h3><p style="float:left">Download your membership card and receive discounts with these partners.</p><div class="bns_nlpage_content" data-ng-controller="CompaniesList"><div class="bns_nlpage_item bns_nlpage_item_nologin" data-ng-repeat="company in companies"><div class="bns_nlpage_item_img"><a data-ng-href="{{ company.link }}" target="_blank" data-ng-bind="company.name"></a></div><div class="bns_left_content_text"><p>{{ company.description }}</p></div></div></div></div></div></div><div class="bns_wrap" data-ng-show="user()"><div class="bns_top"><div class="iner_block"><div class="bns_top_right full"><div class="bns_top_item" style="background-image: url(dist/img/top_icon1.png);"><span>Download a virtual membership card that is good for discounts at local shops and restaurants</span></div><div class="bns_top_item" style="background-image: url(dist/img/top_icon2.png);"><span>Review your vacation home, share on social media, and learn other ways to earn bonus points</span></div><div class="bns_top_item inline" style="background-image: url(dist/img/top_icon4.png);"><span>Earn points for every night you stay</span></div><div class="bns_top_item" style="background-image: url(dist/img/top_icon3.png);"><span>Redeem your points for gifts and services that will make your Tahoe stay exceptional!</span></div></div><h2><span>Welcome to the</span> <strong>Key Club</strong> <img src="dist/img/key.png" alt="key"></h2><div class="bns_top_mid"><a class="ava" data-ng-show="has_avatar()"><img data-ng-src="{{ user().user.pic | sailplay_pic }}" alt=""></a><div class="bns_info_block"><span class="bns_name">{{ user().user.name || \'&nbsp;\' }}</span> <span class="bns_email">{{ user().user.email }}</span> <span class="bns_phone" data-masked-phone-number="+1 (000) 000-00-00" data-phone="user().user.phone"></span> <a href="#" class="bns_edit_prof" data-ng-click="$event.preventDefault(); open_profile();">edit your profile</a> <a href="#" class="bns_info_btn bns_logout" data-ng-click="$event.preventDefault(); logout();">Log out</a></div><div class="bns_info_block"><span class="bns_num_point">{{ user().user_points.confirmed }}</span> <span class="bns_text">bonus points available</span> <a href="#" class="bns_info_btn bns_hist" data-ng-click="$event.preventDefault(); open_history();">History</a></div><div class="bns_info_block"><span class="bns_num_point">{{ user().user_points.confirmed + user().user_points.spent }}</span> <span class="bns_text">points earned since joining the Key Club</span></div></div></div></div><div class="bns_content"><div class="iner_block"><div><h3 class="bns_head">Download Your Key Club Card</h3><div class="bns_left_content_text"><p>Use your Tahoe Luxury Properties Key Club card for discounts and benefits at local shops and restaurants</p><a href="#" class="bns_show_all" data-ng-click="$event.preventDefault(); show_companies = true; body_lock(true);">Find out more>></a></div><div class="bns_right_content"><div class="bns_card" style="cursor: pointer;" data-ng-click="show_companies = true; body_lock(true);"><span class="bns_c_text1">Tahoe Luxury Properties<br>Key Club</span> <span class="bns_c_text2">Download the Key Card</span></div><span class="bns_ch">Choose how you want to get your Key Club Card</span><div class="bns_card_btn"><a href="#" class="bns_info_btn bns_downl" data-ng-click="$event.preventDefault(); show_download = true;body_lock(true);open_download();">Download the Key Card</a> <a href="#" class="bns_info_btn bns_sent" data-ng-click="$event.preventDefault(); tags_add({ tags: [\'KC card emailed\'] }, on_email_sent)">Send to my email</a></div></div></div><div data-sailplay-gifts="" class="page-block__gifts" data-ng-init="selected_gift = false; gift_confirmation = false;"><h3 class="bns_head">Redeem Your Points</h3><div class="bns_redeem_main"><div class="bns_reedem_item" data-ng-repeat="gift in gifts()" style="background-image: url({{ gift.thumbs.url_250x250 | sailplay_pic }})"><div class="bns_reedem_item_over"><span class="bns_name">{{ gift.name }}</span> <span class="bns_point">{{ gift.points }} {{ gift.points | sailplay_pluralize:locale.points_pluralize }}</span> <a href="#" data-ng-click="$event.preventDefault(); $parent.selected_gift = gift; body_lock(true);open_gift();">Get</a></div></div></div><div class="bns_overlay bns_over_get_gift" data-ng-class="{ hidden: !selected_gift || gift_confirmation }" data-overlay-click="selected_gift = false; body_lock(false);"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); selected_gift = false; body_lock(false);"></a> <img data-ng-src="{{ (selected_gift.pic_full || selected_gift.thumbs.url_250x250) | sailplay_pic }}" alt=""><h4>{{ selected_gift.name }}</h4><span class="bns_over_get_gift_info">{{ selected_gift.descr | descr }}</span><div class="bns_over_get_gift_disc"><h5>Disclaimer</h5><span>{{ selected_gift.descr | disclaimer }}</span></div><div class="bns_sign_form"><div data-ng-show="selected_gift.points > user().user_points.confirmed"><span class="bns_over_get_gift_notify">You need {{ selected_gift.points - user().user_points.confirmed }} more points to get this gift</span></div><div class="bns_input_block"><a href="#" class="bns_over_get_gift disabled" data-ng-show="selected_gift.points > user().user_points.confirmed" data-ng-click="$event.preventDefault(); gift_points_notify();">Get</a> <a href="#" class="bns_over_get_gift" data-ng-show="selected_gift.points <= user().user_points.confirmed" data-ng-click="$event.preventDefault(); gift_confirmation = true;">Get</a> <a href="#" class="bns_over_cancel_btn" data-ng-click="$event.preventDefault(); selected_gift = false; body_lock(false);">Cancel</a></div></div></div></div><div class="bns_overlay bns_over_get_gift_confirm" data-ng-class="{ hidden: !gift_confirmation }"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); selected_gift = false; gift_confirmation = false; body_lock(false);"></a><h3>You are about to spend {{ selected_gift.points }} {{ selected_gift.points | sailplay_pluralize:locale.points_pluralize }} on</h3><div class="bns_reedem_item"><img data-ng-src="{{ (selected_gift.pic_full || selected_gift.thumbs.url_250x250) | sailplay_pic }}" alt=""><div class="bns_reedem_item_over"><span class="bns_name">{{ selected_gift.name }}</span></div></div><span class="bns_pass_info">Are you sure?</span><div class="bns_sign_form"><div class="bns_input_block"><a href="#" class="bns_over_get_gift_conf" data-ng-click="$event.preventDefault(); gift_purchase(selected_gift); selected_gift = false; gift_confirmation = false; body_lock(false);">Yes</a> <a href="#" class="bns_over_cancel_btn" data-ng-click="$event.preventDefault(); selected_gift = false; gift_confirmation = false; body_lock(false);">Cancel</a></div></div></div></div></div><div data-sailplay-actions="" class="page-block__actions" data-ng-init="selected_action = false; custom_action = false; link_action = false;"><h3 class="bns_head">Earn More Points</h3><div class="bns_earn_more_main"><div class="bns_earn_more_item" data-ng-repeat="action in actions().actions"><div class="bemi_left"><img data-ng-src="{{ action_data(action).pic }}" alt=""></div><div class="bemi_right"><span class="bnmi_name">{{ action_data(action).name }}</span> <span class="bnmi_point">{{ action.points }} {{ action.points | sailplay_pluralize:locale.points_pluralize }}</span></div><div class="bns_emm_over"><a href="#" data-ng-click="$event.preventDefault(); $parent.selected_action = action; open_actions();">Get bonus points!</a></div></div><div class="bns_earn_more_item" data-ng-init="night_action = { name: \'Earn 100 points for each night you stay in a TLUXP home\', pic: \'dist/img/actions/5.png\', descr: \'Points will be applied upon booking. Call or book online.\' }"><div class="bemi_left"><img data-ng-src="{{ night_action.pic }}" alt=""></div><div class="bemi_right"><span class="bnmi_name">{{ night_action.name }}</span> <span class="bnmi_point">100 {{ 100 | sailplay_pluralize:locale.points_pluralize }}</span></div><div class="bns_emm_over"><a href="#" data-ng-click="$event.preventDefault(); custom_action = night_action; open_actions();">Get bonus points!</a></div></div><div class="bns_earn_more_item" data-ng-init="review_action = { tag: \'TLUXP Review\', name: \'Review your vacation rental on TLUXP.com\', button: \'Review\', pic: \'dist/img/actions/3.png\', descr: \'http://www.tluxp.com/lake-tahoe-vacation-rentals\', url: \'http://www.tluxp.com/lake-tahoe-vacation-rentals\' }"><div class="bemi_left"><img data-ng-src="{{ review_action.pic }}" alt=""></div><div class="bemi_right"><span class="bnmi_name">{{ review_action.name }}</span> <span class="bnmi_point">100 {{ 100 | sailplay_pluralize:locale.points_pluralize }}</span></div><div class="bns_emm_over"><a href="#" data-ng-click="$event.preventDefault(); link_action = review_action; open_actions();">Get bonus points!</a></div></div><div class="bns_earn_more_item" data-ng-show="!check_to_exist(review_action_yelp.tag, exist())" data-ng-init="review_action_yelp = { tag: \'Yelp Review\', name: \'Review Us on Yelp\', button: \'Review\', pic: \'dist/img/actions/3.png\', descr: \'https://www.yelp.com/biz/tahoe-luxury-properties-tahoe-city\', url: \'https://www.yelp.com/biz/tahoe-luxury-properties-tahoe-city\' }"><div class="bemi_left"><img data-ng-src="{{ review_action_yelp.pic }}" alt=""></div><div class="bemi_right"><span class="bnmi_name">{{ review_action_yelp.name }}</span> <span class="bnmi_point">100 {{ 100 | sailplay_pluralize:locale.points_pluralize }}</span></div><div class="bns_emm_over"><a href="#" data-ng-click="$event.preventDefault(); link_action = review_action_yelp; open_actions();">Get bonus points!</a></div></div><div class="bns_earn_more_item" data-ng-show="!check_to_exist(review_action_gp.tag, exist())" data-ng-init="review_action_gp = { tag: \'Google Review\', name: \'Review Us on Google\', button: \'Review\', pic: \'dist/img/actions/3.png\', descr: \'https://www.google.com/maps/place/Tahoe+Luxury+Properties/@39.1670432,-120.1475247,17z/data=!4m7!3m6!1s0x80997d9d67a0270f:0x2af05c19d6ef38f4!8m2!3d39.1670432!4d-120.145336!9m1!1b1\', url: \'https://www.google.com/maps/place/Tahoe+Luxury+Properties/@39.1670432,-120.1475247,17z/data=!4m7!3m6!1s0x80997d9d67a0270f:0x2af05c19d6ef38f4!8m2!3d39.1670432!4d-120.145336!9m1!1b1\' }"><div class="bemi_left"><img data-ng-src="{{ review_action_gp.pic }}" alt=""></div><div class="bemi_right"><span class="bnmi_name">{{ review_action_gp.name }}</span> <span class="bnmi_point">100 {{ 100 | sailplay_pluralize:locale.points_pluralize }}</span></div><div class="bns_emm_over"><a href="#" data-ng-click="$event.preventDefault(); link_action = review_action_gp; open_actions();">Get bonus points!</a></div></div><div class="bns_earn_more_item" data-ng-init="refer_action = { name: \'Refer a friend and earn 500 points when they book a TLUXP home\', pic: \'dist/img/actions/2.png\', descr: \'Points will be applied upon booking. Friend must mention referral points to Agent.\' }"><div class="bemi_left"><img data-ng-src="{{ refer_action.pic }}" alt=""></div><div class="bemi_right"><span class="bnmi_name">{{ refer_action.name }}</span> <span class="bnmi_point">500 {{ 500 | sailplay_pluralize:locale.points_pluralize }}</span></div><div class="bns_emm_over"><a href="#" data-ng-click="$event.preventDefault(); custom_action = refer_action; open_actions();">Get bonus points!</a></div></div></div><div class="bns_overlay bns_tell_about" data-ng-class="{ hidden: !custom_action }" data-overlay-click="custom_action = false;"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); custom_action = false;"></a><h3>{{ custom_action.name }}</h3><div class="bns_tell_about_main"><div class="bns_tell_about_main_left"><img data-ng-src="{{ custom_action.pic }}" alt=""></div><div class="bns_tell_about_main_right"><p class="btamr_text">{{ custom_action.descr }}</p></div></div></div></div><div class="bns_overlay bns_tell_about" data-ng-class="{ hidden: !link_action }" data-overlay-click="link_action = false;"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); link_action = false;"></a><h3>{{ link_action.name }}</h3><div class="bns_tell_about_main"><div class="bns_tell_about_main_left"><img data-ng-src="{{ link_action.pic }}" alt=""></div><div style="margin-top: 20px;"><a data-ng-click="$event.preventDefault();link_action_click(link_action);" href="{{ link_action.url }}" target="_blank" class="bns_tell_about_main_button">{{ link_action.button }}</a></div></div></div></div><div class="bns_overlay bns_tell_about" data-ng-class="{ hidden: !selected_action }" data-overlay-click="selected_action = false;"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); selected_action = false;"></a><h3>{{ action_data(selected_action).name }}</h3><div class="bns_tell_about_main"><div class="bns_tell_about_main_left"><img data-ng-src="{{ action_data(selected_action).pic }}" alt=""></div><div class="bns_tell_about_main_right"><div style="position: relative; height: 32px; float: left; width: 100%; margin-top: 6px;" href="#" data-sailplay-action="" data-action="selected_action" data-text="Get bonus points!" data-styles="{{ config.social_styles }}"><a class="sp_cmn-btn-sm sp_task-slider__btn" style="margin-top: 0; cursor: pointer;">Get bonus points!</a></div></div></div></div></div></div><div class="bns_footer">Check your Key Club emails for more ways to earn!</div></div></div></div><div class="bns_overlay bns_over_hist" data-ng-class="{ hidden: !show_history }" data-overlay-click="show_history = false;body_lock(false)"><div class="bns_over_iner" data-sailplay-history=""><h3>History</h3><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); $parent.show_history = false;body_lock(false)"></a><div class="bns_hist_table"><div class="bns_hist_table_item" data-dir-paginate="item in history() | itemsPerPage:9" data-pagination-id="history_pages"><span class="bhti_left">{{ item | history_item }} <strong>({{ item.action_date | date:\'MM/dd/yyyy\' }})</strong></span> <span class="bhti_right">{{ item.points_delta || 0 }} {{ item.points_delta | sailplay_pluralize:\'point,points,points\' }}</span></div></div><dir-pagination-controls data-max-size="6" data-pagination-id="history_pages" data-template-url="/html/ui/ui.pagination.controls.html" data-auto-hide="true"></dir-pagination-controls></div></div><div class="bns_overlay bns_over_signin" data-ng-class="{ hidden: !show_login }"><div class="bns_over_iner"><h3>Sign in to continue</h3><a href="" class="bns_close" data-ng-click="$event.preventDefault(); show_login = false;"></a><div class="bns_sign_form pn" style="min-height: 341px;" data-ng-controller="RemoteLoginConfig" data-sailplay-remote-login="remote_login_options"></div></div></div><div data-fill-profile="" class="bns_overlay bns_compl_prof edit_profile" data-ng-class="{ hidden: !show_profile_info }" data-overlay-click="close_profile(); revert_profile_form();"><div class="bns_over_iner"><h3>Complete Your Profile</h3><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); close_profile(); revert_profile_form();"></a> <span class="bns_pass_info">Click on the field you\'d like to edit</span><form novalidate="" name="profile" class="bns_sign_form padded" data-ng-submit="$event.preventDefault(); submit_profile(profile, $parent.on_submit_profile)"><div class="bns_input_block bns_input_block_prof"><input type="text" name="first_name" data-ng-model="profile_form.user.firstName" required=""> <span class="bns_span_over">{{ profile_form.user.firstName || \'Name\' }}</span> <span class="bib_er" data-ng-show="profile.first_name.$invalid && profile.first_name.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="last_name" data-ng-model="profile_form.user.lastName" required=""> <span class="bns_span_over">{{ profile_form.user.lastName || \'Surname\' }}</span> <span class="bib_er" data-ng-show="profile.last_name.$invalid && profile.last_name.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="email" name="email" data-ng-model="profile_form.user.addEmail" required=""> <span class="bns_span_over">{{ profile_form.user.addEmail || \'Email\' }}</span> <span class="bib_er" data-ng-show="profile.email.$invalid && profile.email.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="phone" data-phone-mask="+1 (999) 999-99-99" placeholder="+1 (___) ___-__-__" data-ng-model="profile_form.user.addPhone" required=""> <span class="bns_span_over" data-masked-phone-number="+1 (000) 000-00-00" data-phone="profile_form.user.addPhone" data-no-value="Phone number"></span> <span class="bib_er" data-ng-show="profile.phone.$invalid && profile.phone.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="address" data-ng-model="profile_form.custom_vars.Address"> <span class="bns_span_over">{{ profile_form.custom_vars.Address || \'Address\' }}</span> <span class="bib_er" data-ng-show="profile.address.$invalid && profile.address.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="city" data-ng-model="profile_form.custom_vars.City"> <span class="bns_span_over">{{ profile_form.custom_vars.City || \'City\' }}</span> <span class="bib_er" data-ng-show="profile.city.$invalid && profile.city.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="state" data-ng-model="profile_form.custom_vars.State"> <span class="bns_span_over">{{ profile_form.custom_vars.State || \'State\' }}</span> <span class="bib_er" data-ng-show="profile.state.$invalid && profile.state.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="zip_code" data-ng-model="profile_form.custom_vars.Zip_code"> <span class="bns_span_over">{{ profile_form.custom_vars.Zip_code || \'Zip code\' }}</span> <span class="bib_er" data-ng-show="profile.zip_code.$invalid && profile.zip_code.$touched">Field is required</span></div><div class="bns_input_block" data-date-selector="" data-ng-model="$parent.profile_form.user.birthDate" required=""><label>Birthdate</label><div class="bns_select bns_select_date"><span>{{ selected_date[0] || \'Date\' }}</span> <input type="hidden"><div class="bns_select_popup"><a href="" data-ng-repeat="day in date_data.days track by $index" data-ng-click="$event.preventDefault(); $parent.selected_date[0] = ($index+1)">{{ $index+1 }}</a></div></div><div class="bns_select bns_select_man" style="width: 100px; text-align: left;"><span>{{ locale.date.months[selected_date[1]] || \'Month\' }}</span> <input type="hidden"><div class="bns_select_popup" style="text-align: left;"><a style="margin-left: 6px;" href="" data-ng-repeat="month in date_data.months track by $index" data-ng-click="$event.preventDefault(); $parent.selected_date[1] = ($index+1)">{{ locale.date.months[$index+1] }}</a></div></div><div class="bns_select bns_select_year"><span>{{ selected_date[2] || \'Year\' }}</span> <input type="hidden"><div class="bns_select_popup"><a href="" data-ng-repeat="year in date_data.years track by $index" data-ng-click="$event.preventDefault(); $parent.selected_date[2] = year;">{{ year }}</a></div></div></div><div class="bns_input_block bns_input_block_check"><div class="bns_radio"><input type="radio" name="sex" data-ng-value="1" id="man" data-ng-model="profile_form.user.sex"> <label for="man">Male</label></div><div class="bns_radio"><input type="radio" name="sex" data-ng-value="2" id="fam" data-ng-model="profile_form.user.sex"> <label for="fam">Female</label></div></div><div class="bns_input_block"><button type="submit" class="bns_input_block_prof_btn" data-ng-disabled="profile.$invalid">Submit</button> <a href="#" class="bns_over_cancel_btn" data-ng-click="$event.preventDefault(); close_profile(); revert_profile_form(profile)">Cancel</a></div></form></div></div><div data-more-info="" class="bns_overlay bns_compl_prof more_info" data-ng-class="{ hidden: !show_more_info }"><div class="bns_over_iner"><h3>Complete Your Profile</h3><form novalidate="" name="more_info" class="bns_sign_form padded" data-ng-submit="$event.preventDefault(); submit_profile(more_info, $parent.close_more_info)"><div class="bns_input_block bns_input_block_prof"><input type="text" name="first_name" data-ng-model="more_info_form.user.firstName" required=""> <span class="bns_span_over">{{ more_info_form.user.firstName || \'Name\' }}</span> <span class="bib_er" data-ng-show="more_info.first_name.$invalid && more_info.first_name.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="last_name" data-ng-model="more_info_form.user.lastName" required=""> <span class="bns_span_over">{{ more_info_form.user.lastName || \'Surname\' }}</span> <span class="bib_er" data-ng-show="more_info.last_name.$invalid && more_info.last_name.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="address" data-ng-model="more_info_form.custom_vars.Address"> <span class="bns_span_over">{{ more_info_form.custom_vars.Address || \'Address\' }}</span> <span class="bib_er" data-ng-show="more_info.address.$invalid && more_info.address.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="city" data-ng-model="more_info_form.custom_vars.City"> <span class="bns_span_over">{{ more_info_form.custom_vars.City || \'City\' }}</span> <span class="bib_er" data-ng-show="more_info.city.$invalid && more_info.city.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="state" data-ng-model="more_info_form.custom_vars.State"> <span class="bns_span_over">{{ more_info_form.custom_vars.State || \'State\' }}</span> <span class="bib_er" data-ng-show="more_info.state.$invalid && more_info.state.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="zip_code" data-ng-model="more_info_form.custom_vars.Zip_code"> <span class="bns_span_over">{{ more_info_form.custom_vars.Zip_code || \'Zip code\' }}</span> <span class="bib_er" data-ng-show="more_info.zip_code.$invalid && more_info.zip_code.$touched">Field is required</span></div><div class="bns_input_block" data-date-selector="" data-ng-model="$parent.more_info_form.user.birthDate" required=""><label>Birthdate</label><div class="bns_select bns_select_date"><span>{{ selected_date[0] || \'Date\' }}</span> <input type="hidden"><div class="bns_select_popup"><a href="" data-ng-repeat="day in date_data.days track by $index" data-ng-click="$event.preventDefault(); $parent.selected_date[0] = ($index+1)">{{ $index+1 }}</a></div></div><div class="bns_select bns_select_man" style="width: 100px; text-align: left;"><span>{{ locale.date.months[selected_date[1]] || \'Month\' }}</span> <input type="hidden"><div class="bns_select_popup" style="text-align: left;"><a style="margin-left: 6px;" href="" data-ng-repeat="month in date_data.months track by $index" data-ng-click="$event.preventDefault(); $parent.selected_date[1] = ($index+1)">{{ locale.date.months[$index+1] }}</a></div></div><div class="bns_select bns_select_year"><span>{{ selected_date[2] || \'Year\' }}</span> <input type="hidden"><div class="bns_select_popup"><a href="" data-ng-repeat="year in date_data.years track by $index" data-ng-click="$event.preventDefault(); $parent.selected_date[2] = year;">{{ year }}</a></div></div></div><div class="bns_input_block"><button type="submit" class="bns_input_block_prof_btn" data-ng-disabled="more_info.$invalid">Submit</button></div></form></div></div><div class="bns_overlay bns_learn" data-ng-class="{ hidden: !show_companies }" data-overlay-click="show_companies = false; body_lock(false);"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); show_companies = false; body_lock(false);"></a><h3>Use your Key Club card and redeem these special offers</h3><div class="bns_over_scrolblock" data-ng-controller="CompaniesList"><div class="bns_nlpage_content"><div class="bns_nlpage_item" data-ng-repeat="company in companies"><div class="bns_nlpage_item_img"><a href="{{ company.link }}" target="_blank" style="background-image: url(\'{{ company.logo }}\')"></a></div><div class="bns_left_content_text"><p>{{ company.description }}</p></div></div></div></div><div class="bns_learn_conf"><a href="#" data-ng-click="$event.preventDefault(); show_companies = false; body_lock(false);">Ok</a></div></div></div><div class="bns_overlay bns_over_get_gift_confirm card_popup" data-ng-class="{ hidden: !show_download }" data-overlay-click="show_download = false; body_lock(false);"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); show_download = false; body_lock(false);"></a><div class="bns_over_scrolblock"><div class="bns_nlpage_content"><div class="bns_card_popup"><span class="bns_c_text1">Tahoe Luxury Properties<br>Key Club</span> <span class="bns_c_text2">Download the Key Card</span></div></div></div><div class="bns_learn_conf"><a href="#" data-ng-click="$event.preventDefault(); save_pdf(); tags_add({ tags: [\'KC card downloaded\'] })">Save</a></div></div></div><notifier></notifier></div>');
+    '<div data-sailplay-profile="" data-sailplay-history="" data-ng-cloak=""><div class="bns_wrap clearfix" data-ng-show="!user()"><div class="bns_top bns_top_nologin" data-ng-class="{ type_auth : auth }"><div class="iner_block"><h2><span>Join the</span> <strong>KEY CLUB</strong> <img src="dist/img/key.png" alt="key"></h2><div class="bns_top_right_btn"><a href="#" class="bns_logun" data-ng-click="$event.preventDefault(); show_login = true;">Login/Sign Up</a></div></div></div><div class="bns_content"><div class="iner_block clearfix"><div class="bns_top_right"><div class="bns_top_item" style="background-image: url(dist/img/top_icon1_bl.png);"><span>Download a virtual membership card that is good for discounts at local shops and restaurants</span></div><div class="bns_top_item" style="background-image: url(dist/img/top_icon4_bl.png);"><span>Earn points for every night you stay</span></div><div class="bns_top_item" style="background-image: url(dist/img/top_icon2_bl.png);"><span>Review your vacation home, share on social media, and learn other ways to earn bonus points</span></div><div class="bns_top_item" style="background-image: url(dist/img/top_icon3_bl.png);"><span>Redeem your points for gifts and services that will make your Tahoe stay exceptional!</span></div></div><div class="bns_right_content bns_right_content_nl"><div class="bns_card" style="cursor: pointer;" data-ng-click="show_login = true;"><span class="bns_c_text1">Tahoe Luxury Properties<br>Key Club</span> <span class="bns_c_text2">Join the Key Club</span></div></div><div data-sailplay-gifts="" data-ng-init="selected_gift = false; gift_confirmation = false;"><h3 class="bns_head">Earn Rewards!</h3><div class="bns_redeem_main"><div class="bns_reedem_item" data-ng-repeat="gift in gifts()" style="background-image: url({{ gift.thumbs.url_250x250 | sailplay_pic }})"><div class="bns_reedem_item_over"><span class="bns_name">{{ gift.name }}</span> <span class="bns_point">{{ gift.points }} {{ gift.points | sailplay_pluralize:locale.points_pluralize }}</span></div></div></div></div><h3 class="bns_head">Plus, Enjoy Discounts Around Town</h3><p style="float:left">Download your membership card and receive discounts with these partners.</p><div class="bns_nlpage_content" data-ng-controller="CompaniesList"><div class="bns_nlpage_item bns_nlpage_item_nologin" data-ng-repeat="company in companies"><div class="bns_nlpage_item_img"><a data-ng-href="{{ company.link }}" target="_blank" data-ng-bind="company.name"></a></div><div class="bns_left_content_text"><p>{{ company.description }}</p></div></div></div></div></div></div><div class="bns_wrap" data-ng-show="user()"><div class="bns_top"><div class="iner_block"><div class="bns_top_right full"><div class="bns_top_item" style="background-image: url(dist/img/top_icon1.png);"><span>Download a virtual membership card that is good for discounts at local shops and restaurants</span></div><div class="bns_top_item" style="background-image: url(dist/img/top_icon2.png);"><span>Review your vacation home, share on social media, and learn other ways to earn bonus points</span></div><div class="bns_top_item inline" style="background-image: url(dist/img/top_icon4.png);"><span>Earn points for every night you stay</span></div><div class="bns_top_item" style="background-image: url(dist/img/top_icon3.png);"><span>Redeem your points for gifts and services that will make your Tahoe stay exceptional!</span></div></div><h2><span>Welcome to the</span> <strong>Key Club</strong> <img src="dist/img/key.png" alt="key"></h2><div class="bns_top_mid"><a class="ava" data-ng-show="has_avatar()"><img data-ng-src="{{ user().user.pic | sailplay_pic }}" alt=""></a><div class="bns_info_block"><span class="bns_name">{{ user().user.name || \'&nbsp;\' }}</span> <span class="bns_email">{{ user().user.email }}</span> <span class="bns_phone" data-masked-phone-number="+1 (000) 000-00-00" data-phone="user().user.phone"></span> <a href="#" class="bns_edit_prof" data-ng-click="$event.preventDefault(); open_profile();">edit your profile</a> <a href="#" class="bns_info_btn bns_logout" data-ng-click="$event.preventDefault(); logout();">Log out</a></div><div class="bns_info_block"><span class="bns_num_point">{{ user().user_points.confirmed }}</span> <span class="bns_text">bonus points available</span> <a href="#" class="bns_info_btn bns_hist" data-ng-click="$event.preventDefault(); open_history();">History</a></div><div class="bns_info_block"><span class="bns_num_point">{{ user().user_points.confirmed + user().user_points.spent }}</span> <span class="bns_text">points earned since joining the Key Club</span></div></div></div></div><div class="bns_content"><div class="iner_block"><div><h3 class="bns_head">Download Your Key Club Card</h3><div class="bns_left_content_text"><p>Use your Tahoe Luxury Properties Key Club card for discounts and benefits at local shops and restaurants</p><a href="#" class="bns_show_all" data-ng-click="$event.preventDefault(); show_companies = true; body_lock(true);">Find out more>></a></div><div class="bns_right_content"><div class="bns_card" style="cursor: pointer;" data-ng-click="show_companies = true; body_lock(true);"><span class="bns_c_text1">Tahoe Luxury Properties<br>Key Club</span> <span class="bns_c_text2">Download the Key Card</span></div><span class="bns_ch">Choose how you want to get your Key Club Card</span><div class="bns_card_btn"><a href="#" class="bns_info_btn bns_downl" data-ng-click="$event.preventDefault(); show_download = true;body_lock(true);open_download();">Download the Key Card</a> <a href="#" class="bns_info_btn bns_sent" data-ng-click="$event.preventDefault(); tags_add({ tags: [\'KC card emailed\'] }, on_email_sent)">Send to my email</a></div></div></div><div data-sailplay-gifts="" class="page-block__gifts" data-ng-init="selected_gift = false; gift_confirmation = false;"><h3 class="bns_head">Redeem Your Points</h3><div class="bns_redeem_main"><div class="bns_reedem_item" data-ng-repeat="gift in gifts()" style="background-image: url({{ gift.thumbs.url_250x250 | sailplay_pic }})"><div class="bns_reedem_item_over"><span class="bns_name">{{ gift.name }}</span> <span class="bns_point">{{ gift.points }} {{ gift.points | sailplay_pluralize:locale.points_pluralize }}</span> <a href="#" data-ng-click="$event.preventDefault(); $parent.selected_gift = gift;body_lock(true);open_gift();">Get</a></div></div></div><div class="bns_overlay bns_over_get_gift" data-ng-class="{ hidden: !selected_gift || gift_confirmation }" data-overlay-click="selected_gift = false; body_lock(false);"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); selected_gift = false; body_lock(false);"></a> <img data-ng-src="{{ (selected_gift.pic_full || selected_gift.thumbs.url_250x250) | sailplay_pic }}" alt=""><h4>{{ selected_gift.name }}</h4><span class="bns_over_get_gift_info">{{ selected_gift.descr | descr }}</span><div class="bns_over_get_gift_disc"><h5>Disclaimer</h5><span>{{ selected_gift.descr | disclaimer }}</span></div><div class="bns_sign_form"><div data-ng-show="selected_gift.points > user().user_points.confirmed"><span class="bns_over_get_gift_notify">You need {{ selected_gift.points - user().user_points.confirmed }} more points to get this gift</span></div><div class="bns_input_block"><a href="#" class="bns_over_get_gift disabled" data-ng-show="selected_gift.points > user().user_points.confirmed" data-ng-click="$event.preventDefault(); gift_points_notify();">Get</a> <a href="#" class="bns_over_get_gift" data-ng-show="selected_gift.points <= user().user_points.confirmed" data-ng-click="$event.preventDefault(); gift_confirmation = true;">Get</a> <a href="#" class="bns_over_cancel_btn" data-ng-click="$event.preventDefault(); selected_gift = false; body_lock(false);">Cancel</a></div></div></div></div><div class="bns_overlay bns_over_get_gift_confirm" data-ng-class="{ hidden: !gift_confirmation }"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); selected_gift = false; gift_confirmation = false; body_lock(false);"></a><h3>You are about to spend {{ selected_gift.points }} {{ selected_gift.points | sailplay_pluralize:locale.points_pluralize }} on</h3><div class="bns_reedem_item"><img data-ng-src="{{ (selected_gift.pic_full || selected_gift.thumbs.url_250x250) | sailplay_pic }}" alt=""><div class="bns_reedem_item_over"><span class="bns_name">{{ selected_gift.name }}</span></div></div><span class="bns_pass_info">Are you sure?</span><div class="bns_sign_form"><div class="bns_input_block"><a href="#" class="bns_over_get_gift_conf" data-ng-click="$event.preventDefault(); gift_purchase(selected_gift); selected_gift = false; gift_confirmation = false; body_lock(false);">Yes</a> <a href="#" class="bns_over_cancel_btn" data-ng-click="$event.preventDefault(); selected_gift = false; gift_confirmation = false; body_lock(false);">Cancel</a></div></div></div></div></div><div data-sailplay-actions="" class="page-block__actions" data-ng-init="selected_action = false; custom_action = false; link_action = false;"><h3 class="bns_head">Earn More Points</h3><div class="bns_earn_more_main"><div class="bns_earn_more_item" data-ng-repeat="action in actions().actions"><div class="bemi_left"><img data-ng-src="{{ action_data(action).pic }}" alt=""></div><div class="bemi_right"><span class="bnmi_name">{{ action_data(action).name }}</span> <span class="bnmi_point">{{ action.points }} {{ action.points | sailplay_pluralize:locale.points_pluralize }}</span></div><div class="bns_emm_over"><a href="#" data-ng-click="$event.preventDefault(); $parent.selected_action = action; open_actions();">Get bonus points!</a></div></div><div class="bns_earn_more_item" data-ng-init="night_action = { name: \'Earn 100 points for each night you stay in a TLUXP home\', pic: \'dist/img/actions/5.png\', descr: \'Points will be applied upon booking. Call or book online.\' }"><div class="bemi_left"><img data-ng-src="{{ night_action.pic }}" alt=""></div><div class="bemi_right"><span class="bnmi_name">{{ night_action.name }}</span> <span class="bnmi_point">100 {{ 100 | sailplay_pluralize:locale.points_pluralize }}</span></div><div class="bns_emm_over"><a href="#" data-ng-click="$event.preventDefault(); custom_action = night_action; open_actions();">Get bonus points!</a></div></div><div class="bns_earn_more_item" data-ng-init="review_action = { tag: \'TLUXP Review\', name: \'Review your vacation rental on TLUXP.com\', button: \'Review\', pic: \'dist/img/actions/3.png\', descr: \'http://www.tluxp.com/lake-tahoe-vacation-rentals\', url: \'http://www.tluxp.com/lake-tahoe-vacation-rentals\' }"><div class="bemi_left"><img data-ng-src="{{ review_action.pic }}" alt=""></div><div class="bemi_right"><span class="bnmi_name">{{ review_action.name }}</span> <span class="bnmi_point">100 {{ 100 | sailplay_pluralize:locale.points_pluralize }}</span></div><div class="bns_emm_over"><a href="#" data-ng-click="$event.preventDefault(); link_action = review_action; open_actions();">Get bonus points!</a></div></div><div class="bns_earn_more_item" data-ng-show="!check_to_exist(review_action_yelp.tag, exist())" data-ng-init="review_action_yelp = { tag: \'Yelp Review\', name: \'Review Us on Yelp\', button: \'Review\', pic: \'dist/img/actions/3.png\', descr: \'https://www.yelp.com/biz/tahoe-luxury-properties-tahoe-city Once your review is posted, send the link to info@TLUXP.com, and we will add your points!\', url: \'https://www.yelp.com/biz/tahoe-luxury-properties-tahoe-city\' }"><div class="bemi_left"><img data-ng-src="{{ review_action_yelp.pic }}" alt=""></div><div class="bemi_right"><span class="bnmi_name">{{ review_action_yelp.name }}</span> <span class="bnmi_point">100 {{ 100 | sailplay_pluralize:locale.points_pluralize }}</span></div><div class="bns_emm_over"><a href="#" data-ng-click="$event.preventDefault(); link_action = review_action_yelp; open_actions();">Get bonus points!</a></div></div><div class="bns_earn_more_item" data-ng-show="!check_to_exist(review_action_gp.tag, exist())" data-ng-init="review_action_gp = { tag: \'Google Review\', name: \'Review Us on Google\', button: \'Review\', pic: \'dist/img/actions/3.png\', descr: \'https://www.google.com/maps/place/Tahoe+Luxury+Properties/@39.1670432,-120.1475247,17z/data=!4m7!3m6!1s0x80997d9d67a0270f:0x2af05c19d6ef38f4!8m2!3d39.1670432!4d-120.145336!9m1!1b1\', url: \'https://www.google.com/maps/place/Tahoe+Luxury+Properties/@39.1670432,-120.1475247,17z/data=!4m7!3m6!1s0x80997d9d67a0270f:0x2af05c19d6ef38f4!8m2!3d39.1670432!4d-120.145336!9m1!1b1\' }"><div class="bemi_left"><img data-ng-src="{{ review_action_gp.pic }}" alt=""></div><div class="bemi_right"><span class="bnmi_name">{{ review_action_gp.name }}</span> <span class="bnmi_point">100 {{ 100 | sailplay_pluralize:locale.points_pluralize }}</span></div><div class="bns_emm_over"><a href="#" data-ng-click="$event.preventDefault(); link_action = review_action_gp; open_actions();">Get bonus points!</a></div></div><div class="bns_earn_more_item" data-ng-init="refer_action = { name: \'Refer a friend and earn 500 points when they book a TLUXP home\', pic: \'dist/img/actions/2.png\', descr: \'Points will be applied upon booking. Friend must mention referral points to Agent.\' }"><div class="bemi_left"><img data-ng-src="{{ refer_action.pic }}" alt=""></div><div class="bemi_right"><span class="bnmi_name">{{ refer_action.name }}</span> <span class="bnmi_point">500 {{ 500 | sailplay_pluralize:locale.points_pluralize }}</span></div><div class="bns_emm_over"><a href="#" data-ng-click="$event.preventDefault(); custom_action = refer_action; open_actions();">Get bonus points!</a></div></div></div><div class="bns_overlay bns_tell_about" data-ng-class="{ hidden: !custom_action }" data-overlay-click="custom_action = false;"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); custom_action = false;"></a><h3>{{ custom_action.name }}</h3><div class="bns_tell_about_main"><div class="bns_tell_about_main_left"><img data-ng-src="{{ custom_action.pic }}" alt=""></div><div class="bns_tell_about_main_right"><p class="btamr_text">{{ custom_action.descr }}</p></div></div></div></div><div class="bns_overlay bns_tell_about" data-ng-class="{ hidden: !link_action }" data-overlay-click="link_action = false;"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); link_action = false;"></a><h3>{{ link_action.name }}</h3><div class="bns_tell_about_main"><div class="bns_tell_about_main_left"><img data-ng-src="{{ link_action.pic }}" alt=""></div><div style="margin-top: 20px;"><a data-ng-click="$event.preventDefault();link_action_click(link_action);" href="{{ link_action.url }}" target="_blank" class="bns_tell_about_main_button">{{ link_action.button }}</a></div></div></div></div><div class="bns_overlay bns_tell_about" data-ng-class="{ hidden: !selected_action }" data-overlay-click="selected_action = false;"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); selected_action = false;"></a><h3>{{ action_data(selected_action).name }}</h3><div class="bns_tell_about_main"><div class="bns_tell_about_main_left"><img data-ng-src="{{ action_data(selected_action).pic }}" alt=""></div><div class="bns_tell_about_main_right"><div style="position: relative; height: 32px; float: left; width: 100%; margin-top: 6px;" href="#" data-sailplay-action="" data-action="selected_action" data-text="Get bonus points!" data-styles="{{ config.social_styles }}"><a class="sp_cmn-btn-sm sp_task-slider__btn" style="margin-top: 0; cursor: pointer;">Get bonus points!</a></div></div></div></div></div></div><div class="bns_footer">Check your Key Club emails for more ways to earn!</div></div></div></div><div class="bns_overlay bns_over_hist" data-ng-class="{ hidden: !show_history }" data-overlay-click="show_history = false;body_lock(false)"><div class="bns_over_iner" data-sailplay-history=""><h3>History</h3><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); $parent.show_history = false;body_lock(false)"></a><div class="bns_hist_table"><div class="bns_hist_table_item" data-dir-paginate="item in history() | itemsPerPage:9" data-pagination-id="history_pages"><span class="bhti_left">{{ item | history_item }} <strong>({{ item.action_date | date:\'MM/dd/yyyy\' }})</strong></span> <span class="bhti_right">{{ item.points_delta || 0 }} {{ item.points_delta | sailplay_pluralize:\'point,points,points\' }}</span></div></div><dir-pagination-controls data-max-size="6" data-pagination-id="history_pages" data-template-url="/html/ui/ui.pagination.controls.html" data-auto-hide="true"></dir-pagination-controls></div></div><div class="bns_overlay bns_over_signin" data-ng-class="{ hidden: !show_login }"><div class="bns_over_iner"><h3>Sign in to continue</h3><a href="" class="bns_close" data-ng-click="$event.preventDefault(); show_login = false;"></a><div class="bns_sign_form pn" style="min-height: 341px;" data-ng-controller="RemoteLoginConfig" data-sailplay-remote-login="remote_login_options"></div></div></div><div data-fill-profile="" class="bns_overlay bns_compl_prof edit_profile" data-ng-class="{ hidden: !show_profile_info }" data-overlay-click="close_profile(); revert_profile_form();"><div class="bns_over_iner"><h3>Complete Your Profile</h3><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); close_profile(); revert_profile_form();"></a> <span class="bns_pass_info">Click on the field you\'d like to edit</span><form novalidate="" name="profile" class="bns_sign_form padded" data-ng-submit="$event.preventDefault(); submit_profile(profile, $parent.on_submit_profile)"><div class="bns_input_block bns_input_block_prof"><input type="text" name="first_name" data-ng-model="profile_form.user.firstName" required=""> <span class="bns_span_over">{{ profile_form.user.firstName || \'Name\' }}</span> <span class="bib_er" data-ng-show="profile.first_name.$invalid && profile.first_name.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="last_name" data-ng-model="profile_form.user.lastName" required=""> <span class="bns_span_over">{{ profile_form.user.lastName || \'Surname\' }}</span> <span class="bib_er" data-ng-show="profile.last_name.$invalid && profile.last_name.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="email" name="email" data-ng-model="profile_form.user.addEmail" required=""> <span class="bns_span_over">{{ profile_form.user.addEmail || \'Email\' }}</span> <span class="bib_er" data-ng-show="profile.email.$invalid && profile.email.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="phone" data-phone-mask="+1 (999) 999-99-99" placeholder="+1 (___) ___-__-__" data-ng-model="profile_form.user.addPhone" required=""> <span class="bns_span_over" data-masked-phone-number="+1 (000) 000-00-00" data-phone="profile_form.user.addPhone" data-no-value="Phone number"></span> <span class="bib_er" data-ng-show="profile.phone.$invalid && profile.phone.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="address" data-ng-model="profile_form.custom_vars.Address"> <span class="bns_span_over">{{ profile_form.custom_vars.Address || \'Address\' }}</span> <span class="bib_er" data-ng-show="profile.address.$invalid && profile.address.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="city" data-ng-model="profile_form.custom_vars.City"> <span class="bns_span_over">{{ profile_form.custom_vars.City || \'City\' }}</span> <span class="bib_er" data-ng-show="profile.city.$invalid && profile.city.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="state" data-ng-model="profile_form.custom_vars.State"> <span class="bns_span_over">{{ profile_form.custom_vars.State || \'State\' }}</span> <span class="bib_er" data-ng-show="profile.state.$invalid && profile.state.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="zip_code" data-ng-model="profile_form.custom_vars.Zip_code"> <span class="bns_span_over">{{ profile_form.custom_vars.Zip_code || \'Zip code\' }}</span> <span class="bib_er" data-ng-show="profile.zip_code.$invalid && profile.zip_code.$touched">Field is required</span></div><div class="bns_input_block" data-date-selector="" data-ng-model="$parent.profile_form.user.birthDate" required=""><label>Birthdate</label><div class="bns_select bns_select_date"><span>{{ selected_date[0] || \'Date\' }}</span> <input type="hidden"><div class="bns_select_popup"><a href="" data-ng-repeat="day in date_data.days track by $index" data-ng-click="$event.preventDefault(); $parent.selected_date[0] = ($index+1)">{{ $index+1 }}</a></div></div><div class="bns_select bns_select_man" style="width: 100px; text-align: left;"><span>{{ locale.date.months[selected_date[1]] || \'Month\' }}</span> <input type="hidden"><div class="bns_select_popup" style="text-align: left;"><a style="margin-left: 6px;" href="" data-ng-repeat="month in date_data.months track by $index" data-ng-click="$event.preventDefault(); $parent.selected_date[1] = ($index+1)">{{ locale.date.months[$index+1] }}</a></div></div><div class="bns_select bns_select_year"><span>{{ selected_date[2] || \'Year\' }}</span> <input type="hidden"><div class="bns_select_popup"><a href="" data-ng-repeat="year in date_data.years track by $index" data-ng-click="$event.preventDefault(); $parent.selected_date[2] = year;">{{ year }}</a></div></div></div><div class="bns_input_block bns_input_block_check"><div class="bns_radio"><input type="radio" name="sex" data-ng-value="1" id="man" data-ng-model="profile_form.user.sex"> <label for="man">Male</label></div><div class="bns_radio"><input type="radio" name="sex" data-ng-value="2" id="fam" data-ng-model="profile_form.user.sex"> <label for="fam">Female</label></div></div><div class="bns_input_block"><button type="submit" class="bns_input_block_prof_btn" data-ng-disabled="profile.$invalid">Submit</button> <a href="#" class="bns_over_cancel_btn" data-ng-click="$event.preventDefault(); close_profile(); revert_profile_form(profile)">Cancel</a></div></form></div></div><div data-more-info="" class="bns_overlay bns_compl_prof more_info" data-ng-class="{ hidden: !show_more_info }"><div class="bns_over_iner"><h3>Complete Your Profile</h3><form novalidate="" name="more_info" class="bns_sign_form padded" data-ng-submit="$event.preventDefault(); submit_profile(more_info, $parent.close_more_info)"><div class="bns_input_block bns_input_block_prof"><input type="text" name="first_name" data-ng-model="more_info_form.user.firstName" required=""> <span class="bns_span_over">{{ more_info_form.user.firstName || \'Name\' }}</span> <span class="bib_er" data-ng-show="more_info.first_name.$invalid && more_info.first_name.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="last_name" data-ng-model="more_info_form.user.lastName" required=""> <span class="bns_span_over">{{ more_info_form.user.lastName || \'Surname\' }}</span> <span class="bib_er" data-ng-show="more_info.last_name.$invalid && more_info.last_name.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="address" data-ng-model="more_info_form.custom_vars.Address"> <span class="bns_span_over">{{ more_info_form.custom_vars.Address || \'Address\' }}</span> <span class="bib_er" data-ng-show="more_info.address.$invalid && more_info.address.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="city" data-ng-model="more_info_form.custom_vars.City"> <span class="bns_span_over">{{ more_info_form.custom_vars.City || \'City\' }}</span> <span class="bib_er" data-ng-show="more_info.city.$invalid && more_info.city.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="state" data-ng-model="more_info_form.custom_vars.State"> <span class="bns_span_over">{{ more_info_form.custom_vars.State || \'State\' }}</span> <span class="bib_er" data-ng-show="more_info.state.$invalid && more_info.state.$touched">Field is required</span></div><div class="bns_input_block bns_input_block_prof"><input type="text" name="zip_code" data-ng-model="more_info_form.custom_vars.Zip_code"> <span class="bns_span_over">{{ more_info_form.custom_vars.Zip_code || \'Zip code\' }}</span> <span class="bib_er" data-ng-show="more_info.zip_code.$invalid && more_info.zip_code.$touched">Field is required</span></div><div class="bns_input_block" data-date-selector="" data-ng-model="$parent.more_info_form.user.birthDate" required=""><label>Birthdate</label><div class="bns_select bns_select_date"><span>{{ selected_date[0] || \'Date\' }}</span> <input type="hidden"><div class="bns_select_popup"><a href="" data-ng-repeat="day in date_data.days track by $index" data-ng-click="$event.preventDefault(); $parent.selected_date[0] = ($index+1)">{{ $index+1 }}</a></div></div><div class="bns_select bns_select_man" style="width: 100px; text-align: left;"><span>{{ locale.date.months[selected_date[1]] || \'Month\' }}</span> <input type="hidden"><div class="bns_select_popup" style="text-align: left;"><a style="margin-left: 6px;" href="" data-ng-repeat="month in date_data.months track by $index" data-ng-click="$event.preventDefault(); $parent.selected_date[1] = ($index+1)">{{ locale.date.months[$index+1] }}</a></div></div><div class="bns_select bns_select_year"><span>{{ selected_date[2] || \'Year\' }}</span> <input type="hidden"><div class="bns_select_popup"><a href="" data-ng-repeat="year in date_data.years track by $index" data-ng-click="$event.preventDefault(); $parent.selected_date[2] = year;">{{ year }}</a></div></div></div><div class="bns_input_block"><button type="submit" class="bns_input_block_prof_btn" data-ng-disabled="more_info.$invalid">Submit</button></div></form></div></div><div class="bns_overlay bns_learn" data-ng-class="{ hidden: !show_companies }" data-overlay-click="show_companies = false; body_lock(false);"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); show_companies = false; body_lock(false);"></a><h3>Use your Key Club card and redeem these special offers</h3><div class="bns_over_scrolblock" data-ng-controller="CompaniesList"><div class="bns_nlpage_content"><div class="bns_nlpage_item" data-ng-repeat="company in companies"><div class="bns_nlpage_item_img"><a href="{{ company.link }}" target="_blank" style="background-image: url(\'{{ company.logo }}\')"></a></div><div class="bns_left_content_text"><p>{{ company.description }}</p></div></div></div></div><div class="bns_learn_conf"><a href="#" data-ng-click="$event.preventDefault(); show_companies = false; body_lock(false);">Ok</a></div></div></div><div class="bns_overlay bns_over_get_gift_confirm card_popup" data-ng-class="{ hidden: !show_download }" data-overlay-click="show_download = false; body_lock(false);"><div class="bns_over_iner"><a href="#" class="bns_close" data-ng-click="$event.preventDefault(); show_download = false; body_lock(false);"></a><div class="bns_over_scrolblock"><div class="bns_nlpage_content"><div class="bns_card_popup"><span class="bns_c_text1">Tahoe Luxury Properties<br>Key Club</span> <span class="bns_c_text2">Download the Key Card</span></div></div></div><div class="bns_learn_conf"><a href="#" data-ng-click="$event.preventDefault(); save_pdf(); tags_add({ tags: [\'KC card downloaded\'] })">Save</a></div></div></div><notifier></notifier></div>');
 }]);
 })();
 
@@ -2804,7 +2804,7 @@ module.run(['$templateCache', function($templateCache) {
 
           };
 
-          $rootScope.$on('body_lock', function (bool) {
+          $rootScope.$on('body_lock', function (e, bool) {
 
             scope.body_lock(bool);
 
@@ -2812,7 +2812,9 @@ module.run(['$templateCache', function($templateCache) {
 
           scope.body_lock = function (state) {
 
-            if (state) {
+            console.log('body_lock', state);
+
+            if (state && typeof state == 'boolean') {
               $document[0].body.classList.add('body_lock');
             }
             else {
@@ -2831,13 +2833,18 @@ module.run(['$templateCache', function($templateCache) {
 
           scope.open_gift = function () {
 
+            console.log('open_gift 1');
+
             var overlays = $('.page-block__gifts .bns_overlay');
 
-            scope.offset = $('.page-block__gifts').length && $('.page-block__gifts').offset().top;
+            setTimeout(function(){
+              console.log('open_gift 2');
+              scope.offset = $('.page-block__gifts').length && $('.page-block__gifts').offset().top - $(window).scrollTop();
 
-            overlays.css({
-              'padding-top': scope.offset || 0
-            });
+              overlays.css({
+                'padding-top': scope.offset || 0
+              });
+            },100)
 
           };
 
@@ -2847,7 +2854,7 @@ module.run(['$templateCache', function($templateCache) {
 
             setTimeout(function () {
 
-              scope.offset = $('.bns_downl').length && $('.bns_downl').offset().top - $('.bns_overlay.card_popup .bns_over_iner').height() / 2;
+              scope.offset = $('.bns_downl').length && $('.bns_downl').offset().top - $('.bns_overlay.card_popup .bns_over_iner').height() / 2 - $(window).scrollTop();
 
               overlays.css({
                 'padding-top': scope.offset || 0
@@ -2861,7 +2868,7 @@ module.run(['$templateCache', function($templateCache) {
 
             var overlays = $('.page-block__actions .bns_overlay');
 
-            scope.offset = $('.page-block__actions').length && $('.page-block__actions').offset().top;
+            scope.offset = $('.page-block__actions').length && $('.page-block__actions').offset().top - $(window).scrollTop();
 
             overlays.css({
               'padding-top': scope.offset || 0
@@ -2887,13 +2894,15 @@ module.run(['$templateCache', function($templateCache) {
 
           scope.open_history = function () {
 
-            scope.show_history = true;
+            scope.show_history = true
+
+            scope.body_lock(true);
 
             var popup = $('.bns_over_hist .bns_over_iner');
 
             setTimeout(function () {
 
-              scope.offset = $('.bns_hist').length && $('.bns_hist').offset().top || 0;
+              scope.offset = $('.bns_hist').length && $('.bns_hist').offset().top - $(window).scrollTop() || 0;
 
               popup.css({
                 'margin-top': scope.offset - popup.height() / 2 || 0
@@ -2911,7 +2920,7 @@ module.run(['$templateCache', function($templateCache) {
 
             setTimeout(function () {
 
-              scope.offset = $('.bns_edit_prof').length && $('.bns_edit_prof').offset().top || 0;
+              scope.offset = $('.bns_edit_prof').length && $('.bns_edit_prof').offset().top - $(window).scrollTop() || 0;
 
               popup.css({
                 'margin-top': scope.offset - popup.height() / 2 || 0
@@ -2972,7 +2981,7 @@ module.run(['$templateCache', function($templateCache) {
             $rootScope.$broadcast('notifier:notify', {
               header: 'Thank you!',
               body: 'Your KeyClub Card was sent to ' + SailPlayApi.data('load.user.info')().user.email,
-              offset: $('.bns_sent').offset().top
+              offset: $('.bns_sent').offset().top - $(window).scrollTop()
             });
 
           };
@@ -2981,7 +2990,7 @@ module.run(['$templateCache', function($templateCache) {
             $rootScope.$broadcast('notifier:notify', {
               header: '',
               body: 'You do not currently have enough points to redeem this gift. Earn additional points by staying with us or taking the actions below!',
-              offset: $('.page-block__gifts').offset().top + $('.page-block__gifts').height()/2
+              offset: $('.page-block__gifts').offset().top + $('.page-block__gifts').height()/2 - $(window).scrollTop()
             });
           };
 
@@ -3019,6 +3028,123 @@ module.run(['$templateCache', function($templateCache) {
     app_container && angular.bootstrap(app_container, ['sailplay.widgets']);
 
   });
+
+}());
+
+(function () {
+
+  angular.module('core', [
+      'ipCookie'
+    ])
+
+    .run(function (SailPlay, ipCookie, SailPlayApi, $rootScope, $window, FillProfile, RegCompleteTag, $timeout) {
+
+      $rootScope.config = $window._CONFIG || {};
+
+      var auth = false;
+
+      // TODO: перенести действия в отдельный массив из вьюхи
+      var tags = [FillProfile.tag, 'TLUXP Review', 'Yelp Review', 'Google Review', RegCompleteTag];
+
+      $rootScope.$on('sailplay-login-success', function () {
+
+        auth = true;
+
+      });
+
+      $rootScope.$on('sailplay-logout-success', function () {
+
+        if (!auth) {
+          SailPlayApi.call('load.gifts.list');
+        }
+
+        auth = false;
+
+      });
+
+      SailPlay.on('login.error', function () {
+
+        console.log('login error');
+        $rootScope.loaded = true;
+        $rootScope.$apply();
+
+      });
+
+      SailPlay.on('login.success', function () {
+
+        $rootScope.loaded = true;
+
+        //load data for widgets
+        SailPlayApi.call('load.user.info', {all: 1});
+        SailPlayApi.call('load.badges.list');
+        SailPlayApi.call('load.actions.list');
+        SailPlayApi.call('load.user.history');
+        SailPlayApi.call('load.gifts.list');
+        SailPlayApi.call('tags.exist', {tags: tags});
+
+
+        $rootScope.$apply();
+
+      });
+
+      SailPlay.on('tags.add.success', function () {
+
+        $timeout(function(){
+          SailPlayApi.call('tags.exist', {tags: tags});
+        }, 2000)
+
+      });
+
+      SailPlay.on('actions.perform.success', function () {
+        SailPlayApi.call('load.actions.list');
+      });
+
+      SailPlay.on('actions.perform.error', function () {
+        SailPlayApi.call('load.actions.list');
+      });
+
+      SailPlay.on('actions.perform.complete', function () {
+        SailPlayApi.call('load.actions.list');
+      });
+
+      SailPlay.on('gifts.purchase.success', function (res) {
+
+        $rootScope.$broadcast('notifier:notify', {
+
+          header: $rootScope.locale.congratulations,
+          body: res.gift_help_text || $rootScope.locale.gift_received,
+          offset: $('.page-block__gifts').offset().top + $('.page-block__gifts').height()/2 - $(window).scrollTop()
+
+        });
+
+        SailPlayApi.call('load.user.info', {all: 1});
+        SailPlayApi.call('load.user.history');
+
+        $rootScope.$apply();
+
+      });
+
+      SailPlay.on('gift.purchase.error', function (res) {
+
+
+
+        $rootScope.$broadcast('notifier:notify', {
+
+          header: $rootScope.locale.gift_error,
+          body: $rootScope.locale.errors[res.status_code] || $rootScope.locale.error,
+          offset: $('.page-block__gifts').offset().top + $('.page-block__gifts').height()/2 - $(window).scrollTop()
+
+        });
+
+        $rootScope.$apply();
+
+      });
+
+      //SailPlay.on('actions.social.connect.complete', function(){
+      //  SailPlayApi.call('load.actions.list');
+      //});
+
+    });
 
 }());
 
@@ -3577,7 +3703,7 @@ module.run(['$templateCache', function($templateCache) {
     
     .service('sailplay_config', function($window){
       
-      return typeof $window._CONFIG !== 'undefined' && $window._CONFIG.SAILPLAY || { partner_id: 1, domain: 'https://sailplay.net' };
+      return typeof $window._CONFIG !== 'undefined' && $window._CONFIG.SAILPLAY || { partner_id: 1, domain: 'http://crm.tluxp.com' };
       
     })
 
@@ -3591,7 +3717,7 @@ module.run(['$templateCache', function($templateCache) {
 
       var config = {
         partner_id: 1,
-        domain: 'https://sailplay.net'
+        domain: 'http://crm.tluxp.com'
       };
 
       return {
@@ -4053,7 +4179,7 @@ module.run(['$templateCache', function($templateCache) {
 
 
                 popup.css({
-                  'margin-top': $('.bns_edit_prof').length && $('.bns_edit_prof').offset().top - popup.height()/2 || 0
+                  'margin-top': $('.bns_edit_prof').length && $('.bns_edit_prof').offset().top - popup.height()/2 - $(window).scrollTop() || 0
                 });
 
               }, 10);
@@ -4545,7 +4671,7 @@ module.run(['$templateCache', function($templateCache) {
       };
     })
 
-    .directive('notifier', function(){
+    .directive('notifier', function($timeout){
 
        return {
 
@@ -4564,13 +4690,18 @@ module.run(['$templateCache', function($templateCache) {
 
            scope.offset = null;
 
-           scope.$on('notifier:notify', function(e, data){
+           scope.$on('notifier:notify', function (e, data) {
 
-            scope.data = data;
-            scope.show_notifier = true;
-            scope.offset = data.offset;
-            console.log('notifier: ' + data.body);
-            scope.$emit('body_lock', true);
+             scope.$emit('body_lock', true);
+
+             $timeout(function(){
+
+               scope.data = data;
+               scope.show_notifier = true;
+               scope.offset = data.offset;
+               console.log('notifier: ' + data.body);
+
+             }, 100);
 
            });
 
@@ -4738,123 +4869,6 @@ module.run(['$templateCache', function($templateCache) {
 
         }
       };
-
-    });
-
-}());
-
-(function () {
-
-  angular.module('core', [
-      'ipCookie'
-    ])
-
-    .run(function (SailPlay, ipCookie, SailPlayApi, $rootScope, $window, FillProfile, RegCompleteTag, $timeout) {
-
-      $rootScope.config = $window._CONFIG || {};
-
-      var auth = false;
-
-      // TODO: перенести действия в отдельный массив из вьюхи
-      var tags = [FillProfile.tag, 'TLUXP Review', 'Yelp Review', 'Google Review', RegCompleteTag];
-
-      $rootScope.$on('sailplay-login-success', function () {
-
-        auth = true;
-
-      });
-
-      $rootScope.$on('sailplay-logout-success', function () {
-
-        if (!auth) {
-          SailPlayApi.call('load.gifts.list');
-        }
-
-        auth = false;
-
-      });
-
-      SailPlay.on('login.error', function () {
-
-        console.log('login error');
-        $rootScope.loaded = true;
-        $rootScope.$apply();
-
-      });
-
-      SailPlay.on('login.success', function () {
-
-        $rootScope.loaded = true;
-
-        //load data for widgets
-        SailPlayApi.call('load.user.info', {all: 1});
-        SailPlayApi.call('load.badges.list');
-        SailPlayApi.call('load.actions.list');
-        SailPlayApi.call('load.user.history');
-        SailPlayApi.call('load.gifts.list');
-        SailPlayApi.call('tags.exist', {tags: tags});
-
-
-        $rootScope.$apply();
-
-      });
-
-      SailPlay.on('tags.add.success', function () {
-
-        $timeout(function(){
-          SailPlayApi.call('tags.exist', {tags: tags});
-        }, 2000)
-
-      });
-
-      SailPlay.on('actions.perform.success', function () {
-        SailPlayApi.call('load.actions.list');
-      });
-
-      SailPlay.on('actions.perform.error', function () {
-        SailPlayApi.call('load.actions.list');
-      });
-
-      SailPlay.on('actions.perform.complete', function () {
-        SailPlayApi.call('load.actions.list');
-      });
-
-      SailPlay.on('gifts.purchase.success', function (res) {
-
-        $rootScope.$broadcast('notifier:notify', {
-
-          header: $rootScope.locale.congratulations,
-          body: res.gift_help_text || $rootScope.locale.gift_received,
-          offset: $('.page-block__gifts').offset().top + $('.page-block__gifts').height()/2
-
-        });
-
-        SailPlayApi.call('load.user.info', {all: 1});
-        SailPlayApi.call('load.user.history');
-
-        $rootScope.$apply();
-
-      });
-
-      SailPlay.on('gift.purchase.error', function (res) {
-
-
-
-        $rootScope.$broadcast('notifier:notify', {
-
-          header: $rootScope.locale.gift_error,
-          body: $rootScope.locale.errors[res.status_code] || $rootScope.locale.error,
-          offset: $('.page-block__gifts').offset().top + $('.page-block__gifts').height()/2
-
-        });
-
-        $rootScope.$apply();
-
-      });
-
-      //SailPlay.on('actions.social.connect.complete', function(){
-      //  SailPlayApi.call('load.actions.list');
-      //});
 
     });
 

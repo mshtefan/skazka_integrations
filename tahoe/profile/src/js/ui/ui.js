@@ -103,7 +103,7 @@
 
 
                 popup.css({
-                  'margin-top': $('.bns_edit_prof').length && $('.bns_edit_prof').offset().top - popup.height()/2 || 0
+                  'margin-top': $('.bns_edit_prof').length && $('.bns_edit_prof').offset().top - popup.height()/2 - $(window).scrollTop() || 0
                 });
 
               }, 10);
@@ -595,7 +595,7 @@
       };
     })
 
-    .directive('notifier', function(){
+    .directive('notifier', function($timeout){
 
        return {
 
@@ -614,13 +614,18 @@
 
            scope.offset = null;
 
-           scope.$on('notifier:notify', function(e, data){
+           scope.$on('notifier:notify', function (e, data) {
 
-            scope.data = data;
-            scope.show_notifier = true;
-            scope.offset = data.offset;
-            console.log('notifier: ' + data.body);
-            scope.$emit('body_lock', true);
+             scope.$emit('body_lock', true);
+
+             $timeout(function(){
+
+               scope.data = data;
+               scope.show_notifier = true;
+               scope.offset = data.offset;
+               console.log('notifier: ' + data.body);
+
+             }, 100);
 
            });
 
