@@ -23,7 +23,7 @@ window._LOCALE = {
   },
   notifications: {
     fill_profile_success: 'You profile is now updated!',
-    default_error: 'К сожалению произошла ошибка'
+    default_error: 'Error Updating your profile'
   },
   errors: {
     '-200007': 'phone is already in use',
