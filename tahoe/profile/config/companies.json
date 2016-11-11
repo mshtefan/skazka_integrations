@@ -58,5 +58,17 @@
     "description": "10% Off", 
     "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/74d515d196d7127f201eb8094d15fdae.jpg",
     "link": "http://www.rufflesandruffnecks.com/"
+  },
+  {
+    "name": "Squaw Valley Institute", 
+    "description": "Email Emily (Emily@squawvalleyinstitute.org) for reserved VIP seating with your purchase of a general admission ticket to SVI events",
+    "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/551342756409909f23b856103eeabc10.jpg",
+    "link": "http://www.squawvalleyinstitute.org/"
+  },
+  {
+    "name": "Dockside 700 Lakefront Grill & Brewery",
+    "description": "Happy hour drink pricing with purchase of a regularly priced entrée per person. Cannot be combined with other offers",
+    "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/b16102bf42474ab1b4cddb575a8169b9.png", 
+    "link": "http://www.dockside700.com/" 
   }
 ]
