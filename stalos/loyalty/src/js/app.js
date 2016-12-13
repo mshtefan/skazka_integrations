@@ -2,7 +2,7 @@
 
   angular.module('stalos', ['stalos.directives.profile', 'stalos.directives.gifts', 'stalos.directives.actions', 'stalos.tools.notify'])
 
-    .directive('app', function () {
+    .directive('app', function ($rootScope) {
 
       return {
         restrict: 'E',

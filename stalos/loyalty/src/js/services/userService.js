@@ -62,7 +62,7 @@
       self.existTags = function (tags) {
         return new Promise(function (resolve, reject) {
           sp.on('tags.exist.success', function (res) {
-            resolve(angular.extend({}, res.tags));
+            resolve(angular.extend([], res.tags));
           });
           sp.send('tags.exist', {tags: tags});
         });
