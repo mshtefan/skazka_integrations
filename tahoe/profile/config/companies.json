@@ -76,5 +76,11 @@
       "description": "10% off anything in the store excluding custom orders and loose diamonds.", 
       "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/ba83e21f0c3b4163228868cfea7e519a.png", 
       "link": "http://www.steveschmiersjewelry.com/"
-  }
+  },
+  {
+    "name": "Sugar Pine Cakery",
+    "description": "15% Off Your Total Bill",
+    "logo": "https://sailplays3.cdnvideo.ru/media/assets/assetfile/fcf07dc721a9066ac4dfb63ee16e1112.jpg", 
+    "link": "http://sugarpinecakery.com/" 
+  } 
 ]
