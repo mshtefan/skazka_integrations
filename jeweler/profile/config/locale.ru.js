@@ -36,47 +36,50 @@ window._LOCALE = {
       },
       "inviteFriend":{
         name: "Пригласите друга",
-        pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/364047a1a25a4dfaf0964382a23908d5.svg'
+        pic: 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/aee9ca9c83c5dd91cadec92c38e8b8cf.png'
       }
     },
     "social": {
       "vk": {
         "like": {
           "name": "Вступите в группу VK",
-          pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/80bfe068b09d99a22ce81e46ae4d8243.svg'
+          pic: 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/e1c81393b4710839859d0dc680991bef.png'
         },
         "partner_page": {
           "name": "Рассказать о нашем магазине в VK",
-          pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/80bfe068b09d99a22ce81e46ae4d8243.svg'
+          pic: 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/e1c81393b4710839859d0dc680991bef.png'
         },
         "purchase": {
           "name": "Поделитесь вашей покупкой в VK",
-          pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/f8acb4763cb49eaaa454d5f928372413.svg'
+          pic: 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/e1c81393b4710839859d0dc680991bef.png'
         }
       },
       "fb": {
         "like": {
           "name": "Вступите в группу Facebook",
-          pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/3d203916db24a1ee62d20393c591652e.svg'
+          pic: 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/0a18bae70cfb1cbfd120ae7809a463bb.png'
         },
         "partner_page": {
           "name": "Рассказать о нашем магазине в Facebook",
-          pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/3d203916db24a1ee62d20393c591652e.svg'
+          pic: 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/0a18bae70cfb1cbfd120ae7809a463bb.png'
         },
         "purchase": {
           "name": "Поделитесь вашей покупкой в Facebook",
-          pic: 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/f8acb4763cb49eaaa454d5f928372413.svg'
+          pic: 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/0a18bae70cfb1cbfd120ae7809a463bb.png'
         }
       },
       "gp": {
         "like": {
-          "name": "Вступите в группу Google+"
+          "name": "Вступите в группу Google+",
+          pic: 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/43cd180cf3f1978b962c9ee86e855f81.png'
         },
         "partner_page": {
-          "name": "Рассказать о нашем магазине в Google+"
+          "name": "Рассказать о нашем магазине в Google+",
+          pic: 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/43cd180cf3f1978b962c9ee86e855f81.png'
         },
         "purchase": {
-          "name": "Поделитесь вашей покупкой в Google+"
+          "name": "Поделитесь вашей покупкой в Google+",
+          pic: 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/43cd180cf3f1978b962c9ee86e855f81.png'
         }
       },
       "ok": {

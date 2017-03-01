@@ -1,250 +1,259 @@
-(function () {
+import angular from 'angular';
 
-  angular.module('sailplay', [
-    'sailplay.profile',
-    'sailplay.gifts',
-    'sailplay.history',
-    'sailplay.actions',
-    'sailplay.badges'
-  ])
+import SailPlayProfile from './sailplay.profile';
+import SailPlayGifts from './sailplay.gifts';
+import SailPlayHistory from './sailplay.history';
+import SailPlayActions from './sailplay.actions';
+import SailPlayBadges from './sailplay.badges';
 
-    .run(function(SailPlay, $rootScope, ipCookie){
+import SAILPLAY from 'sailplay-hub';
+import 'sailplay-hub-actions/sailplay.hub.actions';
 
-      SailPlay.send('init', SailPlay.CONFIG);
+let SailPlay = angular.module('sailplay', [
+  SailPlayProfile,
+  SailPlayGifts,
+  SailPlayHistory,
+  SailPlayActions,
+  SailPlayBadges
+])
 
-      SailPlay.on('init.success', function(res){
+.run(function(SailPlay, $rootScope, ipCookie){
 
-        $rootScope.$broadcast('sailplay-init-success', res);
-        $rootScope.$apply();
-      });
+  SailPlay.send('init', SailPlay.CONFIG);
 
-      SailPlay.on('login.error', function (res) {
+  SailPlay.on('init.success', function(res){
 
-        $rootScope.$broadcast('sailplay-login-error', res);
-        $rootScope.$apply();
+    $rootScope.$broadcast('sailplay-init-success', res);
+    $rootScope.$apply();
+  });
 
-      });
+  SailPlay.on('login.error', function (res) {
 
-      SailPlay.on('login.success', function (res) {
+    $rootScope.$broadcast('sailplay-login-error', res);
+    $rootScope.$apply();
 
-        $rootScope.$broadcast('sailplay-login-success', res);
-        $rootScope.$apply();
+  });
 
-      });
+  SailPlay.on('login.success', function (res) {
 
-      SailPlay.on('login.cancel', function (res) {
+    $rootScope.$broadcast('sailplay-login-success', res);
+    $rootScope.$apply();
 
-        $rootScope.$broadcast('sailplay-login-cancel', res);
-        $rootScope.$apply();
+  });
 
-      });
+  SailPlay.on('login.cancel', function (res) {
 
-    })
-    
-    .service('sailplay_config', function($window){
-      
-      return typeof $window._CONFIG !== 'undefined' && $window._CONFIG.SAILPLAY || { partner_id: 1, domain: 'https://sailplay.net' };
-      
-    })
+    $rootScope.$broadcast('sailplay-login-cancel', res);
+    $rootScope.$apply();
 
-    .provider('SailPlay', function(){
+  });
 
-      var auth_type = 'url';
+})
 
-      var auth_options = {};
+.service('sailplay_config', function($window){
 
-      var auth_hash_cookie_name = 'sailplay_auth_hash';
+  return typeof $window._CONFIG !== 'undefined' && $window._CONFIG.SAILPLAY || { partner_id: 1, domain: 'https://sailplay.net' };
 
-      var config = {
-        partner_id: 1569,
-        domain: 'https://sailplay.ru'
-      };
+})
 
-      return {
+.provider('SailPlay', function(){
 
-        set_auth_type: function(type, options){
+  var auth_type = 'url';
 
-          if(type) auth_type = type;
+  var auth_options = {};
 
-          if(options) auth_options = options;
+  var auth_hash_cookie_name = 'sailplay_auth_hash';
 
-        },
+  var config = {
+    partner_id: 1569,
+    domain: 'https://sailplay.ru'
+  };
 
-        set_cookie_name: function(name){
+  return {
 
-          if(name) auth_hash_cookie_name = name;
+    set_auth_type: function(type, options){
 
-        },
+      if(type) auth_type = type;
 
-        set_config: function(new_config){
+      if(options) auth_options = options;
 
-          angular.merge(config, new_config);
+    },
 
-        },
+    set_cookie_name: function(name){
 
-        $get: function($window, $rootScope, ipCookie){
+      if(name) auth_hash_cookie_name = name;
 
-          var sp = $window.SAILPLAY || {};
+    },
 
-          sp.CONFIG = config;
+    set_config: function(new_config){
 
-          switch (auth_type){
+      angular.merge(config, new_config);
 
-            case 'config':
+    },
 
-              sp.authorize = function() {
-                var auth_hash = $rootScope.config.SAILPLAY && $rootScope.config.SAILPLAY.auth_hash;
+    $get: function($window, $rootScope, ipCookie){
 
-                if (auth_hash) {
-                  sp.send('login', auth_hash);
-                }
-                else {
-                  $rootScope.$broadcast('sailplay-login-error', {status: 'error', message: 'No auth_hash found'});
-                }
-              };
+      var sp = SAILPLAY || {};
 
-              break;
+      sp.CONFIG = config;
 
-            case 'url':
+      switch (auth_type){
 
-              sp.authorize = function(){
+        case 'config':
 
-                var params = sp.url_params();
+          sp.authorize = function() {
+            var auth_hash = $rootScope.config.SAILPLAY && $rootScope.config.SAILPLAY.auth_hash;
 
-                if (params) {
-                  sp.send('login', params.auth_hash);
-                }
-                else {
-                  $rootScope.$broadcast('sailplay-login-error', { status: 'error', message: 'No auth_hash found' });
-                }
+            if (auth_hash) {
+              sp.send('login', auth_hash);
+            }
+            else {
+              $rootScope.$broadcast('sailplay-login-error', {status: 'error', message: 'No auth_hash found'});
+            }
+          };
 
-              };
-              break;
+          break;
 
-            case 'cookie':
+        case 'url':
 
-              var auth_hash = ipCookie(auth_hash_cookie_name);
-              if(auth_hash){
-                sp.send('login', auth_hash);
-              }
-              else {
-                $rootScope.$broadcast('sailplay-login-error', { status: 'error', message: 'No auth_hash found' });
-              }
-              break;
+          sp.authorize = function(){
 
-            case 'remote':
+            var params = sp.url_params();
 
-              sp.send('login.remote', auth_options);
+            if (params) {
+              sp.send('login', params.auth_hash);
+            }
+            else {
+              $rootScope.$broadcast('sailplay-login-error', { status: 'error', message: 'No auth_hash found' });
+            }
 
+          };
+          break;
 
+        case 'cookie':
+
+          var auth_hash = ipCookie(auth_hash_cookie_name);
+          if(auth_hash){
+            sp.send('login', auth_hash);
           }
+          else {
+            $rootScope.$broadcast('sailplay-login-error', { status: 'error', message: 'No auth_hash found' });
+          }
+          break;
 
-          sp.auth_hash_cookie_name = auth_hash_cookie_name;
+        case 'remote':
 
-          return sp;
-
-        }
-
-      };
+          sp.send('login.remote', auth_options);
 
 
-    })
+      }
 
-    .service('SailPlayApi', function($q, SailPlay, $rootScope){
+      sp.auth_hash_cookie_name = auth_hash_cookie_name;
 
-      var self = this;
+      return sp;
 
-      var data = {};
+    }
 
-      var points = [
+  };
 
-        'load.user.info',
-        'load.gifts.list',
-        'load.user.history',
-        'load.actions.list',
-        'load.badges.list',
-        'tags.exist',
-        'tags.add'
 
-      ];
+})
 
-      self.points = [];
+.service('SailPlayApi', function($q, SailPlay, $rootScope){
 
-      angular.forEach(points, function(point){
+  var self = this;
 
-        SailPlay.on(point+'.success', function(res){
+  var data = {};
 
-          $rootScope.$apply(function(){
-            self.data(point, res);
-            console.log('sailplay.api:' + point + '.success');
-            console.dir(self.data(point)());
-          });
+  var points = [
 
-        });
+    'load.user.info',
+    'load.gifts.list',
+    'load.user.history',
+    'load.actions.list',
+    'load.badges.list',
+    'tags.exist',
+    'tags.add'
 
-        SailPlay.on(point+'.error', function(res){
-          $rootScope.$apply(function() {
-            console.log('sailplay.api:' + point + '.error');
-            console.dir(res);
-            self.data(point, null);
-          });
-        });
+  ];
 
+  self.points = [];
+
+  angular.forEach(points, function(point){
+
+    SailPlay.on(point+'.success', function(res){
+
+      $rootScope.$apply(function(){
+        self.data(point, res);
+        console.log('sailplay.api:' + point + '.success');
+        console.dir(self.data(point)());
       });
-
-      self.data = function(key, value){
-
-        if(typeof value !== 'undefined'){
-
-          data[key] = angular.copy(value);
-
-        }
-
-        return function (){
-          return data[key];
-        };
-
-      };
-
-      self.call = function(name, params, callback){
-
-        SailPlay.send(name, params);
-
-      };
-
-    })
-
-    .filter('sailplay_pluralize', function () {
-      var cases = [2, 0, 1, 1, 1, 2];
-      return function (input, titles) {
-        input = Math.abs(input);
-        titles = titles.split(',');
-        return titles[(input % 100 > 4 && input % 100 < 20) ? 2 : cases[(input % 10 < 5) ? input % 10 : 5]];
-      }
-    })
-
-    .filter('sailplay_pic', function(SailPlay, $window){
-
-      function repair_pic_url(url){
-        if(/^((http|https|ftp):\/\/)/.test(url)){
-          return url;
-        }
-        if(url.indexOf('//') === 0){
-          return $window.location.protocol + url;
-        }
-        else {
-          return SailPlay.config().DOMAIN + url;
-        }
-      }
-
-      return function(pic_url) {
-
-        if(!pic_url) return '';
-
-        return repair_pic_url(pic_url);
-
-      };
 
     });
 
-}());
+    SailPlay.on(point+'.error', function(res){
+      $rootScope.$apply(function() {
+        console.log('sailplay.api:' + point + '.error');
+        console.dir(res);
+        self.data(point, null);
+      });
+    });
+
+  });
+
+  self.data = function(key, value){
+
+    if(typeof value !== 'undefined'){
+
+      data[key] = angular.copy(value);
+
+    }
+
+    return function (){
+      return data[key];
+    };
+
+  };
+
+  self.call = function(name, params, callback){
+
+    SailPlay.send(name, params);
+
+  };
+
+})
+
+.filter('sailplay_pluralize', function () {
+  var cases = [2, 0, 1, 1, 1, 2];
+  return function (input, titles) {
+    input = Math.abs(input);
+    titles = titles.split(',');
+    return titles[(input % 100 > 4 && input % 100 < 20) ? 2 : cases[(input % 10 < 5) ? input % 10 : 5]];
+  }
+})
+
+.filter('sailplay_pic', function(SailPlay, $window){
+
+  function repair_pic_url(url){
+    if(/^((http|https|ftp):\/\/)/.test(url)){
+      return url;
+    }
+    if(url.indexOf('//') === 0){
+      return $window.location.protocol + url;
+    }
+    else {
+      return SailPlay.config().DOMAIN + url;
+    }
+  }
+
+  return function(pic_url) {
+
+    if(!pic_url) return '';
+
+    return repair_pic_url(pic_url);
+
+  };
+
+});
+
+export default SailPlay.name;

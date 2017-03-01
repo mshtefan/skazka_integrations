@@ -3,30 +3,30 @@
   'use strict';
 
   var gulp = require('gulp');
-  var concat = require('gulp-concat');
-  var ngAnnotate = require('gulp-ng-annotate');
-  var less = require('gulp-less');
   var path = require('path');
-  var ngHtml2Js = require("gulp-ng-html2js");
-  var minifyHtml = require("gulp-minify-html");
-  var browserSync = require('browser-sync').create();
+  var server = require('gulp-connect');
+  var webpack = require('webpack');
+
+  var WEBPACK_CONFIG = require('./webpack.config');
 
   gulp.task('connect', function () {
 
-    browserSync.init({
-      server: "./",
-      host: '0.0.0.0',
-      open: false
+    server.server({
+      port: 3000
     });
 
   });
 
   gulp.task('watch', function () {
-    gulp.watch(__dirname + '/src/js/**/*.js', ['build.javascript']);
-    gulp.watch(__dirname + '/src/html/**/*.html', ['build.javascript']);
-    gulp.watch(__dirname + '/src/less/**/*.less', ['build.less']);
-    gulp.watch(__dirname + '/src/font/**/*', ['build.fonts']);
-    gulp.watch(__dirname + '/src/img/**/*', ['build.img']);
+    gulp.watch(__dirname + '/src/**/*', ['build']);
+  });
+  
+  gulp.task('build', function (callback) {
+
+    let bundler = webpack(WEBPACK_CONFIG);
+
+    bundler.run(callback);
+
   });
 
   gulp.task('build.javascript', ['javascript.concat', 'javascript.ngAnnotate']);
@@ -121,8 +121,6 @@
       .pipe(gulp.dest('./docs'));
   });
 
-  gulp.task('default', ['connect', 'watch', 'build.javascript', 'build.less', 'build.img', 'build.fonts']);
-
-  gulp.task('build', ['build.javascript', 'build.less', 'build.img', 'build.fonts']);
-
+  gulp.task('default', ['connect', 'watch', 'build']);
+  
 }());
