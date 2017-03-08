@@ -26,7 +26,7 @@ let Core = angular.module('core', [
       $rootScope.loaded = true;
       //load data for widgets
       SailPlayApi.call('load.user.info', {all: 1, purchases: 1});
-      SailPlayApi.call('load.badges.list');
+      SailPlayApi.call('load.badges.list', { include_rules: 1 });
       SailPlayApi.call('load.actions.list');
       SailPlayApi.call('load.user.history');
       SailPlayApi.call('load.gifts.list');

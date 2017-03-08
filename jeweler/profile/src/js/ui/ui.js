@@ -207,6 +207,12 @@ let Ui = angular.module('ui', [
 
   })
 
+  .filter('number', () => {
+    return (number) => {
+      return number && number.toLocaleString() || 0;
+    };
+  })
+
   .filter('tel', function () {
     return function (tel) {
       if (!tel) {
@@ -301,6 +307,7 @@ let Ui = angular.module('ui', [
       prevArrow: '<div class="slick-prev"></div>',
       nextArrow: '<div class="slick-next"></div>',
       swipeToSlide: true,
+      adaptiveHeight: true,
       responsive: [{
         breakpoint: 800, settings: {
           slidesToShow: 2
@@ -366,10 +373,12 @@ let Ui = angular.module('ui', [
         scope.$watchCollection(function () {
           return angular.toJson($element.find('[data-slick-slide]').toArray().map(elm => elm.slide_id));
         }, function (slides) {
+          console.dir(slides);
+          angular.forEach($element.find('[data-slick-slide]'), (slide) => {
+            slide.slide_id = slide.slide_id || Math.random();
+          });
           if (!scope.process) {
-            angular.forEach($element.find('[data-slick-slide]'), (slide) => {
-              slide.slide_id = slide.slide_id || Math.random();
-            });
+
             scope.process = true;
             toggle(false);
             if ($element.hasClass('slick-initialized')) {
