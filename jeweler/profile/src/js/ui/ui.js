@@ -323,7 +323,8 @@ let Ui = angular.module('ui', [
 
   .directive('slickCarousel', function ($compile, $timeout) {
     return {
-      restrict: 'A', link: function (scope, element, attrs) {
+      restrict: 'A',
+      link: function (scope, element, attrs) {
 
         scope.hidden = true;
 
@@ -374,15 +375,17 @@ let Ui = angular.module('ui', [
           return angular.toJson($element.find('[data-slick-slide]').toArray().map(elm => elm.slide_id));
         }, function (slides) {
           console.dir(slides);
-          angular.forEach($element.find('[data-slick-slide]'), (slide) => {
-            slide.slide_id = slide.slide_id || Math.random();
+
+          angular.forEach($element.find('[data-slick-slide]').toArray(), (slide) => {
+            if(slide.slide_id) slide.parentNode.removeChild(slide);
           });
+
           if (!scope.process) {
 
             scope.process = true;
             toggle(false);
             if ($element.hasClass('slick-initialized')) {
-              $element.slick('removeSlide', null, null, true);
+              // $element.slick('slickRemove', null, null, true);
               $element.slick('unslick');
             }
             $timeout(function () {
@@ -390,6 +393,9 @@ let Ui = angular.module('ui', [
               $element.slick(options);
               $element.slick('slickUnfilter');
               $element.slick('slickFilter', ':not(.ng-hide)');
+              angular.forEach($element.find('[data-slick-slide]').toArray(), (slide) => {
+                slide.slide_id = slide.slide_id || Math.random();
+              });
               toggle(true);
               scope.process = false;
             }, 500);
