@@ -449,25 +449,25 @@ let Ui = angular.module('ui', [
 
   })
 
-  .directive('phoneMask', function ($timeout) {
-
-    return {
-      restrict: 'A', require: 'ngModel', link: function (scope, elm, attrs, ngModel) {
-
-        ngModel.$validators.phone = function (modelValue, viewValue) {
-          var value = (modelValue || viewValue || '').replace(/\D/g, '');
-          if (!value) return true;
-          return /^[0-9]{11}$/.test(value);
-        };
-
-        $timeout(function () {
-          $(elm).mask('+7(000) 000-00-00', {placeholder: "+7(___)___-__-__"});
-        }, 10);
-
-      }
-    };
-
-  })
+  // .directive('phoneMask', function ($timeout) {
+  //
+  //   return {
+  //     restrict: 'A', require: 'ngModel', link: function (scope, elm, attrs, ngModel) {
+  //
+  //       ngModel.$validators.phone = function (modelValue, viewValue) {
+  //         var value = (modelValue || viewValue || '').replace(/\D/g, '');
+  //         if (!value) return true;
+  //         return /^[0-9]{11}$/.test(value);
+  //       };
+  //
+  //       $timeout(function () {
+  //         $(elm).mask('+7(000) 000-00-00', {placeholder: "+7(___)___-__-__"});
+  //       }, 10);
+  //
+  //     }
+  //   };
+  //
+  // })
 
   .directive('selectize', function ($timeout) {
 

@@ -11,10 +11,12 @@
 
 .sp_hist-popup {
   .sp-block-reset();
-  width: 392px;
-  max-width: 90%;
+  //width: 392px;
+  //max-width: 90%;
   margin: 40px auto 40px auto;
   max-height: 90%;
+  max-width: 650px;
+  width: 100%;
   background-color: #fff;
   position: relative;
   .box-shadow(0px 0px 15px rgba(0, 0, 0, 0.5));
@@ -40,6 +42,38 @@
     margin-bottom: 13px;
     &.this-dec {
       color: @red;
+    }
+    &.this-purchase {
+
+      .sp_hist-list__name {
+        cursor: pointer;
+        text-decoration: underline;
+
+        &:hover {
+          text-decoration: none;
+        }
+
+      }
+
+    }
+  }
+  &__date {
+      display: inline-block;
+      width: 100px;
+  }
+  &__name {
+    display: inline-block;
+  }
+  &__purchases {
+    display: block;
+    padding-left: 120px;
+    box-sizing: border-box;
+    padding-top: 10px;
+    span {
+      font-size: 14px;
+      line-height: 20px;
+      display: block;
+      font-weight: 300;
     }
   }
   &__val {

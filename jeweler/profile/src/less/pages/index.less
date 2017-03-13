@@ -399,7 +399,26 @@
   }
   &__txt {
     font-size: 25px;
-    font: 300;
+    font-weight: 300;
+
+
+    @media (max-width: @screen-xs-max) {
+      text-align: center;
+    }
+
+
+    b {
+      @media (max-width: @screen-md-max) {
+      }
+      @media (max-width: @screen-sm-max) {
+      }
+      @media (max-width: @screen-xs-max) {
+        display: block;
+      }
+      @media (max-width: (@screen-xs-min - 1px)) {
+      }
+    }
+
   }
 }
 
@@ -501,11 +520,11 @@
     @media (max-width: @screen-sm-max) {
     }
     @media (max-width: @screen-xs-max) {
-      width: 50px;
-      height: 60px;
+      //width: 50px;
+      //height: 60px;
     }
     @media (max-width: (@screen-xs-min - 1px)) {
-      width: 30px;
+      //width: 30px;
     }
   }
   &__point-name {

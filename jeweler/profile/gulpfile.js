@@ -36,12 +36,12 @@
 
         // Libs
         __dirname + '/node_modules/jquery/dist/jquery.min.js',
-        __dirname + '/lib/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js',
+        // __dirname + '/lib/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js',
         __dirname + '/lib/js/plugins/slick.min.js',
-        __dirname + '/lib/js/plugins/jquery.bpopup.min.js',
-        __dirname + '/lib/js/plugins/prettyCheckable.min.js',
+        // __dirname + '/lib/js/plugins/jquery.bpopup.min.js',
+        // __dirname + '/lib/js/plugins/prettyCheckable.min.js',
         __dirname + '/lib/js/plugins/selectize.min.js',
-        __dirname + '/lib/js/plugins/jquery.mask.min.js',
+        // __dirname + '/lib/js/plugins/jquery.mask.min.js',
 
         // Sailplay HUB
         __dirname + '/node_modules/sailplay-hub/sailplay.hub.js',

@@ -34,8 +34,8 @@
           <div class="sp_person-info__status">
             <div class="sp_person-info__stat-hd">Ваш статус: {{ user().user_status.name }}</div>
             <div data-ng-if="get_next()">До статуса <b>{{ get_next().name }}</b> осталось {{
-              get_next().rules[0].value_to_success | number }}
-              {{ get_next().rules[0].value_to_success | sailplay_pluralize:'рубль,рубля,рублей' }}
+              (get_next().rules[0].value_to_success - user().purchases.sum) | number }}
+              {{ (get_next().rules[0].value_to_success - user().purchases.sum) | sailplay_pluralize:'рубль,рубля,рублей' }}
             </div>
           </div>
         </div>
@@ -59,8 +59,7 @@
           <div class="sp_points-cell__ttl">{{ user().user_points.confirmed | sailplay_pluralize:'бонусный балл,бонусных балла,бонусных баллов' }}
           </div>
           <a href="" data-ng-hide="hide_hist" data-ng-click="$event.preventDefault();open_history()"
-             class="sp_cmn-btn sp_cmn-btn_red sp_points-cell__btn js-open-history-popup">История
-            транзакций</a>
+             class="sp_cmn-btn sp_cmn-btn_red sp_points-cell__btn js-open-history-popup">Детализация бонусов</a>
         </div>
       </div>
       <div class="sp_info-sec__r">
@@ -78,7 +77,7 @@
     <section class="sp_l-centered sp_progr-sec" data-ng-if="get_next()">
       <div class="sp_progr-sec__l">
         <div class="sp_progr-sec__txt">
-          До следющего статуса осталось <b>{{ get_next().rules[0].value_to_success | number }} {{ get_next().rules[0].value_to_success |
+          До следющего статуса осталось <b>{{ (get_next().rules[0].value_to_success - user().purchases.sum) | number }} {{ (get_next().rules[0].value_to_success - user().purchases.sum) |
           sailplay_pluralize:'рубль,рубля,рублей' }}</b>
         </div>
       </div>
@@ -190,7 +189,7 @@
               <div class="sp_task-slider__cover">
                                 <span class="sp_cmn-btn-sm sp_task-slider__btn" data-sailplay-action
                                       data-action="action" data-text="Выполнить"
-                                      data-styles="{{ config.social_styles || 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/e8f73ebedc5f336aa857674149750d3b.css' }}">Выполнить</span>
+                                      data-styles="{{ config.social_styles || 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/1ebeb46c5b7c37ab366018743083082d.css' }}">Выполнить</span>
               </div>
             </div>
           </div>
@@ -205,15 +204,29 @@
   <div class="sp_overlay" data-ng-show="show_history">
     <div class="sp_hist-popup js-history-popup" data-overlay-click="close_history()">
       <div class="sp_cmn-popup-close js-close-popup" data-ng-click="close_history()"></div>
-      <div class="sp_hist-popup__hd">История транзакций</div>
+      <div class="sp_hist-popup__hd">Детализация бонусов</div>
       <div class="sp_hist-list">
+
         <div class="sp_hist-list__itm" data-dir-paginate="item in history() | itemsPerPage:6"
-             data-pagination-id="history_pages" data-ng-class="{ 'this-dec': item.points_delta < 0 }">
-          <div class="sp_hist-list__val">{{ item.points_delta || 0 }} {{ item.points_delta |
-            sailplay_pluralize:'балл,балла,баллов' }}
+             data-pagination-id="history_pages"
+             data-ng-class="{ 'this-dec': item.points_delta < 0, 'this-purchase': item.action == 'purchase' }">
+
+          <span class="sp_hist-list__date" data-ng-bind="item.action_date | date:'dd.MM.yyyy'"></span>
+
+          <span class="sp_hist-list__name" data-ng-click="history_item_click(item);" data-ng-bind="item | history_item"></span>
+
+          <div class="sp_hist-list__val" data-ng-if="item.points_delta">
+            {{ item.points_delta || 0 }} {{ item.points_delta | sailplay_pluralize:'балл,балла,баллов' }}
           </div>
-          {{ item | history_item }}
+
+          <div class="sp_hist-list__purchases"
+                data-ng-show="item.action === 'purchase' && item.purchase_data"
+                data-ng-repeat="info in item.purchase_data">
+            <span data-ng-bind="info.product.name || 'Товар без названия'"></span>
+          </div>
+
         </div>
+
       </div>
       <!-- /list -->
 

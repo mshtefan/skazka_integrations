@@ -110,13 +110,15 @@ let SailPlayBadges = angular.module('sailplay.badges', [])
 
       scope.get_progress = function(){
 
-        var balance = user && user() ? user().user_points.confirmed + user().user_points.spent + user().user_points.spent_extra : 0;
+        if(!user || !user()) return;
 
-        var target = parseInt(angular.copy(SailPlayBadges.limits).pop());
+        var balance = user && user() ? user().purchases.sum : 0;
+
+        var target = scope.get_next().rules[0].value_to_success - user().purchases.sum;
 
         var progress = balance/target*100;
 
-        return progress <= 100 ? progress : 100;
+        return progress <= 100 ? progress > 100 ? 100 : progress : 100;
 
       };
 
