@@ -69,11 +69,19 @@
     padding-left: 120px;
     box-sizing: border-box;
     padding-top: 10px;
+    overflow: hidden;
     span {
       font-size: 14px;
       line-height: 20px;
       display: block;
       font-weight: 300;
+      float: left;
+      width: 50%;
+
+      &.type_price {
+        text-align: right;
+      }
+
     }
   }
   &__val {
@@ -316,7 +324,7 @@
   }
 
   &__btns {
-
+    text-align: center;
   }
   &__btn {
     display: inline-block;

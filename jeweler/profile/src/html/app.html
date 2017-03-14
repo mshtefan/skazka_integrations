@@ -48,9 +48,9 @@
         <div class="sp_points-cell">
           <div class="sp_points-cell__hd">Ваши баллы</div>
           <div class="status-info-counter">
-            <div class="status-info-counter__val">{{ user().user_points.confirmed }}</div>
+            <div class="status-info-counter__val">{{ user().user_points.confirmed | number }}</div>
             <div class="status-info-counter__remain">
-              +{{ user().user_points.unconfirmed }}
+              +{{ user().user_points.unconfirmed | number }}
               <div class="status-info-counter__popup">
                 Неподтвержденные баллы, которые начислятся после оплаты
               </div>
@@ -182,7 +182,7 @@
               <div class="sp_task-slider__ico"
                    style="background-image: url({{ action_data(action).pic }});"></div>
               <div class="sp_task-slider__hd">{{ action_data(action).name }}</div>
-              <div class="sp_task-slider__price">{{ action.points }} {{ action.points |
+              <div class="sp_task-slider__price">{{ action.points | number }} {{ action.points |
                 sailplay_pluralize:'балл,балла,баллов' }}
               </div>
 
@@ -216,13 +216,14 @@
           <span class="sp_hist-list__name" data-ng-click="history_item_click(item);" data-ng-bind="item | history_item"></span>
 
           <div class="sp_hist-list__val" data-ng-if="item.points_delta">
-            {{ item.points_delta || 0 }} {{ item.points_delta | sailplay_pluralize:'балл,балла,баллов' }}
+            {{ (item.points_delta | number) || 0 }} {{ item.points_delta | sailplay_pluralize:'балл,балла,баллов' }}
           </div>
 
           <div class="sp_hist-list__purchases"
                 data-ng-show="item.action === 'purchase' && item.purchase_data"
                 data-ng-repeat="info in item.purchase_data">
             <span data-ng-bind="info.product.name || 'Товар без названия'"></span>
+            <span class="type_price" data-ng-bind="(info.price | number) + ' ' + (info.price | sailplay_pluralize:'рубль,рубля,рублей')"></span>
           </div>
 
         </div>
@@ -279,7 +280,7 @@
                data-ng-model="$parent.profile_form.user.birthDate">
             <div class="sp_profile-form__dates-col">
               <select name="birth_date" data-ng-model="selected_date[0]" data-selectize
-                      class="js-create-select sp_cmn-selectize">
+                      class="js-create-select sp_cmn-selectize sp">
                 <option value="01">01</option>
                 <option value="02">02</option>
                 <option value="03">03</option>

@@ -139,6 +139,8 @@ let Ui = angular.module('ui', [
 
                 var _variables = angular.copy(scope.profile_form.custom_vars);
 
+                console.log('_variables', _variables);
+
                 if (!_variables['Имя супруга(и)']) {
                   delete _variables['Имя супруга(и)']
                 }
@@ -207,11 +209,11 @@ let Ui = angular.module('ui', [
 
   })
 
-  .filter('number', () => {
-    return (number) => {
-      return number && number.toLocaleString() || 0;
-    };
-  })
+  // .filter('number', () => {
+  //   return (number) => {
+  //     return number && number.toLocaleString() || 0;
+  //   };
+  // })
 
   .filter('tel', function () {
     return function (tel) {
@@ -374,7 +376,7 @@ let Ui = angular.module('ui', [
         scope.$watchCollection(function () {
           return angular.toJson($element.find('[data-slick-slide]').toArray().map(elm => elm.slide_id));
         }, function (slides) {
-          console.dir(slides);
+          // console.dir(slides);
 
           angular.forEach($element.find('[data-slick-slide]').toArray(), (slide) => {
             if(slide.slide_id) slide.parentNode.removeChild(slide);
@@ -398,7 +400,7 @@ let Ui = angular.module('ui', [
               });
               toggle(true);
               scope.process = false;
-            }, 500);
+            }, 700);
           }
 
         });
