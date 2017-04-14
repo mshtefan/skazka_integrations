@@ -49,11 +49,28 @@ let Ui = angular.module('ui', [
           //scope.profile_form.user.addPhone = user.user.phone;
           scope.profile_form.user.addEmail = user.user.email;
           scope.profile_form.user.birthDate = user.user.birth_date || '0000-00-00';
-          if (ipCookie('profile_form') && SailPlay.config().auth_hash === ipCookie('profile_form').user.auth_hash) {
-            angular.extend(scope.profile_form, ipCookie('profile_form'));
-          } else {
-            scope.profile_form.custom_vars['ДР супруга(и)'] = ipCookie('profile_form') ? ipCookie('profile_form').custom_vars['ДР супруга(и)'] : '0000-00-00';
-          }
+
+
+          SailPlay.send('vars.batch', { names: Object.keys(new_form.custom_vars) });
+          SailPlay.on('vars.batch.success', function (res) {
+            if (res.status == 'ok') {
+            
+              angular.forEach(res.vars, function( v ) { 
+                scope.profile_form.custom_vars[v.name] = v.value
+              })
+
+              scope.$apply();                
+
+            } else {
+              $rootScope.$broadcast('notifier:notify', {
+
+                header: 'Ошибка',
+                body: user_res.message || 'К сожалению произошла ошибка'
+
+              });
+              scope.$apply();
+            }
+          });
 
         });
 

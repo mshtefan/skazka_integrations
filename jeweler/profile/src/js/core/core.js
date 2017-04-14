@@ -28,6 +28,7 @@ let Core = angular.module('core', [
       SailPlayApi.call('load.user.info', {all: 1, purchases: 1});
       SailPlayApi.call('load.badges.list', { include_rules: 1 });
       SailPlayApi.call('load.actions.list');
+      SailPlayApi.call('load.actions.custom.list'); 
       SailPlayApi.call('load.user.history');
       SailPlayApi.call('load.gifts.list');
       SailPlayApi.call('tags.exist', {tags: [ProfileTag]});

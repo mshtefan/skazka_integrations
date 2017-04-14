@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10056,6 +10056,7 @@ var Core = _angular2.default.module('core', [_angularCookie2.default]).run(funct
       SailPlayApi.call('load.user.info', { all: 1, purchases: 1 });
       SailPlayApi.call('load.badges.list', { include_rules: 1 });
       SailPlayApi.call('load.actions.list');
+      SailPlayApi.call('load.actions.custom.list');
       SailPlayApi.call('load.user.history');
       SailPlayApi.call('load.gifts.list');
       SailPlayApi.call('tags.exist', { tags: [ProfileTag] });
@@ -10123,31 +10124,31 @@ var _angular = __webpack_require__(0);
 
 var _angular2 = _interopRequireDefault(_angular);
 
-var _sailplay = __webpack_require__(18);
+var _sailplay = __webpack_require__(19);
 
 var _sailplay2 = _interopRequireDefault(_sailplay);
 
-var _sailplay3 = __webpack_require__(16);
+var _sailplay3 = __webpack_require__(17);
 
 var _sailplay4 = _interopRequireDefault(_sailplay3);
 
-var _sailplay5 = __webpack_require__(17);
+var _sailplay5 = __webpack_require__(18);
 
 var _sailplay6 = _interopRequireDefault(_sailplay5);
 
-var _sailplay7 = __webpack_require__(14);
+var _sailplay7 = __webpack_require__(15);
 
 var _sailplay8 = _interopRequireDefault(_sailplay7);
 
-var _sailplay9 = __webpack_require__(15);
+var _sailplay9 = __webpack_require__(16);
 
 var _sailplay10 = _interopRequireDefault(_sailplay9);
 
-var _sailplayHub = __webpack_require__(24);
+var _sailplayHub = __webpack_require__(25);
 
 var _sailplayHub2 = _interopRequireDefault(_sailplayHub);
 
-__webpack_require__(23);
+__webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10277,7 +10278,7 @@ var SailPlay = _angular2.default.module('sailplay', [_sailplay2.default, _sailpl
 
   var data = {};
 
-  var points = ['load.user.info', 'load.gifts.list', 'load.user.history', 'load.actions.list', 'load.badges.list', 'tags.exist', 'tags.add'];
+  var points = ['load.user.info', 'load.gifts.list', 'load.user.history', 'load.actions.list', 'load.actions.custom.list', 'load.badges.list', 'tags.exist', 'tags.add'];
 
   self.points = [];
 
@@ -10370,11 +10371,11 @@ var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-__webpack_require__(25);
+__webpack_require__(26);
 
-__webpack_require__(27);
+__webpack_require__(28);
 
-var _uiNotifier = __webpack_require__(21);
+var _uiNotifier = __webpack_require__(22);
 
 var _uiNotifier2 = _interopRequireDefault(_uiNotifier);
 
@@ -10415,11 +10416,26 @@ var Ui = _angular2.default.module('ui', [_angularUtilsPagination2.default]).cons
         //scope.profile_form.user.addPhone = user.user.phone;
         scope.profile_form.user.addEmail = user.user.email;
         scope.profile_form.user.birthDate = user.user.birth_date || '0000-00-00';
-        if (ipCookie('profile_form') && SailPlay.config().auth_hash === ipCookie('profile_form').user.auth_hash) {
-          _angular2.default.extend(scope.profile_form, ipCookie('profile_form'));
-        } else {
-          scope.profile_form.custom_vars['ДР супруга(и)'] = ipCookie('profile_form') ? ipCookie('profile_form').custom_vars['ДР супруга(и)'] : '0000-00-00';
-        }
+
+        SailPlay.send('vars.batch', { names: Object.keys(new_form.custom_vars) });
+        SailPlay.on('vars.batch.success', function (res) {
+          if (res.status == 'ok') {
+
+            _angular2.default.forEach(res.vars, function (v) {
+              scope.profile_form.custom_vars[v.name] = v.value;
+            });
+
+            scope.$apply();
+          } else {
+            $rootScope.$broadcast('notifier:notify', {
+
+              header: 'Ошибка',
+              body: user_res.message || 'К сожалению произошла ошибка'
+
+            });
+            scope.$apply();
+          }
+        });
       });
 
       scope.toggle_tag = function (arr, tag) {
@@ -10853,7 +10869,7 @@ exports.default = Ui.name;
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = "<div data-sailplay-profile data-sailplay-history data-sailplay-badges style=\"margin: 14px;\"\n     data-ng-show=\"user()\" data-ng-cloak>\n\n  <div class=\"sp_widget\">\n\n    <section class=\"sp_l-centered sp_person-sec\">\n      <div class=\"sp_person-sec__col1\">\n        <div class=\"sp_person-sec__hd\">Добро пожаловать</div>\n        <div class=\"sp_person-sec__ttl\">в клуб покупателей \"Бронницкий ювелир\"</div>\n      </div>\n      <div class=\"sp_person-sec__col2\">\n        <div class=\"sp_person-cell\">\n          <div class=\"sp_person-cell__photo\"\n               style=\"background-image: url('{{ user().user.pic | sailplay_pic }}');\"></div>\n          <a href=\"#\" class=\"sp_cmn-btn person-cell__btn js-open-profile-popup\"\n             data-ng-click=\"$event.preventDefault();open_profile();\">Изменить профиль</a>\n        </div>\n      </div>\n      <div class=\"sp_person-sec__col3\">\n        <div class=\"sp_person-info\">\n          <div class=\"sp_person-info__hd\">Здравствуйте,</div>\n          <div class=\"sp_person-info__name\">{{ user().user.name || 'Уважаемый покупатель' }}</div>\n          <div class=\"sp_person-info__cont\">\n            <div data-ng-show=\"user().user.email\">{{ user().user.email }}</div>\n            <div data-ng-show=\"user().user.phone\">\n              {{ user().user.phone | tel }}\n              <div class=\"tooltip\">\n                <span class=\"tooltip_icon\">?</span>\n                <span class=\"tooltip_text\">Телефон Вы можете изменить, отправив запрос на почту <a\n                    href=\"mailto:change@bronnitsy.info\">change@bronnitsy.info</a></span>\n              </div>\n            </div>\n          </div>\n          <div class=\"sp_person-info__status\">\n            <div class=\"sp_person-info__stat-hd\">Ваш статус: {{ user().user_status.name }}</div>\n            <div data-ng-if=\"get_next()\">До статуса <b>{{ get_next().name }}</b> осталось {{\n              (get_next().rules[0].value_to_success - user().purchases.sum) | number }}\n              {{ (get_next().rules[0].value_to_success - user().purchases.sum) | sailplay_pluralize:'рубль,рубля,рублей' }}\n            </div>\n          </div>\n        </div>\n        <!--<a href=\"http://www.bronnitsy.com/delivery/\" class=\"sp_person-sec__more\">условия доставки</a>-->\n      </div>\n    </section>\n\n    <section class=\"sp_l-centered sp_info-sec\">\n      <div class=\"sp_info-sec__l\">\n        <div class=\"sp_points-cell\">\n          <div class=\"sp_points-cell__hd\">Ваши баллы</div>\n          <div class=\"status-info-counter\">\n            <div class=\"status-info-counter__val\">{{ user().user_points.confirmed | number }}</div>\n            <div class=\"status-info-counter__remain\">\n              +{{ user().user_points.unconfirmed | number }}\n              <div class=\"status-info-counter__popup\">\n                Неподтвержденные баллы, которые начислятся после оплаты\n              </div>\n            </div>\n          </div>\n          <div class=\"sp_points-cell__ttl\">{{ user().user_points.confirmed | sailplay_pluralize:'бонусный балл,бонусных балла,бонусных баллов' }}\n          </div>\n          <a href=\"\" data-ng-hide=\"hide_hist\" data-ng-click=\"$event.preventDefault();open_history()\"\n             class=\"sp_cmn-btn sp_cmn-btn_red sp_points-cell__btn js-open-history-popup\">Детализация бонусов</a>\n        </div>\n      </div>\n      <div class=\"sp_info-sec__r\">\n        <div class=\"sp_status-cell\">\n          <div class=\"sp_status-cell__hd\">Ваш статус:</div>\n          <div class=\"sp_status-cell__img\"\n               style=\"background-image: url({{ user().user_status.pic || 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/e979ec44819f37ff84795afb2179a256.svg' }});\"></div>\n          <div class=\"sp_status-cell__ttl\">{{ user().user_status.name || 'Нет статуса' }}</div>\n          <a href=\"\" class=\"sp_cmn-btn sp_cmn-btn_red sp_status-cell__btn js-open-status-popup\"\n             data-ng-click=\"$event.preventDefault();open_status_list();\">Список статусов</a>\n        </div>\n      </div>\n    </section>\n\n    <section class=\"sp_l-centered sp_progr-sec\" data-ng-if=\"get_next()\">\n      <div class=\"sp_progr-sec__l\">\n        <div class=\"sp_progr-sec__txt\">\n          До следющего статуса осталось <b>{{ (get_next().rules[0].value_to_success - user().purchases.sum) | number }} {{ (get_next().rules[0].value_to_success - user().purchases.sum) |\n          sailplay_pluralize:'рубль,рубля,рублей' }}</b>\n        </div>\n      </div>\n      <div class=\"sp_progr-sec__r\">\n\n        <div class=\"sp_progr-cell\">\n          <!-- в data-width указывается ширина бара отоснительно всей длинны -->\n          <div class=\"sp_progr-bar js-status-bar\" data-width=\"90\">\n            <div class=\"sp_progr-bar__inner\">\n              <div class=\"sp_progr-bar__inner-bar this-inner1 js-status-bar__inner\"\n                   data-ng-style=\"{ width: get_progress() + '%' }\"></div>\n            </div>\n\n            <div class=\"sp_progr-bar__point this-point-{{ $index+1 }}\"\n                 data-ng-repeat=\"badge in badges().multilevel_badges[0]\">\n              <div class=\"sp_progr-bar__point-img\"\n                   style=\"background-image: url('{{ badge.thumbs.url_250x250 | sailplay_pic }}');\"></div>\n              <div class=\"sp_progr-bar__point-name\">{{ badge.name }}</div>\n            </div>\n          </div>\n        </div>\n        <!-- /sp_progr-cell -->\n      </div>\n    </section>\n\n    <section class=\"sp_l-section sp_gift-sec\" data-sailplay-gifts data-ng-cloak data-ng-controller=\"slick_config\"\n             data-ng-init=\"selected_gift = false;\" data-ng-show=\"gifts && gifts() && gifts().length\">\n      <div class=\"sp_cmn-sec-head\">Подарки</div>\n      <div class=\"sp_gift-slider js-gift-slider\" data-ng-if=\"gifts && gifts() && gifts().length\" data-slick-carousel\n           data-options=\"$parent.gift_slider_config\">\n        <div data-ng-repeat=\"gift in $parent.gifts()\" data-slick-slide>\n          <div class=\"sp_gift-slider__slide\">\n            <div class=\"sp_gift-slider__img\"\n                 style=\"background-image: url('{{ gift.thumbs.url_250x250 | sailplay_pic }}');\"></div>\n            <div class=\"sp_gift-slider__hd\">{{ gift.name }}</div>\n            <div class=\"sp_gift-slider__ttl\">{{ gift.descr }}</div>\n            <div class=\"sp_gift-slider__price\">{{ gift.points }} {{ gift.points |\n              sailplay_pluralize:'балл,балла,баллов' }}\n            </div>\n            <button style=\"line-height: 36px;\" type=\"button\"\n                    class=\"sp_cmn-btn-sm sp_gift-slider__btn js-open-gift-popup\"\n                    data-ng-click=\"$event.preventDefault();$parent.$parent.selected_gift = gift\"\n                    data-ng-disabled=\"gift.points > $parent.user().user_points.confirmed\">Получить\n            </button>\n          </div>\n        </div>\n\n      </div>\n\n      <div class=\"sp_overlay display_table\" data-ng-show=\"selected_gift\">\n        <div class=\"display_table_cell\" data-overlay-click=\"selected_gift = false;\">\n          <div class=\"sp_gift-popup js-gift-popup\">\n            <div class=\"sp_gift-popup__hd\">{{ selected_gift.points }} бонусных баллов будут списаны с\n              вашего\n              счета\n            </div>\n            <div class=\"sp_gift-popup__img\"\n                 style=\"background-image: url('{{ selected_gift.thumbs.url_250x250 | sailplay_pic }}');\"></div>\n            <div class=\"sp_gift-popup__ttl\">Вы уверены?</div>\n            <div class=\"sp_gift-popup__btns\">\n              <div class=\"sp_gift-popup__btn sp_cmn-btn-sm js-close-popup\"\n                   data-ng-click=\"gift_purchase(selected_gift); selected_gift = false;\">Да\n              </div>\n              <div class=\"sp_gift-popup__btn sp_cmn-btn-sm js-close-popup\"\n                   data-ng-click=\"selected_gift = false;\">Отмена\n              </div>\n            </div>\n\n          </div>\n        </div>\n\n      </div>\n\n    </section>\n\n    <section class=\"sp_l-section sp_task-sec-wrap\" data-sailplay-actions data-ng-cloak>\n      <div class=\"sp_l-section sp_task-sec\" data-ng-controller=\"slick_config\">\n        <div class=\"sp_cmn-sec-head\">Задания</div>\n\n        <div class=\"sp_task-slider js-task-slider\" data-ng-if=\"actions && actions()\" data-slick-carousel\n             data-options=\"action_slider_config\">\n\n          <div data-slick-slide data-ng-show=\"show_profile_action\">\n            <div class=\"sp_task-slider__slide\">\n              <div class=\"sp_task-slider__ico\"\n                   style=\"background-image: url('https://sailplays3.cdnvideo.ru/media/assets/assetfile/cef8e553e3431ce0cd7f82f5138befd0.png');\"></div>\n              <div class=\"sp_task-slider__hd\">Заполнить профиль</div>\n              <div class=\"sp_task-slider__price\">{{ 100 }} {{ 100 |\n                sailplay_pluralize:'балл,балла,баллов'\n                }}\n              </div>\n\n              <div class=\"sp_task-slider__cover\">\n                <a class=\"sp_cmn-btn-sm sp_task-slider__btn\"\n                   data-ng-click=\"$event.preventDefault();open_profile()\">Выполнить</a>\n              </div>\n            </div>\n          </div>\n\n          <div data-ng-repeat=\"action in $parent.actions().actions\" data-slick-slide>\n            <div class=\"sp_task-slider__slide\">\n              <div class=\"sp_task-slider__ico\"\n                   style=\"background-image: url({{ action_data(action).pic }});\"></div>\n              <div class=\"sp_task-slider__hd\">{{ action_data(action).name }}</div>\n              <div class=\"sp_task-slider__price\">{{ action.points | number }} {{ action.points |\n                sailplay_pluralize:'балл,балла,баллов' }}\n              </div>\n\n              <div class=\"sp_task-slider__cover\">\n                                <span class=\"sp_cmn-btn-sm sp_task-slider__btn\" data-sailplay-action\n                                      data-action=\"action\" data-text=\"Выполнить\"\n                                      data-styles=\"{{ config.social_styles || 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/1ebeb46c5b7c37ab366018743083082d.css' }}\">Выполнить</span>\n              </div>\n            </div>\n          </div>\n\n        </div>\n      </div>\n    </section>\n\n\n  </div>\n  <!-- /sp_widget -->\n  <div class=\"sp_overlay\" data-ng-show=\"show_history\">\n    <div class=\"sp_hist-popup js-history-popup\" data-overlay-click=\"close_history()\">\n      <div class=\"sp_cmn-popup-close js-close-popup\" data-ng-click=\"close_history()\"></div>\n      <div class=\"sp_hist-popup__hd\">Детализация бонусов</div>\n      <div class=\"sp_hist-list\">\n\n        <div class=\"sp_hist-list__itm\" data-dir-paginate=\"item in history() | itemsPerPage:6\"\n             data-pagination-id=\"history_pages\"\n             data-ng-class=\"{ 'this-dec': item.points_delta < 0, 'this-purchase': item.action == 'purchase' }\">\n\n          <span class=\"sp_hist-list__date\" data-ng-bind=\"item.action_date | date:'dd.MM.yyyy'\"></span>\n\n          <span class=\"sp_hist-list__name\" data-ng-click=\"history_item_click(item);\" data-ng-bind=\"item | history_item\"></span>\n\n          <div class=\"sp_hist-list__val\" data-ng-if=\"item.points_delta\">\n            {{ (item.points_delta | number) || 0 }} {{ item.points_delta | sailplay_pluralize:'балл,балла,баллов' }}\n          </div>\n\n          <div class=\"sp_hist-list__purchases\"\n                data-ng-show=\"item.action === 'purchase' && item.purchase_data\"\n                data-ng-repeat=\"info in item.purchase_data\">\n            <span data-ng-bind=\"info.product.name || 'Товар без названия'\"></span>\n            <span class=\"type_price\" data-ng-bind=\"(info.price | number) + ' ' + (info.price | sailplay_pluralize:'рубль,рубля,рублей')\"></span>\n          </div>\n\n        </div>\n\n      </div>\n      <!-- /list -->\n\n      <dir-pagination-controls data-max-size=\"5\" data-pagination-id=\"history_pages\"\n                               data-template-url=\"/html/ui/ui.pagination.controls.html\"\n                               data-auto-hide=\"true\"></dir-pagination-controls>\n\n    </div>\n\n  </div>\n  <!-- /hist popup -->\n\n  <div class=\"sp_overlay\" data-ng-show=\"show_statuses_list\">\n    <div class=\"sp_stat-popup js-status-popup\">\n      <div class=\"sp_stat-popup__hd\">Описание статусов</div>\n      <div class=\"sp_stat-pop-itm\" data-ng-repeat=\"badge in badges().multilevel_badges[0]\">\n        <div class=\"sp_stat-pop-itm__img\"><img data-ng-src=\"{{ badge.thumbs.url_250x250 | sailplay_pic }}\"\n                                               alt=\"\"></div>\n        <div class=\"sp_stat-pop-itm__text\">\n          {{ badge.descr }}\n        </div>\n      </div>\n      <div class=\"sp_stat-popup__btns\">\n        <div class=\"sp_stat-popup__btn sp_cmn-btn-sm js-close-popup\"\n             data-ng-click=\"close_status_list();\">ОК\n        </div>\n      </div>\n    </div>\n\n  </div>\n\n  <div class=\"sp_overlay\" data-ng-show=\"show_profile_info\"\n       data-overlay-click=\"show_profile_info = false;  body_lock(false)\">\n    <div class=\"sp_profile-popup js-profile-popup\" data-fill-profile>\n      <div class=\"sp_profile-popup__hd\">Изменить профиль</div>\n\n      <form class=\"sp_profile-form\" name=\"fill_profile\" novalidate\n            data-ng-submit=\"$event.preventDefault(); submit_profile(fill_profile, $parent.close_profile)\">\n        <div class=\"sp_profile-form__set\">\n          <input type=\"email\" name=\"email\" class=\"sp_cmn-input\" placeholder=\"Email\"\n                 data-ng-model=\"profile_form.user.addEmail\"\n                 data-ng-model-options=\"{ updateOn: 'default change blur' }\" required>\n        </div>\n        <!--<div class=\"sp_profile-form__set\">-->\n        <!--<input type=\"text\" name=\"phone\" class=\"sp_cmn-input js-create-mask\" data-phone-mask data-ng-model=\"profile_form.user.addPhone\" maxlength=\"17\" data-ng-model-options=\"{ updateOn: 'default change blur' }\" required>-->\n        <!--</div>-->\n        <div class=\"sp_profile-form__set\" data-ng-if=\"profile_form.user.birthDate\">\n          <div class=\"sp_profile-form__ttl\">Дата рождения</div>\n          <div class=\"sp_profile-form__dates\" data-date-selector\n               data-ng-model=\"$parent.profile_form.user.birthDate\">\n            <div class=\"sp_profile-form__dates-col\">\n              <select name=\"birth_date\" data-ng-model=\"selected_date[0]\" data-selectize\n                      class=\"js-create-select sp_cmn-selectize sp\">\n                <option value=\"01\">01</option>\n                <option value=\"02\">02</option>\n                <option value=\"03\">03</option>\n                <option value=\"04\">04</option>\n                <option value=\"05\">05</option>\n                <option value=\"06\">06</option>\n                <option value=\"07\">07</option>\n                <option value=\"08\">08</option>\n                <option value=\"09\">09</option>\n                <option value=\"10\">10</option>\n                <option value=\"11\">11</option>\n                <option value=\"12\">12</option>\n                <option value=\"13\">13</option>\n                <option value=\"14\">14</option>\n                <option value=\"15\">15</option>\n                <option value=\"16\">16</option>\n                <option value=\"17\">17</option>\n                <option value=\"18\">18</option>\n                <option value=\"19\">19</option>\n                <option value=\"20\">20</option>\n                <option value=\"21\">21</option>\n                <option value=\"22\">22</option>\n                <option value=\"23\">23</option>\n                <option value=\"24\">24</option>\n                <option value=\"25\">25</option>\n                <option value=\"26\">26</option>\n                <option value=\"27\">27</option>\n                <option value=\"28\">28</option>\n                <option value=\"29\">29</option>\n                <option value=\"30\">30</option>\n                <option value=\"31\">31</option>\n              </select>\n            </div>\n            <div class=\"sp_profile-form__dates-col\">\n              <select name=\"birth_date\" data-ng-model=\"selected_date[1]\" data-selectize\n                      class=\"js-create-select sp_cmn-selectize\">\n                <option value=\"01\">01</option>\n                <option value=\"02\">02</option>\n                <option value=\"03\">03</option>\n                <option value=\"04\">04</option>\n                <option value=\"05\">05</option>\n                <option value=\"06\">06</option>\n                <option value=\"07\">07</option>\n                <option value=\"08\">08</option>\n                <option value=\"09\">09</option>\n                <option value=\"10\">10</option>\n                <option value=\"11\">11</option>\n                <option value=\"12\">12</option>\n              </select>\n\n            </div>\n            <div class=\"sp_profile-form__dates-col\">\n              <select name=\"birth_date\" data-ng-model=\"selected_date[2]\" data-selectize\n                      class=\"js-create-select sp_cmn-selectize\">\n                <option value=\"1924\">1924</option>\n                <option value=\"1925\">1925</option>\n                <option value=\"1926\">1926</option>\n                <option value=\"1927\">1927</option>\n                <option value=\"1928\">1928</option>\n                <option value=\"1929\">1929</option>\n                <option value=\"1930\">1930</option>\n                <option value=\"1931\">1931</option>\n                <option value=\"1932\">1932</option>\n                <option value=\"1933\">1933</option>\n                <option value=\"1934\">1934</option>\n                <option value=\"1935\">1935</option>\n                <option value=\"1936\">1936</option>\n                <option value=\"1937\">1937</option>\n                <option value=\"1938\">1938</option>\n                <option value=\"1939\">1939</option>\n                <option value=\"1940\">1940</option>\n                <option value=\"1941\">1941</option>\n                <option value=\"1942\">1942</option>\n                <option value=\"1943\">1943</option>\n                <option value=\"1944\">1944</option>\n                <option value=\"1945\">1945</option>\n                <option value=\"1946\">1946</option>\n                <option value=\"1947\">1947</option>\n                <option value=\"1948\">1948</option>\n                <option value=\"1949\">1949</option>\n                <option value=\"1950\">1950</option>\n                <option value=\"1951\">1951</option>\n                <option value=\"1952\">1952</option>\n                <option value=\"1953\">1953</option>\n                <option value=\"1954\">1954</option>\n                <option value=\"1955\">1955</option>\n                <option value=\"1956\">1956</option>\n                <option value=\"1957\">1957</option>\n                <option value=\"1958\">1958</option>\n                <option value=\"1959\">1959</option>\n                <option value=\"1960\">1960</option>\n                <option value=\"1961\">1961</option>\n                <option value=\"1962\">1962</option>\n                <option value=\"1963\">1963</option>\n                <option value=\"1964\">1964</option>\n                <option value=\"1965\">1965</option>\n                <option value=\"1966\">1966</option>\n                <option value=\"1967\">1967</option>\n                <option value=\"1968\">1968</option>\n                <option value=\"1969\">1969</option>\n                <option value=\"1970\">1970</option>\n                <option value=\"1971\">1971</option>\n                <option value=\"1972\">1972</option>\n                <option value=\"1973\">1973</option>\n                <option value=\"1974\">1974</option>\n                <option value=\"1975\">1975</option>\n                <option value=\"1976\">1976</option>\n                <option value=\"1977\">1977</option>\n                <option value=\"1978\">1978</option>\n                <option value=\"1979\">1979</option>\n                <option value=\"1980\">1980</option>\n                <option value=\"1981\">1981</option>\n                <option value=\"1982\">1982</option>\n                <option value=\"1983\">1983</option>\n                <option value=\"1984\">1984</option>\n                <option value=\"1985\">1985</option>\n                <option value=\"1986\">1986</option>\n                <option value=\"1987\">1987</option>\n                <option value=\"1988\">1988</option>\n                <option value=\"1989\">1989</option>\n                <option value=\"1990\">1990</option>\n                <option value=\"1991\">1991</option>\n                <option value=\"1992\">1992</option>\n                <option value=\"1993\">1993</option>\n                <option value=\"1994\">1994</option>\n                <option value=\"1995\">1995</option>\n                <option value=\"1996\">1996</option>\n                <option value=\"1997\">1997</option>\n                <option value=\"1998\">1998</option>\n                <option value=\"1999\">1999</option>\n                <option value=\"2000\">2000</option>\n                <option value=\"2001\">2001</option>\n                <option value=\"2002\">2002</option>\n                <option value=\"2003\">2003</option>\n                <option value=\"2004\">2004</option>\n                <option value=\"2005\">2005</option>\n                <option value=\"2006\">2006</option>\n                <option value=\"2007\">2007</option>\n                <option value=\"2008\">2008</option>\n                <option value=\"2009\">2009</option>\n              </select>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"sp_profile-form__set\">\n          <div class=\"sp_cmn-inline-param\">\n            <label class=\"outer_label radio\"\n                   data-ng-class=\"{ checked: profile_form.custom_vars['В браке'] === 'да' }\">\n              <input name=\"married\" type=\"radio\" class=\"js-create-radio\" data-ng-value=\"'да'\"\n                     required\n                     data-ng-model=\"profile_form.custom_vars['В браке']\">\n\n              <span class=\"sp_cmn-label js-satellite\">Замужем/женат</span>\n            </label>\n\n          </div>\n          <div class=\"sp_cmn-inline-param\">\n            <label class=\"outer_label radio\"\n                   data-ng-class=\"{ checked: profile_form.custom_vars['В браке'] === 'нет' }\">\n              <input name=\"married\" type=\"radio\" class=\"js-create-radio\" data-ng-value=\"'нет'\"\n                     required\n                     data-ng-model=\"profile_form.custom_vars['В браке']\">\n\n              <span class=\"sp_cmn-label js-satellite\">Не замужем/Холост</span>\n            </label>\n          </div>\n        </div>\n        <div class=\"sp_profile-form__set\">\n          <input type=\"text\" class=\"sp_cmn-input\" placeholder=\"Имя супруга/супруги\"\n                 data-ng-model=\"profile_form.custom_vars['Имя супруга(и)']\">\n        </div>\n        <div class=\"sp_profile-form__set\" data-ng-if=\"profile_form.custom_vars['ДР супруга(и)']\">\n          <div class=\"sp_profile-form__ttl\">Дата рождения супруга/супруги</div>\n          <div class=\"sp_profile-form__dates\" data-date-selector\n               data-ng-model=\"$parent.profile_form.custom_vars['ДР супруга(и)']\">\n            <div class=\"sp_profile-form__dates-col\">\n              <select name=\"married_date\" data-ng-model=\"selected_date[0]\" data-selectize\n                      class=\"js-create-select sp_cmn-selectize\">\n                <option value=\"01\">01</option>\n                <option value=\"02\">02</option>\n                <option value=\"03\">03</option>\n                <option value=\"04\">04</option>\n                <option value=\"05\">05</option>\n                <option value=\"06\">06</option>\n                <option value=\"07\">07</option>\n                <option value=\"08\">08</option>\n                <option value=\"09\">09</option>\n                <option value=\"10\">10</option>\n                <option value=\"11\">11</option>\n                <option value=\"12\">12</option>\n                <option value=\"13\">13</option>\n                <option value=\"14\">14</option>\n                <option value=\"15\">15</option>\n                <option value=\"16\">16</option>\n                <option value=\"17\">17</option>\n                <option value=\"18\">18</option>\n                <option value=\"19\">19</option>\n                <option value=\"20\">20</option>\n                <option value=\"21\">21</option>\n                <option value=\"22\">22</option>\n                <option value=\"23\">23</option>\n                <option value=\"24\">24</option>\n                <option value=\"25\">25</option>\n                <option value=\"26\">26</option>\n                <option value=\"27\">27</option>\n                <option value=\"28\">28</option>\n                <option value=\"29\">29</option>\n                <option value=\"30\">30</option>\n                <option value=\"31\">31</option>\n              </select>\n            </div>\n            <!-- /date-col -->\n            <div class=\"sp_profile-form__dates-col\">\n              <select name=\"married_date\" data-ng-model=\"selected_date[1]\" data-selectize\n                      class=\"js-create-select sp_cmn-selectize\">\n                <option value=\"01\">01</option>\n                <option value=\"02\">02</option>\n                <option value=\"03\">03</option>\n                <option value=\"04\">04</option>\n                <option value=\"05\">05</option>\n                <option value=\"06\">06</option>\n                <option value=\"07\">07</option>\n                <option value=\"08\">08</option>\n                <option value=\"09\">09</option>\n                <option value=\"10\">10</option>\n                <option value=\"11\">11</option>\n                <option value=\"12\">12</option>\n              </select>\n\n            </div>\n            <!-- /date-col -->\n            <div class=\"sp_profile-form__dates-col\">\n              <select name=\"married_date\" data-ng-model=\"selected_date[2]\" data-selectize\n                      class=\"js-create-select sp_cmn-selectize\">\n                <option value=\"1924\">1924</option>\n                <option value=\"1925\">1925</option>\n                <option value=\"1926\">1926</option>\n                <option value=\"1927\">1927</option>\n                <option value=\"1928\">1928</option>\n                <option value=\"1929\">1929</option>\n                <option value=\"1930\">1930</option>\n                <option value=\"1931\">1931</option>\n                <option value=\"1932\">1932</option>\n                <option value=\"1933\">1933</option>\n                <option value=\"1934\">1934</option>\n                <option value=\"1935\">1935</option>\n                <option value=\"1936\">1936</option>\n                <option value=\"1937\">1937</option>\n                <option value=\"1938\">1938</option>\n                <option value=\"1939\">1939</option>\n                <option value=\"1940\">1940</option>\n                <option value=\"1941\">1941</option>\n                <option value=\"1942\">1942</option>\n                <option value=\"1943\">1943</option>\n                <option value=\"1944\">1944</option>\n                <option value=\"1945\">1945</option>\n                <option value=\"1946\">1946</option>\n                <option value=\"1947\">1947</option>\n                <option value=\"1948\">1948</option>\n                <option value=\"1949\">1949</option>\n                <option value=\"1950\">1950</option>\n                <option value=\"1951\">1951</option>\n                <option value=\"1952\">1952</option>\n                <option value=\"1953\">1953</option>\n                <option value=\"1954\">1954</option>\n                <option value=\"1955\">1955</option>\n                <option value=\"1956\">1956</option>\n                <option value=\"1957\">1957</option>\n                <option value=\"1958\">1958</option>\n                <option value=\"1959\">1959</option>\n                <option value=\"1960\">1960</option>\n                <option value=\"1961\">1961</option>\n                <option value=\"1962\">1962</option>\n                <option value=\"1963\">1963</option>\n                <option value=\"1964\">1964</option>\n                <option value=\"1965\">1965</option>\n                <option value=\"1966\">1966</option>\n                <option value=\"1967\">1967</option>\n                <option value=\"1968\">1968</option>\n                <option value=\"1969\">1969</option>\n                <option value=\"1970\">1970</option>\n                <option value=\"1971\">1971</option>\n                <option value=\"1972\">1972</option>\n                <option value=\"1973\">1973</option>\n                <option value=\"1974\">1974</option>\n                <option value=\"1975\">1975</option>\n                <option value=\"1976\">1976</option>\n                <option value=\"1977\">1977</option>\n                <option value=\"1978\">1978</option>\n                <option value=\"1979\">1979</option>\n                <option value=\"1980\">1980</option>\n                <option value=\"1981\">1981</option>\n                <option value=\"1982\">1982</option>\n                <option value=\"1983\">1983</option>\n                <option value=\"1984\">1984</option>\n                <option value=\"1985\">1985</option>\n                <option value=\"1986\">1986</option>\n                <option value=\"1987\">1987</option>\n                <option value=\"1988\">1988</option>\n                <option value=\"1989\">1989</option>\n                <option value=\"1990\">1990</option>\n                <option value=\"1991\">1991</option>\n                <option value=\"1992\">1992</option>\n                <option value=\"1993\">1993</option>\n                <option value=\"1994\">1994</option>\n                <option value=\"1995\">1995</option>\n                <option value=\"1996\">1996</option>\n                <option value=\"1997\">1997</option>\n                <option value=\"1998\">1998</option>\n                <option value=\"1999\">1999</option>\n                <option value=\"2000\">2000</option>\n                <option value=\"2001\">2001</option>\n                <option value=\"2002\">2002</option>\n                <option value=\"2003\">2003</option>\n                <option value=\"2004\">2004</option>\n                <option value=\"2005\">2005</option>\n                <option value=\"2006\">2006</option>\n                <option value=\"2007\">2007</option>\n                <option value=\"2008\">2008</option>\n                <option value=\"2009\">2009</option>\n              </select>\n            </div>\n            <!-- /date-col -->\n          </div>\n          <!-- /dates -->\n        </div>\n        <!-- /set -->\n        <div class=\"sp_profile-form__set\">\n          <div class=\"sp_cmn-inline-param\">\n            <label class=\"outer_label checkbox\"\n                   data-ng-class=\"{ checked: profile_form.custom_vars['Дети'] === 'Да' }\">\n              <input name=\"checkboxname\" type=\"checkbox\" class=\"js-create-checkbox\"\n                     data-ng-model=\"profile_form.custom_vars['Дети']\" data-ng-true-value=\"'Да'\"\n                     data-ng-false-value=\"'Нет'\">\n\n              <span class=\"sp_cmn-label js-satellite\">Есть дети</span>\n            </label>\n          </div>\n        </div>\n        <div class=\"sp_profile-form__set\">\n          <div class=\"sp_profile-form__ttl\">Скрывать историю транзакции</div>\n          <div class=\"sp_cmn-inline-param\">\n            <label class=\"outer_label radio\"\n                   data-ng-class=\"{ checked: profile_form.custom_vars.hide_hist === 'Да' }\">\n              <input name=\"hide_hist\" type=\"radio\" class=\"js-create-radio\" data-ng-value=\"'Да'\"\n                     data-ng-model=\"profile_form.custom_vars.hide_hist\">\n\n              <span class=\"sp_cmn-label js-satellite\">Да</span>\n            </label>\n          </div>\n          <div class=\"sp_cmn-inline-param\">\n            <label class=\"outer_label radio\"\n                   data-ng-class=\"{ checked: profile_form.custom_vars.hide_hist === 'Нет' }\">\n              <input name=\"hide_hist\" type=\"radio\" class=\"js-create-radio\" data-ng-value=\"'Нет'\"\n                     data-ng-model=\"profile_form.custom_vars.hide_hist\">\n\n              <span class=\"sp_cmn-label js-satellite\">Нет</span>\n            </label>\n\n          </div>\n        </div>\n        <!-- /set -->\n\n        <div class=\"sp_profile-form__btns\">\n          <button type=\"submit\" class=\"sp_cmn-btn-sm sp_profile-form__btn\"\n                  data-ng-disabled=\"!fill_profile.$valid\">Отправить\n          </button>\n          <a href=\"#\" class=\"sp_cmn-btn-sm sp_profile-form__btn js-close-popup\"\n             data-ng-click=\"$event.preventDefault();$parent.show_profile_info = false; $parent.body_lock(false);\">Отмена</a>\n        </div>\n      </form>\n    </div>\n  </div>\n  <!-- /profile popup -->\n\n  <notifier></notifier>\n\n</div>\n\n";
+module.exports = "<div data-sailplay-profile data-sailplay-history data-sailplay-badges style=\"margin: 14px;\" data-ng-show=\"user()\" data-ng-cloak>\n\n  <div class=\"sp_widget\">\n\n    <section class=\"sp_l-centered sp_person-sec\">\n      <div class=\"sp_person-sec__col1\">\n        <div class=\"sp_person-sec__hd\">Добро пожаловать</div>\n        <div class=\"sp_person-sec__ttl\">в клуб покупателей \"Бронницкий ювелир\"</div>\n      </div>\n      <div class=\"sp_person-sec__col2\">\n        <div class=\"sp_person-cell\">\n          <div class=\"sp_person-cell__photo\" style=\"background-image: url('{{ user().user.pic | sailplay_pic }}');\"></div>\n          <a href=\"#\" class=\"sp_cmn-btn person-cell__btn js-open-profile-popup\" data-ng-click=\"$event.preventDefault();open_profile();\">Изменить профиль</a>\n        </div>\n      </div>\n      <div class=\"sp_person-sec__col3\">\n        <div class=\"sp_person-info\">\n          <div class=\"sp_person-info__hd\">Здравствуйте,</div>\n          <div class=\"sp_person-info__name\">{{ user().user.name || 'Уважаемый покупатель' }}</div>\n          <div class=\"sp_person-info__cont\">\n            <div data-ng-show=\"user().user.email\">{{ user().user.email }}</div>\n            <div data-ng-show=\"user().user.phone\">\n              {{ user().user.phone | tel }}\n              <div class=\"tooltip\">\n                <span class=\"tooltip_icon\">?</span>\n                <span class=\"tooltip_text\">Телефон Вы можете изменить, отправив запрос на почту <a\n                    href=\"mailto:change@bronnitsy.info\">change@bronnitsy.info</a></span>\n              </div>\n            </div>\n          </div>\n          <div class=\"sp_person-info__status\">\n            <div class=\"sp_person-info__stat-hd\">Ваш статус: {{ user().user_status.name }}</div>\n            <div data-ng-if=\"get_next()\">До статуса <b>{{ get_next().name }}</b> осталось {{ (get_next().rules[0].value_to_success - user().purchases.sum)\n              | number }} {{ (get_next().rules[0].value_to_success - user().purchases.sum) | sailplay_pluralize:'рубль,рубля,рублей'\n              }}\n            </div>\n          </div>\n        </div>\n        <!--<a href=\"http://www.bronnitsy.com/delivery/\" class=\"sp_person-sec__more\">условия доставки</a>-->\n      </div>\n    </section>\n\n    <section class=\"sp_l-centered sp_info-sec\">\n      <div class=\"sp_info-sec__l\">\n        <div class=\"sp_points-cell\">\n          <div class=\"sp_points-cell__hd\">Ваши баллы</div>\n          <div class=\"status-info-counter\">\n            <div class=\"status-info-counter__val\">{{ user().user_points.confirmed | number }}</div>\n            <div class=\"status-info-counter__remain\">\n              +{{ user().user_points.unconfirmed | number }}\n              <div class=\"status-info-counter__popup\">\n                Неподтвержденные баллы, которые начислятся после оплаты\n              </div>\n            </div>\n          </div>\n          <div class=\"sp_points-cell__ttl\">{{ user().user_points.confirmed | sailplay_pluralize:'бонусный балл,бонусных балла,бонусных баллов' }}\n          </div>\n          <a href=\"\" data-ng-hide=\"hide_hist\" data-ng-click=\"$event.preventDefault();open_history()\" class=\"sp_cmn-btn sp_cmn-btn_red sp_points-cell__btn js-open-history-popup\">Детализация бонусов</a>\n        </div>\n      </div>\n      <div class=\"sp_info-sec__r\">\n        <div class=\"sp_status-cell\">\n          <div class=\"sp_status-cell__hd\">Ваш статус:</div>\n          <div class=\"sp_status-cell__img\" style=\"background-image: url({{ user().user_status.pic || 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/e979ec44819f37ff84795afb2179a256.svg' }});\"></div>\n          <div class=\"sp_status-cell__ttl\">{{ user().user_status.name || 'Нет статуса' }}</div>\n          <a href=\"\" class=\"sp_cmn-btn sp_cmn-btn_red sp_status-cell__btn js-open-status-popup\" data-ng-click=\"$event.preventDefault();open_status_list();\">Список статусов</a>\n        </div>\n      </div>\n    </section>\n\n    <section class=\"sp_l-centered sp_progr-sec\" data-ng-if=\"get_next()\">\n      <div class=\"sp_progr-sec__l\">\n        <div class=\"sp_progr-sec__txt\">\n          До следющего статуса осталось <b>{{ (get_next().rules[0].value_to_success - user().purchases.sum) | number }} {{ (get_next().rules[0].value_to_success - user().purchases.sum) |\n          sailplay_pluralize:'рубль,рубля,рублей' }}</b>\n        </div>\n      </div>\n      <div class=\"sp_progr-sec__r\">\n\n        <div class=\"sp_progr-cell\">\n          <!-- в data-width указывается ширина бара отоснительно всей длинны -->\n          <div class=\"sp_progr-bar js-status-bar\" data-width=\"90\">\n            <div class=\"sp_progr-bar__inner\">\n              <div class=\"sp_progr-bar__inner-bar this-inner1 js-status-bar__inner\" data-ng-style=\"{ width: get_progress() + '%' }\"></div>\n            </div>\n\n            <div class=\"sp_progr-bar__point this-point-{{ $index+1 }}\" data-ng-repeat=\"badge in badges().multilevel_badges[0]\">\n              <div class=\"sp_progr-bar__point-img\" style=\"background-image: url('{{ badge.thumbs.url_250x250 | sailplay_pic }}');\"></div>\n              <div class=\"sp_progr-bar__point-name\">{{ badge.name }}</div>\n            </div>\n          </div>\n        </div>\n        <!-- /sp_progr-cell -->\n      </div>\n    </section>\n\n    <section class=\"sp_l-section sp_gift-sec\" data-sailplay-gifts data-ng-cloak data-ng-controller=\"slick_config\" data-ng-init=\"selected_gift = false;\"\n      data-ng-show=\"gifts && gifts() && gifts().length\">\n      <div class=\"sp_cmn-sec-head\">Подарки</div>\n      <div class=\"sp_gift-slider js-gift-slider\" data-ng-if=\"gifts && gifts() && gifts().length\" data-slick-carousel data-options=\"$parent.gift_slider_config\">\n        <div data-ng-repeat=\"gift in $parent.gifts()\" data-slick-slide>\n          <div class=\"sp_gift-slider__slide\">\n            <div class=\"sp_gift-slider__img\" style=\"background-image: url('{{ gift.thumbs.url_250x250 | sailplay_pic }}');\"></div>\n            <div class=\"sp_gift-slider__hd\">{{ gift.name }}</div>\n            <div class=\"sp_gift-slider__ttl\">{{ gift.descr }}</div>\n            <div class=\"sp_gift-slider__price\">{{ gift.points }} {{ gift.points | sailplay_pluralize:'балл,балла,баллов' }}\n            </div>\n            <button style=\"line-height: 36px;\" type=\"button\" class=\"sp_cmn-btn-sm sp_gift-slider__btn js-open-gift-popup\" data-ng-click=\"$event.preventDefault();$parent.$parent.selected_gift = gift\"\n              data-ng-disabled=\"gift.points > $parent.user().user_points.confirmed\">Получить\n              </button>\n          </div>\n        </div>\n\n      </div>\n\n      <div class=\"sp_overlay display_table\" data-ng-show=\"selected_gift\">\n        <div class=\"display_table_cell\" data-overlay-click=\"selected_gift = false;\">\n          <div class=\"sp_gift-popup js-gift-popup\">\n            <div class=\"sp_gift-popup__hd\">{{ selected_gift.points }} бонусных баллов будут списаны с вашего счета\n            </div>\n            <div class=\"sp_gift-popup__img\" style=\"background-image: url('{{ selected_gift.thumbs.url_250x250 | sailplay_pic }}');\"></div>\n            <div class=\"sp_gift-popup__ttl\">Вы уверены?</div>\n            <div class=\"sp_gift-popup__btns\">\n              <div class=\"sp_gift-popup__btn sp_cmn-btn-sm js-close-popup\" data-ng-click=\"gift_purchase(selected_gift); selected_gift = false;\">Да\n              </div>\n              <div class=\"sp_gift-popup__btn sp_cmn-btn-sm js-close-popup\" data-ng-click=\"selected_gift = false;\">Отмена\n              </div>\n            </div>\n\n          </div>\n        </div>\n\n      </div>\n\n      </section>\n\n      <section class=\"sp_l-section sp_task-sec-wrap\" data-sailplay-actions data-ng-cloak>\n        <div class=\"sp_l-section sp_task-sec\" data-ng-controller=\"slick_config\">\n          <div class=\"sp_cmn-sec-head\">Задания</div>\n\n          <div class=\"sp_task-slider js-task-slider\" data-ng-if=\"actions && actions()\" data-slick-carousel data-options=\"action_slider_config\">\n\n            <div data-slick-slide data-ng-show=\"show_profile_action\">\n              <div class=\"sp_task-slider__slide\">\n                <div class=\"sp_task-slider__ico\" style=\"background-image: url('https://sailplays3.cdnvideo.ru/media/assets/assetfile/cef8e553e3431ce0cd7f82f5138befd0.png');\"></div>\n                <div class=\"sp_task-slider__hd\">Заполнить профиль</div>\n                <div class=\"sp_task-slider__price\">{{ 100 }} {{ 100 | sailplay_pluralize:'балл,балла,баллов' }}\n                </div>\n\n                <div class=\"sp_task-slider__cover\">\n                  <a class=\"sp_cmn-btn-sm sp_task-slider__btn\" data-ng-click=\"$event.preventDefault();open_profile()\">Выполнить</a>\n                </div>\n              </div>\n            </div>\n\n            <div data-ng-repeat=\"action in $parent.actions().actions\" data-slick-slide>\n              <div class=\"sp_task-slider__slide\">\n                <div class=\"sp_task-slider__ico\" style=\"background-image: url({{ action_data(action).pic }});\"></div>\n                <div class=\"sp_task-slider__hd\">{{ action_data(action).name }}</div>\n                <div class=\"sp_task-slider__price\">{{ action.points | number }} {{ action.points | sailplay_pluralize:'балл,балла,баллов' }}\n                </div>\n\n                <div class=\"sp_task-slider__cover\">\n                  <span class=\"sp_cmn-btn-sm sp_task-slider__btn\" data-sailplay-action data-action=\"action\" data-text=\"Выполнить\" data-styles=\"{{ config.social_styles || 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/1ebeb46c5b7c37ab366018743083082d.css' }}\">Выполнить</span>\n                </div>\n              </div>\n            </div>\n\n            <div data-ng-repeat=\"action in $parent.actions_custom()\" data-slick-slide>\n              <div class=\"sp_task-slider__slide\">\n                <div class=\"sp_task-slider__ico\" style=\"background-image: url({{ action_data(action).pic }});\"></div>\n                <div class=\"sp_task-slider__hd\">{{ action_data(action).name }}</div>\n                <div class=\"sp_task-slider__price\">{{ action.points }} {{ action.points | sailplay_pluralize:'балл,балла,баллов' }}\n                </div>\n\n                <div class=\"sp_task-slider__cover\">\n                  <span class=\"sp_cmn-btn-sm sp_task-slider__btn\" \n                  data-ng-click=\"$parent.open_custom_action(action)\"\n                  data-action=\"custom_action\" data-text=\"Выполнить\"\n                    data-styles=\"{{ config.social_styles || 'https://d3sailplay.cdnvideo.ru/media/assets/assetfile/e8f73ebedc5f336aa857674149750d3b.css' }}\">Выполнить</span>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </section>\n  </div>\n  <!-- /sp_widget -->\n  <div class=\"sp_overlay\" data-ng-show=\"custom_action\">\n    <div class=\"sp_stat-popup js-custom_action-popup\" data-overlay-click=\"close_custom_action()\">\n            <div class=\"sp_cmn-popup-close js-close-popup\" data-ng-click=\"close_custom_action()\"></div>              \n        <div class=\"sp_custom_action-popup__inner\" data-sailplay-action-custom data-action=\"custom_action\"></div>                              \n    </div>\n  </div>    \n\n  <div class=\"sp_overlay\" data-ng-show=\"show_history\">\n    <div class=\"sp_hist-popup js-history-popup\" data-overlay-click=\"close_history()\">\n      <div class=\"sp_cmn-popup-close js-close-popup\" data-ng-click=\"close_history()\"></div>\n      <div class=\"sp_hist-popup__hd\">Детализация бонусов</div>\n      <div class=\"sp_hist-list\">\n\n        <div class=\"sp_hist-list__itm\" data-dir-paginate=\"item in history() | itemsPerPage:6\" data-pagination-id=\"history_pages\"\n          data-ng-class=\"{ 'this-dec': item.points_delta < 0, 'this-purchase': item.action == 'purchase' }\">\n\n          <span class=\"sp_hist-list__date\" data-ng-bind=\"item.action_date | date:'dd.MM.yyyy'\"></span>\n\n          <span class=\"sp_hist-list__name\" data-ng-click=\"history_item_click(item);\" data-ng-bind=\"item | history_item\"></span>\n\n          <div class=\"sp_hist-list__val\" data-ng-if=\"item.points_delta\">\n            {{ (item.points_delta | number) || 0 }} {{ item.points_delta | sailplay_pluralize:'балл,балла,баллов' }}\n          </div>\n\n          <div class=\"sp_hist-list__purchases\" data-ng-show=\"item.action === 'purchase' && item.purchase_data\" data-ng-repeat=\"info in item.purchase_data\">\n            <span data-ng-bind=\"info.product.name || 'Товар без названия'\"></span>\n            <span class=\"type_price\" data-ng-bind=\"(info.price | number) + ' ' + (info.price | sailplay_pluralize:'рубль,рубля,рублей')\"></span>\n          </div>\n\n      </div>\n\n    </div>\n    <!-- /list -->\n\n    <dir-pagination-controls data-max-size=\"5\" data-pagination-id=\"history_pages\" data-template-url=\"/html/ui/ui.pagination.controls.html\"\n      data-auto-hide=\"true\"></dir-pagination-controls>\n\n  </div>\n\n</div>\n<!-- /hist popup -->\n\n<div class=\"sp_overlay\" data-ng-show=\"show_statuses_list\">\n  <div class=\"sp_stat-popup js-status-popup\">\n    <div class=\"sp_stat-popup__hd\">Описание статусов</div>\n    <div class=\"sp_stat-pop-itm\" data-ng-repeat=\"badge in badges().multilevel_badges[0]\">\n      <div class=\"sp_stat-pop-itm__img\"><img data-ng-src=\"{{ badge.thumbs.url_250x250 | sailplay_pic }}\" alt=\"\"></div>\n      <div class=\"sp_stat-pop-itm__text\">\n        {{ badge.descr }}\n      </div>\n    </div>\n    <div class=\"sp_stat-popup__btns\">\n      <div class=\"sp_stat-popup__btn sp_cmn-btn-sm js-close-popup\" data-ng-click=\"close_status_list();\">ОК\n      </div>\n    </div>\n  </div>\n\n</div>\n\n<div class=\"sp_overlay\" data-ng-show=\"show_profile_info\" data-overlay-click=\"show_profile_info = false;  body_lock(false)\">\n  <div class=\"sp_profile-popup js-profile-popup\" data-fill-profile>\n    <div class=\"sp_profile-popup__hd\">Изменить профиль</div>\n\n    <form class=\"sp_profile-form\" name=\"fill_profile\" novalidate data-ng-submit=\"$event.preventDefault(); submit_profile(fill_profile, $parent.close_profile)\">\n      <div class=\"sp_profile-form__set\">\n        <input type=\"email\" name=\"email\" class=\"sp_cmn-input\" placeholder=\"Email\" data-ng-model=\"profile_form.user.addEmail\" data-ng-model-options=\"{ updateOn: 'default change blur' }\"\n          required>\n      </div>\n      <!--<div class=\"sp_profile-form__set\">-->\n      <!--<input type=\"text\" name=\"phone\" class=\"sp_cmn-input js-create-mask\" data-phone-mask data-ng-model=\"profile_form.user.addPhone\" maxlength=\"17\" data-ng-model-options=\"{ updateOn: 'default change blur' }\" required>-->\n      <!--</div>-->\n      <div class=\"sp_profile-form__set\" data-ng-if=\"profile_form.user.birthDate\">\n        <div class=\"sp_profile-form__ttl\">Дата рождения</div>\n        <div class=\"sp_profile-form__dates\" data-date-selector data-ng-model=\"$parent.profile_form.user.birthDate\">\n          <div class=\"sp_profile-form__dates-col\">\n            <select name=\"birth_date\" data-ng-model=\"selected_date[0]\" data-selectize class=\"js-create-select sp_cmn-selectize sp\">\n                <option value=\"01\">01</option>\n                <option value=\"02\">02</option>\n                <option value=\"03\">03</option>\n                <option value=\"04\">04</option>\n                <option value=\"05\">05</option>\n                <option value=\"06\">06</option>\n                <option value=\"07\">07</option>\n                <option value=\"08\">08</option>\n                <option value=\"09\">09</option>\n                <option value=\"10\">10</option>\n                <option value=\"11\">11</option>\n                <option value=\"12\">12</option>\n                <option value=\"13\">13</option>\n                <option value=\"14\">14</option>\n                <option value=\"15\">15</option>\n                <option value=\"16\">16</option>\n                <option value=\"17\">17</option>\n                <option value=\"18\">18</option>\n                <option value=\"19\">19</option>\n                <option value=\"20\">20</option>\n                <option value=\"21\">21</option>\n                <option value=\"22\">22</option>\n                <option value=\"23\">23</option>\n                <option value=\"24\">24</option>\n                <option value=\"25\">25</option>\n                <option value=\"26\">26</option>\n                <option value=\"27\">27</option>\n                <option value=\"28\">28</option>\n                <option value=\"29\">29</option>\n                <option value=\"30\">30</option>\n                <option value=\"31\">31</option>\n              </select>\n          </div>\n          <div class=\"sp_profile-form__dates-col\">\n            <select name=\"birth_date\" data-ng-model=\"selected_date[1]\" data-selectize class=\"js-create-select sp_cmn-selectize\">\n                <option value=\"01\">01</option>\n                <option value=\"02\">02</option>\n                <option value=\"03\">03</option>\n                <option value=\"04\">04</option>\n                <option value=\"05\">05</option>\n                <option value=\"06\">06</option>\n                <option value=\"07\">07</option>\n                <option value=\"08\">08</option>\n                <option value=\"09\">09</option>\n                <option value=\"10\">10</option>\n                <option value=\"11\">11</option>\n                <option value=\"12\">12</option>\n              </select>\n\n          </div>\n          <div class=\"sp_profile-form__dates-col\">\n            <select name=\"birth_date\" data-ng-model=\"selected_date[2]\" data-selectize class=\"js-create-select sp_cmn-selectize\">\n                <option value=\"1924\">1924</option>\n                <option value=\"1925\">1925</option>\n                <option value=\"1926\">1926</option>\n                <option value=\"1927\">1927</option>\n                <option value=\"1928\">1928</option>\n                <option value=\"1929\">1929</option>\n                <option value=\"1930\">1930</option>\n                <option value=\"1931\">1931</option>\n                <option value=\"1932\">1932</option>\n                <option value=\"1933\">1933</option>\n                <option value=\"1934\">1934</option>\n                <option value=\"1935\">1935</option>\n                <option value=\"1936\">1936</option>\n                <option value=\"1937\">1937</option>\n                <option value=\"1938\">1938</option>\n                <option value=\"1939\">1939</option>\n                <option value=\"1940\">1940</option>\n                <option value=\"1941\">1941</option>\n                <option value=\"1942\">1942</option>\n                <option value=\"1943\">1943</option>\n                <option value=\"1944\">1944</option>\n                <option value=\"1945\">1945</option>\n                <option value=\"1946\">1946</option>\n                <option value=\"1947\">1947</option>\n                <option value=\"1948\">1948</option>\n                <option value=\"1949\">1949</option>\n                <option value=\"1950\">1950</option>\n                <option value=\"1951\">1951</option>\n                <option value=\"1952\">1952</option>\n                <option value=\"1953\">1953</option>\n                <option value=\"1954\">1954</option>\n                <option value=\"1955\">1955</option>\n                <option value=\"1956\">1956</option>\n                <option value=\"1957\">1957</option>\n                <option value=\"1958\">1958</option>\n                <option value=\"1959\">1959</option>\n                <option value=\"1960\">1960</option>\n                <option value=\"1961\">1961</option>\n                <option value=\"1962\">1962</option>\n                <option value=\"1963\">1963</option>\n                <option value=\"1964\">1964</option>\n                <option value=\"1965\">1965</option>\n                <option value=\"1966\">1966</option>\n                <option value=\"1967\">1967</option>\n                <option value=\"1968\">1968</option>\n                <option value=\"1969\">1969</option>\n                <option value=\"1970\">1970</option>\n                <option value=\"1971\">1971</option>\n                <option value=\"1972\">1972</option>\n                <option value=\"1973\">1973</option>\n                <option value=\"1974\">1974</option>\n                <option value=\"1975\">1975</option>\n                <option value=\"1976\">1976</option>\n                <option value=\"1977\">1977</option>\n                <option value=\"1978\">1978</option>\n                <option value=\"1979\">1979</option>\n                <option value=\"1980\">1980</option>\n                <option value=\"1981\">1981</option>\n                <option value=\"1982\">1982</option>\n                <option value=\"1983\">1983</option>\n                <option value=\"1984\">1984</option>\n                <option value=\"1985\">1985</option>\n                <option value=\"1986\">1986</option>\n                <option value=\"1987\">1987</option>\n                <option value=\"1988\">1988</option>\n                <option value=\"1989\">1989</option>\n                <option value=\"1990\">1990</option>\n                <option value=\"1991\">1991</option>\n                <option value=\"1992\">1992</option>\n                <option value=\"1993\">1993</option>\n                <option value=\"1994\">1994</option>\n                <option value=\"1995\">1995</option>\n                <option value=\"1996\">1996</option>\n                <option value=\"1997\">1997</option>\n                <option value=\"1998\">1998</option>\n                <option value=\"1999\">1999</option>\n                <option value=\"2000\">2000</option>\n                <option value=\"2001\">2001</option>\n                <option value=\"2002\">2002</option>\n                <option value=\"2003\">2003</option>\n                <option value=\"2004\">2004</option>\n                <option value=\"2005\">2005</option>\n                <option value=\"2006\">2006</option>\n                <option value=\"2007\">2007</option>\n                <option value=\"2008\">2008</option>\n                <option value=\"2009\">2009</option>\n              </select>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"sp_profile-form__set\">\n        <div class=\"sp_cmn-inline-param\">\n          <label class=\"outer_label radio\" data-ng-class=\"{ checked: profile_form.custom_vars['В браке'] === 'да' }\">\n              <input name=\"married\" type=\"radio\" class=\"js-create-radio\" data-ng-value=\"'да'\"\n                     required\n                     data-ng-model=\"profile_form.custom_vars['В браке']\">\n\n              <span class=\"sp_cmn-label js-satellite\">Замужем/женат</span>\n            </label>\n\n        </div>\n        <div class=\"sp_cmn-inline-param\">\n          <label class=\"outer_label radio\" data-ng-class=\"{ checked: profile_form.custom_vars['В браке'] === 'нет' }\">\n              <input name=\"married\" type=\"radio\" class=\"js-create-radio\" data-ng-value=\"'нет'\"\n                     required\n                     data-ng-model=\"profile_form.custom_vars['В браке']\">\n\n              <span class=\"sp_cmn-label js-satellite\">Не замужем/Холост</span>\n            </label>\n        </div>\n      </div>\n      <div class=\"sp_profile-form__set\">\n        <input type=\"text\" class=\"sp_cmn-input\" placeholder=\"Имя супруга/супруги\" data-ng-model=\"profile_form.custom_vars['Имя супруга(и)']\">\n      </div>\n      <div class=\"sp_profile-form__set\" data-ng-if=\"profile_form.custom_vars['ДР супруга(и)']\">\n        <div class=\"sp_profile-form__ttl\">Дата рождения супруга/супруги</div>\n        <div class=\"sp_profile-form__dates\" data-date-selector data-ng-model=\"$parent.profile_form.custom_vars['ДР супруга(и)']\">\n          <div class=\"sp_profile-form__dates-col\">\n            <select name=\"married_date\" data-ng-model=\"selected_date[0]\" data-selectize class=\"js-create-select sp_cmn-selectize\">\n                <option value=\"01\">01</option>\n                <option value=\"02\">02</option>\n                <option value=\"03\">03</option>\n                <option value=\"04\">04</option>\n                <option value=\"05\">05</option>\n                <option value=\"06\">06</option>\n                <option value=\"07\">07</option>\n                <option value=\"08\">08</option>\n                <option value=\"09\">09</option>\n                <option value=\"10\">10</option>\n                <option value=\"11\">11</option>\n                <option value=\"12\">12</option>\n                <option value=\"13\">13</option>\n                <option value=\"14\">14</option>\n                <option value=\"15\">15</option>\n                <option value=\"16\">16</option>\n                <option value=\"17\">17</option>\n                <option value=\"18\">18</option>\n                <option value=\"19\">19</option>\n                <option value=\"20\">20</option>\n                <option value=\"21\">21</option>\n                <option value=\"22\">22</option>\n                <option value=\"23\">23</option>\n                <option value=\"24\">24</option>\n                <option value=\"25\">25</option>\n                <option value=\"26\">26</option>\n                <option value=\"27\">27</option>\n                <option value=\"28\">28</option>\n                <option value=\"29\">29</option>\n                <option value=\"30\">30</option>\n                <option value=\"31\">31</option>\n              </select>\n          </div>\n          <!-- /date-col -->\n          <div class=\"sp_profile-form__dates-col\">\n            <select name=\"married_date\" data-ng-model=\"selected_date[1]\" data-selectize class=\"js-create-select sp_cmn-selectize\">\n                <option value=\"01\">01</option>\n                <option value=\"02\">02</option>\n                <option value=\"03\">03</option>\n                <option value=\"04\">04</option>\n                <option value=\"05\">05</option>\n                <option value=\"06\">06</option>\n                <option value=\"07\">07</option>\n                <option value=\"08\">08</option>\n                <option value=\"09\">09</option>\n                <option value=\"10\">10</option>\n                <option value=\"11\">11</option>\n                <option value=\"12\">12</option>\n              </select>\n\n          </div>\n          <!-- /date-col -->\n          <div class=\"sp_profile-form__dates-col\">\n            <select name=\"married_date\" data-ng-model=\"selected_date[2]\" data-selectize class=\"js-create-select sp_cmn-selectize\">\n                <option value=\"1924\">1924</option>\n                <option value=\"1925\">1925</option>\n                <option value=\"1926\">1926</option>\n                <option value=\"1927\">1927</option>\n                <option value=\"1928\">1928</option>\n                <option value=\"1929\">1929</option>\n                <option value=\"1930\">1930</option>\n                <option value=\"1931\">1931</option>\n                <option value=\"1932\">1932</option>\n                <option value=\"1933\">1933</option>\n                <option value=\"1934\">1934</option>\n                <option value=\"1935\">1935</option>\n                <option value=\"1936\">1936</option>\n                <option value=\"1937\">1937</option>\n                <option value=\"1938\">1938</option>\n                <option value=\"1939\">1939</option>\n                <option value=\"1940\">1940</option>\n                <option value=\"1941\">1941</option>\n                <option value=\"1942\">1942</option>\n                <option value=\"1943\">1943</option>\n                <option value=\"1944\">1944</option>\n                <option value=\"1945\">1945</option>\n                <option value=\"1946\">1946</option>\n                <option value=\"1947\">1947</option>\n                <option value=\"1948\">1948</option>\n                <option value=\"1949\">1949</option>\n                <option value=\"1950\">1950</option>\n                <option value=\"1951\">1951</option>\n                <option value=\"1952\">1952</option>\n                <option value=\"1953\">1953</option>\n                <option value=\"1954\">1954</option>\n                <option value=\"1955\">1955</option>\n                <option value=\"1956\">1956</option>\n                <option value=\"1957\">1957</option>\n                <option value=\"1958\">1958</option>\n                <option value=\"1959\">1959</option>\n                <option value=\"1960\">1960</option>\n                <option value=\"1961\">1961</option>\n                <option value=\"1962\">1962</option>\n                <option value=\"1963\">1963</option>\n                <option value=\"1964\">1964</option>\n                <option value=\"1965\">1965</option>\n                <option value=\"1966\">1966</option>\n                <option value=\"1967\">1967</option>\n                <option value=\"1968\">1968</option>\n                <option value=\"1969\">1969</option>\n                <option value=\"1970\">1970</option>\n                <option value=\"1971\">1971</option>\n                <option value=\"1972\">1972</option>\n                <option value=\"1973\">1973</option>\n                <option value=\"1974\">1974</option>\n                <option value=\"1975\">1975</option>\n                <option value=\"1976\">1976</option>\n                <option value=\"1977\">1977</option>\n                <option value=\"1978\">1978</option>\n                <option value=\"1979\">1979</option>\n                <option value=\"1980\">1980</option>\n                <option value=\"1981\">1981</option>\n                <option value=\"1982\">1982</option>\n                <option value=\"1983\">1983</option>\n                <option value=\"1984\">1984</option>\n                <option value=\"1985\">1985</option>\n                <option value=\"1986\">1986</option>\n                <option value=\"1987\">1987</option>\n                <option value=\"1988\">1988</option>\n                <option value=\"1989\">1989</option>\n                <option value=\"1990\">1990</option>\n                <option value=\"1991\">1991</option>\n                <option value=\"1992\">1992</option>\n                <option value=\"1993\">1993</option>\n                <option value=\"1994\">1994</option>\n                <option value=\"1995\">1995</option>\n                <option value=\"1996\">1996</option>\n                <option value=\"1997\">1997</option>\n                <option value=\"1998\">1998</option>\n                <option value=\"1999\">1999</option>\n                <option value=\"2000\">2000</option>\n                <option value=\"2001\">2001</option>\n                <option value=\"2002\">2002</option>\n                <option value=\"2003\">2003</option>\n                <option value=\"2004\">2004</option>\n                <option value=\"2005\">2005</option>\n                <option value=\"2006\">2006</option>\n                <option value=\"2007\">2007</option>\n                <option value=\"2008\">2008</option>\n                <option value=\"2009\">2009</option>\n              </select>\n          </div>\n          <!-- /date-col -->\n        </div>\n        <!-- /dates -->\n      </div>\n      <!-- /set -->\n      <div class=\"sp_profile-form__set\">\n        <div class=\"sp_cmn-inline-param\">\n          <label class=\"outer_label checkbox\" data-ng-class=\"{ checked: profile_form.custom_vars['Дети'] === 'Да' }\">\n              <input name=\"checkboxname\" type=\"checkbox\" class=\"js-create-checkbox\"\n                     data-ng-model=\"profile_form.custom_vars['Дети']\" data-ng-true-value=\"'Да'\"\n                     data-ng-false-value=\"'Нет'\">\n\n              <span class=\"sp_cmn-label js-satellite\">Есть дети</span>\n            </label>\n        </div>\n      </div>\n      <div class=\"sp_profile-form__set\">\n        <div class=\"sp_profile-form__ttl\">Скрывать историю транзакции</div>\n        <div class=\"sp_cmn-inline-param\">\n          <label class=\"outer_label radio\" data-ng-class=\"{ checked: profile_form.custom_vars.hide_hist === 'Да' }\">\n              <input name=\"hide_hist\" type=\"radio\" class=\"js-create-radio\" data-ng-value=\"'Да'\"\n                     data-ng-model=\"profile_form.custom_vars.hide_hist\">\n\n              <span class=\"sp_cmn-label js-satellite\">Да</span>\n            </label>\n        </div>\n        <div class=\"sp_cmn-inline-param\">\n          <label class=\"outer_label radio\" data-ng-class=\"{ checked: profile_form.custom_vars.hide_hist === 'Нет' }\">\n              <input name=\"hide_hist\" type=\"radio\" class=\"js-create-radio\" data-ng-value=\"'Нет'\"\n                     data-ng-model=\"profile_form.custom_vars.hide_hist\">\n\n              <span class=\"sp_cmn-label js-satellite\">Нет</span>\n            </label>\n\n        </div>\n      </div>\n      <!-- /set -->\n\n      <div class=\"sp_profile-form__btns\">\n        <button type=\"submit\" class=\"sp_cmn-btn-sm sp_profile-form__btn\" data-ng-disabled=\"!fill_profile.$valid\">Отправить\n          </button>\n        <a href=\"#\" class=\"sp_cmn-btn-sm sp_profile-form__btn js-close-popup\" data-ng-click=\"$event.preventDefault();$parent.show_profile_info = false; $parent.body_lock(false);\">Отмена</a>\n      </div>\n    </form>\n  </div>\n</div>\n<!-- /profile popup -->\n\n<notifier></notifier>\n\n</div>";
 
 /***/ }),
 /* 7 */
@@ -10868,10 +10884,10 @@ module.exports = "<div class=\"bns_hist_pager\" data-ng-if=\"1 < pages.length ||
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(19);
+var content = __webpack_require__(20);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(28)(content, {});
+var update = __webpack_require__(29)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -11684,7 +11700,7 @@ module.exports = 'angularUtils.directives.dirPagination';
 /***/ (function(module, exports) {
 
 /**
- * @license AngularJS v1.6.3
+ * @license AngularJS v1.6.4
  * (c) 2010-2017 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -11741,7 +11757,7 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
-    message += '\nhttp://errors.angularjs.org/1.6.3/' +
+    message += '\nhttp://errors.angularjs.org/1.6.4/' +
       (module ? module + '/' : '') + code;
 
     for (i = 0, paramPrefix = '?'; i < templateArgs.length; i++, paramPrefix = '&') {
@@ -11814,6 +11830,7 @@ function minErr(module, ErrorConstructor) {
   includes,
   arrayRemove,
   copy,
+  simpleCompare,
   equals,
   csp,
   jq,
@@ -12792,6 +12809,10 @@ function copy(source, destination, maxDepth) {
 }
 
 
+// eslint-disable-next-line no-self-compare
+function simpleCompare(a, b) { return a === b || (a !== a && b !== b); }
+
+
 /**
  * @ngdoc function
  * @name angular.equals
@@ -12872,7 +12893,7 @@ function equals(o1, o2) {
       }
     } else if (isDate(o1)) {
       if (!isDate(o2)) return false;
-      return equals(o1.getTime(), o2.getTime());
+      return simpleCompare(o1.getTime(), o2.getTime());
     } else if (isRegExp(o1)) {
       if (!isRegExp(o2)) return false;
       return o1.toString() === o2.toString();
@@ -14427,11 +14448,11 @@ function toDebugString(obj, maxDepth) {
 var version = {
   // These placeholder strings will be replaced by grunt's `build` task.
   // They need to be double- or single-quoted.
-  full: '1.6.3',
+  full: '1.6.4',
   major: 1,
   minor: 6,
-  dot: 3,
-  codeName: 'scriptalicious-bootstrapping'
+  dot: 4,
+  codeName: 'phenomenal-footnote'
 };
 
 
@@ -14577,7 +14598,7 @@ function publishExternalAPI(angular) {
       });
     }
   ])
-  .info({ angularVersion: '1.6.3' });
+  .info({ angularVersion: '1.6.4' });
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -14781,12 +14802,6 @@ function jqLiteHasData(node) {
   return false;
 }
 
-function jqLiteCleanData(nodes) {
-  for (var i = 0, ii = nodes.length; i < ii; i++) {
-    jqLiteRemoveData(nodes[i]);
-  }
-}
-
 function jqLiteBuildFragment(html, context) {
   var tmp, tag, wrap,
       fragment = context.createDocumentFragment(),
@@ -14889,13 +14904,10 @@ function jqLiteClone(element) {
 }
 
 function jqLiteDealoc(element, onlyDescendants) {
-  if (!onlyDescendants) jqLiteRemoveData(element);
+  if (!onlyDescendants && jqLiteAcceptsData(element)) jqLite.cleanData([element]);
 
   if (element.querySelectorAll) {
-    var descendants = element.querySelectorAll('*');
-    for (var i = 0, l = descendants.length; i < l; i++) {
-      jqLiteRemoveData(descendants[i]);
-    }
+    jqLite.cleanData(element.querySelectorAll('*'));
   }
 }
 
@@ -15193,7 +15205,11 @@ forEach({
   data: jqLiteData,
   removeData: jqLiteRemoveData,
   hasData: jqLiteHasData,
-  cleanData: jqLiteCleanData
+  cleanData: function jqLiteCleanData(nodes) {
+    for (var i = 0, ii = nodes.length; i < ii; i++) {
+      jqLiteRemoveData(nodes[i]);
+    }
+  }
 }, function(fn, name) {
   JQLite[name] = fn;
 });
@@ -19054,9 +19070,9 @@ function $TemplateCacheProvider() {
  * initialized.
  *
  * <div class="alert alert-warning">
- * **Deprecation warning:** although bindings for non-ES6 class controllers are currently
- * bound to `this` before the controller constructor is called, this use is now deprecated. Please place initialization
- * code that relies upon bindings inside a `$onInit` method on the controller, instead.
+ * **Deprecation warning:** if `$compileProcvider.preAssignBindingsEnabled(true)` was called, bindings for non-ES6 class
+ * controllers are bound to `this` before the controller constructor is called but this use is now deprecated. Please
+ * place initialization code that relies upon bindings inside a `$onInit` method on the controller, instead.
  * </div>
  *
  * It is also possible to set `bindToController` to an object hash with the same format as the `scope` property.
@@ -20069,7 +20085,14 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    *
    * If disabled (false), the compiler calls the constructor first before assigning bindings.
    *
-   * The default value is true in Angular 1.5.x but will switch to false in Angular 1.6.x.
+   * The default value is false.
+   *
+   * @deprecated
+   * sinceVersion="1.6.0"
+   * removeVersion="1.7.0"
+   *
+   * This method and the option to assign the bindings before calling the controller's constructor
+   * will be removed in v1.7.0.
    */
   var preAssignBindingsEnabled = false;
   this.preAssignBindingsEnabled = function(enabled) {
@@ -22159,8 +22182,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             if (parentGet.literal) {
               compare = equals;
             } else {
-              // eslint-disable-next-line no-self-compare
-              compare = function simpleCompare(a, b) { return a === b || (a !== a && b !== b); };
+              compare = simpleCompare;
             }
             parentSet = parentGet.assign || function() {
               // reset the change, or we will throw this exception on every $digest
@@ -22235,9 +22257,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       });
 
       function recordChanges(key, currentValue, previousValue) {
-        if (isFunction(destination.$onChanges) && currentValue !== previousValue &&
-            // eslint-disable-next-line no-self-compare
-            (currentValue === currentValue || previousValue === previousValue)) {
+        if (isFunction(destination.$onChanges) && !simpleCompare(currentValue, previousValue)) {
           // If we have not already scheduled the top level onChangesQueue handler then do so now
           if (!onChangesQueue) {
             scope.$$postDigest(flushOnChangesQueue);
@@ -22852,7 +22872,12 @@ function defaultHttpResponseTransform(data, headers) {
     if (tempData) {
       var contentType = headers('Content-Type');
       if ((contentType && (contentType.indexOf(APPLICATION_JSON) === 0)) || isJsonLike(tempData)) {
-        data = fromJson(tempData);
+        try {
+          data = fromJson(tempData);
+        } catch (e) {
+          throw $httpMinErr('baddata', 'Data must be a valid JSON object. Received: "{0}". ' +
+          'Parse error: "{1}"', data, e);
+        }
       }
     }
   }
@@ -24757,7 +24782,7 @@ function $IntervalProvider() {
       * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
       *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
       * @param {...*=} Pass additional parameters to the executed function.
-      * @returns {promise} A promise which will be notified on each iteration.
+      * @returns {promise} A promise which will be notified on each iteration. It will resolve once all iterations of the interval complete.
       *
       * @example
       * <example module="intervalExample" name="interval-service">
@@ -26980,15 +27005,13 @@ function isConstant(ast) {
   return ast.constant;
 }
 
-function ASTCompiler(astBuilder, $filter) {
-  this.astBuilder = astBuilder;
+function ASTCompiler($filter) {
   this.$filter = $filter;
 }
 
 ASTCompiler.prototype = {
-  compile: function(expression) {
+  compile: function(ast) {
     var self = this;
-    var ast = this.astBuilder.ast(expression);
     this.state = {
       nextId: 0,
       filters: {},
@@ -27043,8 +27066,6 @@ ASTCompiler.prototype = {
           ifDefined,
           plusFn);
     this.state = this.stage = undefined;
-    fn.literal = isLiteral(ast);
-    fn.constant = isConstant(ast);
     return fn;
   },
 
@@ -27447,15 +27468,13 @@ ASTCompiler.prototype = {
 };
 
 
-function ASTInterpreter(astBuilder, $filter) {
-  this.astBuilder = astBuilder;
+function ASTInterpreter($filter) {
   this.$filter = $filter;
 }
 
 ASTInterpreter.prototype = {
-  compile: function(expression) {
+  compile: function(ast) {
     var self = this;
-    var ast = this.astBuilder.ast(expression);
     findConstantAndWatchExpressions(ast, self.$filter);
     var assignable;
     var assign;
@@ -27494,8 +27513,6 @@ ASTInterpreter.prototype = {
     if (inputs) {
       fn.inputs = inputs;
     }
-    fn.literal = isLiteral(ast);
-    fn.constant = isConstant(ast);
     return fn;
   },
 
@@ -27824,20 +27841,21 @@ ASTInterpreter.prototype = {
 /**
  * @constructor
  */
-var Parser = function Parser(lexer, $filter, options) {
-  this.lexer = lexer;
-  this.$filter = $filter;
-  this.options = options;
+function Parser(lexer, $filter, options) {
   this.ast = new AST(lexer, options);
-  this.astCompiler = options.csp ? new ASTInterpreter(this.ast, $filter) :
-                                   new ASTCompiler(this.ast, $filter);
-};
+  this.astCompiler = options.csp ? new ASTInterpreter($filter) :
+                                   new ASTCompiler($filter);
+}
 
 Parser.prototype = {
   constructor: Parser,
 
   parse: function(text) {
-    return this.astCompiler.compile(text);
+    var ast = this.ast.ast(text);
+    var fn = this.astCompiler.compile(ast);
+    fn.literal = isLiteral(ast);
+    fn.constant = isConstant(ast);
+    return fn;
   }
 };
 
@@ -27983,8 +28001,8 @@ function $ParseProvider() {
             if (parsedExpression.constant) {
               parsedExpression.$$watchDelegate = constantWatchDelegate;
             } else if (oneTime) {
-              parsedExpression.$$watchDelegate = parsedExpression.literal ?
-                  oneTimeLiteralWatchDelegate : oneTimeWatchDelegate;
+              parsedExpression.oneTime = true;
+              parsedExpression.$$watchDelegate = oneTimeWatchDelegate;
             } else if (parsedExpression.inputs) {
               parsedExpression.$$watchDelegate = inputsWatchDelegate;
             }
@@ -28006,14 +28024,14 @@ function $ParseProvider() {
         return newValue === oldValueOfValue;
       }
 
-      if (typeof newValue === 'object' && !compareObjectIdentity) {
+      if (typeof newValue === 'object') {
 
         // attempt to convert the value to a primitive type
         // TODO(docs): add a note to docs that by implementing valueOf even objects and arrays can
         //             be cheaply dirty-checked
         newValue = getValueOf(newValue);
 
-        if (typeof newValue === 'object') {
+        if (typeof newValue === 'object' && !compareObjectIdentity) {
           // objects/arrays are not supported - deep-watching them would be too expensive
           return false;
         }
@@ -28070,6 +28088,7 @@ function $ParseProvider() {
     }
 
     function oneTimeWatchDelegate(scope, listener, objectEquality, parsedExpression, prettyPrintExpression) {
+      var isDone = parsedExpression.literal ? isAllDefined : isDefined;
       var unwatch, lastValue;
       if (parsedExpression.inputs) {
         unwatch = inputsWatchDelegate(scope, oneTimeListener, objectEquality, parsedExpression, prettyPrintExpression);
@@ -28086,9 +28105,9 @@ function $ParseProvider() {
         if (isFunction(listener)) {
           listener(value, old, scope);
         }
-        if (isDefined(value)) {
+        if (isDone(value)) {
           scope.$$postDigest(function() {
-            if (isDefined(lastValue)) {
+            if (isDone(lastValue)) {
               unwatch();
             }
           });
@@ -28096,31 +28115,12 @@ function $ParseProvider() {
       }
     }
 
-    function oneTimeLiteralWatchDelegate(scope, listener, objectEquality, parsedExpression) {
-      var unwatch, lastValue;
-      unwatch = scope.$watch(function oneTimeWatch(scope) {
-        return parsedExpression(scope);
-      }, function oneTimeListener(value, old, scope) {
-        lastValue = value;
-        if (isFunction(listener)) {
-          listener(value, old, scope);
-        }
-        if (isAllDefined(value)) {
-          scope.$$postDigest(function() {
-            if (isAllDefined(lastValue)) unwatch();
-          });
-        }
-      }, objectEquality);
-
-      return unwatch;
-
-      function isAllDefined(value) {
-        var allDefined = true;
-        forEach(value, function(val) {
-          if (!isDefined(val)) allDefined = false;
-        });
-        return allDefined;
-      }
+    function isAllDefined(value) {
+      var allDefined = true;
+      forEach(value, function(val) {
+        if (!isDefined(val)) allDefined = false;
+      });
+      return allDefined;
     }
 
     function constantWatchDelegate(scope, listener, objectEquality, parsedExpression) {
@@ -28136,26 +28136,31 @@ function $ParseProvider() {
       var watchDelegate = parsedExpression.$$watchDelegate;
       var useInputs = false;
 
-      var regularWatch =
-          watchDelegate !== oneTimeLiteralWatchDelegate &&
-          watchDelegate !== oneTimeWatchDelegate;
+      var isDone = parsedExpression.literal ? isAllDefined : isDefined;
 
-      var fn = regularWatch ? function regularInterceptedExpression(scope, locals, assign, inputs) {
+      function regularInterceptedExpression(scope, locals, assign, inputs) {
         var value = useInputs && inputs ? inputs[0] : parsedExpression(scope, locals, assign, inputs);
         return interceptorFn(value, scope, locals);
-      } : function oneTimeInterceptedExpression(scope, locals, assign, inputs) {
-        var value = parsedExpression(scope, locals, assign, inputs);
+      }
+
+      function oneTimeInterceptedExpression(scope, locals, assign, inputs) {
+        var value = useInputs && inputs ? inputs[0] : parsedExpression(scope, locals, assign, inputs);
         var result = interceptorFn(value, scope, locals);
         // we only return the interceptor's result if the
         // initial value is defined (for bind-once)
-        return isDefined(value) ? result : value;
-      };
+        return isDone(value) ? result : value;
+      }
 
-      // Propagate $$watchDelegates other then inputsWatchDelegate
+      var fn = parsedExpression.oneTime ? oneTimeInterceptedExpression : regularInterceptedExpression;
+
+      // Propogate the literal/oneTime attributes
+      fn.literal = parsedExpression.literal;
+      fn.oneTime = parsedExpression.oneTime;
+
+      // Propagate or create inputs / $$watchDelegates
       useInputs = !parsedExpression.inputs;
-      if (parsedExpression.$$watchDelegate &&
-          parsedExpression.$$watchDelegate !== inputsWatchDelegate) {
-        fn.$$watchDelegate = parsedExpression.$$watchDelegate;
+      if (watchDelegate && watchDelegate !== inputsWatchDelegate) {
+        fn.$$watchDelegate = watchDelegate;
         fn.inputs = parsedExpression.inputs;
       } else if (!interceptorFn.$stateful) {
         // If there is an interceptor, but no watchDelegate then treat the interceptor like
@@ -30372,12 +30377,21 @@ function $$SanitizeUriProvider() {
 var $sceMinErr = minErr('$sce');
 
 var SCE_CONTEXTS = {
+  // HTML is used when there's HTML rendered (e.g. ng-bind-html, iframe srcdoc binding).
   HTML: 'html',
+
+  // Style statements or stylesheets. Currently unused in AngularJS.
   CSS: 'css',
+
+  // An URL used in a context where it does not refer to a resource that loads code. Currently
+  // unused in AngularJS.
   URL: 'url',
-  // RESOURCE_URL is a subtype of URL used in contexts where a privileged resource is sourced from a
-  // url.  (e.g. ng-include, script src, templateUrl)
+
+  // RESOURCE_URL is a subtype of URL used where the referred-to resource could be interpreted as
+  // code. (e.g. ng-include, script src binding, templateUrl)
   RESOURCE_URL: 'resourceUrl',
+
+  // Script. Currently unused in AngularJS.
   JS: 'js'
 };
 
@@ -30439,6 +30453,16 @@ function adjustMatchers(matchers) {
  * `$sceDelegate` is a service that is used by the `$sce` service to provide {@link ng.$sce Strict
  * Contextual Escaping (SCE)} services to AngularJS.
  *
+ * For an overview of this service and the functionnality it provides in AngularJS, see the main
+ * page for {@link ng.$sce SCE}. The current page is targeted for developers who need to alter how
+ * SCE works in their application, which shouldn't be needed in most cases.
+ *
+ * <div class="alert alert-danger">
+ * AngularJS strongly relies on contextual escaping for the security of bindings: disabling or
+ * modifying this might cause cross site scripting (XSS) vulnerabilities. For libraries owners,
+ * changes to this service will also influence users, so be extra careful and document your changes.
+ * </div>
+ *
  * Typically, you would configure or override the {@link ng.$sceDelegate $sceDelegate} instead of
  * the `$sce` service to customize the way Strict Contextual Escaping works in AngularJS.  This is
  * because, while the `$sce` provides numerous shorthand methods, etc., you really only need to
@@ -30464,10 +30488,14 @@ function adjustMatchers(matchers) {
  * @description
  *
  * The `$sceDelegateProvider` provider allows developers to configure the {@link ng.$sceDelegate
- * $sceDelegate} service.  This allows one to get/set the whitelists and blacklists used to ensure
- * that the URLs used for sourcing Angular templates are safe.  Refer {@link
- * ng.$sceDelegateProvider#resourceUrlWhitelist $sceDelegateProvider.resourceUrlWhitelist} and
- * {@link ng.$sceDelegateProvider#resourceUrlBlacklist $sceDelegateProvider.resourceUrlBlacklist}
+ * $sceDelegate service}, used as a delegate for {@link ng.$sce Strict Contextual Escaping (SCE)}.
+ *
+ * The `$sceDelegateProvider` allows one to get/set the whitelists and blacklists used to ensure
+ * that the URLs used for sourcing AngularJS templates and other script-running URLs are safe (all
+ * places that use the `$sce.RESOURCE_URL` context). See
+ * {@link ng.$sceDelegateProvider#resourceUrlWhitelist $sceDelegateProvider.resourceUrlWhitelist}
+ * and
+ * {@link ng.$sceDelegateProvider#resourceUrlBlacklist $sceDelegateProvider.resourceUrlBlacklist},
  *
  * For the general details about this service in Angular, read the main page for {@link ng.$sce
  * Strict Contextual Escaping (SCE)}.
@@ -30496,6 +30524,13 @@ function adjustMatchers(matchers) {
  *    ]);
  *  });
  * ```
+ * Note that an empty whitelist will block every resource URL from being loaded, and will require
+ * you to manually mark each one as trusted with `$sce.trustAsResourceUrl`. However, templates
+ * requested by {@link ng.$templateRequest $templateRequest} that are present in
+ * {@link ng.$templateCache $templateCache} will not go through this check. If you have a mechanism
+ * to populate your templates in that cache at config time, then it is a good idea to remove 'self'
+ * from that whitelist. This helps to mitigate the security impact of certain types of issues, like
+ * for instance attacker-controlled `ng-includes`.
  */
 
 function $SceDelegateProvider() {
@@ -30511,23 +30546,23 @@ function $SceDelegateProvider() {
    * @kind function
    *
    * @param {Array=} whitelist When provided, replaces the resourceUrlWhitelist with the value
-   *    provided.  This must be an array or null.  A snapshot of this array is used so further
-   *    changes to the array are ignored.
+   *     provided.  This must be an array or null.  A snapshot of this array is used so further
+   *     changes to the array are ignored.
+   *     Follow {@link ng.$sce#resourceUrlPatternItem this link} for a description of the items
+   *     allowed in this array.
    *
-   *    Follow {@link ng.$sce#resourceUrlPatternItem this link} for a description of the items
-   *    allowed in this array.
+   * @return {Array} The currently set whitelist array.
    *
-   *    <div class="alert alert-warning">
-   *    **Note:** an empty whitelist array will block all URLs!
-   *    </div>
-   *
-   * @return {Array} the currently set whitelist array.
+   * @description
+   * Sets/Gets the whitelist of trusted resource URLs.
    *
    * The **default value** when no whitelist has been explicitly set is `['self']` allowing only
    * same origin resource requests.
    *
-   * @description
-   * Sets/Gets the whitelist of trusted resource URLs.
+   * <div class="alert alert-warning">
+   * **Note:** the default whitelist of 'self' is not recommended if your app shares its origin
+   * with other apps! It is a good idea to limit it to only your application's directory.
+   * </div>
    */
   this.resourceUrlWhitelist = function(value) {
     if (arguments.length) {
@@ -30542,25 +30577,23 @@ function $SceDelegateProvider() {
    * @kind function
    *
    * @param {Array=} blacklist When provided, replaces the resourceUrlBlacklist with the value
-   *    provided.  This must be an array or null.  A snapshot of this array is used so further
-   *    changes to the array are ignored.
+   *     provided.  This must be an array or null.  A snapshot of this array is used so further
+   *     changes to the array are ignored.</p><p>
+   *     Follow {@link ng.$sce#resourceUrlPatternItem this link} for a description of the items
+   *     allowed in this array.</p><p>
+   *     The typical usage for the blacklist is to **block
+   *     [open redirects](http://cwe.mitre.org/data/definitions/601.html)** served by your domain as
+   *     these would otherwise be trusted but actually return content from the redirected domain.
+   *     </p><p>
+   *     Finally, **the blacklist overrides the whitelist** and has the final say.
    *
-   *    Follow {@link ng.$sce#resourceUrlPatternItem this link} for a description of the items
-   *    allowed in this array.
-   *
-   *    The typical usage for the blacklist is to **block
-   *    [open redirects](http://cwe.mitre.org/data/definitions/601.html)** served by your domain as
-   *    these would otherwise be trusted but actually return content from the redirected domain.
-   *
-   *    Finally, **the blacklist overrides the whitelist** and has the final say.
-   *
-   * @return {Array} the currently set blacklist array.
-   *
-   * The **default value** when no whitelist has been explicitly set is the empty array (i.e. there
-   * is no blacklist.)
+   * @return {Array} The currently set blacklist array.
    *
    * @description
    * Sets/Gets the blacklist of trusted resource URLs.
+   *
+   * The **default value** when no whitelist has been explicitly set is the empty array (i.e. there
+   * is no blacklist.)
    */
 
   this.resourceUrlBlacklist = function(value) {
@@ -30644,17 +30677,24 @@ function $SceDelegateProvider() {
      * @name $sceDelegate#trustAs
      *
      * @description
-     * Returns an object that is trusted by angular for use in specified strict
-     * contextual escaping contexts (such as ng-bind-html, ng-include, any src
-     * attribute interpolation, any dom event binding attribute interpolation
-     * such as for onclick,  etc.) that uses the provided value.
-     * See {@link ng.$sce $sce} for enabling strict contextual escaping.
+     * Returns a trusted representation of the parameter for the specified context. This trusted
+     * object will later on be used as-is, without any security check, by bindings or directives
+     * that require this security context.
+     * For instance, marking a string as trusted for the `$sce.HTML` context will entirely bypass
+     * the potential `$sanitize` call in corresponding `$sce.HTML` bindings or directives, such as
+     * `ng-bind-html`. Note that in most cases you won't need to call this function: if you have the
+     * sanitizer loaded, passing the value itself will render all the HTML that does not pose a
+     * security risk.
      *
-     * @param {string} type The kind of context in which this value is safe for use.  e.g. url,
-     *   resourceUrl, html, js and css.
-     * @param {*} value The value that that should be considered trusted/safe.
-     * @returns {*} A value that can be used to stand in for the provided `value` in places
-     * where Angular expects a $sce.trustAs() return value.
+     * See {@link ng.$sceDelegate#getTrusted getTrusted} for the function that will consume those
+     * trusted values, and {@link ng.$sce $sce} for general documentation about strict contextual
+     * escaping.
+     *
+     * @param {string} type The context in which this value is safe for use, e.g. `$sce.URL`,
+     *     `$sce.RESOURCE_URL`, `$sce.HTML`, `$sce.JS` or `$sce.CSS`.
+     *
+     * @param {*} value The value that should be considered trusted.
+     * @return {*} A trusted representation of value, that can be used in the given context.
      */
     function trustAs(type, trustedValue) {
       var Constructor = (byType.hasOwnProperty(type) ? byType[type] : null);
@@ -30686,11 +30726,11 @@ function $SceDelegateProvider() {
      * ng.$sceDelegate#trustAs `$sceDelegate.trustAs`}.
      *
      * If the passed parameter is not a value that had been returned by {@link
-     * ng.$sceDelegate#trustAs `$sceDelegate.trustAs`}, returns it as-is.
+     * ng.$sceDelegate#trustAs `$sceDelegate.trustAs`}, it must be returned as-is.
      *
      * @param {*} value The result of a prior {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs`}
-     *      call or anything else.
-     * @returns {*} The `value` that was originally provided to {@link ng.$sceDelegate#trustAs
+     *     call or anything else.
+     * @return {*} The `value` that was originally provided to {@link ng.$sceDelegate#trustAs
      *     `$sceDelegate.trustAs`} if `value` is the result of such a call.  Otherwise, returns
      *     `value` unchanged.
      */
@@ -30707,33 +30747,38 @@ function $SceDelegateProvider() {
      * @name $sceDelegate#getTrusted
      *
      * @description
-     * Takes the result of a {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs`} call and
-     * returns the originally supplied value if the queried context type is a supertype of the
-     * created type.  If this condition isn't satisfied, throws an exception.
+     * Takes any input, and either returns a value that's safe to use in the specified context, or
+     * throws an exception.
      *
-     * <div class="alert alert-danger">
-     * Disabling auto-escaping is extremely dangerous, it usually creates a Cross Site Scripting
-     * (XSS) vulnerability in your application.
-     * </div>
+     * In practice, there are several cases. When given a string, this function runs checks
+     * and sanitization to make it safe without prior assumptions. When given the result of a {@link
+     * ng.$sceDelegate#trustAs `$sceDelegate.trustAs`} call, it returns the originally supplied
+     * value if that value's context is valid for this call's context. Finally, this function can
+     * also throw when there is no way to turn `maybeTrusted` in a safe value (e.g., no sanitization
+     * is available or possible.)
      *
-     * @param {string} type The kind of context in which this value is to be used.
+     * @param {string} type The context in which this value is to be used (such as `$sce.HTML`).
      * @param {*} maybeTrusted The result of a prior {@link ng.$sceDelegate#trustAs
-     *     `$sceDelegate.trustAs`} call.
-     * @returns {*} The value the was originally provided to {@link ng.$sceDelegate#trustAs
-     *     `$sceDelegate.trustAs`} if valid in this context.  Otherwise, throws an exception.
+     *     `$sceDelegate.trustAs`} call, or anything else (which will not be considered trusted.)
+     * @return {*} A version of the value that's safe to use in the given context, or throws an
+     *     exception if this is impossible.
      */
     function getTrusted(type, maybeTrusted) {
       if (maybeTrusted === null || isUndefined(maybeTrusted) || maybeTrusted === '') {
         return maybeTrusted;
       }
       var constructor = (byType.hasOwnProperty(type) ? byType[type] : null);
+      // If maybeTrusted is a trusted class instance or subclass instance, then unwrap and return
+      // as-is.
       if (constructor && maybeTrusted instanceof constructor) {
         return maybeTrusted.$$unwrapTrustedValue();
       }
-      // If we get here, then we may only take one of two actions.
-      // 1. sanitize the value for the requested type, or
-      // 2. throw an exception.
+      // Otherwise, if we get here, then we may either make it safe, or throw an exception. This
+      // depends on the context: some are sanitizatible (HTML), some use whitelists (RESOURCE_URL),
+      // some are impossible to do (JS). This step isn't implemented for CSS and URL, as AngularJS
+      // has no corresponding sinks.
       if (type === SCE_CONTEXTS.RESOURCE_URL) {
+        // RESOURCE_URL uses a whitelist.
         if (isResourceUrlAllowedByPolicy(maybeTrusted)) {
           return maybeTrusted;
         } else {
@@ -30742,8 +30787,10 @@ function $SceDelegateProvider() {
               maybeTrusted.toString());
         }
       } else if (type === SCE_CONTEXTS.HTML) {
+        // htmlSanitizer throws its own error when no sanitizer is available.
         return htmlSanitizer(maybeTrusted);
       }
+      // Default error when the $sce service has no way to make the input safe.
       throw $sceMinErr('unsafe', 'Attempting to use an unsafe value in a safe context.');
     }
 
@@ -30779,21 +30826,27 @@ function $SceDelegateProvider() {
  *
  * # Strict Contextual Escaping
  *
- * Strict Contextual Escaping (SCE) is a mode in which AngularJS requires bindings in certain
- * contexts to result in a value that is marked as safe to use for that context.  One example of
- * such a context is binding arbitrary html controlled by the user via `ng-bind-html`.  We refer
- * to these contexts as privileged or SCE contexts.
+ * Strict Contextual Escaping (SCE) is a mode in which AngularJS constrains bindings to only render
+ * trusted values. Its goal is to assist in writing code in a way that (a) is secure by default, and
+ * (b) makes auditing for security vulnerabilities such as XSS, clickjacking, etc. a lot easier.
  *
- * As of version 1.2, Angular ships with SCE enabled by default.
+ * ## Overview
  *
- * Note:  When enabled (the default), IE<11 in quirks mode is not supported.  In this mode, IE<11 allow
- * one to execute arbitrary javascript by the use of the expression() syntax.  Refer
- * <http://blogs.msdn.com/b/ie/archive/2008/10/16/ending-expressions.aspx> to learn more about them.
- * You can ensure your document is in standards mode and not quirks mode by adding `<!doctype html>`
- * to the top of your HTML document.
+ * To systematically block XSS security bugs, AngularJS treats all values as untrusted by default in
+ * HTML or sensitive URL bindings. When binding untrusted values, AngularJS will automatically
+ * run security checks on them (sanitizations, whitelists, depending on context), or throw when it
+ * cannot guarantee the security of the result. That behavior depends strongly on contexts: HTML
+ * can be sanitized, but template URLs cannot, for instance.
  *
- * SCE assists in writing code in a way that (a) is secure by default and (b) makes auditing for
- * security vulnerabilities such as XSS, clickjacking, etc. a lot easier.
+ * To illustrate this, consider the `ng-bind-html` directive. It renders its value directly as HTML:
+ * we call that the *context*. When given an untrusted input, AngularJS will attempt to sanitize it
+ * before rendering if a sanitizer is available, and throw otherwise. To bypass sanitization and
+ * render the input as-is, you will need to mark it as trusted for that context before attempting
+ * to bind it.
+ *
+ * As of version 1.2, AngularJS ships with SCE enabled by default.
+ *
+ * ## In practice
  *
  * Here's an example of a binding in a privileged context:
  *
@@ -30803,10 +30856,10 @@ function $SceDelegateProvider() {
  * ```
  *
  * Notice that `ng-bind-html` is bound to `userHtml` controlled by the user.  With SCE
- * disabled, this application allows the user to render arbitrary HTML into the DIV.
- * In a more realistic example, one may be rendering user comments, blog articles, etc. via
- * bindings.  (HTML is just one example of a context where rendering user controlled input creates
- * security vulnerabilities.)
+ * disabled, this application allows the user to render arbitrary HTML into the DIV, which would
+ * be an XSS security bug. In a more realistic example, one may be rendering user comments, blog
+ * articles, etc. via bindings. (HTML is just one example of a context where rendering user
+ * controlled input creates security vulnerabilities.)
  *
  * For the case of HTML, you might use a library, either on the client side, or on the server side,
  * to sanitize unsafe HTML before binding to the value and rendering it in the document.
@@ -30816,25 +30869,29 @@ function $SceDelegateProvider() {
  * ensure that you didn't accidentally delete the line that sanitized the value, or renamed some
  * properties/fields and forgot to update the binding to the sanitized value?
  *
- * To be secure by default, you want to ensure that any such bindings are disallowed unless you can
- * determine that something explicitly says it's safe to use a value for binding in that
- * context.  You can then audit your code (a simple grep would do) to ensure that this is only done
- * for those values that you can easily tell are safe - because they were received from your server,
- * sanitized by your library, etc.  You can organize your codebase to help with this - perhaps
- * allowing only the files in a specific directory to do this.  Ensuring that the internal API
- * exposed by that code doesn't markup arbitrary values as safe then becomes a more manageable task.
+ * To be secure by default, AngularJS makes sure bindings go through that sanitization, or
+ * any similar validation process, unless there's a good reason to trust the given value in this
+ * context.  That trust is formalized with a function call. This means that as a developer, you
+ * can assume all untrusted bindings are safe. Then, to audit your code for binding security issues,
+ * you just need to ensure the values you mark as trusted indeed are safe - because they were
+ * received from your server, sanitized by your library, etc. You can organize your codebase to
+ * help with this - perhaps allowing only the files in a specific directory to do this.
+ * Ensuring that the internal API exposed by that code doesn't markup arbitrary values as safe then
+ * becomes a more manageable task.
  *
  * In the case of AngularJS' SCE service, one uses {@link ng.$sce#trustAs $sce.trustAs}
  * (and shorthand methods such as {@link ng.$sce#trustAsHtml $sce.trustAsHtml}, etc.) to
- * obtain values that will be accepted by SCE / privileged contexts.
- *
+ * build the trusted versions of your values.
  *
  * ## How does it work?
  *
  * In privileged contexts, directives and code will bind to the result of {@link ng.$sce#getTrusted
- * $sce.getTrusted(context, value)} rather than to the value directly.  Directives use {@link
- * ng.$sce#parseAs $sce.parseAs} rather than `$parse` to watch attribute bindings, which performs the
- * {@link ng.$sce#getTrusted $sce.getTrusted} behind the scenes on non-constant literals.
+ * $sce.getTrusted(context, value)} rather than to the value directly.  Think of this function as
+ * a way to enforce the required security context in your data sink. Directives use {@link
+ * ng.$sce#parseAs $sce.parseAs} rather than `$parse` to watch attribute bindings, which performs
+ * the {@link ng.$sce#getTrusted $sce.getTrusted} behind the scenes on non-constant literals. Also,
+ * when binding without directives, AngularJS will understand the context of your bindings
+ * automatically.
  *
  * As an example, {@link ng.directive:ngBindHtml ngBindHtml} uses {@link
  * ng.$sce#parseAsHtml $sce.parseAsHtml(binding expression)}.  Here's the actual code (slightly
@@ -30875,11 +30932,12 @@ function $SceDelegateProvider() {
  * It's important to remember that SCE only applies to interpolation expressions.
  *
  * If your expressions are constant literals, they're automatically trusted and you don't need to
- * call `$sce.trustAs` on them (remember to include the `ngSanitize` module) (e.g.
- * `<div ng-bind-html="'<b>implicitly trusted</b>'"></div>`) just works.
- *
- * Additionally, `a[href]` and `img[src]` automatically sanitize their URLs and do not pass them
- * through {@link ng.$sce#getTrusted $sce.getTrusted}.  SCE doesn't play a role here.
+ * call `$sce.trustAs` on them (e.g.
+ * `<div ng-bind-html="'<b>implicitly trusted</b>'"></div>`) just works. The `$sceDelegate` will
+ * also use the `$sanitize` service if it is available when binding untrusted values to
+ * `$sce.HTML` context. AngularJS provides an implementation in `angular-sanitize.js`, and if you
+ * wish to use it, you will also need to depend on the {@link ngSanitize `ngSanitize`} module in
+ * your application.
  *
  * The included {@link ng.$sceDelegate $sceDelegate} comes with sane defaults to allow you to load
  * templates in `ng-include` from your application's domain without having to even know about SCE.
@@ -30897,11 +30955,17 @@ function $SceDelegateProvider() {
  *
  * | Context             | Notes          |
  * |---------------------|----------------|
- * | `$sce.HTML`         | For HTML that's safe to source into the application.  The {@link ng.directive:ngBindHtml ngBindHtml} directive uses this context for bindings. If an unsafe value is encountered and the {@link ngSanitize $sanitize} module is present this will sanitize the value instead of throwing an error. |
- * | `$sce.CSS`          | For CSS that's safe to source into the application.  Currently unused.  Feel free to use it in your own directives. |
- * | `$sce.URL`          | For URLs that are safe to follow as links.  Currently unused (`<a href=` and `<img src=` sanitize their urls and don't constitute an SCE context. |
- * | `$sce.RESOURCE_URL` | For URLs that are not only safe to follow as links, but whose contents are also safe to include in your application.  Examples include `ng-include`, `src` / `ngSrc` bindings for tags other than `IMG`, `VIDEO`, `AUDIO`, `SOURCE`, and `TRACK` (e.g. `IFRAME`, `OBJECT`, etc.)  <br><br>Note that `$sce.RESOURCE_URL` makes a stronger statement about the URL than `$sce.URL` does and therefore contexts requiring values trusted for `$sce.RESOURCE_URL` can be used anywhere that values trusted for `$sce.URL` are required. |
- * | `$sce.JS`           | For JavaScript that is safe to execute in your application's context.  Currently unused.  Feel free to use it in your own directives. |
+ * | `$sce.HTML`         | For HTML that's safe to source into the application.  The {@link ng.directive:ngBindHtml ngBindHtml} directive uses this context for bindings. If an unsafe value is encountered, and the {@link ngSanitize.$sanitize $sanitize} service is available (implemented by the {@link ngSanitize ngSanitize} module) this will sanitize the value instead of throwing an error. |
+ * | `$sce.CSS`          | For CSS that's safe to source into the application.  Currently, no bindings require this context. Feel free to use it in your own directives. |
+ * | `$sce.URL`          | For URLs that are safe to follow as links.  Currently unused (`<a href=`, `<img src=`, and some others sanitize their urls and don't constitute an SCE context.) |
+ * | `$sce.RESOURCE_URL` | For URLs that are not only safe to follow as links, but whose contents are also safe to include in your application.  Examples include `ng-include`, `src` / `ngSrc` bindings for tags other than `IMG`, `VIDEO`, `AUDIO`, `SOURCE`, and `TRACK` (e.g. `IFRAME`, `OBJECT`, etc.)  <br><br>Note that `$sce.RESOURCE_URL` makes a stronger statement about the URL than `$sce.URL` does (it's not just the URL that matters, but also what is at the end of it), and therefore contexts requiring values trusted for `$sce.RESOURCE_URL` can be used anywhere that values trusted for `$sce.URL` are required. |
+ * | `$sce.JS`           | For JavaScript that is safe to execute in your application's context.  Currently, no bindings require this context.  Feel free to use it in your own directives. |
+ *
+ *
+ * Be aware that `a[href]` and `img[src]` automatically sanitize their URLs and do not pass them
+ * through {@link ng.$sce#getTrusted $sce.getTrusted}. There's no CSS-, URL-, or JS-context bindings
+ * in AngularJS currently, so their corresponding `$sce.trustAs` functions aren't useful yet. This
+ * might evolve.
  *
  * ## Format of items in {@link ng.$sceDelegateProvider#resourceUrlWhitelist resourceUrlWhitelist}/{@link ng.$sceDelegateProvider#resourceUrlBlacklist Blacklist} <a name="resourceUrlPatternItem"></a>
  *
@@ -31020,14 +31084,15 @@ function $SceDelegateProvider() {
  * for little coding overhead.  It will be much harder to take an SCE disabled application and
  * either secure it on your own or enable SCE at a later stage.  It might make sense to disable SCE
  * for cases where you have a lot of existing code that was written before SCE was introduced and
- * you're migrating them a module at a time.
+ * you're migrating them a module at a time. Also do note that this is an app-wide setting, so if
+ * you are writing a library, you will cause security bugs applications using it.
  *
  * That said, here's how you can completely disable SCE:
  *
  * ```
  * angular.module('myAppWithSceDisabledmyApp', []).config(function($sceProvider) {
  *   // Completely disable SCE.  For demonstration purposes only!
- *   // Do not use in new projects.
+ *   // Do not use in new projects or libraries.
  *   $sceProvider.enabled(false);
  * });
  * ```
@@ -31042,8 +31107,8 @@ function $SceProvider() {
    * @name $sceProvider#enabled
    * @kind function
    *
-   * @param {boolean=} value If provided, then enables/disables SCE.
-   * @return {boolean} true if SCE is enabled, false otherwise.
+   * @param {boolean=} value If provided, then enables/disables SCE application-wide.
+   * @return {boolean} True if SCE is enabled, false otherwise.
    *
    * @description
    * Enables/disables SCE and returns the current value.
@@ -31097,9 +31162,9 @@ function $SceProvider() {
    *     getTrusted($sce.RESOURCE_URL, value) succeeding implies that getTrusted($sce.URL, value)
    *     will also succeed.
    *
-   * Inheritance happens to capture this in a natural way.  In some future, we
-   * may not use inheritance anymore.  That is OK because no code outside of
-   * sce.js and sceSpecs.js would need to be aware of this detail.
+   * Inheritance happens to capture this in a natural way. In some future, we may not use
+   * inheritance anymore. That is OK because no code outside of sce.js and sceSpecs.js would need to
+   * be aware of this detail.
    */
 
   this.$get = ['$parse', '$sceDelegate', function(
@@ -31121,8 +31186,8 @@ function $SceProvider() {
      * @name $sce#isEnabled
      * @kind function
      *
-     * @return {Boolean} true if SCE is enabled, false otherwise.  If you want to set the value, you
-     * have to do it at module config time on {@link ng.$sceProvider $sceProvider}.
+     * @return {Boolean} True if SCE is enabled, false otherwise.  If you want to set the value, you
+     *     have to do it at module config time on {@link ng.$sceProvider $sceProvider}.
      *
      * @description
      * Returns a boolean indicating if SCE is enabled.
@@ -31149,14 +31214,14 @@ function $SceProvider() {
      * wraps the expression in a call to {@link ng.$sce#getTrusted $sce.getTrusted(*type*,
      * *result*)}
      *
-     * @param {string} type The kind of SCE context in which this result will be used.
+     * @param {string} type The SCE context in which this result will be used.
      * @param {string} expression String expression to compile.
-     * @returns {function(context, locals)} a function which represents the compiled expression:
+     * @return {function(context, locals)} A function which represents the compiled expression:
      *
-     *    * `context` – `{object}` – an object against which any expressions embedded in the strings
-     *      are evaluated against (typically a scope object).
-     *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
-     *      `context`.
+     *    * `context` – `{object}` – an object against which any expressions embedded in the
+     *      strings are evaluated against (typically a scope object).
+     *    * `locals` – `{object=}` – local variables context object, useful for overriding values
+     *      in `context`.
      */
     sce.parseAs = function sceParseAs(type, expr) {
       var parsed = $parse(expr);
@@ -31174,18 +31239,18 @@ function $SceProvider() {
      * @name $sce#trustAs
      *
      * @description
-     * Delegates to {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs`}.  As such,
-     * returns an object that is trusted by angular for use in specified strict contextual
-     * escaping contexts (such as ng-bind-html, ng-include, any src attribute
-     * interpolation, any dom event binding attribute interpolation such as for onclick,  etc.)
-     * that uses the provided value.  See * {@link ng.$sce $sce} for enabling strict contextual
-     * escaping.
+     * Delegates to {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs`}. As such, returns a
+     * wrapped object that represents your value, and the trust you have in its safety for the given
+     * context. AngularJS can then use that value as-is in bindings of the specified secure context.
+     * This is used in bindings for `ng-bind-html`, `ng-include`, and most `src` attribute
+     * interpolations. See {@link ng.$sce $sce} for strict contextual escaping.
      *
-     * @param {string} type The kind of context in which this value is safe for use.  e.g. url,
-     *   resourceUrl, html, js and css.
-     * @param {*} value The value that that should be considered trusted/safe.
-     * @returns {*} A value that can be used to stand in for the provided `value` in places
-     * where Angular expects a $sce.trustAs() return value.
+     * @param {string} type The context in which this value is safe for use, e.g. `$sce.URL`,
+     *     `$sce.RESOURCE_URL`, `$sce.HTML`, `$sce.JS` or `$sce.CSS`.
+     *
+     * @param {*} value The value that that should be considered trusted.
+     * @return {*} A wrapped version of value that can be used as a trusted variant of your `value`
+     *     in the context you specified.
      */
 
     /**
@@ -31196,11 +31261,23 @@ function $SceProvider() {
      * Shorthand method.  `$sce.trustAsHtml(value)` →
      *     {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs($sce.HTML, value)`}
      *
-     * @param {*} value The value to trustAs.
-     * @returns {*} An object that can be passed to {@link ng.$sce#getTrustedHtml
-     *     $sce.getTrustedHtml(value)} to obtain the original value.  (privileged directives
-     *     only accept expressions that are either literal constants or are the
-     *     return value of {@link ng.$sce#trustAs $sce.trustAs}.)
+     * @param {*} value The value to mark as trusted for `$sce.HTML` context.
+     * @return {*} A wrapped version of value that can be used as a trusted variant of your `value`
+     *     in `$sce.HTML` context (like `ng-bind-html`).
+     */
+
+    /**
+     * @ngdoc method
+     * @name $sce#trustAsCss
+     *
+     * @description
+     * Shorthand method.  `$sce.trustAsCss(value)` →
+     *     {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs($sce.CSS, value)`}
+     *
+     * @param {*} value The value to mark as trusted for `$sce.CSS` context.
+     * @return {*} A wrapped version of value that can be used as a trusted variant
+     *     of your `value` in `$sce.CSS` context. This context is currently unused, so there are
+     *     almost no reasons to use this function so far.
      */
 
     /**
@@ -31211,11 +31288,10 @@ function $SceProvider() {
      * Shorthand method.  `$sce.trustAsUrl(value)` →
      *     {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs($sce.URL, value)`}
      *
-     * @param {*} value The value to trustAs.
-     * @returns {*} An object that can be passed to {@link ng.$sce#getTrustedUrl
-     *     $sce.getTrustedUrl(value)} to obtain the original value.  (privileged directives
-     *     only accept expressions that are either literal constants or are the
-     *     return value of {@link ng.$sce#trustAs $sce.trustAs}.)
+     * @param {*} value The value to mark as trusted for `$sce.URL` context.
+     * @return {*} A wrapped version of value that can be used as a trusted variant of your `value`
+     *     in `$sce.URL` context. That context is currently unused, so there are almost no reasons
+     *     to use this function so far.
      */
 
     /**
@@ -31226,11 +31302,10 @@ function $SceProvider() {
      * Shorthand method.  `$sce.trustAsResourceUrl(value)` →
      *     {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs($sce.RESOURCE_URL, value)`}
      *
-     * @param {*} value The value to trustAs.
-     * @returns {*} An object that can be passed to {@link ng.$sce#getTrustedResourceUrl
-     *     $sce.getTrustedResourceUrl(value)} to obtain the original value.  (privileged directives
-     *     only accept expressions that are either literal constants or are the return
-     *     value of {@link ng.$sce#trustAs $sce.trustAs}.)
+     * @param {*} value The value to mark as trusted for `$sce.RESOURCE_URL` context.
+     * @return {*} A wrapped version of value that can be used as a trusted variant of your `value`
+     *     in `$sce.RESOURCE_URL` context (template URLs in `ng-include`, most `src` attribute
+     *     bindings, ...)
      */
 
     /**
@@ -31241,11 +31316,10 @@ function $SceProvider() {
      * Shorthand method.  `$sce.trustAsJs(value)` →
      *     {@link ng.$sceDelegate#trustAs `$sceDelegate.trustAs($sce.JS, value)`}
      *
-     * @param {*} value The value to trustAs.
-     * @returns {*} An object that can be passed to {@link ng.$sce#getTrustedJs
-     *     $sce.getTrustedJs(value)} to obtain the original value.  (privileged directives
-     *     only accept expressions that are either literal constants or are the
-     *     return value of {@link ng.$sce#trustAs $sce.trustAs}.)
+     * @param {*} value The value to mark as trusted for `$sce.JS` context.
+     * @return {*} A wrapped version of value that can be used as a trusted variant of your `value`
+     *     in `$sce.JS` context. That context is currently unused, so there are almost no reasons to
+     *     use this function so far.
      */
 
     /**
@@ -31254,16 +31328,17 @@ function $SceProvider() {
      *
      * @description
      * Delegates to {@link ng.$sceDelegate#getTrusted `$sceDelegate.getTrusted`}.  As such,
-     * takes the result of a {@link ng.$sce#trustAs `$sce.trustAs`}() call and returns the
-     * originally supplied value if the queried context type is a supertype of the created type.
-     * If this condition isn't satisfied, throws an exception.
+     * takes any input, and either returns a value that's safe to use in the specified context,
+     * or throws an exception. This function is aware of trusted values created by the `trustAs`
+     * function and its shorthands, and when contexts are appropriate, returns the unwrapped value
+     * as-is. Finally, this function can also throw when there is no way to turn `maybeTrusted` in a
+     * safe value (e.g., no sanitization is available or possible.)
      *
-     * @param {string} type The kind of context in which this value is to be used.
-     * @param {*} maybeTrusted The result of a prior {@link ng.$sce#trustAs `$sce.trustAs`}
-     *                         call.
-     * @returns {*} The value the was originally provided to
-     *              {@link ng.$sce#trustAs `$sce.trustAs`} if valid in this context.
-     *              Otherwise, throws an exception.
+     * @param {string} type The context in which this value is to be used.
+     * @param {*} maybeTrusted The result of a prior {@link ng.$sce#trustAs
+     *     `$sce.trustAs`} call, or anything else (which will not be considered trusted.)
+     * @return {*} A version of the value that's safe to use in the given context, or throws an
+     *     exception if this is impossible.
      */
 
     /**
@@ -31275,7 +31350,7 @@ function $SceProvider() {
      *     {@link ng.$sceDelegate#getTrusted `$sceDelegate.getTrusted($sce.HTML, value)`}
      *
      * @param {*} value The value to pass to `$sce.getTrusted`.
-     * @returns {*} The return value of `$sce.getTrusted($sce.HTML, value)`
+     * @return {*} The return value of `$sce.getTrusted($sce.HTML, value)`
      */
 
     /**
@@ -31287,7 +31362,7 @@ function $SceProvider() {
      *     {@link ng.$sceDelegate#getTrusted `$sceDelegate.getTrusted($sce.CSS, value)`}
      *
      * @param {*} value The value to pass to `$sce.getTrusted`.
-     * @returns {*} The return value of `$sce.getTrusted($sce.CSS, value)`
+     * @return {*} The return value of `$sce.getTrusted($sce.CSS, value)`
      */
 
     /**
@@ -31299,7 +31374,7 @@ function $SceProvider() {
      *     {@link ng.$sceDelegate#getTrusted `$sceDelegate.getTrusted($sce.URL, value)`}
      *
      * @param {*} value The value to pass to `$sce.getTrusted`.
-     * @returns {*} The return value of `$sce.getTrusted($sce.URL, value)`
+     * @return {*} The return value of `$sce.getTrusted($sce.URL, value)`
      */
 
     /**
@@ -31311,7 +31386,7 @@ function $SceProvider() {
      *     {@link ng.$sceDelegate#getTrusted `$sceDelegate.getTrusted($sce.RESOURCE_URL, value)`}
      *
      * @param {*} value The value to pass to `$sceDelegate.getTrusted`.
-     * @returns {*} The return value of `$sce.getTrusted($sce.RESOURCE_URL, value)`
+     * @return {*} The return value of `$sce.getTrusted($sce.RESOURCE_URL, value)`
      */
 
     /**
@@ -31323,7 +31398,7 @@ function $SceProvider() {
      *     {@link ng.$sceDelegate#getTrusted `$sceDelegate.getTrusted($sce.JS, value)`}
      *
      * @param {*} value The value to pass to `$sce.getTrusted`.
-     * @returns {*} The return value of `$sce.getTrusted($sce.JS, value)`
+     * @return {*} The return value of `$sce.getTrusted($sce.JS, value)`
      */
 
     /**
@@ -31335,12 +31410,12 @@ function $SceProvider() {
      *     {@link ng.$sce#parseAs `$sce.parseAs($sce.HTML, value)`}
      *
      * @param {string} expression String expression to compile.
-     * @returns {function(context, locals)} a function which represents the compiled expression:
+     * @return {function(context, locals)} A function which represents the compiled expression:
      *
-     *    * `context` – `{object}` – an object against which any expressions embedded in the strings
-     *      are evaluated against (typically a scope object).
-     *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
-     *      `context`.
+     *    * `context` – `{object}` – an object against which any expressions embedded in the
+     *      strings are evaluated against (typically a scope object).
+     *    * `locals` – `{object=}` – local variables context object, useful for overriding values
+     *      in `context`.
      */
 
     /**
@@ -31352,12 +31427,12 @@ function $SceProvider() {
      *     {@link ng.$sce#parseAs `$sce.parseAs($sce.CSS, value)`}
      *
      * @param {string} expression String expression to compile.
-     * @returns {function(context, locals)} a function which represents the compiled expression:
+     * @return {function(context, locals)} A function which represents the compiled expression:
      *
-     *    * `context` – `{object}` – an object against which any expressions embedded in the strings
-     *      are evaluated against (typically a scope object).
-     *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
-     *      `context`.
+     *    * `context` – `{object}` – an object against which any expressions embedded in the
+     *      strings are evaluated against (typically a scope object).
+     *    * `locals` – `{object=}` – local variables context object, useful for overriding values
+     *      in `context`.
      */
 
     /**
@@ -31369,12 +31444,12 @@ function $SceProvider() {
      *     {@link ng.$sce#parseAs `$sce.parseAs($sce.URL, value)`}
      *
      * @param {string} expression String expression to compile.
-     * @returns {function(context, locals)} a function which represents the compiled expression:
+     * @return {function(context, locals)} A function which represents the compiled expression:
      *
-     *    * `context` – `{object}` – an object against which any expressions embedded in the strings
-     *      are evaluated against (typically a scope object).
-     *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
-     *      `context`.
+     *    * `context` – `{object}` – an object against which any expressions embedded in the
+     *      strings are evaluated against (typically a scope object).
+     *    * `locals` – `{object=}` – local variables context object, useful for overriding values
+     *      in `context`.
      */
 
     /**
@@ -31386,12 +31461,12 @@ function $SceProvider() {
      *     {@link ng.$sce#parseAs `$sce.parseAs($sce.RESOURCE_URL, value)`}
      *
      * @param {string} expression String expression to compile.
-     * @returns {function(context, locals)} a function which represents the compiled expression:
+     * @return {function(context, locals)} A function which represents the compiled expression:
      *
-     *    * `context` – `{object}` – an object against which any expressions embedded in the strings
-     *      are evaluated against (typically a scope object).
-     *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
-     *      `context`.
+     *    * `context` – `{object}` – an object against which any expressions embedded in the
+     *      strings are evaluated against (typically a scope object).
+     *    * `locals` – `{object=}` – local variables context object, useful for overriding values
+     *      in `context`.
      */
 
     /**
@@ -31403,12 +31478,12 @@ function $SceProvider() {
      *     {@link ng.$sce#parseAs `$sce.parseAs($sce.JS, value)`}
      *
      * @param {string} expression String expression to compile.
-     * @returns {function(context, locals)} a function which represents the compiled expression:
+     * @return {function(context, locals)} A function which represents the compiled expression:
      *
-     *    * `context` – `{object}` – an object against which any expressions embedded in the strings
-     *      are evaluated against (typically a scope object).
-     *    * `locals` – `{object=}` – local variables context object, useful for overriding values in
-     *      `context`.
+     *    * `context` – `{object}` – an object against which any expressions embedded in the
+     *      strings are evaluated against (typically a scope object).
+     *    * `locals` – `{object=}` – local variables context object, useful for overriding values
+     *      in `context`.
      */
 
     // Shorthand delegations.
@@ -32268,8 +32343,9 @@ function $FilterProvider($provide) {
  *     The final result is an array of those elements that the predicate returned true for.
  *
  * @param {function(actual, expected)|true|false} [comparator] Comparator which is used in
- *     determining if the expected value (from the filter expression) and actual value (from
- *     the object in the array) should be considered a match.
+ *     determining if values retrieved using `expression` (when it is not a function) should be
+ *     considered a match based on the the expected value (from the filter expression) and actual
+ *     value (from the object in the array).
  *
  *   Can be one of:
  *
@@ -32964,7 +33040,7 @@ var DATE_FORMATS = {
      GGGG: longEraGetter
 };
 
-var DATE_FORMATS_SPLIT = /((?:[^yMLdHhmsaZEwG']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|L+|d+|H+|h+|m+|s+|a|Z|G+|w+))(.*)/,
+var DATE_FORMATS_SPLIT = /((?:[^yMLdHhmsaZEwG']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|L+|d+|H+|h+|m+|s+|a|Z|G+|w+))([\s\S]*)/,
     NUMBER_STRING = /^-?\d+$/;
 
 /**
@@ -33022,6 +33098,8 @@ var DATE_FORMATS_SPLIT = /((?:[^yMLdHhmsaZEwG']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+
  *   `format` string can contain literal values. These need to be escaped by surrounding with single quotes (e.g.
  *   `"h 'in the morning'"`). In order to output a single quote, escape it - i.e., two single quotes in a sequence
  *   (e.g. `"h 'o''clock'"`).
+ *
+ *   Any other characters in the `format` string will be output as-is.
  *
  * @param {(Date|number|string)} date Date to format either as Date object, milliseconds (string or
  *    number) or various ISO 8601 datetime string formats (e.g. yyyy-MM-ddTHH:mm:ss.sssZ and its
@@ -37637,13 +37715,6 @@ function classDirective(name, selector) {
     return {
       restrict: 'AC',
       link: function(scope, element, attr) {
-        var expression = attr[name].trim();
-        var isOneTime = (expression.charAt(0) === ':') && (expression.charAt(1) === ':');
-
-        var watchInterceptor = isOneTime ? toFlatValue : toClassString;
-        var watchExpression = $parse(expression, watchInterceptor);
-        var watchAction = isOneTime ? ngClassOneTimeWatchAction : ngClassWatchAction;
-
         var classCounts = element.data('$classCounts');
         var oldModulo = true;
         var oldClassString;
@@ -37666,7 +37737,7 @@ function classDirective(name, selector) {
           scope.$watch(indexWatchExpression, ngClassIndexWatchAction);
         }
 
-        scope.$watch(watchExpression, watchAction, isOneTime);
+        scope.$watch($parse(attr[name], toClassString), ngClassWatchAction);
 
         function addClasses(classString) {
           classString = digestClassCounts(split(classString), 1);
@@ -37708,9 +37779,9 @@ function classDirective(name, selector) {
         }
 
         function ngClassIndexWatchAction(newModulo) {
-          // This watch-action should run before the `ngClass[OneTime]WatchAction()`, thus it
+          // This watch-action should run before the `ngClassWatchAction()`, thus it
           // adds/removes `oldClassString`. If the `ngClass` expression has changed as well, the
-          // `ngClass[OneTime]WatchAction()` will update the classes.
+          // `ngClassWatchAction()` will update the classes.
           if (newModulo === selector) {
             addClasses(oldClassString);
           } else {
@@ -37720,15 +37791,13 @@ function classDirective(name, selector) {
           oldModulo = newModulo;
         }
 
-        function ngClassOneTimeWatchAction(newClassValue) {
-          var newClassString = toClassString(newClassValue);
-
-          if (newClassString !== oldClassString) {
-            ngClassWatchAction(newClassString);
-          }
-        }
-
         function ngClassWatchAction(newClassString) {
+          // When using a one-time binding the newClassString will return
+          // the pre-interceptor value until the one-time is complete
+          if (!isString(newClassString)) {
+            newClassString = toClassString(newClassString);
+          }
+
           if (oldModulo === selector) {
             updateClasses(oldClassString, newClassString);
           }
@@ -37774,34 +37843,6 @@ function classDirective(name, selector) {
     }
 
     return classString;
-  }
-
-  function toFlatValue(classValue) {
-    var flatValue = classValue;
-
-    if (isArray(classValue)) {
-      flatValue = classValue.map(toFlatValue);
-    } else if (isObject(classValue)) {
-      var hasUndefined = false;
-
-      flatValue = Object.keys(classValue).filter(function(key) {
-        var value = classValue[key];
-
-        if (!hasUndefined && isUndefined(value)) {
-          hasUndefined = true;
-        }
-
-        return value;
-      });
-
-      if (hasUndefined) {
-        // Prevent the `oneTimeLiteralWatchInterceptor` from unregistering
-        // the watcher, by including at least one `undefined` value.
-        flatValue.push(undefined);
-      }
-    }
-
-    return flatValue;
   }
 }
 
@@ -39982,7 +40023,9 @@ function NgModelController($scope, $exceptionHandler, $attr, $element, $parse, $
 
   this.$$currentValidationRunId = 0;
 
-  this.$$scope = $scope;
+  // https://github.com/angular/angular.js/issues/15833
+  // Prevent `$$scope` from being iterated over by `copy` when NgModelController is deep watched
+  Object.defineProperty(this, '$$scope', {value: $scope});
   this.$$attr = $attr;
   this.$$element = $element;
   this.$$animate = $animate;
@@ -40591,8 +40634,8 @@ function setupModelWatcher(ctrl) {
   //    -> scope value did not change since the last digest as
   //       ng-change executes in apply phase
   // 4. view should be changed back to 'a'
-  ctrl.$$scope.$watch(function ngModelWatch() {
-    var modelValue = ctrl.$$ngModelGet(ctrl.$$scope);
+  ctrl.$$scope.$watch(function ngModelWatch(scope) {
+    var modelValue = ctrl.$$ngModelGet(scope);
 
     // if scope model value and ngModel value are out of sync
     // TODO(perf): why not move this to the action fn?
@@ -45044,6 +45087,235 @@ var _angular = __webpack_require__(0);
 
 var _angular2 = _interopRequireDefault(_angular);
 
+var _core = __webpack_require__(3);
+
+var _core2 = _interopRequireDefault(_core);
+
+var _ui = __webpack_require__(5);
+
+var _ui2 = _interopRequireDefault(_ui);
+
+var _sailplay = __webpack_require__(4);
+
+var _sailplay2 = _interopRequireDefault(_sailplay);
+
+__webpack_require__(2);
+
+var _jquery = __webpack_require__(1);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _app = __webpack_require__(6);
+
+var _app2 = _interopRequireDefault(_app);
+
+var _uiPaginationControls = __webpack_require__(7);
+
+var _uiPaginationControls2 = _interopRequireDefault(_uiPaginationControls);
+
+__webpack_require__(8);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var jeweler = _angular2.default.module('sailplay.widgets', [_core2.default, _ui2.default, _sailplay2.default]);
+
+//styles
+
+
+//templates
+
+
+jeweler.config(function (SailPlayProvider, SailPlayActionsDataProvider, SailPlayBadgesProvider) {
+
+  //possible values:
+  //url,cookie,remote
+  SailPlayProvider.set_auth_type('config');
+
+  SailPlayProvider.set_cookie_name('auth_hash');
+
+  window._CONFIG && SailPlayProvider.set_config({
+    partner_id: _CONFIG.SAILPLAY.partner_id,
+    domain: _CONFIG.SAILPLAY.domain,
+    lang: 'ru'
+  });
+
+  _LOCALE && SailPlayActionsDataProvider.set_actions_data(_LOCALE.actions);
+
+  SailPlayBadgesProvider.set_limits([0, 100000]);
+});
+
+jeweler.run(function ($rootScope, SailPlay, $templateCache) {
+
+  $templateCache.put('/html/ui/ui.pagination.controls.html', _uiPaginationControls2.default);
+
+  $rootScope.locale = _LOCALE || {};
+
+  $rootScope.$on('sailplay-init-success', function () {
+
+    SailPlay.authorize();
+  });
+});
+
+jeweler.directive('sailplayWidgets', function (SailPlay, ipCookie, $document, $rootScope, SailPlayApi) {
+
+  return {
+    restrict: 'E',
+    replace: true,
+    scope: true,
+    template: _app2.default,
+    link: function link(scope) {
+
+      scope.global = $rootScope;
+
+      scope.show_history = false;
+
+      scope.show_statuses_list = false;
+
+      scope.show_profile_info = false;
+
+      scope.show_profile_action = true;
+
+      scope.fill_profile = function () {
+
+        scope.show_profile_info = true;
+      };
+
+      scope.body_lock = function (state) {
+
+        if (state) {
+          (0, _jquery2.default)('body').addClass('body_lock');
+        } else {
+          (0, _jquery2.default)('body').removeClass('body_lock');
+        }
+      };
+
+      scope.close_profile = function () {
+
+        scope.show_profile_action = false;
+
+        scope.show_profile_info = false;
+
+        scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').custom_vars.hide_hist === 'Да';
+
+        scope.body_lock(false);
+      };
+
+      scope.open_profile = function () {
+
+        var popup = (0, _jquery2.default)('.js-profile-popup');
+
+        if ((0, _jquery2.default)('.menu._fixed._open').length) {
+          popup.css('top', (0, _jquery2.default)('.menu._fixed._open').length && (0, _jquery2.default)('.menu._fixed._open').height() || 0);
+        } else {
+          popup.css('top', (0, _jquery2.default)('header').length && (0, _jquery2.default)('header').height() || 0);
+        }
+
+        scope.show_profile_info = true;
+
+        scope.body_lock(true);
+      };
+
+      scope.open_custom_action = function (action) {
+        var popup = (0, _jquery2.default)('.js-custom_action-popup');
+
+        if ((0, _jquery2.default)('.menu._fixed._open').length) {
+          popup.css('top', (0, _jquery2.default)('.menu._fixed._open').length && (0, _jquery2.default)('.menu._fixed._open').height() || 0);
+        } else {
+          popup.css('top', (0, _jquery2.default)('header').length && (0, _jquery2.default)('header').height() || 0);
+        }
+
+        scope.custom_action = action;
+      };
+
+      scope.open_history = function () {
+
+        var popup = (0, _jquery2.default)('.js-history-popup');
+
+        if ((0, _jquery2.default)('.menu._fixed._open').length) {
+          popup.css('top', (0, _jquery2.default)('.menu._fixed._open').length && (0, _jquery2.default)('.menu._fixed._open').height() || 0);
+        } else {
+          popup.css('top', (0, _jquery2.default)('header').length && (0, _jquery2.default)('header').height() || 0);
+        }
+
+        scope.show_history = true;
+
+        scope.body_lock(true);
+      };
+
+      scope.close_custom_action = function () {
+        scope.custom_action = '';
+
+        scope.body_lock(false);
+      };
+
+      scope.close_history = function () {
+
+        scope.show_history = false;
+
+        scope.body_lock(false);
+      };
+
+      scope.open_status_list = function () {
+
+        var popup = (0, _jquery2.default)('.js-status-popup');
+
+        if ((0, _jquery2.default)('.menu._fixed._open').length) {
+          popup.css('top', (0, _jquery2.default)('.menu._fixed._open').length && (0, _jquery2.default)('.menu._fixed._open').height() || 0);
+        } else {
+          popup.css('top', (0, _jquery2.default)('header').length && (0, _jquery2.default)('header').height() || 0);
+        }
+
+        scope.show_statuses_list = true;
+
+        scope.body_lock(true);
+      };
+
+      scope.close_status_list = function () {
+
+        scope.show_statuses_list = false;
+
+        scope.body_lock(false);
+      };
+
+      SailPlay.on('tags.exist.success', function (res) {
+
+        if (res.status === 'ok' && res.tags[0].exist) {
+
+          scope.show_profile_action = false;
+          scope.$apply();
+        }
+      });
+
+      scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').custom_vars.hide_hist === 'Да';
+    }
+  };
+});
+
+exports.default = jeweler.name;
+
+
+setTimeout(function () {
+
+  var app_container = document.getElementsByTagName('sailplay-widgets')[0];
+
+  app_container && _angular2.default.bootstrap(app_container, ['sailplay.widgets']);
+}, 100);
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _angular = __webpack_require__(0);
+
+var _angular2 = _interopRequireDefault(_angular);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SailPlayActions = _angular2.default.module('sailplay.actions', []).provider('SailPlayActionsData', function () {
@@ -45152,6 +45424,7 @@ var SailPlayActions = _angular2.default.module('sailplay.actions', []).provider(
     link: function link(scope) {
 
       scope.actions = SailPlayApi.data('load.actions.list');
+      scope.actions_custom = SailPlayApi.data('load.actions.custom.list');
 
       scope.perform_action = function (action) {
 
@@ -45217,12 +45490,49 @@ var SailPlayActions = _angular2.default.module('sailplay.actions', []).provider(
     }
 
   };
+}).directive('sailplayActionCustom', function (SailPlay, $document) {
+
+  var init_state = void 0;
+
+  return {
+
+    restrict: 'A',
+    replace: false,
+    scope: {
+      action: '='
+    },
+    link: function link(scope, elm, attrs) {
+
+      var iframe = $document[0].createElement('iframe');
+
+      iframe.style.backgroundColor = "transparent";
+      iframe.frameBorder = "0";
+      iframe.allowTransparency = "true";
+
+      elm.append(iframe);
+
+      scope.$watch('action', function (action) {
+
+        if (action) {
+
+          var config = SailPlay.config();
+
+          iframe.src = config && config.DOMAIN + config.urls.actions.custom.render.replace(':action_id', action.id) + '?auth_hash=' + config.auth_hash + '&lang=' + config.lang || '';
+
+          iframe.className = ['sailplay_action_custom_frame', action.type].join(' ');
+        } else {
+          iframe.src = '';
+        }
+      });
+    }
+
+  };
 });
 
 exports.default = SailPlayActions.name;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45354,7 +45664,7 @@ var SailPlayBadges = _angular2.default.module('sailplay.badges', []).provider('S
 exports.default = SailPlayBadges.name;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45414,7 +45724,7 @@ var SailPlayGifts = _angular2.default.module('sailplay.gifts', [])
 exports.default = SailPlayGifts.name;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45514,7 +45824,7 @@ var SailPlayHistory = _angular2.default.module('sailplay.history', [])
 exports.default = SailPlayHistory.name;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45581,21 +45891,21 @@ var SailPlayProfile = _angular2.default.module('sailplay.profile', [])
 exports.default = SailPlayProfile.name;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(20)();
+exports = module.exports = __webpack_require__(21)();
 // imports
 
 
 // module
-exports.push([module.i, "@font-face {\n  font-family: 'coco_gothic';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eb5907e5b8a8c16d8bd746c08aae7ae0.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eb5907e5b8a8c16d8bd746c08aae7ae0.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eea299fe1a86571538f48a69c0d91bea.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/94ba4858f5801daeb689e759193ba0ff.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/dcb5df3da7d570620ef674e863b0a6a6.ttf') format('truetype');\n  font-weight: 400;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'coco_gothic';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/69ba4269a5a866de4408712b4916cb47.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/69ba4269a5a866de4408712b4916cb47.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/c71aa5a0bfc853a07657b7583fac6afd.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/079abd9b98d4d3cfcd612386df435016.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/ea4aa13378c938624417de13045a6e4b.ttf') format('truetype');\n  font-weight: 700;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'coco_gothic';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/a05f526f2fc4b690006c0a1e4614abf4.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/a05f526f2fc4b690006c0a1e4614abf4.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/d8ec60a555f5f491647f542e2402ae84.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/c8531a767c4a2cac3db2e1354c35ff2a.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/20fad5cd3789d63569dbe79bc809da4e.ttf') format('truetype');\n  font-weight: 300;\n  font-style: normal;\n}\n.coco {\n  font-family: 'coco_gothic', sans-serif;\n}\n@font-face {\n  font-family: 'a_antiquetradyregular';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/03c5660fc5dbbc84ef6d2dd0b61a1dab.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/03c5660fc5dbbc84ef6d2dd0b61a1dab.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/e903cd6dec20f70f98928ffdeae2d381.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/a2e4e356d5fa98fe35a626f7135e6da3.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/85cd6f498ba57b2cd9637ef084966910.ttf') format('truetype');\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'MullerFont';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/14b10cded46c5f3dc004d75b253bde72.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/14b10cded46c5f3dc004d75b253bde72.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/1881e8ca0a54c95b111c478ec9fa8837.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/75a444030389ee5c90ee23c7fde3f618.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/5ea4412a38bf286c8f67fa8386b32d61.ttf') format('truetype');\n  font-weight: 400;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'MullerFont';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/95ed8e52096a72758fc957c91c4561a7.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/95ed8e52096a72758fc957c91c4561a7.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eaa790e041ed8fe8c1f51299eea69d9d.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/e173d29c2fd6c461477920b87a2dacfb.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/4b82a8f83af63b5e2e7ad41b7488d5be.ttf') format('truetype');\n  font-weight: 700;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'MullerFont';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/9c975cc1696bd20420c7e6db2e19639e.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/9c975cc1696bd20420c7e6db2e19639e.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/41cf83fcb0ecbe2f44f7000193a8a81b.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/01df7e8c5e27042e9363d755c876ec07.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/1731022c0a614a603e62f24762bfc291.ttf') format('truetype');\n  font-weight: 300;\n  font-style: normal;\n}\n.muller {\n  font-family: 'MullerFont', sans-serif;\n}\n.sp_l-centered,\n.sp_l-section {\n  position: relative;\n  margin-right: auto;\n  margin-left: auto;\n  max-width: 1140px;\n}\n.sp_l-section {\n  overflow: hidden;\n}\ninput.ng-invalid.ng-touched {\n  border: 1px solid #d9534f !important;\n}\nbutton {\n  outline: none;\n}\n.body_lock {\n  overflow: hidden;\n  margin-right: 15px;\n}\n.uppercase {\n  text-transform: uppercase;\n}\n.sp_cmn-btn {\n  display: block;\n  height: 55px;\n  width: 100%;\n  overflow: hidden;\n  cursor: pointer;\n  font-size: 15px;\n  text-transform: uppercase;\n  line-height: 59px;\n  text-align: center;\n  color: #313B49;\n  border: 1px solid #313B49;\n  border-radius: 28px;\n}\n.sp_cmn-btn:link {\n  color: #313B49;\n}\n.sp_cmn-btn:visited {\n  color: #313B49;\n}\n.sp_cmn-btn:hover {\n  color: #820d41;\n}\n.sp_cmn-btn:active {\n  color: #313B49;\n}\n.sp_cmn-btn:hover {\n  background-color: rgba(255, 255, 255, 0.4);\n  border-color: #820d41;\n  color: #820d41;\n}\n.sp_cmn-btn:active {\n  background-color: rgba(255, 255, 255, 0.6);\n}\n.sp_cmn-btn_red {\n  background-color: #820d41;\n  border-color: #820d41;\n  color: #fff;\n}\n.sp_cmn-btn_red:link {\n  color: #fff;\n}\n.sp_cmn-btn_red:visited {\n  color: #fff;\n}\n.sp_cmn-btn_red:hover {\n  color: #fff;\n}\n.sp_cmn-btn_red:active {\n  color: #fff;\n}\n.sp_cmn-btn_red:hover {\n  background-color: #990f4d;\n}\n.sp_cmn-btn_red:active {\n  background-color: #740c3a;\n}\n.sp_cmn-btn:disabled {\n  background-color: #E6E6E6;\n  color: #808080;\n}\n.sp_cmn-btn-sm {\n  display: block;\n  height: 38px;\n  width: 100%;\n  overflow: hidden;\n  cursor: pointer;\n  font-size: 15px;\n  text-transform: uppercase;\n  line-height: 42px;\n  text-align: center;\n  border: 1px solid #313B49;\n  border-radius: 28px;\n  background-color: #820d41;\n  border-color: #820d41;\n  color: #fff;\n}\n.sp_cmn-btn-sm:link {\n  color: #fff;\n}\n.sp_cmn-btn-sm:visited {\n  color: #fff;\n}\n.sp_cmn-btn-sm:hover {\n  color: #fff;\n}\n.sp_cmn-btn-sm:active {\n  color: #fff;\n}\n.sp_cmn-btn-sm:hover {\n  /* background-color: lighten(#820d41, 5%); */\n}\n.sp_cmn-btn-sm:active {\n  /* background-color: darken(#820d41, 3%); */\n}\n.sp_cmn-btn-sm:disabled {\n  background-color: #E6E6E6;\n  border: 1px solid #E6E6E6;\n}\n.sp_cmn-sec-head {\n  font-family: 'MullerFont', sans-serif;\n  font-size: 40px;\n  text-align: center;\n  margin-bottom: 25px;\n  text-transform: uppercase;\n}\n.sp_cmn-breadcr {\n  text-align: center;\n  padding: 0 30px;\n}\n.sp_cmn-breadcr__inner {\n  display: inline-block;\n  position: relative;\n}\n.sp_cmn-breadcr__itm {\n  display: inline-block;\n  font-size: 13px;\n  font-weight: 300;\n  line-height: 1;\n  padding: 0 4px 2px;\n}\n.sp_cmn-breadcr__itm:link {\n  color: #262626;\n}\n.sp_cmn-breadcr__itm:visited {\n  color: #262626;\n}\n.sp_cmn-breadcr__itm:hover {\n  color: #820d41;\n}\n.sp_cmn-breadcr__itm:active {\n  color: #262626;\n}\n.sp_cmn-breadcr__itm.this-active {\n  color: #820d41;\n  border-bottom: 1px solid #820d41;\n}\n.sp_cmn-breadcr__itm:hover {\n  color: #820d41;\n}\n.sp_cmn-breadcr__arrow {\n  position: absolute;\n  width: 6px;\n  height: 8px;\n  top: 39%;\n  margin-top: -4px;\n  background-color: red;\n  opacity: .8;\n}\n.sp_cmn-breadcr__arrow.this-left {\n  left: -14px;\n  background: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eead5542c9e188907d185192b16da8b4.png\") no-repeat center;\n}\n.sp_cmn-breadcr__arrow.this-right {\n  right: -14px;\n  background: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/54191274c2ac2f95281907c0836f183c.png\") no-repeat center;\n}\n.sp_cmn-breadcr__arrow:hover {\n  opacity: 1;\n}\n.sp_cmn-popup-close {\n  width: 14px;\n  height: 14px;\n  position: absolute;\n  right: 15px;\n  top: 15px;\n  background: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/9d9c35daa6ad76b5b26b7a190dc85457.svg\") no-repeat center;\n  background-size: contain;\n  cursor: pointer;\n}\n/* forms */\n.sp_cmn-input {\n  display: block;\n  width: 100%;\n  height: 48px;\n  padding: 0 12px;\n  border: 1px solid #E6E6E6;\n  font-size: 16px;\n  font-weight: normal;\n  color: #262626;\n  font-family: 'MullerFont', sans-serif;\n  font-weight: 300;\n  font-size: 13px;\n  -webkit-transition: border-color 150ms linear 0ms;\n  transition: border-color 150ms linear 0ms;\n}\n.sp_cmn-input:active,\n.sp_cmn-input:focus {\n  outline: none !important;\n  border-color: #c0c0c0;\n}\n.sp_cmn-input::-webkit-input-placeholder {\n  color: #808080;\n}\n.sp_cmn-input::-moz-placeholder {\n  color: #808080;\n}\n.sp_cmn-input:-moz-placeholder {\n  color: #808080;\n}\n.sp_cmn-input:-ms-input-placeholder {\n  color: #808080;\n}\n.sp_cmn-radio-wrap {\n  display: block;\n  position: absolute;\n  left: 0px;\n  top: 1px;\n}\n.sp_cmn-radio-wrap a {\n  display: block;\n  position: relative;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  border: 1px solid #000;\n}\n.sp_cmn-radio-wrap a:hover {\n  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);\n  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);\n}\n.sp_cmn-radio-wrap a.checked {\n  border-color: #820d41;\n  background-color: #820d41;\n}\n.sp_cmn-radio-wrap label {\n  display: none;\n}\n.sp_cmn-checkbox-wrap {\n  display: block;\n  position: absolute;\n  left: 0px;\n  top: 0px;\n}\n.sp_cmn-checkbox-wrap a {\n  display: block;\n  position: relative;\n  width: 12px;\n  height: 12px;\n  border-radius: 2px;\n  border: 1px solidН #000;\n}\n.sp_cmn-checkbox-wrap a:hover {\n  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);\n  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);\n}\n.sp_cmn-checkbox-wrap a.checked {\n  border-color: #820d41;\n  background-color: #820d41;\n  background-image: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/58c932599f2ac4a949d6c02cb35c8c3d.png\");\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: 9px 6px;\n}\n.sp_cmn-checkbox-wrap label {\n  display: none;\n}\n.sp_cmn-label {\n  cursor: pointer;\n}\n.sp_cmn-inline-param {\n  display: inline-block;\n  position: relative;\n  padding-left: 0px;\n  font-size: 13px;\n  line-height: 1;\n  font-weight: 300;\n  margin-right: 55px;\n}\n.sp_cmn-inline-param .outer_label {\n  display: inline-block;\n  padding: 4px;\n  border-radius: 4px;\n}\n.sp_cmn-inline-param:last-child {\n  margin-bottom: 0;\n}\n@media (max-width: 1199px) {\n}\n@media (max-width: 991px) {\n}\n@media (max-width: 767px) {\n  .sp_cmn-inline-param {\n    display: block;\n    margin-bottom: 7px;\n  }\n}\n@media (max-width: 479px) {\n}\n.outer_label {\n  padding-left: 20px !important;\n  background-repeat: no-repeat;\n  background-position: left center;\n  background-size: 15px 15px;\n}\n.outer_label.radio {\n  background-image: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/983ed13b88728b6e3cd1515d0cd02065.png');\n}\n.outer_label.radio.checked {\n  background-image: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/0a4056ee69b2c116a90879dad1c057f8.png');\n}\n.outer_label.checkbox {\n  background-image: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/7bc83e69d13bd06a8e3a92a1a9561221.png');\n}\n.outer_label.checkbox.checked {\n  background-image: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/4444eb710d3576c02f34c6ad3f3f9184.png');\n}\n.outer_label input {\n  display: none;\n}\n.test-fonts-sec {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n}\n.test-fonts-sec:before,\n.test-fonts-sec:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.test-fonts-sec * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.test-fonts-sec *:before,\n.test-fonts-sec *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.test-fonts-sec a,\n.test-fonts-sec a:hover,\n.test-fonts-sec a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.test-fonts-sec h1,\n.test-fonts-sec h2,\n.test-fonts-sec h3,\n.test-fonts-sec h4,\n.test-fonts-sec h5,\n.test-fonts-sec h6,\n.test-fonts-sec ul,\n.test-fonts-sec ol,\n.test-fonts-sec p {\n  margin: 0;\n  padding: 0;\n}\n.test-fonts-sec h1,\n.test-fonts-sec h2,\n.test-fonts-sec h3,\n.test-fonts-sec h4,\n.test-fonts-sec h5,\n.test-fonts-sec h6 {\n  font-weight: normal;\n}\n.test-fonts-sec ul,\n.test-fonts-sec ol {\n  list-style: none;\n}\n.test-font {\n  font-size: 36px;\n}\n.test-font.font1 {\n  font-weight: 300;\n}\n.test-font.font2 {\n  font-weight: 400;\n}\n.test-font.font3 {\n  font-weight: 700;\n}\n.sp_person-sec {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  background: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/6716947a502a7f27365c5ea00234084c.jpg\") no-repeat 0 0;\n  background-size: cover;\n  padding: 70px 60px 50px;\n}\n.sp_person-sec:before,\n.sp_person-sec:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_person-sec * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_person-sec *:before,\n.sp_person-sec *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_person-sec a,\n.sp_person-sec a:hover,\n.sp_person-sec a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_person-sec h1,\n.sp_person-sec h2,\n.sp_person-sec h3,\n.sp_person-sec h4,\n.sp_person-sec h5,\n.sp_person-sec h6,\n.sp_person-sec ul,\n.sp_person-sec ol,\n.sp_person-sec p {\n  margin: 0;\n  padding: 0;\n}\n.sp_person-sec h1,\n.sp_person-sec h2,\n.sp_person-sec h3,\n.sp_person-sec h4,\n.sp_person-sec h5,\n.sp_person-sec h6 {\n  font-weight: normal;\n}\n.sp_person-sec ul,\n.sp_person-sec ol {\n  list-style: none;\n}\n.sp_person-sec:before,\n.sp_person-sec:after {\n  content: \" \";\n  display: table;\n}\n.sp_person-sec:after {\n  clear: both;\n}\n@media (max-width: 767px) {\n  .sp_person-sec {\n    padding: 30px 30px;\n  }\n}\n@media (max-width: 479px) {\n  .sp_person-sec {\n    padding: 20px;\n  }\n}\n.sp_person-sec__col1 {\n  float: left;\n  width: 52%;\n  color: #451300;\n  text-transform: uppercase;\n}\n@media (max-width: 991px) {\n  .sp_person-sec__col1 {\n    width: 100%;\n    margin-bottom: 20px;\n  }\n}\n.sp_person-sec__col2 {\n  float: left;\n  width: 24%;\n  padding: 0 10px;\n}\n@media (max-width: 991px) {\n  .sp_person-sec__col2 {\n    width: 50%;\n  }\n}\n@media (max-width: 767px) {\n  .sp_person-sec__col2 {\n    width: 100%;\n    margin-bottom: 20px;\n  }\n}\n.sp_person-sec__col3 {\n  float: left;\n  width: 24%;\n  padding-left: 15px;\n  padding-top: 17px;\n}\n@media (max-width: 991px) {\n  .sp_person-sec__col3 {\n    width: 50%;\n  }\n}\n@media (max-width: 767px) {\n  .sp_person-sec__col3 {\n    width: 100%;\n    padding: 0;\n  }\n}\n.sp_person-sec__hd {\n  font-size: 60px;\n  line-height: 1.2;\n  font-weight: 700;\n}\n@media (max-width: 1199px) {\n  .sp_person-sec__hd {\n    font-size: 48px;\n  }\n}\n@media (max-width: 991px) {\n  .sp_person-sec__hd {\n    font-size: 40px;\n  }\n}\n@media (max-width: 767px) {\n  .sp_person-sec__hd {\n    font-size: 35px;\n  }\n}\n@media (max-width: 479px) {\n  .sp_person-sec__hd {\n    font-size: 20px;\n  }\n}\n.sp_person-sec__ttl {\n  font-size: 35px;\n  line-height: 1.2;\n  font-weight: 300;\n  margin-top: -15px;\n  margin-bottom: 20px;\n}\n@media (max-width: 1199px) {\n  .sp_person-sec__ttl {\n    font-size: 25px;\n    margin-top: 0;\n  }\n}\n@media (max-width: 479px) {\n  .sp_person-sec__ttl {\n    font-size: 18px;\n  }\n}\n.sp_person-sec__more {\n  display: inline-block;\n  margin-top: 30px;\n  font-size: 12px;\n  line-height: 10px;\n  text-transform: uppercase;\n  border-bottom: 1px dashed #B20B49;\n}\n.sp_person-sec__more:link {\n  color: #B20B49;\n}\n.sp_person-sec__more:visited {\n  color: #B20B49;\n}\n.sp_person-sec__more:hover {\n  color: #B20B49;\n}\n.sp_person-sec__more:active {\n  color: #B20B49;\n}\n.sp_person-sec__more:hover {\n  border-bottom-color: rgba(255, 255, 255, 0);\n}\n.sp_person-cell__photo {\n  display: block;\n  width: 152px;\n  height: 152px;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  border-radius: 50%;\n  margin: 0 auto 30px;\n}\n.sp_person-info {\n  font-size: 15px;\n  font-weight: 300;\n}\n.sp_person-info__hd {\n  font-size: 25px;\n  line-height: 1;\n  margin-bottom: 10px;\n}\n.sp_person-info__name {\n  font-weight: 700;\n  line-height: 27px;\n}\n.sp_person-info__cont {\n  line-height: 27px;\n}\n.sp_person-info__status {\n  border-top: 1px solid #000;\n  line-height: 1;\n  margin-top: 25px;\n  padding-top: 15px;\n}\n.sp_person-info__stat-hd {\n  margin-bottom: 11px;\n}\n.status-info-counter {\n  display: inline-block;\n  position: relative;\n  margin-bottom: 0px;\n}\n.status-info-counter__val {\n  display: inline-block;\n  font-size: 121px;\n  line-height: 1;\n  font-weight: 700;\n  color: #5C6980;\n}\n.status-info-counter__remain {\n  position: absolute;\n  right: -22px;\n  top: -30px;\n  width: 40px;\n  height: 40px;\n  border-radius: 50%;\n  background-color: #fff;\n  font-size: 15px;\n  font-weight: 700;\n  color: #BEBEBE;\n  text-align: center;\n  padding-top: 12px;\n}\n.status-info-counter__remain:hover .status-info-counter__popup {\n  display: block;\n}\n.status-info-counter__popup {\n  display: none;\n  position: absolute;\n  z-index: 2;\n  background-color: #fff;\n  bottom: 100%;\n  margin-bottom: 17px;\n  width: 320px;\n  left: 50%;\n  margin-left: -160px;\n  padding: 30px 25px;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.2;\n  text-align: center;\n  -webkit-box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.3);\n  box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.3);\n}\n.status-info-counter__popup:after {\n  content: \"\";\n  display: block;\n  position: absolute;\n  top: 100%;\n  left: 50%;\n  width: 0;\n  height: 0;\n  margin-left: -13px;\n  border-left: 13px solid transparent;\n  border-right: 13px solid transparent;\n  border-top: 14px solid #fff;\n}\n.sp_info-sec {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  margin-top: 14px;\n}\n.sp_info-sec:before,\n.sp_info-sec:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_info-sec * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_info-sec *:before,\n.sp_info-sec *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_info-sec a,\n.sp_info-sec a:hover,\n.sp_info-sec a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_info-sec h1,\n.sp_info-sec h2,\n.sp_info-sec h3,\n.sp_info-sec h4,\n.sp_info-sec h5,\n.sp_info-sec h6,\n.sp_info-sec ul,\n.sp_info-sec ol,\n.sp_info-sec p {\n  margin: 0;\n  padding: 0;\n}\n.sp_info-sec h1,\n.sp_info-sec h2,\n.sp_info-sec h3,\n.sp_info-sec h4,\n.sp_info-sec h5,\n.sp_info-sec h6 {\n  font-weight: normal;\n}\n.sp_info-sec ul,\n.sp_info-sec ol {\n  list-style: none;\n}\n.sp_info-sec:before,\n.sp_info-sec:after {\n  content: \" \";\n  display: table;\n}\n.sp_info-sec:after {\n  clear: both;\n}\n.sp_info-sec__l {\n  float: left;\n  width: 50%;\n  padding-right: 7px;\n}\n@media (max-width: 767px) {\n  .sp_info-sec__l {\n    width: 100%;\n    margin-bottom: 20px;\n    padding-right: 0;\n  }\n}\n.sp_info-sec__r {\n  float: left;\n  width: 50%;\n  padding-left: 7px;\n}\n@media (max-width: 767px) {\n  .sp_info-sec__r {\n    width: 100%;\n    padding-left: 0;\n  }\n}\n.sp_points-cell {\n  background-color: #e1ebf2;\n  padding: 50px 20px 20px;\n  min-height: 393px;\n  text-align: center;\n  color: #313B49;\n}\n.sp_points-cell__hd {\n  font-size: 30px;\n  line-height: 1;\n  font-weight: 300;\n  text-transform: uppercase;\n  margin-bottom: 48px;\n}\n.sp_points-cell__ttl {\n  font-size: 20px;\n  margin-bottom: 16px;\n}\n.sp_points-cell__btn {\n  display: inline-block;\n  position: relative;\n  z-index: 2;\n  padding: 0 35px;\n  width: auto;\n}\n.sp_status-cell {\n  background-color: #f5e6d2;\n  padding: 50px 20px 20px;\n  min-height: 393px;\n  text-align: center;\n  color: #471202;\n}\n.sp_status-cell__hd {\n  font-size: 30px;\n  font-weight: 300;\n  line-height: 1;\n  text-transform: uppercase;\n  margin-bottom: 15px;\n}\n.sp_status-cell__img {\n  width: 145px;\n  height: 145px;\n  margin: 0 auto 5px;\n  background-position: center;\n  background-size: contain;\n  background-repeat: no-repeat;\n}\n.sp_status-cell__ttl {\n  font-size: 25px;\n  font-weight: 700;\n  margin-bottom: 13px;\n}\n.sp_status-cell__btn {\n  display: inline-block;\n  padding: 0 35px;\n  width: auto;\n}\n.sp_progr-sec {\n  margin-top: 50px;\n  margin-bottom: 50px;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n}\n.sp_progr-sec:before,\n.sp_progr-sec:after {\n  content: \" \";\n  display: table;\n}\n.sp_progr-sec:after {\n  clear: both;\n}\n.sp_progr-sec:before,\n.sp_progr-sec:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_progr-sec * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_progr-sec *:before,\n.sp_progr-sec *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_progr-sec a,\n.sp_progr-sec a:hover,\n.sp_progr-sec a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_progr-sec h1,\n.sp_progr-sec h2,\n.sp_progr-sec h3,\n.sp_progr-sec h4,\n.sp_progr-sec h5,\n.sp_progr-sec h6,\n.sp_progr-sec ul,\n.sp_progr-sec ol,\n.sp_progr-sec p {\n  margin: 0;\n  padding: 0;\n}\n.sp_progr-sec h1,\n.sp_progr-sec h2,\n.sp_progr-sec h3,\n.sp_progr-sec h4,\n.sp_progr-sec h5,\n.sp_progr-sec h6 {\n  font-weight: normal;\n}\n.sp_progr-sec ul,\n.sp_progr-sec ol {\n  list-style: none;\n}\n@media (max-width: 991px) {\n  .sp_progr-sec {\n    padding: 0 20px;\n  }\n}\n.sp_progr-sec__l {\n  float: left;\n  width: 30%;\n  padding-top: 34px;\n  padding-right: 15px;\n}\n@media (max-width: 991px) {\n  .sp_progr-sec__l {\n    width: 100%;\n    padding: 0;\n    margin-bottom: 25px;\n  }\n}\n.sp_progr-sec__r {\n  float: left;\n  width: 70%;\n}\n@media (max-width: 991px) {\n  .sp_progr-sec__r {\n    width: 100%;\n  }\n}\n.sp_progr-sec__txt {\n  font-size: 25px;\n  font-weight: 300;\n}\n@media (max-width: 767px) {\n  .sp_progr-sec__txt {\n    text-align: center;\n  }\n}\n@media (max-width: 767px) {\n  .sp_progr-sec__txt b {\n    display: block;\n  }\n}\n.sp_progr-cell {\n  padding: 40px 40px 70px;\n}\n@media (max-width: 767px) {\n  .sp_progr-cell {\n    padding-left: 10px;\n    padding-right: 10px;\n  }\n}\n.sp_progr-bar {\n  display: block;\n  position: relative;\n  width: 100%;\n  height: 16px;\n  background-color: #BCBCBB;\n}\n.sp_progr-bar:before {\n  content: \"\";\n  display: block;\n  position: absolute;\n  width: 100%;\n  left: 0;\n  top: 0;\n  height: 2px;\n  background-color: #9E9E9C;\n}\n.sp_progr-bar__inner {\n  position: relative;\n  height: 16px;\n  width: 100%;\n}\n.sp_progr-bar__inner-bar {\n  position: absolute;\n  left: 0;\n  top: 0;\n  height: 100%;\n  width: 10%;\n  -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5) inset;\n  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5) inset;\n  -webkit-transition: width 500ms linear 0ms;\n  transition: width 500ms linear 0ms;\n}\n.sp_progr-bar__inner-bar.this-inner1 {\n  background-color: #7BC3AB;\n}\n.sp_progr-bar__inner-bar.this-inner2 {\n  background-color: #C2DEEF;\n}\n.sp_progr-bar__inner-bar.this-inner3 {\n  background-color: #D4A6D0;\n}\n.sp_progr-bar__inner-bar.this-inner4 {\n  background-color: #B45570;\n}\n.sp_progr-bar__point {\n  position: absolute;\n  top: -30px;\n  width: 72px;\n  margin-left: -36px;\n}\n.sp_progr-bar__point.this-point-1 {\n  left: 0%;\n}\n.sp_progr-bar__point.this-point-2 {\n  left: 100%;\n}\n@media (max-width: 767px) {\n  .sp_progr-bar__point {\n    top: -25px;\n  }\n}\n@media (max-width: 479px) {\n  .sp_progr-bar__point {\n    top: -21px;\n  }\n}\n.sp_progr-bar__point-img {\n  width: 100%;\n  height: 82px;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: contain;\n  margin: 0 auto 3px;\n}\n@media (max-width: 767px) {\n}\n@media (max-width: 479px) {\n}\n.sp_progr-bar__point-name {\n  font-size: 15px;\n  text-align: center;\n  font-weight: 300;\n  color: #471202;\n}\n@media (max-width: 767px) {\n  .sp_progr-bar__point-name {\n    font-size: 13px;\n  }\n}\n@media (max-width: 479px) {\n  .sp_progr-bar__point-name {\n    font-size: 10px;\n  }\n}\n.sp_badges-sec {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  margin-top: 50px;\n  margin-bottom: 50px;\n  background-color: #F3F5F9;\n  padding: 40px 30px;\n}\n.sp_badges-sec:before,\n.sp_badges-sec:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_badges-sec * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_badges-sec *:before,\n.sp_badges-sec *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_badges-sec a,\n.sp_badges-sec a:hover,\n.sp_badges-sec a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_badges-sec h1,\n.sp_badges-sec h2,\n.sp_badges-sec h3,\n.sp_badges-sec h4,\n.sp_badges-sec h5,\n.sp_badges-sec h6,\n.sp_badges-sec ul,\n.sp_badges-sec ol,\n.sp_badges-sec p {\n  margin: 0;\n  padding: 0;\n}\n.sp_badges-sec h1,\n.sp_badges-sec h2,\n.sp_badges-sec h3,\n.sp_badges-sec h4,\n.sp_badges-sec h5,\n.sp_badges-sec h6 {\n  font-weight: normal;\n}\n.sp_badges-sec ul,\n.sp_badges-sec ol {\n  list-style: none;\n}\n.sp_badges-sec__row {\n  text-align: center;\n}\n.sp_badges-itm {\n  display: inline-block;\n  position: relative;\n  width: 190px;\n}\n.sp_badges-itm__img img {\n  display: block;\n  width: 100%;\n  height: auto;\n}\n.sp_badges-itm__cover {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n}\n.sp_badges-itm__inner {\n  position: absolute;\n  width: 100%;\n  top: 50%;\n  margin-top: -10px;\n  font-size: 15px;\n  font-weight: 700;\n  color: #7A7A7A;\n}\n.sp_gift-sec {\n  margin-top: 14px;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  padding: 0 45px;\n}\n.sp_gift-sec:before,\n.sp_gift-sec:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_gift-sec * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_gift-sec *:before,\n.sp_gift-sec *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_gift-sec a,\n.sp_gift-sec a:hover,\n.sp_gift-sec a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_gift-sec h1,\n.sp_gift-sec h2,\n.sp_gift-sec h3,\n.sp_gift-sec h4,\n.sp_gift-sec h5,\n.sp_gift-sec h6,\n.sp_gift-sec ul,\n.sp_gift-sec ol,\n.sp_gift-sec p {\n  margin: 0;\n  padding: 0;\n}\n.sp_gift-sec h1,\n.sp_gift-sec h2,\n.sp_gift-sec h3,\n.sp_gift-sec h4,\n.sp_gift-sec h5,\n.sp_gift-sec h6 {\n  font-weight: normal;\n}\n.sp_gift-sec ul,\n.sp_gift-sec ol {\n  list-style: none;\n}\n.sp_gift-slider {\n  text-align: center;\n}\n.sp_gift-slider__slide {\n  width: 100%;\n  border: 1px solid #969594;\n  padding: 30px 20px;\n}\n.sp_gift-slider__slide:hover {\n  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);\n}\n.sp_gift-slider__img {\n  width: 240px;\n  height: 225px;\n  max-width: 100%;\n  margin: 0 auto 10px;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: contain;\n}\n.sp_gift-slider__hd {\n  font-size: 15px;\n  font-weight: 700;\n  margin-bottom: 5px;\n}\n.sp_gift-slider__ttl {\n  font-size: 15px;\n  font-weight: 300;\n  color: #808080;\n  margin-bottom: 5px;\n}\n.sp_gift-slider__price {\n  font-size: 25px;\n  color: #9BDE99;\n  margin-bottom: 10px;\n}\n.sp_gift-slider__btn {\n  display: inline-block;\n  width: auto;\n  padding: 0 25px;\n}\n.sp_gift-slider .slick-slide {\n  outline: none !important;\n  padding: 10px 4px;\n}\n.sp_gift-slider .slick-arrow {\n  position: absolute;\n  top: 50%;\n  height: 113px;\n  width: 35px;\n  margin-top: -50px;\n  background-size: contain;\n  background-position: center;\n  background-repeat: no-repeat;\n  cursor: pointer;\n  opacity: .8;\n}\n.sp_gift-slider .slick-arrow:hover {\n  opacity: 1;\n}\n.sp_gift-slider .slick-arrow.slick-disabled {\n  display: none !important;\n}\n.sp_gift-slider .slick-prev {\n  left: -35px;\n  background-image: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/0a6b55e204cb27ad24799aa634a5a89f.png\");\n}\n.sp_gift-slider .slick-next {\n  right: -35px;\n  background-image: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/bbe8e74981f17405a856c029f6e1548d.png\");\n}\n.sp_task-sec-wrap {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  position: relative;\n  margin-top: 14px;\n  background-color: #e8f5ec;\n}\n.sp_task-sec-wrap:before,\n.sp_task-sec-wrap:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_task-sec-wrap * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_task-sec-wrap *:before,\n.sp_task-sec-wrap *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_task-sec-wrap a,\n.sp_task-sec-wrap a:hover,\n.sp_task-sec-wrap a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_task-sec-wrap h1,\n.sp_task-sec-wrap h2,\n.sp_task-sec-wrap h3,\n.sp_task-sec-wrap h4,\n.sp_task-sec-wrap h5,\n.sp_task-sec-wrap h6,\n.sp_task-sec-wrap ul,\n.sp_task-sec-wrap ol,\n.sp_task-sec-wrap p {\n  margin: 0;\n  padding: 0;\n}\n.sp_task-sec-wrap h1,\n.sp_task-sec-wrap h2,\n.sp_task-sec-wrap h3,\n.sp_task-sec-wrap h4,\n.sp_task-sec-wrap h5,\n.sp_task-sec-wrap h6 {\n  font-weight: normal;\n}\n.sp_task-sec-wrap ul,\n.sp_task-sec-wrap ol {\n  list-style: none;\n}\n.sp_task-sec {\n  padding: 40px 40px;\n}\n.sp_task-slider {\n  text-align: center;\n}\n.sp_task-slider__slide {\n  display: block;\n  position: relative;\n  width: 100%;\n  border: 1px solid #969594;\n  padding: 30px 10px 10px;\n  height: 220px;\n  background-color: #fff;\n}\n.sp_task-slider__slide:hover {\n  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);\n}\n.sp_task-slider__slide:hover .sp_task-slider__cover {\n  display: block;\n}\n.sp_task-slider__ico {\n  width: 66px;\n  height: 66px;\n  max-width: 100%;\n  margin: 0 auto 10px;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: contain;\n}\n.sp_task-slider__hd {\n  font-size: 15px;\n  font-weight: 300;\n  margin-bottom: 5px;\n}\n.sp_task-slider__price {\n  font-size: 25px;\n  color: #9BDE99;\n  margin-bottom: 10px;\n}\n.sp_task-slider__btn {\n  display: inline-block;\n  width: auto;\n  padding: 0 25px;\n}\n.sp_task-slider__cover {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n  background-color: #fff;\n  display: none;\n  padding-top: 90px;\n}\n.sp_task-slider .slick-slide {\n  outline: none !important;\n  padding: 10px 4px;\n}\n.sp_task-slider .slick-arrow {\n  position: absolute;\n  top: 50%;\n  height: 113px;\n  width: 26px;\n  margin-top: -50px;\n  background-size: contain;\n  background-position: center;\n  background-repeat: no-repeat;\n  cursor: pointer;\n  opacity: .8;\n}\n.sp_task-slider .slick-arrow:hover {\n  opacity: 1;\n}\n.sp_task-slider .slick-arrow.slick-disabled {\n  display: none !important;\n}\n.sp_task-slider .slick-prev {\n  left: -30px;\n  background-image: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/0a6b55e204cb27ad24799aa634a5a89f.png\");\n}\n.sp_task-slider .slick-next {\n  right: -30px;\n  background-image: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/bbe8e74981f17405a856c029f6e1548d.png\");\n}\n.sailplay_action_frame {\n  width: 100px !important;\n  display: inline-block !important;\n}\n.sp_overlay {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  width: 100%;\n  height: 100%;\n  z-index: 10000;\n  display: block;\n  overflow: auto;\n}\n.sp_hist-popup {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  margin: 40px auto 40px auto;\n  max-height: 90%;\n  max-width: 650px;\n  width: 100%;\n  background-color: #fff;\n  position: relative;\n  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  padding: 35px 35px;\n}\n.sp_hist-popup:before,\n.sp_hist-popup:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_hist-popup * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_hist-popup *:before,\n.sp_hist-popup *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_hist-popup a,\n.sp_hist-popup a:hover,\n.sp_hist-popup a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_hist-popup h1,\n.sp_hist-popup h2,\n.sp_hist-popup h3,\n.sp_hist-popup h4,\n.sp_hist-popup h5,\n.sp_hist-popup h6,\n.sp_hist-popup ul,\n.sp_hist-popup ol,\n.sp_hist-popup p {\n  margin: 0;\n  padding: 0;\n}\n.sp_hist-popup h1,\n.sp_hist-popup h2,\n.sp_hist-popup h3,\n.sp_hist-popup h4,\n.sp_hist-popup h5,\n.sp_hist-popup h6 {\n  font-weight: normal;\n}\n.sp_hist-popup ul,\n.sp_hist-popup ol {\n  list-style: none;\n}\n.sp_hist-popup__hd {\n  font-size: 25px;\n  text-transform: uppercase;\n  text-align: center;\n  font-weight: 300;\n  margin-bottom: 20px;\n}\n.sp_hist-list {\n  margin: 15px 0 20px;\n}\n.sp_hist-list__itm {\n  font-size: 15px;\n  line-height: 1;\n  font-weight: 300;\n  margin-bottom: 13px;\n}\n.sp_hist-list__itm:before,\n.sp_hist-list__itm:after {\n  content: \" \";\n  display: table;\n}\n.sp_hist-list__itm:after {\n  clear: both;\n}\n.sp_hist-list__itm.this-dec {\n  color: #820d41;\n}\n.sp_hist-list__itm.this-purchase .sp_hist-list__name {\n  cursor: pointer;\n  text-decoration: underline;\n}\n.sp_hist-list__itm.this-purchase .sp_hist-list__name:hover {\n  text-decoration: none;\n}\n.sp_hist-list__date {\n  display: inline-block;\n  width: 100px;\n}\n.sp_hist-list__name {\n  display: inline-block;\n}\n.sp_hist-list__purchases {\n  display: block;\n  padding-left: 120px;\n  box-sizing: border-box;\n  padding-top: 10px;\n  overflow: hidden;\n}\n.sp_hist-list__purchases span {\n  font-size: 14px;\n  line-height: 20px;\n  display: block;\n  font-weight: 300;\n  float: left;\n  width: 50%;\n}\n.sp_hist-list__purchases span.type_price {\n  text-align: right;\n}\n.sp_hist-list__val {\n  float: right;\n  margin-left: 15px;\n  font-weight: 700;\n}\n.sp_stat-popup {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  width: 650px;\n  position: relative;\n  max-width: 90%;\n  margin: 40px auto 40px auto;\n  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  padding: 30px 30px;\n  background-color: #fff;\n}\n.sp_stat-popup:before,\n.sp_stat-popup:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_stat-popup * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_stat-popup *:before,\n.sp_stat-popup *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_stat-popup a,\n.sp_stat-popup a:hover,\n.sp_stat-popup a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_stat-popup h1,\n.sp_stat-popup h2,\n.sp_stat-popup h3,\n.sp_stat-popup h4,\n.sp_stat-popup h5,\n.sp_stat-popup h6,\n.sp_stat-popup ul,\n.sp_stat-popup ol,\n.sp_stat-popup p {\n  margin: 0;\n  padding: 0;\n}\n.sp_stat-popup h1,\n.sp_stat-popup h2,\n.sp_stat-popup h3,\n.sp_stat-popup h4,\n.sp_stat-popup h5,\n.sp_stat-popup h6 {\n  font-weight: normal;\n}\n.sp_stat-popup ul,\n.sp_stat-popup ol {\n  list-style: none;\n}\n.sp_stat-popup__hd {\n  font-size: 25px;\n  font-weight: 300;\n  margin-bottom: 20px;\n  text-align: center;\n}\n.sp_stat-popup__btns {\n  padding: 0 10%;\n}\n.sp_stat-popup__btns:before,\n.sp_stat-popup__btns:after {\n  content: \" \";\n  display: table;\n}\n.sp_stat-popup__btns:after {\n  clear: both;\n}\n.sp_stat-popup__btn {\n  width: 165px;\n  margin: 0 auto;\n}\n.sp_stat-pop-itm {\n  margin-bottom: 20px;\n}\n.sp_stat-pop-itm:before,\n.sp_stat-pop-itm:after {\n  content: \" \";\n  display: table;\n}\n.sp_stat-pop-itm:after {\n  clear: both;\n}\n@media (max-width: 767px) {\n  .sp_stat-pop-itm {\n    margin-bottom: 40px;\n  }\n}\n.sp_stat-pop-itm__img {\n  float: left;\n  width: 120px;\n  padding-top: 10px;\n}\n.sp_stat-pop-itm__img img {\n  display: block;\n  width: 100%;\n  height: auto;\n  max-width: 70px;\n  margin: 0 auto;\n}\n@media (max-width: 767px) {\n  .sp_stat-pop-itm__img img {\n    max-width: 120px;\n  }\n}\n@media (max-width: 767px) {\n  .sp_stat-pop-itm__img {\n    float: none;\n    margin: 0 auto 20px;\n    width: 100%;\n    padding: 0;\n  }\n}\n.sp_stat-pop-itm__text {\n  font-size: 15px;\n  line-height: 1.2;\n  font-weight: 300;\n  margin-left: 120px;\n}\n@media (max-width: 767px) {\n  .sp_stat-pop-itm__text {\n    margin: 0;\n  }\n}\n.sp_gift-popup {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  position: relative;\n  width: 556px;\n  max-width: 90%;\n  margin: 40px auto 40px auto;\n  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  padding: 30px 30px;\n  background-color: #fff;\n}\n.sp_gift-popup:before,\n.sp_gift-popup:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_gift-popup * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_gift-popup *:before,\n.sp_gift-popup *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_gift-popup a,\n.sp_gift-popup a:hover,\n.sp_gift-popup a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_gift-popup h1,\n.sp_gift-popup h2,\n.sp_gift-popup h3,\n.sp_gift-popup h4,\n.sp_gift-popup h5,\n.sp_gift-popup h6,\n.sp_gift-popup ul,\n.sp_gift-popup ol,\n.sp_gift-popup p {\n  margin: 0;\n  padding: 0;\n}\n.sp_gift-popup h1,\n.sp_gift-popup h2,\n.sp_gift-popup h3,\n.sp_gift-popup h4,\n.sp_gift-popup h5,\n.sp_gift-popup h6 {\n  font-weight: normal;\n}\n.sp_gift-popup ul,\n.sp_gift-popup ol {\n  list-style: none;\n}\n.sp_gift-popup__hd {\n  font-size: 25px;\n  font-weight: 300;\n  line-height: 1.4;\n  margin-bottom: 20px;\n  text-align: center;\n}\n.sp_gift-popup__img {\n  width: 215px;\n  height: 215px;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: contain;\n  margin: 0 auto 20px;\n}\n.sp_gift-popup__ttl {\n  font-size: 25px;\n  line-height: 1;\n  font-weight: 300;\n  margin-bottom: 25px;\n  text-align: center;\n}\n.sp_gift-popup__btns {\n  padding: 0 10%;\n}\n.sp_gift-popup__btns:before,\n.sp_gift-popup__btns:after {\n  content: \" \";\n  display: table;\n}\n.sp_gift-popup__btns:after {\n  clear: both;\n}\n.sp_gift-popup__btn {\n  width: 165px;\n}\n.sp_gift-popup__btn:first-child {\n  float: left;\n}\n.sp_gift-popup__btn:last-child {\n  float: right;\n}\n@media (max-width: 767px) {\n  .sp_gift-popup__btn {\n    float: none !important;\n    margin: 0 auto 20px;\n  }\n}\n.sp_profile-popup {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  width: 556px;\n  max-width: 90%;\n  margin: 40px auto 40px auto;\n  position: relative;\n  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  padding: 30px 60px;\n  background-color: #fff;\n}\n.sp_profile-popup:before,\n.sp_profile-popup:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_profile-popup * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_profile-popup *:before,\n.sp_profile-popup *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_profile-popup a,\n.sp_profile-popup a:hover,\n.sp_profile-popup a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_profile-popup h1,\n.sp_profile-popup h2,\n.sp_profile-popup h3,\n.sp_profile-popup h4,\n.sp_profile-popup h5,\n.sp_profile-popup h6,\n.sp_profile-popup ul,\n.sp_profile-popup ol,\n.sp_profile-popup p {\n  margin: 0;\n  padding: 0;\n}\n.sp_profile-popup h1,\n.sp_profile-popup h2,\n.sp_profile-popup h3,\n.sp_profile-popup h4,\n.sp_profile-popup h5,\n.sp_profile-popup h6 {\n  font-weight: normal;\n}\n.sp_profile-popup ul,\n.sp_profile-popup ol {\n  list-style: none;\n}\n@media (max-width: 767px) {\n  .sp_profile-popup {\n    padding: 30px 30px;\n  }\n}\n.sp_profile-popup__hd {\n  font-size: 25px;\n  font-weight: 300;\n  margin-bottom: 20px;\n}\n.sp_profile-form {\n  max-width: 100%;\n}\n@media (max-width: 767px) {\n  .sp_profile-form {\n    width: 100%;\n  }\n}\n.sp_profile-form__set {\n  margin-bottom: 30px;\n}\n.sp_profile-form__ttl {\n  font-size: 13px;\n  font-weight: 300;\n  margin-bottom: 7px;\n}\n.sp_profile-form__dates:before,\n.sp_profile-form__dates:after {\n  content: \" \";\n  display: table;\n}\n.sp_profile-form__dates:after {\n  clear: both;\n}\n.sp_profile-form__dates-col {\n  width: 33.333%;\n  padding-right: 10px;\n  float: left;\n}\n@media (max-width: 767px) {\n  .sp_profile-form__dates-col {\n    float: none;\n    width: 100%;\n    margin-bottom: 15px;\n    padding: 0;\n  }\n  .sp_profile-form__dates-col:last-child {\n    margin-bottom: 0;\n  }\n}\n.sp_profile-form__btns {\n  text-align: center;\n}\n.sp_profile-form__btn {\n  display: inline-block;\n  padding: 0 20px;\n  width: 132px;\n  margin-right: 15px;\n  outline: none;\n  vertical-align: top;\n}\n.sp_profile-form__btn[type=submit] {\n  line-height: 36px !important;\n}\n.sp_profile-form__btn:last-child {\n  margin-right: 0;\n}\n@media (max-width: 767px) {\n  .sp_profile-form__btn {\n    display: block;\n    margin-bottom: 20px;\n    width: 100%;\n  }\n}\n.sp_task-popup {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  position: relative;\n  width: 556px;\n  max-width: 90%;\n  background-color: #fff;\n  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  padding: 35px 35px;\n}\n.sp_task-popup:before,\n.sp_task-popup:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_task-popup * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_task-popup *:before,\n.sp_task-popup *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_task-popup a,\n.sp_task-popup a:hover,\n.sp_task-popup a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_task-popup h1,\n.sp_task-popup h2,\n.sp_task-popup h3,\n.sp_task-popup h4,\n.sp_task-popup h5,\n.sp_task-popup h6,\n.sp_task-popup ul,\n.sp_task-popup ol,\n.sp_task-popup p {\n  margin: 0;\n  padding: 0;\n}\n.sp_task-popup h1,\n.sp_task-popup h2,\n.sp_task-popup h3,\n.sp_task-popup h4,\n.sp_task-popup h5,\n.sp_task-popup h6 {\n  font-weight: normal;\n}\n.sp_task-popup ul,\n.sp_task-popup ol {\n  list-style: none;\n}\n.sp_task-popup__hd {\n  font-size: 25px;\n  font-weight: 300;\n  margin-bottom: 20px;\n}\n.sp_task-popup__inner {\n  margin-bottom: 25px;\n}\n.sp_task-popup__inner:before,\n.sp_task-popup__inner:after {\n  content: \" \";\n  display: table;\n}\n.sp_task-popup__inner:after {\n  clear: both;\n}\n.sp_task-popup__l {\n  float: left;\n  width: 30%;\n  padding-top: 20px;\n}\n@media (max-width: 767px) {\n  .sp_task-popup__l {\n    float: none;\n    width: 100%;\n    margin-bottom: 30px;\n    padding-top: 0;\n  }\n}\n.sp_task-popup__r {\n  float: left;\n  width: 70%;\n  font-size: 15px;\n  line-height: 16px;\n}\n.sp_task-popup__r p {\n  margin-bottom: 15px;\n}\n.sp_task-popup__r p:last-child {\n  margin-bottom: 0;\n}\n@media (max-width: 767px) {\n  .sp_task-popup__r {\n    float: none;\n    width: 100%;\n  }\n}\n.sp_task-popup__btn {\n  width: 166px;\n  max-width: 100%;\n  margin: 0 auto;\n}\n.sp_task-popup__img {\n  display: block;\n  margin: 0 auto;\n  width: 100px;\n  max-width: 60%;\n  height: auto;\n}\n.display_table {\n  display: table;\n}\n.display_table_cell {\n  display: table-cell;\n  vertical-align: middle;\n}\n/* Slider */\n.slick-slider {\n  position: relative;\n  display: block;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -ms-touch-action: pan-y;\n  touch-action: pan-y;\n  -webkit-tap-highlight-color: transparent;\n}\n.slick-list {\n  position: relative;\n  overflow: hidden;\n  display: block;\n  margin: 0;\n  padding: 0;\n}\n.slick-list:focus {\n  outline: none;\n}\n.slick-list.dragging {\n  cursor: pointer;\n  cursor: hand;\n}\n.slick-slider .slick-track,\n.slick-slider .slick-list {\n  -webkit-transform: translate3d(0, 0, 0);\n  -moz-transform: translate3d(0, 0, 0);\n  -ms-transform: translate3d(0, 0, 0);\n  -o-transform: translate3d(0, 0, 0);\n  transform: translate3d(0, 0, 0);\n}\n.slick-track {\n  position: relative;\n  left: 0;\n  top: 0;\n  display: block;\n}\n.slick-track:before,\n.slick-track:after {\n  content: \"\";\n  display: table;\n}\n.slick-track:after {\n  clear: both;\n}\n.slick-loading .slick-track {\n  visibility: hidden;\n}\n.slick-slide {\n  float: left;\n  height: 100%;\n  min-height: 1px;\n  display: none;\n}\n[dir=\"rtl\"] .slick-slide {\n  float: right;\n}\n.slick-slide img {\n  display: block;\n}\n.slick-slide.slick-loading img {\n  display: none;\n}\n.slick-slide.dragging img {\n  pointer-events: none;\n}\n.slick-initialized .slick-slide {\n  display: block;\n}\n.slick-loading .slick-slide {\n  visibility: hidden;\n}\n.slick-vertical .slick-slide {\n  display: block;\n  height: auto;\n  border: 1px solid transparent;\n}\n.slick-arrow.slick-hidden {\n  display: none;\n}\n/**\n * selectize.default.css (v@@version) - Default Theme\n * Copyright (c) 2013–2015 Brian Reavis & contributors\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this\n * file except in compliance with the License. You may obtain a copy of the License at:\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software distributed under\n * the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF\n * ANY KIND, either express or implied. See the License for the specific language\n * governing permissions and limitations under the License.\n *\n * @author Brian Reavis <brian@thirdroute.com>\n */\n.selectize-control {\n  position: relative;\n}\n.selectize-dropdown,\n.selectize-input,\n.selectize-input input {\n  color: #303030;\n  font-family: inherit;\n  font-size: 13px;\n  line-height: 18px;\n  -webkit-font-smoothing: inherit;\n}\n.selectize-input,\n.selectize-control.single .selectize-input.input-active {\n  background: #fff;\n  cursor: text;\n  display: inline-block;\n}\n.selectize-input {\n  border: 1px solid #d0d0d0;\n  padding: 8px 8px;\n  display: inline-block;\n  width: 100%;\n  overflow: hidden;\n  position: relative;\n  z-index: 1;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);\n  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);\n  -webkit-border-radius: 3px;\n  -moz-border-radius: 3px;\n  border-radius: 3px;\n}\n.selectize-control.multi .selectize-input.has-items {\n  padding: 5px 8px 2px;\n}\n.selectize-input.full {\n  background-color: #fff;\n}\n.selectize-input.disabled,\n.selectize-input.disabled * {\n  cursor: default !important;\n}\n.selectize-input.focus {\n  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);\n}\n.selectize-input.dropdown-active {\n  -webkit-border-radius: 3px 3px 0 0;\n  -moz-border-radius: 3px 3px 0 0;\n  border-radius: 3px 3px 0 0;\n}\n.selectize-input > * {\n  vertical-align: baseline;\n  display: -moz-inline-stack;\n  display: inline-block;\n  zoom: 1;\n  *display: inline;\n}\n.selectize-control.multi .selectize-input > div {\n  cursor: pointer;\n  margin: 0 3px 3px 0;\n  padding: 2px 6px;\n  background: #1da7ee;\n  color: #fff;\n  border: 1px solid #0073bb;\n}\n.selectize-control.multi .selectize-input > div.active {\n  background: #92c836;\n  color: #fff;\n  border: 1px solid #00578d;\n}\n.selectize-control.multi .selectize-input.disabled > div,\n.selectize-control.multi .selectize-input.disabled > div.active {\n  color: #ffffff;\n  background: #d2d2d2;\n  border: 1px solid #aaaaaa;\n}\n.selectize-input > input {\n  display: inline-block !important;\n  padding: 0 !important;\n  min-height: 0 !important;\n  max-height: none !important;\n  max-width: 100% !important;\n  margin: 0 1px !important;\n  text-indent: 0 !important;\n  border: 0 none !important;\n  background: none !important;\n  line-height: inherit !important;\n  -webkit-user-select: auto !important;\n  -webkit-box-shadow: none !important;\n  box-shadow: none !important;\n}\n.selectize-input > input::-ms-clear {\n  display: none;\n}\n.selectize-input > input:focus {\n  outline: none !important;\n}\n.selectize-input::after {\n  content: ' ';\n  display: block;\n  clear: left;\n}\n.selectize-input.dropdown-active::before {\n  content: ' ';\n  display: block;\n  position: absolute;\n  background: #f0f0f0;\n  height: 1px;\n  bottom: 0;\n  left: 0;\n  right: 0;\n}\n.selectize-dropdown {\n  position: absolute;\n  z-index: 10;\n  border: 1px solid #d0d0d0;\n  background: #fff;\n  margin: -1px 0 0 0;\n  border-top: 0 none;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);\n  -webkit-border-radius: 0 0 3px 3px;\n  -moz-border-radius: 0 0 3px 3px;\n  border-radius: 0 0 3px 3px;\n}\n.selectize-dropdown [data-selectable] {\n  cursor: pointer;\n  overflow: hidden;\n}\n.selectize-dropdown [data-selectable] .highlight {\n  background: rgba(125, 168, 208, 0.2);\n  -webkit-border-radius: 1px;\n  -moz-border-radius: 1px;\n  border-radius: 1px;\n}\n.selectize-dropdown [data-selectable],\n.selectize-dropdown .optgroup-header {\n  padding: 5px 8px;\n}\n.selectize-dropdown .optgroup:first-child .optgroup-header {\n  border-top: 0 none;\n}\n.selectize-dropdown .optgroup-header {\n  color: #303030;\n  background: #fff;\n  cursor: default;\n}\n.selectize-dropdown .active {\n  background-color: #f5fafd;\n  color: #495c68;\n}\n.selectize-dropdown .active.create {\n  color: #495c68;\n}\n.selectize-dropdown .create {\n  color: rgba(48, 48, 48, 0.5);\n}\n.selectize-dropdown-content {\n  overflow-y: auto;\n  overflow-x: hidden;\n  max-height: 200px;\n}\n.selectize-control.single .selectize-input,\n.selectize-control.single .selectize-input input {\n  cursor: pointer;\n}\n.selectize-control.single .selectize-input.input-active,\n.selectize-control.single .selectize-input.input-active input {\n  cursor: text;\n}\n.selectize-control.single .selectize-input:after {\n  content: ' ';\n  display: block;\n  position: absolute;\n  top: 50%;\n  right: 15px;\n  margin-top: -3px;\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: 5px 5px 0 5px;\n  border-color: #808080 transparent transparent transparent;\n}\n.selectize-control.single .selectize-input.dropdown-active:after {\n  margin-top: -4px;\n  border-width: 0 5px 5px 5px;\n  border-color: transparent transparent #808080 transparent;\n}\n.selectize-control.rtl.single .selectize-input:after {\n  left: 15px;\n  right: auto;\n}\n.selectize-control.rtl .selectize-input > input {\n  margin: 0 4px 0 -2px !important;\n}\n.selectize-control .selectize-input.disabled {\n  opacity: 0.5;\n  background-color: #fafafa;\n}\n.selectize-control.multi .selectize-input.has-items {\n  padding-left: 5px;\n  padding-right: 5px;\n}\n.selectize-control.multi .selectize-input.disabled [data-value] {\n  color: #999;\n  text-shadow: none;\n  background: none;\n  -webkit-box-shadow: none;\n  box-shadow: none;\n}\n.selectize-control.multi .selectize-input.disabled [data-value],\n.selectize-control.multi .selectize-input.disabled [data-value] .remove {\n  border-color: #e6e6e6;\n}\n.selectize-control.multi .selectize-input.disabled [data-value] .remove {\n  background: none;\n}\n.selectize-control.multi .selectize-input [data-value] {\n  text-shadow: 0 1px 0 rgba(0, 51, 83, 0.3);\n  -webkit-border-radius: 3px;\n  -moz-border-radius: 3px;\n  border-radius: 3px;\n  background-color: #1b9dec;\n  background-image: -moz-linear-gradient(top, #1da7ee, #178ee9);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1da7ee), to(#178ee9));\n  background-image: -webkit-linear-gradient(top, #1da7ee, #178ee9);\n  background-image: -o-linear-gradient(top, #1da7ee, #178ee9);\n  background-image: linear-gradient(to bottom, #1da7ee, #178ee9);\n  background-repeat: repeat-x;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1da7ee', endColorstr='#ff178ee9', GradientType=0);\n  -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.2),inset 0 1px rgba(255,255,255,0.03);\n  box-shadow: 0 1px 0 rgba(0,0,0,0.2),inset 0 1px rgba(255,255,255,0.03);\n}\n.selectize-control.multi .selectize-input [data-value].active {\n  background-color: #0085d4;\n  background-image: -moz-linear-gradient(top, #008fd8, #0075cf);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#008fd8), to(#0075cf));\n  background-image: -webkit-linear-gradient(top, #008fd8, #0075cf);\n  background-image: -o-linear-gradient(top, #008fd8, #0075cf);\n  background-image: linear-gradient(to bottom, #008fd8, #0075cf);\n  background-repeat: repeat-x;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff008fd8', endColorstr='#ff0075cf', GradientType=0);\n}\n.selectize-control.single .selectize-input {\n  -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);\n  box-shadow: 0 1px 0 rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);\n  background-color: #f9f9f9;\n  background-image: -moz-linear-gradient(top, #fefefe, #f2f2f2);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fefefe), to(#f2f2f2));\n  background-image: -webkit-linear-gradient(top, #fefefe, #f2f2f2);\n  background-image: -o-linear-gradient(top, #fefefe, #f2f2f2);\n  background-image: linear-gradient(to bottom, #fefefe, #f2f2f2);\n  background-repeat: repeat-x;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffefefe', endColorstr='#fff2f2f2', GradientType=0);\n}\n.selectize-control.single .selectize-input,\n.selectize-dropdown.single {\n  border-color: #b8b8b8;\n}\n.selectize-dropdown .optgroup-header {\n  padding-top: 7px;\n  font-weight: bold;\n  font-size: 0.85em;\n}\n.selectize-dropdown .optgroup {\n  border-top: 1px solid #f0f0f0;\n}\n.selectize-dropdown .optgroup:first-child {\n  border-top: 0 none;\n}\n.selectize-control.sp_cmn-selectize {\n  height: 48px;\n  border: none;\n  background: none;\n  font-size: 14px;\n  font-weight: 300;\n}\n.selectize-control.sp_cmn-selectize .selectize-input {\n  display: block;\n  position: relative;\n  height: 48px;\n  padding: 15px 24px 0px 20px;\n  border: 1px solid #E6E6E6;\n  background: #fff;\n  box-shadow: none;\n  font-size: 14px;\n  color: #262626;\n}\n@media (max-width: 767px) {\n  .selectize-control.sp_cmn-selectize .selectize-input {\n    padding: 15px 24px 0px 20px;\n  }\n}\n.selectize-control.sp_cmn-selectize .selectize-input:after {\n  content: \"\";\n  display: block;\n  position: absolute;\n  width: 12px;\n  height: 6px;\n  top: 50%;\n  margin-top: -3px;\n  right: 10px;\n  background: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/667725ff1c00f30f88bf7d5eb7caec20.svg\") no-repeat center;\n  background-size: contain;\n  border: none;\n}\n.selectize-control.sp_cmn-selectize .selectize-input.has-items:before {\n  display: none;\n}\n.selectize-control.sp_cmn-selectize .selectize-input.dropdown-active {\n  background-color: #e6e6e6;\n}\n.selectize-control.sp_cmn-selectize .selectize-input.dropdown-active:after {\n  background-image: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/8eac85a31cafe2dda0337266f6c173c9.svg\");\n}\n.selectize-control.sp_cmn-selectize .selectize-input input {\n  vertical-align: top;\n  font-size: 14px;\n  line-height: 28px;\n  background-color: #fff;\n}\n.selectize-control.sp_cmn-selectize .selectize-input input::-webkit-input-placeholder {\n  color: #767676;\n}\n.selectize-control.sp_cmn-selectize .selectize-input input::-moz-placeholder {\n  color: #767676;\n}\n.selectize-control.sp_cmn-selectize .selectize-input input:-moz-placeholder {\n  color: #767676;\n}\n.selectize-control.sp_cmn-selectize .selectize-input input:-ms-input-placeholder {\n  color: #767676;\n}\n.selectize-control.sp_cmn-selectize .selectize-input .item {\n  vertical-align: top;\n  white-space: nowrap;\n}\n.selectize-control.sp_cmn-selectize .sp_cmn-selectize {\n  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);\n  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);\n  margin-top: -2px;\n  border: 1px solid #E6E6E6;\n  border-top: none;\n  border-bottom-right-radius: 0px;\n  border-bottom-left-radius: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  color: #262626;\n}\n.selectize-control.sp_cmn-selectize .sp_cmn-selectize .selectize-dropdown-content {\n  max-height: 180px;\n}\n.selectize-control.sp_cmn-selectize .sp_cmn-selectize .option {\n  border-top: 1px solid #E6E6E6;\n  line-height: 1;\n  padding: 10px 9px 5px 20px;\n}\n.selectize-control.sp_cmn-selectize .sp_cmn-selectize .option.selected {\n  color: #820d41 !important;\n}\n.selectize-control.sp_cmn-selectize .sp_cmn-selectize .option:hover {\n  color: #820d41;\n}\n.selectize-control.sp_cmn-selectize .sp_cmn-selectize .option:first-child {\n  border: none;\n}\n.bns_hist_pager a {\n  display: inline-block;\n  text-align: center;\n  color: black;\n}\n.bns_hist_pager a.active,\n.bns_hist_pager a:focus,\n.bns_hist_pager a:active {\n  text-decoration: underline;\n}\n.tooltip {\n  display: inline-block;\n  margin-left: 5px;\n  position: relative;\n  font-family: 'MullerFont';\n}\n.tooltip_icon {\n  border-radius: 50%;\n  width: 18px;\n  display: inline-block;\n  height: 18px;\n  line-height: 18px;\n  box-sizing: border-box;\n  cursor: pointer;\n  font-size: 14px;\n  text-align: center;\n  color: #820d41;\n  border: 1px solid #000;\n}\n.tooltip_text {\n  display: none;\n  position: absolute;\n  z-index: 2;\n  background-color: #fff;\n  bottom: 75%;\n  margin-bottom: 17px;\n  width: 260px;\n  left: 50%;\n  margin-left: -130px;\n  padding: 30px 25px;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.2;\n  text-align: center;\n  -webkit-box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.3);\n  box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.3);\n}\n.tooltip_text:after {\n  content: \"\";\n  display: block;\n  position: absolute;\n  top: 100%;\n  left: 50%;\n  width: 0;\n  height: 0;\n  margin-left: -13px;\n  border-left: 13px solid transparent;\n  border-right: 13px solid transparent;\n  border-top: 14px solid #fff;\n}\n.tooltip_text a {\n  color: #820d41;\n  cursor: pointer;\n  text-decoration: underline;\n}\n.tooltip_text a:hover {\n  text-decoration: none;\n}\n.tooltip:hover .tooltip_text {\n  display: block;\n}\n", ""]);
+exports.push([module.i, "@font-face {\n  font-family: 'coco_gothic';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eb5907e5b8a8c16d8bd746c08aae7ae0.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eb5907e5b8a8c16d8bd746c08aae7ae0.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eea299fe1a86571538f48a69c0d91bea.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/94ba4858f5801daeb689e759193ba0ff.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/dcb5df3da7d570620ef674e863b0a6a6.ttf') format('truetype');\n  font-weight: 400;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'coco_gothic';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/69ba4269a5a866de4408712b4916cb47.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/69ba4269a5a866de4408712b4916cb47.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/c71aa5a0bfc853a07657b7583fac6afd.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/079abd9b98d4d3cfcd612386df435016.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/ea4aa13378c938624417de13045a6e4b.ttf') format('truetype');\n  font-weight: 700;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'coco_gothic';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/a05f526f2fc4b690006c0a1e4614abf4.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/a05f526f2fc4b690006c0a1e4614abf4.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/d8ec60a555f5f491647f542e2402ae84.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/c8531a767c4a2cac3db2e1354c35ff2a.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/20fad5cd3789d63569dbe79bc809da4e.ttf') format('truetype');\n  font-weight: 300;\n  font-style: normal;\n}\n.coco {\n  font-family: 'coco_gothic', sans-serif;\n}\n@font-face {\n  font-family: 'a_antiquetradyregular';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/03c5660fc5dbbc84ef6d2dd0b61a1dab.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/03c5660fc5dbbc84ef6d2dd0b61a1dab.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/e903cd6dec20f70f98928ffdeae2d381.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/a2e4e356d5fa98fe35a626f7135e6da3.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/85cd6f498ba57b2cd9637ef084966910.ttf') format('truetype');\n  font-weight: normal;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'MullerFont';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/14b10cded46c5f3dc004d75b253bde72.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/14b10cded46c5f3dc004d75b253bde72.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/1881e8ca0a54c95b111c478ec9fa8837.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/75a444030389ee5c90ee23c7fde3f618.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/5ea4412a38bf286c8f67fa8386b32d61.ttf') format('truetype');\n  font-weight: 400;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'MullerFont';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/95ed8e52096a72758fc957c91c4561a7.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/95ed8e52096a72758fc957c91c4561a7.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eaa790e041ed8fe8c1f51299eea69d9d.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/e173d29c2fd6c461477920b87a2dacfb.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/4b82a8f83af63b5e2e7ad41b7488d5be.ttf') format('truetype');\n  font-weight: 700;\n  font-style: normal;\n}\n@font-face {\n  font-family: 'MullerFont';\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/9c975cc1696bd20420c7e6db2e19639e.eot');\n  src: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/9c975cc1696bd20420c7e6db2e19639e.eot?#iefix') format('embedded-opentype'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/41cf83fcb0ecbe2f44f7000193a8a81b.woff2') format('woff2'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/01df7e8c5e27042e9363d755c876ec07.woff') format('woff'), url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/1731022c0a614a603e62f24762bfc291.ttf') format('truetype');\n  font-weight: 300;\n  font-style: normal;\n}\n.muller {\n  font-family: 'MullerFont', sans-serif;\n}\n.sp_l-centered,\n.sp_l-section {\n  position: relative;\n  margin-right: auto;\n  margin-left: auto;\n  max-width: 1140px;\n}\n.sp_l-section {\n  overflow: hidden;\n}\ninput.ng-invalid.ng-touched {\n  border: 1px solid #d9534f !important;\n}\nbutton {\n  outline: none;\n}\n.body_lock {\n  overflow: hidden;\n  margin-right: 15px;\n}\n.uppercase {\n  text-transform: uppercase;\n}\n.sp_custom_action-popup__inner iframe {\n  width: 100%;\n  height: 500px;\n}\n.sp_cmn-btn {\n  display: block;\n  height: 55px;\n  width: 100%;\n  overflow: hidden;\n  cursor: pointer;\n  font-size: 15px;\n  text-transform: uppercase;\n  line-height: 59px;\n  text-align: center;\n  color: #313B49;\n  border: 1px solid #313B49;\n  border-radius: 28px;\n}\n.sp_cmn-btn:link {\n  color: #313B49;\n}\n.sp_cmn-btn:visited {\n  color: #313B49;\n}\n.sp_cmn-btn:hover {\n  color: #820d41;\n}\n.sp_cmn-btn:active {\n  color: #313B49;\n}\n.sp_cmn-btn:hover {\n  background-color: rgba(255, 255, 255, 0.4);\n  border-color: #820d41;\n  color: #820d41;\n}\n.sp_cmn-btn:active {\n  background-color: rgba(255, 255, 255, 0.6);\n}\n.sp_cmn-btn_red {\n  background-color: #820d41;\n  border-color: #820d41;\n  color: #fff;\n}\n.sp_cmn-btn_red:link {\n  color: #fff;\n}\n.sp_cmn-btn_red:visited {\n  color: #fff;\n}\n.sp_cmn-btn_red:hover {\n  color: #fff;\n}\n.sp_cmn-btn_red:active {\n  color: #fff;\n}\n.sp_cmn-btn_red:hover {\n  background-color: #990f4d;\n}\n.sp_cmn-btn_red:active {\n  background-color: #740c3a;\n}\n.sp_cmn-btn:disabled {\n  background-color: #E6E6E6;\n  color: #808080;\n}\n.sp_cmn-btn-sm {\n  display: block;\n  height: 38px;\n  width: 100%;\n  overflow: hidden;\n  cursor: pointer;\n  font-size: 15px;\n  text-transform: uppercase;\n  line-height: 42px;\n  text-align: center;\n  border: 1px solid #313B49;\n  border-radius: 28px;\n  background-color: #820d41;\n  border-color: #820d41;\n  color: #fff;\n}\n.sp_cmn-btn-sm:link {\n  color: #fff;\n}\n.sp_cmn-btn-sm:visited {\n  color: #fff;\n}\n.sp_cmn-btn-sm:hover {\n  color: #fff;\n}\n.sp_cmn-btn-sm:active {\n  color: #fff;\n}\n.sp_cmn-btn-sm:hover {\n  /* background-color: lighten(#820d41, 5%); */\n}\n.sp_cmn-btn-sm:active {\n  /* background-color: darken(#820d41, 3%); */\n}\n.sp_cmn-btn-sm:disabled {\n  background-color: #E6E6E6;\n  border: 1px solid #E6E6E6;\n}\n.sp_cmn-sec-head {\n  font-family: 'MullerFont', sans-serif;\n  font-size: 40px;\n  text-align: center;\n  margin-bottom: 25px;\n  text-transform: uppercase;\n}\n.sp_cmn-breadcr {\n  text-align: center;\n  padding: 0 30px;\n}\n.sp_cmn-breadcr__inner {\n  display: inline-block;\n  position: relative;\n}\n.sp_cmn-breadcr__itm {\n  display: inline-block;\n  font-size: 13px;\n  font-weight: 300;\n  line-height: 1;\n  padding: 0 4px 2px;\n}\n.sp_cmn-breadcr__itm:link {\n  color: #262626;\n}\n.sp_cmn-breadcr__itm:visited {\n  color: #262626;\n}\n.sp_cmn-breadcr__itm:hover {\n  color: #820d41;\n}\n.sp_cmn-breadcr__itm:active {\n  color: #262626;\n}\n.sp_cmn-breadcr__itm.this-active {\n  color: #820d41;\n  border-bottom: 1px solid #820d41;\n}\n.sp_cmn-breadcr__itm:hover {\n  color: #820d41;\n}\n.sp_cmn-breadcr__arrow {\n  position: absolute;\n  width: 6px;\n  height: 8px;\n  top: 39%;\n  margin-top: -4px;\n  background-color: red;\n  opacity: .8;\n}\n.sp_cmn-breadcr__arrow.this-left {\n  left: -14px;\n  background: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/eead5542c9e188907d185192b16da8b4.png\") no-repeat center;\n}\n.sp_cmn-breadcr__arrow.this-right {\n  right: -14px;\n  background: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/54191274c2ac2f95281907c0836f183c.png\") no-repeat center;\n}\n.sp_cmn-breadcr__arrow:hover {\n  opacity: 1;\n}\n.sp_cmn-popup-close {\n  width: 14px;\n  height: 14px;\n  position: absolute;\n  right: 15px;\n  top: 15px;\n  background: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/9d9c35daa6ad76b5b26b7a190dc85457.svg\") no-repeat center;\n  background-size: contain;\n  cursor: pointer;\n}\n/* forms */\n.sp_cmn-input {\n  display: block;\n  width: 100%;\n  height: 48px;\n  padding: 0 12px;\n  border: 1px solid #E6E6E6;\n  font-size: 16px;\n  font-weight: normal;\n  color: #262626;\n  font-family: 'MullerFont', sans-serif;\n  font-weight: 300;\n  font-size: 13px;\n  -webkit-transition: border-color 150ms linear 0ms;\n  transition: border-color 150ms linear 0ms;\n}\n.sp_cmn-input:active,\n.sp_cmn-input:focus {\n  outline: none !important;\n  border-color: #c0c0c0;\n}\n.sp_cmn-input::-webkit-input-placeholder {\n  color: #808080;\n}\n.sp_cmn-input::-moz-placeholder {\n  color: #808080;\n}\n.sp_cmn-input:-moz-placeholder {\n  color: #808080;\n}\n.sp_cmn-input:-ms-input-placeholder {\n  color: #808080;\n}\n.sp_cmn-radio-wrap {\n  display: block;\n  position: absolute;\n  left: 0px;\n  top: 1px;\n}\n.sp_cmn-radio-wrap a {\n  display: block;\n  position: relative;\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  border: 1px solid #000;\n}\n.sp_cmn-radio-wrap a:hover {\n  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);\n  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);\n}\n.sp_cmn-radio-wrap a.checked {\n  border-color: #820d41;\n  background-color: #820d41;\n}\n.sp_cmn-radio-wrap label {\n  display: none;\n}\n.sp_cmn-checkbox-wrap {\n  display: block;\n  position: absolute;\n  left: 0px;\n  top: 0px;\n}\n.sp_cmn-checkbox-wrap a {\n  display: block;\n  position: relative;\n  width: 12px;\n  height: 12px;\n  border-radius: 2px;\n  border: 1px solidН #000;\n}\n.sp_cmn-checkbox-wrap a:hover {\n  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);\n  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);\n}\n.sp_cmn-checkbox-wrap a.checked {\n  border-color: #820d41;\n  background-color: #820d41;\n  background-image: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/58c932599f2ac4a949d6c02cb35c8c3d.png\");\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: 9px 6px;\n}\n.sp_cmn-checkbox-wrap label {\n  display: none;\n}\n.sp_cmn-label {\n  cursor: pointer;\n}\n.sp_cmn-inline-param {\n  display: inline-block;\n  position: relative;\n  padding-left: 0px;\n  font-size: 13px;\n  line-height: 1;\n  font-weight: 300;\n  margin-right: 55px;\n}\n.sp_cmn-inline-param .outer_label {\n  display: inline-block;\n  padding: 4px;\n  border-radius: 4px;\n}\n.sp_cmn-inline-param:last-child {\n  margin-bottom: 0;\n}\n@media (max-width: 1199px) {\n}\n@media (max-width: 991px) {\n}\n@media (max-width: 767px) {\n  .sp_cmn-inline-param {\n    display: block;\n    margin-bottom: 7px;\n  }\n}\n@media (max-width: 479px) {\n}\n.outer_label {\n  padding-left: 20px !important;\n  background-repeat: no-repeat;\n  background-position: left center;\n  background-size: 15px 15px;\n}\n.outer_label.radio {\n  background-image: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/983ed13b88728b6e3cd1515d0cd02065.png');\n}\n.outer_label.radio.checked {\n  background-image: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/0a4056ee69b2c116a90879dad1c057f8.png');\n}\n.outer_label.checkbox {\n  background-image: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/7bc83e69d13bd06a8e3a92a1a9561221.png');\n}\n.outer_label.checkbox.checked {\n  background-image: url('https://d3sailplay.cdnvideo.ru/media/assets/assetfile/4444eb710d3576c02f34c6ad3f3f9184.png');\n}\n.outer_label input {\n  display: none;\n}\n.test-fonts-sec {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n}\n.test-fonts-sec:before,\n.test-fonts-sec:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.test-fonts-sec * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.test-fonts-sec *:before,\n.test-fonts-sec *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.test-fonts-sec a,\n.test-fonts-sec a:hover,\n.test-fonts-sec a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.test-fonts-sec h1,\n.test-fonts-sec h2,\n.test-fonts-sec h3,\n.test-fonts-sec h4,\n.test-fonts-sec h5,\n.test-fonts-sec h6,\n.test-fonts-sec ul,\n.test-fonts-sec ol,\n.test-fonts-sec p {\n  margin: 0;\n  padding: 0;\n}\n.test-fonts-sec h1,\n.test-fonts-sec h2,\n.test-fonts-sec h3,\n.test-fonts-sec h4,\n.test-fonts-sec h5,\n.test-fonts-sec h6 {\n  font-weight: normal;\n}\n.test-fonts-sec ul,\n.test-fonts-sec ol {\n  list-style: none;\n}\n.test-font {\n  font-size: 36px;\n}\n.test-font.font1 {\n  font-weight: 300;\n}\n.test-font.font2 {\n  font-weight: 400;\n}\n.test-font.font3 {\n  font-weight: 700;\n}\n.sp_person-sec {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  background: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/6716947a502a7f27365c5ea00234084c.jpg\") no-repeat 0 0;\n  background-size: cover;\n  padding: 70px 60px 50px;\n}\n.sp_person-sec:before,\n.sp_person-sec:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_person-sec * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_person-sec *:before,\n.sp_person-sec *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_person-sec a,\n.sp_person-sec a:hover,\n.sp_person-sec a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_person-sec h1,\n.sp_person-sec h2,\n.sp_person-sec h3,\n.sp_person-sec h4,\n.sp_person-sec h5,\n.sp_person-sec h6,\n.sp_person-sec ul,\n.sp_person-sec ol,\n.sp_person-sec p {\n  margin: 0;\n  padding: 0;\n}\n.sp_person-sec h1,\n.sp_person-sec h2,\n.sp_person-sec h3,\n.sp_person-sec h4,\n.sp_person-sec h5,\n.sp_person-sec h6 {\n  font-weight: normal;\n}\n.sp_person-sec ul,\n.sp_person-sec ol {\n  list-style: none;\n}\n.sp_person-sec:before,\n.sp_person-sec:after {\n  content: \" \";\n  display: table;\n}\n.sp_person-sec:after {\n  clear: both;\n}\n@media (max-width: 767px) {\n  .sp_person-sec {\n    padding: 30px 30px;\n  }\n}\n@media (max-width: 479px) {\n  .sp_person-sec {\n    padding: 20px;\n  }\n}\n.sp_person-sec__col1 {\n  float: left;\n  width: 52%;\n  color: #451300;\n  text-transform: uppercase;\n}\n@media (max-width: 991px) {\n  .sp_person-sec__col1 {\n    width: 100%;\n    margin-bottom: 20px;\n  }\n}\n.sp_person-sec__col2 {\n  float: left;\n  width: 24%;\n  padding: 0 10px;\n}\n@media (max-width: 991px) {\n  .sp_person-sec__col2 {\n    width: 50%;\n  }\n}\n@media (max-width: 767px) {\n  .sp_person-sec__col2 {\n    width: 100%;\n    margin-bottom: 20px;\n  }\n}\n.sp_person-sec__col3 {\n  float: left;\n  width: 24%;\n  padding-left: 15px;\n  padding-top: 17px;\n}\n@media (max-width: 991px) {\n  .sp_person-sec__col3 {\n    width: 50%;\n  }\n}\n@media (max-width: 767px) {\n  .sp_person-sec__col3 {\n    width: 100%;\n    padding: 0;\n  }\n}\n.sp_person-sec__hd {\n  font-size: 60px;\n  line-height: 1.2;\n  font-weight: 700;\n}\n@media (max-width: 1199px) {\n  .sp_person-sec__hd {\n    font-size: 48px;\n  }\n}\n@media (max-width: 991px) {\n  .sp_person-sec__hd {\n    font-size: 40px;\n  }\n}\n@media (max-width: 767px) {\n  .sp_person-sec__hd {\n    font-size: 35px;\n  }\n}\n@media (max-width: 479px) {\n  .sp_person-sec__hd {\n    font-size: 20px;\n  }\n}\n.sp_person-sec__ttl {\n  font-size: 35px;\n  line-height: 1.2;\n  font-weight: 300;\n  margin-top: -15px;\n  margin-bottom: 20px;\n}\n@media (max-width: 1199px) {\n  .sp_person-sec__ttl {\n    font-size: 25px;\n    margin-top: 0;\n  }\n}\n@media (max-width: 479px) {\n  .sp_person-sec__ttl {\n    font-size: 18px;\n  }\n}\n.sp_person-sec__more {\n  display: inline-block;\n  margin-top: 30px;\n  font-size: 12px;\n  line-height: 10px;\n  text-transform: uppercase;\n  border-bottom: 1px dashed #B20B49;\n}\n.sp_person-sec__more:link {\n  color: #B20B49;\n}\n.sp_person-sec__more:visited {\n  color: #B20B49;\n}\n.sp_person-sec__more:hover {\n  color: #B20B49;\n}\n.sp_person-sec__more:active {\n  color: #B20B49;\n}\n.sp_person-sec__more:hover {\n  border-bottom-color: rgba(255, 255, 255, 0);\n}\n.sp_person-cell__photo {\n  display: block;\n  width: 152px;\n  height: 152px;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  border-radius: 50%;\n  margin: 0 auto 30px;\n}\n.sp_person-info {\n  font-size: 15px;\n  font-weight: 300;\n}\n.sp_person-info__hd {\n  font-size: 25px;\n  line-height: 1;\n  margin-bottom: 10px;\n}\n.sp_person-info__name {\n  font-weight: 700;\n  line-height: 27px;\n}\n.sp_person-info__cont {\n  line-height: 27px;\n}\n.sp_person-info__status {\n  border-top: 1px solid #000;\n  line-height: 1;\n  margin-top: 25px;\n  padding-top: 15px;\n}\n.sp_person-info__stat-hd {\n  margin-bottom: 11px;\n}\n.status-info-counter {\n  display: inline-block;\n  position: relative;\n  margin-bottom: 0px;\n}\n.status-info-counter__val {\n  display: inline-block;\n  font-size: 121px;\n  line-height: 1;\n  font-weight: 700;\n  color: #5C6980;\n}\n.status-info-counter__remain {\n  position: absolute;\n  right: -22px;\n  top: -30px;\n  width: 40px;\n  height: 40px;\n  border-radius: 50%;\n  background-color: #fff;\n  font-size: 15px;\n  font-weight: 700;\n  color: #BEBEBE;\n  text-align: center;\n  padding-top: 12px;\n}\n.status-info-counter__remain:hover .status-info-counter__popup {\n  display: block;\n}\n.status-info-counter__popup {\n  display: none;\n  position: absolute;\n  z-index: 2;\n  background-color: #fff;\n  bottom: 100%;\n  margin-bottom: 17px;\n  width: 320px;\n  left: 50%;\n  margin-left: -160px;\n  padding: 30px 25px;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.2;\n  text-align: center;\n  -webkit-box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.3);\n  box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.3);\n}\n.status-info-counter__popup:after {\n  content: \"\";\n  display: block;\n  position: absolute;\n  top: 100%;\n  left: 50%;\n  width: 0;\n  height: 0;\n  margin-left: -13px;\n  border-left: 13px solid transparent;\n  border-right: 13px solid transparent;\n  border-top: 14px solid #fff;\n}\n.sp_info-sec {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  margin-top: 14px;\n}\n.sp_info-sec:before,\n.sp_info-sec:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_info-sec * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_info-sec *:before,\n.sp_info-sec *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_info-sec a,\n.sp_info-sec a:hover,\n.sp_info-sec a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_info-sec h1,\n.sp_info-sec h2,\n.sp_info-sec h3,\n.sp_info-sec h4,\n.sp_info-sec h5,\n.sp_info-sec h6,\n.sp_info-sec ul,\n.sp_info-sec ol,\n.sp_info-sec p {\n  margin: 0;\n  padding: 0;\n}\n.sp_info-sec h1,\n.sp_info-sec h2,\n.sp_info-sec h3,\n.sp_info-sec h4,\n.sp_info-sec h5,\n.sp_info-sec h6 {\n  font-weight: normal;\n}\n.sp_info-sec ul,\n.sp_info-sec ol {\n  list-style: none;\n}\n.sp_info-sec:before,\n.sp_info-sec:after {\n  content: \" \";\n  display: table;\n}\n.sp_info-sec:after {\n  clear: both;\n}\n.sp_info-sec__l {\n  float: left;\n  width: 50%;\n  padding-right: 7px;\n}\n@media (max-width: 767px) {\n  .sp_info-sec__l {\n    width: 100%;\n    margin-bottom: 20px;\n    padding-right: 0;\n  }\n}\n.sp_info-sec__r {\n  float: left;\n  width: 50%;\n  padding-left: 7px;\n}\n@media (max-width: 767px) {\n  .sp_info-sec__r {\n    width: 100%;\n    padding-left: 0;\n  }\n}\n.sp_points-cell {\n  background-color: #e1ebf2;\n  padding: 50px 20px 20px;\n  min-height: 393px;\n  text-align: center;\n  color: #313B49;\n}\n.sp_points-cell__hd {\n  font-size: 30px;\n  line-height: 1;\n  font-weight: 300;\n  text-transform: uppercase;\n  margin-bottom: 48px;\n}\n.sp_points-cell__ttl {\n  font-size: 20px;\n  margin-bottom: 16px;\n}\n.sp_points-cell__btn {\n  display: inline-block;\n  position: relative;\n  z-index: 2;\n  padding: 0 35px;\n  width: auto;\n}\n.sp_status-cell {\n  background-color: #f5e6d2;\n  padding: 50px 20px 20px;\n  min-height: 393px;\n  text-align: center;\n  color: #471202;\n}\n.sp_status-cell__hd {\n  font-size: 30px;\n  font-weight: 300;\n  line-height: 1;\n  text-transform: uppercase;\n  margin-bottom: 15px;\n}\n.sp_status-cell__img {\n  width: 145px;\n  height: 145px;\n  margin: 0 auto 5px;\n  background-position: center;\n  background-size: contain;\n  background-repeat: no-repeat;\n}\n.sp_status-cell__ttl {\n  font-size: 25px;\n  font-weight: 700;\n  margin-bottom: 13px;\n}\n.sp_status-cell__btn {\n  display: inline-block;\n  padding: 0 35px;\n  width: auto;\n}\n.sp_progr-sec {\n  margin-top: 50px;\n  margin-bottom: 50px;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n}\n.sp_progr-sec:before,\n.sp_progr-sec:after {\n  content: \" \";\n  display: table;\n}\n.sp_progr-sec:after {\n  clear: both;\n}\n.sp_progr-sec:before,\n.sp_progr-sec:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_progr-sec * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_progr-sec *:before,\n.sp_progr-sec *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_progr-sec a,\n.sp_progr-sec a:hover,\n.sp_progr-sec a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_progr-sec h1,\n.sp_progr-sec h2,\n.sp_progr-sec h3,\n.sp_progr-sec h4,\n.sp_progr-sec h5,\n.sp_progr-sec h6,\n.sp_progr-sec ul,\n.sp_progr-sec ol,\n.sp_progr-sec p {\n  margin: 0;\n  padding: 0;\n}\n.sp_progr-sec h1,\n.sp_progr-sec h2,\n.sp_progr-sec h3,\n.sp_progr-sec h4,\n.sp_progr-sec h5,\n.sp_progr-sec h6 {\n  font-weight: normal;\n}\n.sp_progr-sec ul,\n.sp_progr-sec ol {\n  list-style: none;\n}\n@media (max-width: 991px) {\n  .sp_progr-sec {\n    padding: 0 20px;\n  }\n}\n.sp_progr-sec__l {\n  float: left;\n  width: 30%;\n  padding-top: 34px;\n  padding-right: 15px;\n}\n@media (max-width: 991px) {\n  .sp_progr-sec__l {\n    width: 100%;\n    padding: 0;\n    margin-bottom: 25px;\n  }\n}\n.sp_progr-sec__r {\n  float: left;\n  width: 70%;\n}\n@media (max-width: 991px) {\n  .sp_progr-sec__r {\n    width: 100%;\n  }\n}\n.sp_progr-sec__txt {\n  font-size: 25px;\n  font-weight: 300;\n}\n@media (max-width: 767px) {\n  .sp_progr-sec__txt {\n    text-align: center;\n  }\n}\n@media (max-width: 767px) {\n  .sp_progr-sec__txt b {\n    display: block;\n  }\n}\n.sp_progr-cell {\n  padding: 40px 40px 70px;\n}\n@media (max-width: 767px) {\n  .sp_progr-cell {\n    padding-left: 10px;\n    padding-right: 10px;\n  }\n}\n.sp_progr-bar {\n  display: block;\n  position: relative;\n  width: 100%;\n  height: 16px;\n  background-color: #BCBCBB;\n}\n.sp_progr-bar:before {\n  content: \"\";\n  display: block;\n  position: absolute;\n  width: 100%;\n  left: 0;\n  top: 0;\n  height: 2px;\n  background-color: #9E9E9C;\n}\n.sp_progr-bar__inner {\n  position: relative;\n  height: 16px;\n  width: 100%;\n}\n.sp_progr-bar__inner-bar {\n  position: absolute;\n  left: 0;\n  top: 0;\n  height: 100%;\n  width: 10%;\n  -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5) inset;\n  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5) inset;\n  -webkit-transition: width 500ms linear 0ms;\n  transition: width 500ms linear 0ms;\n}\n.sp_progr-bar__inner-bar.this-inner1 {\n  background-color: #7BC3AB;\n}\n.sp_progr-bar__inner-bar.this-inner2 {\n  background-color: #C2DEEF;\n}\n.sp_progr-bar__inner-bar.this-inner3 {\n  background-color: #D4A6D0;\n}\n.sp_progr-bar__inner-bar.this-inner4 {\n  background-color: #B45570;\n}\n.sp_progr-bar__point {\n  position: absolute;\n  top: -30px;\n  width: 72px;\n  margin-left: -36px;\n}\n.sp_progr-bar__point.this-point-1 {\n  left: 0%;\n}\n.sp_progr-bar__point.this-point-2 {\n  left: 100%;\n}\n@media (max-width: 767px) {\n  .sp_progr-bar__point {\n    top: -25px;\n  }\n}\n@media (max-width: 479px) {\n  .sp_progr-bar__point {\n    top: -21px;\n  }\n}\n.sp_progr-bar__point-img {\n  width: 100%;\n  height: 82px;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: contain;\n  margin: 0 auto 3px;\n}\n@media (max-width: 767px) {\n}\n@media (max-width: 479px) {\n}\n.sp_progr-bar__point-name {\n  font-size: 15px;\n  text-align: center;\n  font-weight: 300;\n  color: #471202;\n}\n@media (max-width: 767px) {\n  .sp_progr-bar__point-name {\n    font-size: 13px;\n  }\n}\n@media (max-width: 479px) {\n  .sp_progr-bar__point-name {\n    font-size: 10px;\n  }\n}\n.sp_badges-sec {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  margin-top: 50px;\n  margin-bottom: 50px;\n  background-color: #F3F5F9;\n  padding: 40px 30px;\n}\n.sp_badges-sec:before,\n.sp_badges-sec:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_badges-sec * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_badges-sec *:before,\n.sp_badges-sec *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_badges-sec a,\n.sp_badges-sec a:hover,\n.sp_badges-sec a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_badges-sec h1,\n.sp_badges-sec h2,\n.sp_badges-sec h3,\n.sp_badges-sec h4,\n.sp_badges-sec h5,\n.sp_badges-sec h6,\n.sp_badges-sec ul,\n.sp_badges-sec ol,\n.sp_badges-sec p {\n  margin: 0;\n  padding: 0;\n}\n.sp_badges-sec h1,\n.sp_badges-sec h2,\n.sp_badges-sec h3,\n.sp_badges-sec h4,\n.sp_badges-sec h5,\n.sp_badges-sec h6 {\n  font-weight: normal;\n}\n.sp_badges-sec ul,\n.sp_badges-sec ol {\n  list-style: none;\n}\n.sp_badges-sec__row {\n  text-align: center;\n}\n.sp_badges-itm {\n  display: inline-block;\n  position: relative;\n  width: 190px;\n}\n.sp_badges-itm__img img {\n  display: block;\n  width: 100%;\n  height: auto;\n}\n.sp_badges-itm__cover {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n}\n.sp_badges-itm__inner {\n  position: absolute;\n  width: 100%;\n  top: 50%;\n  margin-top: -10px;\n  font-size: 15px;\n  font-weight: 700;\n  color: #7A7A7A;\n}\n.sp_gift-sec {\n  margin-top: 14px;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  padding: 0 45px;\n}\n.sp_gift-sec:before,\n.sp_gift-sec:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_gift-sec * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_gift-sec *:before,\n.sp_gift-sec *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_gift-sec a,\n.sp_gift-sec a:hover,\n.sp_gift-sec a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_gift-sec h1,\n.sp_gift-sec h2,\n.sp_gift-sec h3,\n.sp_gift-sec h4,\n.sp_gift-sec h5,\n.sp_gift-sec h6,\n.sp_gift-sec ul,\n.sp_gift-sec ol,\n.sp_gift-sec p {\n  margin: 0;\n  padding: 0;\n}\n.sp_gift-sec h1,\n.sp_gift-sec h2,\n.sp_gift-sec h3,\n.sp_gift-sec h4,\n.sp_gift-sec h5,\n.sp_gift-sec h6 {\n  font-weight: normal;\n}\n.sp_gift-sec ul,\n.sp_gift-sec ol {\n  list-style: none;\n}\n.sp_gift-slider {\n  text-align: center;\n}\n.sp_gift-slider__slide {\n  width: 100%;\n  border: 1px solid #969594;\n  padding: 30px 20px;\n}\n.sp_gift-slider__slide:hover {\n  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);\n}\n.sp_gift-slider__img {\n  width: 240px;\n  height: 225px;\n  max-width: 100%;\n  margin: 0 auto 10px;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: contain;\n}\n.sp_gift-slider__hd {\n  font-size: 15px;\n  font-weight: 700;\n  margin-bottom: 5px;\n}\n.sp_gift-slider__ttl {\n  font-size: 15px;\n  font-weight: 300;\n  color: #808080;\n  margin-bottom: 5px;\n}\n.sp_gift-slider__price {\n  font-size: 25px;\n  color: #9BDE99;\n  margin-bottom: 10px;\n}\n.sp_gift-slider__btn {\n  display: inline-block;\n  width: auto;\n  padding: 0 25px;\n}\n.sp_gift-slider .slick-slide {\n  outline: none !important;\n  padding: 10px 4px;\n}\n.sp_gift-slider .slick-arrow {\n  position: absolute;\n  top: 50%;\n  height: 113px;\n  width: 35px;\n  margin-top: -50px;\n  background-size: contain;\n  background-position: center;\n  background-repeat: no-repeat;\n  cursor: pointer;\n  opacity: .8;\n}\n.sp_gift-slider .slick-arrow:hover {\n  opacity: 1;\n}\n.sp_gift-slider .slick-arrow.slick-disabled {\n  display: none !important;\n}\n.sp_gift-slider .slick-prev {\n  left: -35px;\n  background-image: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/0a6b55e204cb27ad24799aa634a5a89f.png\");\n}\n.sp_gift-slider .slick-next {\n  right: -35px;\n  background-image: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/bbe8e74981f17405a856c029f6e1548d.png\");\n}\n.sp_task-sec-wrap {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  position: relative;\n  margin-top: 14px;\n  background-color: #e8f5ec;\n}\n.sp_task-sec-wrap:before,\n.sp_task-sec-wrap:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_task-sec-wrap * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_task-sec-wrap *:before,\n.sp_task-sec-wrap *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_task-sec-wrap a,\n.sp_task-sec-wrap a:hover,\n.sp_task-sec-wrap a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_task-sec-wrap h1,\n.sp_task-sec-wrap h2,\n.sp_task-sec-wrap h3,\n.sp_task-sec-wrap h4,\n.sp_task-sec-wrap h5,\n.sp_task-sec-wrap h6,\n.sp_task-sec-wrap ul,\n.sp_task-sec-wrap ol,\n.sp_task-sec-wrap p {\n  margin: 0;\n  padding: 0;\n}\n.sp_task-sec-wrap h1,\n.sp_task-sec-wrap h2,\n.sp_task-sec-wrap h3,\n.sp_task-sec-wrap h4,\n.sp_task-sec-wrap h5,\n.sp_task-sec-wrap h6 {\n  font-weight: normal;\n}\n.sp_task-sec-wrap ul,\n.sp_task-sec-wrap ol {\n  list-style: none;\n}\n.sp_task-sec {\n  padding: 40px 40px;\n}\n.sp_task-slider {\n  text-align: center;\n}\n.sp_task-slider__slide {\n  display: block;\n  position: relative;\n  width: 100%;\n  border: 1px solid #969594;\n  padding: 30px 10px 10px;\n  height: 220px;\n  background-color: #fff;\n}\n.sp_task-slider__slide:hover {\n  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);\n}\n.sp_task-slider__slide:hover .sp_task-slider__cover {\n  display: block;\n}\n.sp_task-slider__ico {\n  width: 66px;\n  height: 66px;\n  max-width: 100%;\n  margin: 0 auto 10px;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: contain;\n}\n.sp_task-slider__hd {\n  font-size: 15px;\n  font-weight: 300;\n  margin-bottom: 5px;\n}\n.sp_task-slider__price {\n  font-size: 25px;\n  color: #9BDE99;\n  margin-bottom: 10px;\n}\n.sp_task-slider__btn {\n  display: inline-block;\n  width: auto;\n  padding: 0 25px;\n}\n.sp_task-slider__cover {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n  background-color: #fff;\n  display: none;\n  padding-top: 90px;\n}\n.sp_task-slider .slick-slide {\n  outline: none !important;\n  padding: 10px 4px;\n}\n.sp_task-slider .slick-arrow {\n  position: absolute;\n  top: 50%;\n  height: 113px;\n  width: 26px;\n  margin-top: -50px;\n  background-size: contain;\n  background-position: center;\n  background-repeat: no-repeat;\n  cursor: pointer;\n  opacity: .8;\n}\n.sp_task-slider .slick-arrow:hover {\n  opacity: 1;\n}\n.sp_task-slider .slick-arrow.slick-disabled {\n  display: none !important;\n}\n.sp_task-slider .slick-prev {\n  left: -30px;\n  background-image: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/0a6b55e204cb27ad24799aa634a5a89f.png\");\n}\n.sp_task-slider .slick-next {\n  right: -30px;\n  background-image: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/bbe8e74981f17405a856c029f6e1548d.png\");\n}\n.sailplay_action_frame {\n  width: 100px !important;\n  display: inline-block !important;\n}\n.sp_overlay {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  width: 100%;\n  height: 100%;\n  z-index: 10000;\n  display: block;\n  overflow: auto;\n}\n.sp_hist-popup {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  margin: 40px auto 40px auto;\n  max-height: 90%;\n  max-width: 650px;\n  width: 100%;\n  background-color: #fff;\n  position: relative;\n  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  padding: 35px 35px;\n}\n.sp_hist-popup:before,\n.sp_hist-popup:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_hist-popup * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_hist-popup *:before,\n.sp_hist-popup *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_hist-popup a,\n.sp_hist-popup a:hover,\n.sp_hist-popup a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_hist-popup h1,\n.sp_hist-popup h2,\n.sp_hist-popup h3,\n.sp_hist-popup h4,\n.sp_hist-popup h5,\n.sp_hist-popup h6,\n.sp_hist-popup ul,\n.sp_hist-popup ol,\n.sp_hist-popup p {\n  margin: 0;\n  padding: 0;\n}\n.sp_hist-popup h1,\n.sp_hist-popup h2,\n.sp_hist-popup h3,\n.sp_hist-popup h4,\n.sp_hist-popup h5,\n.sp_hist-popup h6 {\n  font-weight: normal;\n}\n.sp_hist-popup ul,\n.sp_hist-popup ol {\n  list-style: none;\n}\n.sp_hist-popup__hd {\n  font-size: 25px;\n  text-transform: uppercase;\n  text-align: center;\n  font-weight: 300;\n  margin-bottom: 20px;\n}\n.sp_hist-list {\n  margin: 15px 0 20px;\n}\n.sp_hist-list__itm {\n  font-size: 15px;\n  line-height: 1;\n  font-weight: 300;\n  margin-bottom: 13px;\n}\n.sp_hist-list__itm:before,\n.sp_hist-list__itm:after {\n  content: \" \";\n  display: table;\n}\n.sp_hist-list__itm:after {\n  clear: both;\n}\n.sp_hist-list__itm.this-dec {\n  color: #820d41;\n}\n.sp_hist-list__itm.this-purchase .sp_hist-list__name {\n  cursor: pointer;\n  text-decoration: underline;\n}\n.sp_hist-list__itm.this-purchase .sp_hist-list__name:hover {\n  text-decoration: none;\n}\n.sp_hist-list__date {\n  display: inline-block;\n  width: 100px;\n}\n.sp_hist-list__name {\n  display: inline-block;\n}\n.sp_hist-list__purchases {\n  display: block;\n  padding-left: 120px;\n  box-sizing: border-box;\n  padding-top: 10px;\n  overflow: hidden;\n}\n.sp_hist-list__purchases span {\n  font-size: 14px;\n  line-height: 20px;\n  display: block;\n  font-weight: 300;\n  float: left;\n  width: 50%;\n}\n.sp_hist-list__purchases span.type_price {\n  text-align: right;\n}\n.sp_hist-list__val {\n  float: right;\n  margin-left: 15px;\n  font-weight: 700;\n}\n.sp_stat-popup {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  width: 650px;\n  position: relative;\n  max-width: 90%;\n  margin: 40px auto 40px auto;\n  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  padding: 30px 30px;\n  background-color: #fff;\n}\n.sp_stat-popup:before,\n.sp_stat-popup:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_stat-popup * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_stat-popup *:before,\n.sp_stat-popup *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_stat-popup a,\n.sp_stat-popup a:hover,\n.sp_stat-popup a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_stat-popup h1,\n.sp_stat-popup h2,\n.sp_stat-popup h3,\n.sp_stat-popup h4,\n.sp_stat-popup h5,\n.sp_stat-popup h6,\n.sp_stat-popup ul,\n.sp_stat-popup ol,\n.sp_stat-popup p {\n  margin: 0;\n  padding: 0;\n}\n.sp_stat-popup h1,\n.sp_stat-popup h2,\n.sp_stat-popup h3,\n.sp_stat-popup h4,\n.sp_stat-popup h5,\n.sp_stat-popup h6 {\n  font-weight: normal;\n}\n.sp_stat-popup ul,\n.sp_stat-popup ol {\n  list-style: none;\n}\n.sp_stat-popup__hd {\n  font-size: 25px;\n  font-weight: 300;\n  margin-bottom: 20px;\n  text-align: center;\n}\n.sp_stat-popup__btns {\n  padding: 0 10%;\n}\n.sp_stat-popup__btns:before,\n.sp_stat-popup__btns:after {\n  content: \" \";\n  display: table;\n}\n.sp_stat-popup__btns:after {\n  clear: both;\n}\n.sp_stat-popup__btn {\n  width: 165px;\n  margin: 0 auto;\n}\n.sp_stat-pop-itm {\n  margin-bottom: 20px;\n}\n.sp_stat-pop-itm:before,\n.sp_stat-pop-itm:after {\n  content: \" \";\n  display: table;\n}\n.sp_stat-pop-itm:after {\n  clear: both;\n}\n@media (max-width: 767px) {\n  .sp_stat-pop-itm {\n    margin-bottom: 40px;\n  }\n}\n.sp_stat-pop-itm__img {\n  float: left;\n  width: 120px;\n  padding-top: 10px;\n}\n.sp_stat-pop-itm__img img {\n  display: block;\n  width: 100%;\n  height: auto;\n  max-width: 70px;\n  margin: 0 auto;\n}\n@media (max-width: 767px) {\n  .sp_stat-pop-itm__img img {\n    max-width: 120px;\n  }\n}\n@media (max-width: 767px) {\n  .sp_stat-pop-itm__img {\n    float: none;\n    margin: 0 auto 20px;\n    width: 100%;\n    padding: 0;\n  }\n}\n.sp_stat-pop-itm__text {\n  font-size: 15px;\n  line-height: 1.2;\n  font-weight: 300;\n  margin-left: 120px;\n}\n@media (max-width: 767px) {\n  .sp_stat-pop-itm__text {\n    margin: 0;\n  }\n}\n.sp_gift-popup {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  position: relative;\n  width: 556px;\n  max-width: 90%;\n  margin: 40px auto 40px auto;\n  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  padding: 30px 30px;\n  background-color: #fff;\n}\n.sp_gift-popup:before,\n.sp_gift-popup:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_gift-popup * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_gift-popup *:before,\n.sp_gift-popup *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_gift-popup a,\n.sp_gift-popup a:hover,\n.sp_gift-popup a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_gift-popup h1,\n.sp_gift-popup h2,\n.sp_gift-popup h3,\n.sp_gift-popup h4,\n.sp_gift-popup h5,\n.sp_gift-popup h6,\n.sp_gift-popup ul,\n.sp_gift-popup ol,\n.sp_gift-popup p {\n  margin: 0;\n  padding: 0;\n}\n.sp_gift-popup h1,\n.sp_gift-popup h2,\n.sp_gift-popup h3,\n.sp_gift-popup h4,\n.sp_gift-popup h5,\n.sp_gift-popup h6 {\n  font-weight: normal;\n}\n.sp_gift-popup ul,\n.sp_gift-popup ol {\n  list-style: none;\n}\n.sp_gift-popup__hd {\n  font-size: 25px;\n  font-weight: 300;\n  line-height: 1.4;\n  margin-bottom: 20px;\n  text-align: center;\n}\n.sp_gift-popup__img {\n  width: 215px;\n  height: 215px;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: contain;\n  margin: 0 auto 20px;\n}\n.sp_gift-popup__ttl {\n  font-size: 25px;\n  line-height: 1;\n  font-weight: 300;\n  margin-bottom: 25px;\n  text-align: center;\n}\n.sp_gift-popup__btns {\n  padding: 0 10%;\n}\n.sp_gift-popup__btns:before,\n.sp_gift-popup__btns:after {\n  content: \" \";\n  display: table;\n}\n.sp_gift-popup__btns:after {\n  clear: both;\n}\n.sp_gift-popup__btn {\n  width: 165px;\n}\n.sp_gift-popup__btn:first-child {\n  float: left;\n}\n.sp_gift-popup__btn:last-child {\n  float: right;\n}\n@media (max-width: 767px) {\n  .sp_gift-popup__btn {\n    float: none !important;\n    margin: 0 auto 20px;\n  }\n}\n.sp_profile-popup {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  width: 556px;\n  max-width: 90%;\n  margin: 40px auto 40px auto;\n  position: relative;\n  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  padding: 30px 60px;\n  background-color: #fff;\n}\n.sp_profile-popup:before,\n.sp_profile-popup:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_profile-popup * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_profile-popup *:before,\n.sp_profile-popup *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_profile-popup a,\n.sp_profile-popup a:hover,\n.sp_profile-popup a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_profile-popup h1,\n.sp_profile-popup h2,\n.sp_profile-popup h3,\n.sp_profile-popup h4,\n.sp_profile-popup h5,\n.sp_profile-popup h6,\n.sp_profile-popup ul,\n.sp_profile-popup ol,\n.sp_profile-popup p {\n  margin: 0;\n  padding: 0;\n}\n.sp_profile-popup h1,\n.sp_profile-popup h2,\n.sp_profile-popup h3,\n.sp_profile-popup h4,\n.sp_profile-popup h5,\n.sp_profile-popup h6 {\n  font-weight: normal;\n}\n.sp_profile-popup ul,\n.sp_profile-popup ol {\n  list-style: none;\n}\n@media (max-width: 767px) {\n  .sp_profile-popup {\n    padding: 30px 30px;\n  }\n}\n.sp_profile-popup__hd {\n  font-size: 25px;\n  font-weight: 300;\n  margin-bottom: 20px;\n}\n.sp_profile-form {\n  max-width: 100%;\n}\n@media (max-width: 767px) {\n  .sp_profile-form {\n    width: 100%;\n  }\n}\n.sp_profile-form__set {\n  margin-bottom: 30px;\n}\n.sp_profile-form__ttl {\n  font-size: 13px;\n  font-weight: 300;\n  margin-bottom: 7px;\n}\n.sp_profile-form__dates:before,\n.sp_profile-form__dates:after {\n  content: \" \";\n  display: table;\n}\n.sp_profile-form__dates:after {\n  clear: both;\n}\n.sp_profile-form__dates-col {\n  width: 33.333%;\n  padding-right: 10px;\n  float: left;\n}\n@media (max-width: 767px) {\n  .sp_profile-form__dates-col {\n    float: none;\n    width: 100%;\n    margin-bottom: 15px;\n    padding: 0;\n  }\n  .sp_profile-form__dates-col:last-child {\n    margin-bottom: 0;\n  }\n}\n.sp_profile-form__btns {\n  text-align: center;\n}\n.sp_profile-form__btn {\n  display: inline-block;\n  padding: 0 20px;\n  width: 132px;\n  margin-right: 15px;\n  outline: none;\n  vertical-align: top;\n}\n.sp_profile-form__btn[type=submit] {\n  line-height: 36px !important;\n}\n.sp_profile-form__btn:last-child {\n  margin-right: 0;\n}\n@media (max-width: 767px) {\n  .sp_profile-form__btn {\n    display: block;\n    margin-bottom: 20px;\n    width: 100%;\n  }\n}\n.sp_task-popup {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  font-family: 'MullerFont', sans-serif;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.42857143;\n  color: #000;\n  position: relative;\n  width: 556px;\n  max-width: 90%;\n  background-color: #fff;\n  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);\n  padding: 35px 35px;\n}\n.sp_task-popup:before,\n.sp_task-popup:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_task-popup * {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_task-popup *:before,\n.sp_task-popup *:after {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.sp_task-popup a,\n.sp_task-popup a:hover,\n.sp_task-popup a:focus {\n  text-decoration: none;\n  outline: none;\n}\n.sp_task-popup h1,\n.sp_task-popup h2,\n.sp_task-popup h3,\n.sp_task-popup h4,\n.sp_task-popup h5,\n.sp_task-popup h6,\n.sp_task-popup ul,\n.sp_task-popup ol,\n.sp_task-popup p {\n  margin: 0;\n  padding: 0;\n}\n.sp_task-popup h1,\n.sp_task-popup h2,\n.sp_task-popup h3,\n.sp_task-popup h4,\n.sp_task-popup h5,\n.sp_task-popup h6 {\n  font-weight: normal;\n}\n.sp_task-popup ul,\n.sp_task-popup ol {\n  list-style: none;\n}\n.sp_task-popup__hd {\n  font-size: 25px;\n  font-weight: 300;\n  margin-bottom: 20px;\n}\n.sp_task-popup__inner {\n  margin-bottom: 25px;\n}\n.sp_task-popup__inner:before,\n.sp_task-popup__inner:after {\n  content: \" \";\n  display: table;\n}\n.sp_task-popup__inner:after {\n  clear: both;\n}\n.sp_task-popup__l {\n  float: left;\n  width: 30%;\n  padding-top: 20px;\n}\n@media (max-width: 767px) {\n  .sp_task-popup__l {\n    float: none;\n    width: 100%;\n    margin-bottom: 30px;\n    padding-top: 0;\n  }\n}\n.sp_task-popup__r {\n  float: left;\n  width: 70%;\n  font-size: 15px;\n  line-height: 16px;\n}\n.sp_task-popup__r p {\n  margin-bottom: 15px;\n}\n.sp_task-popup__r p:last-child {\n  margin-bottom: 0;\n}\n@media (max-width: 767px) {\n  .sp_task-popup__r {\n    float: none;\n    width: 100%;\n  }\n}\n.sp_task-popup__btn {\n  width: 166px;\n  max-width: 100%;\n  margin: 0 auto;\n}\n.sp_task-popup__img {\n  display: block;\n  margin: 0 auto;\n  width: 100px;\n  max-width: 60%;\n  height: auto;\n}\n.display_table {\n  display: table;\n}\n.display_table_cell {\n  display: table-cell;\n  vertical-align: middle;\n}\n/* Slider */\n.slick-slider {\n  position: relative;\n  display: block;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -ms-touch-action: pan-y;\n  touch-action: pan-y;\n  -webkit-tap-highlight-color: transparent;\n}\n.slick-list {\n  position: relative;\n  overflow: hidden;\n  display: block;\n  margin: 0;\n  padding: 0;\n}\n.slick-list:focus {\n  outline: none;\n}\n.slick-list.dragging {\n  cursor: pointer;\n  cursor: hand;\n}\n.slick-slider .slick-track,\n.slick-slider .slick-list {\n  -webkit-transform: translate3d(0, 0, 0);\n  -moz-transform: translate3d(0, 0, 0);\n  -ms-transform: translate3d(0, 0, 0);\n  -o-transform: translate3d(0, 0, 0);\n  transform: translate3d(0, 0, 0);\n}\n.slick-track {\n  position: relative;\n  left: 0;\n  top: 0;\n  display: block;\n}\n.slick-track:before,\n.slick-track:after {\n  content: \"\";\n  display: table;\n}\n.slick-track:after {\n  clear: both;\n}\n.slick-loading .slick-track {\n  visibility: hidden;\n}\n.slick-slide {\n  float: left;\n  height: 100%;\n  min-height: 1px;\n  display: none;\n}\n[dir=\"rtl\"] .slick-slide {\n  float: right;\n}\n.slick-slide img {\n  display: block;\n}\n.slick-slide.slick-loading img {\n  display: none;\n}\n.slick-slide.dragging img {\n  pointer-events: none;\n}\n.slick-initialized .slick-slide {\n  display: block;\n}\n.slick-loading .slick-slide {\n  visibility: hidden;\n}\n.slick-vertical .slick-slide {\n  display: block;\n  height: auto;\n  border: 1px solid transparent;\n}\n.slick-arrow.slick-hidden {\n  display: none;\n}\n/**\n * selectize.default.css (v@@version) - Default Theme\n * Copyright (c) 2013–2015 Brian Reavis & contributors\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this\n * file except in compliance with the License. You may obtain a copy of the License at:\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software distributed under\n * the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF\n * ANY KIND, either express or implied. See the License for the specific language\n * governing permissions and limitations under the License.\n *\n * @author Brian Reavis <brian@thirdroute.com>\n */\n.selectize-control {\n  position: relative;\n}\n.selectize-dropdown,\n.selectize-input,\n.selectize-input input {\n  color: #303030;\n  font-family: inherit;\n  font-size: 13px;\n  line-height: 18px;\n  -webkit-font-smoothing: inherit;\n}\n.selectize-input,\n.selectize-control.single .selectize-input.input-active {\n  background: #fff;\n  cursor: text;\n  display: inline-block;\n}\n.selectize-input {\n  border: 1px solid #d0d0d0;\n  padding: 8px 8px;\n  display: inline-block;\n  width: 100%;\n  overflow: hidden;\n  position: relative;\n  z-index: 1;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);\n  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);\n  -webkit-border-radius: 3px;\n  -moz-border-radius: 3px;\n  border-radius: 3px;\n}\n.selectize-control.multi .selectize-input.has-items {\n  padding: 5px 8px 2px;\n}\n.selectize-input.full {\n  background-color: #fff;\n}\n.selectize-input.disabled,\n.selectize-input.disabled * {\n  cursor: default !important;\n}\n.selectize-input.focus {\n  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);\n}\n.selectize-input.dropdown-active {\n  -webkit-border-radius: 3px 3px 0 0;\n  -moz-border-radius: 3px 3px 0 0;\n  border-radius: 3px 3px 0 0;\n}\n.selectize-input > * {\n  vertical-align: baseline;\n  display: -moz-inline-stack;\n  display: inline-block;\n  zoom: 1;\n  *display: inline;\n}\n.selectize-control.multi .selectize-input > div {\n  cursor: pointer;\n  margin: 0 3px 3px 0;\n  padding: 2px 6px;\n  background: #1da7ee;\n  color: #fff;\n  border: 1px solid #0073bb;\n}\n.selectize-control.multi .selectize-input > div.active {\n  background: #92c836;\n  color: #fff;\n  border: 1px solid #00578d;\n}\n.selectize-control.multi .selectize-input.disabled > div,\n.selectize-control.multi .selectize-input.disabled > div.active {\n  color: #ffffff;\n  background: #d2d2d2;\n  border: 1px solid #aaaaaa;\n}\n.selectize-input > input {\n  display: inline-block !important;\n  padding: 0 !important;\n  min-height: 0 !important;\n  max-height: none !important;\n  max-width: 100% !important;\n  margin: 0 1px !important;\n  text-indent: 0 !important;\n  border: 0 none !important;\n  background: none !important;\n  line-height: inherit !important;\n  -webkit-user-select: auto !important;\n  -webkit-box-shadow: none !important;\n  box-shadow: none !important;\n}\n.selectize-input > input::-ms-clear {\n  display: none;\n}\n.selectize-input > input:focus {\n  outline: none !important;\n}\n.selectize-input::after {\n  content: ' ';\n  display: block;\n  clear: left;\n}\n.selectize-input.dropdown-active::before {\n  content: ' ';\n  display: block;\n  position: absolute;\n  background: #f0f0f0;\n  height: 1px;\n  bottom: 0;\n  left: 0;\n  right: 0;\n}\n.selectize-dropdown {\n  position: absolute;\n  z-index: 10;\n  border: 1px solid #d0d0d0;\n  background: #fff;\n  margin: -1px 0 0 0;\n  border-top: 0 none;\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);\n  -webkit-border-radius: 0 0 3px 3px;\n  -moz-border-radius: 0 0 3px 3px;\n  border-radius: 0 0 3px 3px;\n}\n.selectize-dropdown [data-selectable] {\n  cursor: pointer;\n  overflow: hidden;\n}\n.selectize-dropdown [data-selectable] .highlight {\n  background: rgba(125, 168, 208, 0.2);\n  -webkit-border-radius: 1px;\n  -moz-border-radius: 1px;\n  border-radius: 1px;\n}\n.selectize-dropdown [data-selectable],\n.selectize-dropdown .optgroup-header {\n  padding: 5px 8px;\n}\n.selectize-dropdown .optgroup:first-child .optgroup-header {\n  border-top: 0 none;\n}\n.selectize-dropdown .optgroup-header {\n  color: #303030;\n  background: #fff;\n  cursor: default;\n}\n.selectize-dropdown .active {\n  background-color: #f5fafd;\n  color: #495c68;\n}\n.selectize-dropdown .active.create {\n  color: #495c68;\n}\n.selectize-dropdown .create {\n  color: rgba(48, 48, 48, 0.5);\n}\n.selectize-dropdown-content {\n  overflow-y: auto;\n  overflow-x: hidden;\n  max-height: 200px;\n}\n.selectize-control.single .selectize-input,\n.selectize-control.single .selectize-input input {\n  cursor: pointer;\n}\n.selectize-control.single .selectize-input.input-active,\n.selectize-control.single .selectize-input.input-active input {\n  cursor: text;\n}\n.selectize-control.single .selectize-input:after {\n  content: ' ';\n  display: block;\n  position: absolute;\n  top: 50%;\n  right: 15px;\n  margin-top: -3px;\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: 5px 5px 0 5px;\n  border-color: #808080 transparent transparent transparent;\n}\n.selectize-control.single .selectize-input.dropdown-active:after {\n  margin-top: -4px;\n  border-width: 0 5px 5px 5px;\n  border-color: transparent transparent #808080 transparent;\n}\n.selectize-control.rtl.single .selectize-input:after {\n  left: 15px;\n  right: auto;\n}\n.selectize-control.rtl .selectize-input > input {\n  margin: 0 4px 0 -2px !important;\n}\n.selectize-control .selectize-input.disabled {\n  opacity: 0.5;\n  background-color: #fafafa;\n}\n.selectize-control.multi .selectize-input.has-items {\n  padding-left: 5px;\n  padding-right: 5px;\n}\n.selectize-control.multi .selectize-input.disabled [data-value] {\n  color: #999;\n  text-shadow: none;\n  background: none;\n  -webkit-box-shadow: none;\n  box-shadow: none;\n}\n.selectize-control.multi .selectize-input.disabled [data-value],\n.selectize-control.multi .selectize-input.disabled [data-value] .remove {\n  border-color: #e6e6e6;\n}\n.selectize-control.multi .selectize-input.disabled [data-value] .remove {\n  background: none;\n}\n.selectize-control.multi .selectize-input [data-value] {\n  text-shadow: 0 1px 0 rgba(0, 51, 83, 0.3);\n  -webkit-border-radius: 3px;\n  -moz-border-radius: 3px;\n  border-radius: 3px;\n  background-color: #1b9dec;\n  background-image: -moz-linear-gradient(top, #1da7ee, #178ee9);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1da7ee), to(#178ee9));\n  background-image: -webkit-linear-gradient(top, #1da7ee, #178ee9);\n  background-image: -o-linear-gradient(top, #1da7ee, #178ee9);\n  background-image: linear-gradient(to bottom, #1da7ee, #178ee9);\n  background-repeat: repeat-x;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1da7ee', endColorstr='#ff178ee9', GradientType=0);\n  -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.2),inset 0 1px rgba(255,255,255,0.03);\n  box-shadow: 0 1px 0 rgba(0,0,0,0.2),inset 0 1px rgba(255,255,255,0.03);\n}\n.selectize-control.multi .selectize-input [data-value].active {\n  background-color: #0085d4;\n  background-image: -moz-linear-gradient(top, #008fd8, #0075cf);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#008fd8), to(#0075cf));\n  background-image: -webkit-linear-gradient(top, #008fd8, #0075cf);\n  background-image: -o-linear-gradient(top, #008fd8, #0075cf);\n  background-image: linear-gradient(to bottom, #008fd8, #0075cf);\n  background-repeat: repeat-x;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff008fd8', endColorstr='#ff0075cf', GradientType=0);\n}\n.selectize-control.single .selectize-input {\n  -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);\n  box-shadow: 0 1px 0 rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);\n  background-color: #f9f9f9;\n  background-image: -moz-linear-gradient(top, #fefefe, #f2f2f2);\n  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fefefe), to(#f2f2f2));\n  background-image: -webkit-linear-gradient(top, #fefefe, #f2f2f2);\n  background-image: -o-linear-gradient(top, #fefefe, #f2f2f2);\n  background-image: linear-gradient(to bottom, #fefefe, #f2f2f2);\n  background-repeat: repeat-x;\n  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffefefe', endColorstr='#fff2f2f2', GradientType=0);\n}\n.selectize-control.single .selectize-input,\n.selectize-dropdown.single {\n  border-color: #b8b8b8;\n}\n.selectize-dropdown .optgroup-header {\n  padding-top: 7px;\n  font-weight: bold;\n  font-size: 0.85em;\n}\n.selectize-dropdown .optgroup {\n  border-top: 1px solid #f0f0f0;\n}\n.selectize-dropdown .optgroup:first-child {\n  border-top: 0 none;\n}\n.selectize-control.sp_cmn-selectize {\n  height: 48px;\n  border: none;\n  background: none;\n  font-size: 14px;\n  font-weight: 300;\n}\n.selectize-control.sp_cmn-selectize .selectize-input {\n  display: block;\n  position: relative;\n  height: 48px;\n  padding: 15px 24px 0px 20px;\n  border: 1px solid #E6E6E6;\n  background: #fff;\n  box-shadow: none;\n  font-size: 14px;\n  color: #262626;\n}\n@media (max-width: 767px) {\n  .selectize-control.sp_cmn-selectize .selectize-input {\n    padding: 15px 24px 0px 20px;\n  }\n}\n.selectize-control.sp_cmn-selectize .selectize-input:after {\n  content: \"\";\n  display: block;\n  position: absolute;\n  width: 12px;\n  height: 6px;\n  top: 50%;\n  margin-top: -3px;\n  right: 10px;\n  background: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/667725ff1c00f30f88bf7d5eb7caec20.svg\") no-repeat center;\n  background-size: contain;\n  border: none;\n}\n.selectize-control.sp_cmn-selectize .selectize-input.has-items:before {\n  display: none;\n}\n.selectize-control.sp_cmn-selectize .selectize-input.dropdown-active {\n  background-color: #e6e6e6;\n}\n.selectize-control.sp_cmn-selectize .selectize-input.dropdown-active:after {\n  background-image: url(\"https://d3sailplay.cdnvideo.ru/media/assets/assetfile/8eac85a31cafe2dda0337266f6c173c9.svg\");\n}\n.selectize-control.sp_cmn-selectize .selectize-input input {\n  vertical-align: top;\n  font-size: 14px;\n  line-height: 28px;\n  background-color: #fff;\n}\n.selectize-control.sp_cmn-selectize .selectize-input input::-webkit-input-placeholder {\n  color: #767676;\n}\n.selectize-control.sp_cmn-selectize .selectize-input input::-moz-placeholder {\n  color: #767676;\n}\n.selectize-control.sp_cmn-selectize .selectize-input input:-moz-placeholder {\n  color: #767676;\n}\n.selectize-control.sp_cmn-selectize .selectize-input input:-ms-input-placeholder {\n  color: #767676;\n}\n.selectize-control.sp_cmn-selectize .selectize-input .item {\n  vertical-align: top;\n  white-space: nowrap;\n}\n.selectize-control.sp_cmn-selectize .sp_cmn-selectize {\n  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);\n  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);\n  margin-top: -2px;\n  border: 1px solid #E6E6E6;\n  border-top: none;\n  border-bottom-right-radius: 0px;\n  border-bottom-left-radius: 0px;\n  font-size: 14px;\n  font-weight: normal;\n  color: #262626;\n}\n.selectize-control.sp_cmn-selectize .sp_cmn-selectize .selectize-dropdown-content {\n  max-height: 180px;\n}\n.selectize-control.sp_cmn-selectize .sp_cmn-selectize .option {\n  border-top: 1px solid #E6E6E6;\n  line-height: 1;\n  padding: 10px 9px 5px 20px;\n}\n.selectize-control.sp_cmn-selectize .sp_cmn-selectize .option.selected {\n  color: #820d41 !important;\n}\n.selectize-control.sp_cmn-selectize .sp_cmn-selectize .option:hover {\n  color: #820d41;\n}\n.selectize-control.sp_cmn-selectize .sp_cmn-selectize .option:first-child {\n  border: none;\n}\n.bns_hist_pager a {\n  display: inline-block;\n  text-align: center;\n  color: black;\n}\n.bns_hist_pager a.active,\n.bns_hist_pager a:focus,\n.bns_hist_pager a:active {\n  text-decoration: underline;\n}\n.tooltip {\n  display: inline-block;\n  margin-left: 5px;\n  position: relative;\n  font-family: 'MullerFont';\n}\n.tooltip_icon {\n  border-radius: 50%;\n  width: 18px;\n  display: inline-block;\n  height: 18px;\n  line-height: 18px;\n  box-sizing: border-box;\n  cursor: pointer;\n  font-size: 14px;\n  text-align: center;\n  color: #820d41;\n  border: 1px solid #000;\n}\n.tooltip_text {\n  display: none;\n  position: absolute;\n  z-index: 2;\n  background-color: #fff;\n  bottom: 75%;\n  margin-bottom: 17px;\n  width: 260px;\n  left: 50%;\n  margin-left: -130px;\n  padding: 30px 25px;\n  font-size: 14px;\n  font-weight: 400;\n  line-height: 1.2;\n  text-align: center;\n  -webkit-box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.3);\n  box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.3);\n}\n.tooltip_text:after {\n  content: \"\";\n  display: block;\n  position: absolute;\n  top: 100%;\n  left: 50%;\n  width: 0;\n  height: 0;\n  margin-left: -13px;\n  border-left: 13px solid transparent;\n  border-right: 13px solid transparent;\n  border-top: 14px solid #fff;\n}\n.tooltip_text a {\n  color: #820d41;\n  cursor: pointer;\n  text-decoration: underline;\n}\n.tooltip_text a:hover {\n  text-decoration: none;\n}\n.tooltip:hover .tooltip_text {\n  display: block;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 /*
@@ -45651,13 +45961,13 @@ module.exports = function() {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"sp_overlay display_table\" data-ng-show=\"show_notifier\" data-overlay-click=\"reset_notifier()\">\n  <div class=\"display_table_cell\">\n    <div class=\"sp_hist-popup js-history-popup\" style=\"margin-top: 0px;\">\n      <div class=\"sp_cmn-popup-close js-close-popup\" data-ng-click=\"reset_notifier()\"></div>\n      <div class=\"sp_hist-popup__hd\">{{ data.header }}</div>\n      <div class=\"sp_hist-list__itm\">\n        <div style=\"font-size: 18px; text-align: center;\">{{ data.body }}</div>\n      </div>\n    </div>\n  </div>\n\n</div>";
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -45801,7 +46111,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 }));
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 (function () {
@@ -46182,10 +46492,23 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function () {
+
+  var last_scroll = 0;
+  function disableScroll() {
+    last_scroll = document.body.scrollTop;
+    window.document.body.style.top = -last_scroll + 'px';
+    window.document.body.className += ' noscroll'
+  }
+
+  function enableScroll() {
+    window.document.body.className = window.document.body.className.replace(' noscroll', '')
+    window.document.body.style.top = 0;    
+    window.scrollTo(0, last_scroll)
+  }  
 
   var SAILPLAY = (function () {
 
@@ -46329,7 +46652,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
     function remoteLogin(opts) {
 
       var frame;
-
+      disableScroll();
       opts = opts || {};
 
       if (opts.node && opts.node.nodeType == 1 && opts.node.tagName == 'IFRAME') {
@@ -46350,6 +46673,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
         frame.style.margin = 'auto';
         frame.style.zIndex = '100000';
         document.body.appendChild(frame);
+
       }
 
       var frame_id = frame.id || 'sailplay_login_frame_' + new Date().getTime();
@@ -46378,6 +46702,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
         if (data.name == 'login.cancel') {
           sp.send('login.cancel');
           cancelLogin();
+          enableScroll();          
           return;
         }
         if (data.name == 'login.check') {
@@ -46386,7 +46711,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
           }
           else {
             cancelLogin();
-            sp.send('login.do', data.auth_hash)
+            enableScroll();            
+            sp.send('login.do', data.auth_hash, data)
           }
           return;
         }
@@ -46506,7 +46832,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
           window.addEventListener("message", onActionMessage, false);
 
           //2. recieve ref_hash info
-          _config.ref_hash = sp.url_params().ref_hash || '';
+          // _config.ref_hash = sp.url_params().ref_hash || '';
           //var cookie_frame = document.createElement('IFRAME');
           //cookie_frame.style.width = 0;
           //cookie_frame.style.height = 0;
@@ -47303,7 +47629,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -47327,7 +47653,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 (function(root, factory) {
 	if (true) {
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1),__webpack_require__(26),__webpack_require__(22)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1),__webpack_require__(27),__webpack_require__(23)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -50504,7 +50830,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 }));
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -51012,7 +51338,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -53913,7 +54239,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 /*
@@ -54163,217 +54489,6 @@ function updateLink(linkElement, obj) {
 		URL.revokeObjectURL(oldSrc);
 }
 
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _angular = __webpack_require__(0);
-
-var _angular2 = _interopRequireDefault(_angular);
-
-var _core = __webpack_require__(3);
-
-var _core2 = _interopRequireDefault(_core);
-
-var _ui = __webpack_require__(5);
-
-var _ui2 = _interopRequireDefault(_ui);
-
-var _sailplay = __webpack_require__(4);
-
-var _sailplay2 = _interopRequireDefault(_sailplay);
-
-__webpack_require__(2);
-
-var _jquery = __webpack_require__(1);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _app = __webpack_require__(6);
-
-var _app2 = _interopRequireDefault(_app);
-
-var _uiPaginationControls = __webpack_require__(7);
-
-var _uiPaginationControls2 = _interopRequireDefault(_uiPaginationControls);
-
-__webpack_require__(8);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var jeweler = _angular2.default.module('sailplay.widgets', [_core2.default, _ui2.default, _sailplay2.default]);
-
-//styles
-
-
-//templates
-
-
-jeweler.config(function (SailPlayProvider, SailPlayActionsDataProvider, SailPlayBadgesProvider) {
-
-  //possible values:
-  //url,cookie,remote
-  SailPlayProvider.set_auth_type('config');
-
-  SailPlayProvider.set_cookie_name('auth_hash');
-
-  window._CONFIG && SailPlayProvider.set_config({
-    partner_id: _CONFIG.SAILPLAY.partner_id,
-    domain: _CONFIG.SAILPLAY.domain,
-    lang: 'ru'
-  });
-
-  _LOCALE && SailPlayActionsDataProvider.set_actions_data(_LOCALE.actions);
-
-  SailPlayBadgesProvider.set_limits([0, 100000]);
-});
-
-jeweler.run(function ($rootScope, SailPlay, $templateCache) {
-
-  $templateCache.put('/html/ui/ui.pagination.controls.html', _uiPaginationControls2.default);
-
-  $rootScope.locale = _LOCALE || {};
-
-  $rootScope.$on('sailplay-init-success', function () {
-
-    SailPlay.authorize();
-  });
-});
-
-jeweler.directive('sailplayWidgets', function (SailPlay, ipCookie, $document, $rootScope) {
-
-  return {
-    restrict: 'E',
-    replace: true,
-    scope: true,
-    template: _app2.default,
-    link: function link(scope) {
-
-      scope.global = $rootScope;
-
-      scope.show_history = false;
-
-      scope.show_statuses_list = false;
-
-      scope.show_profile_info = false;
-
-      scope.show_profile_action = true;
-
-      scope.fill_profile = function () {
-
-        scope.show_profile_info = true;
-      };
-
-      scope.body_lock = function (state) {
-
-        if (state) {
-          (0, _jquery2.default)('body').addClass('body_lock');
-        } else {
-          (0, _jquery2.default)('body').removeClass('body_lock');
-        }
-      };
-
-      scope.close_profile = function () {
-
-        scope.show_profile_action = false;
-
-        scope.show_profile_info = false;
-
-        scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').custom_vars.hide_hist === 'Да';
-
-        scope.body_lock(false);
-      };
-
-      scope.open_profile = function () {
-
-        var popup = (0, _jquery2.default)('.js-profile-popup');
-
-        if ((0, _jquery2.default)('.menu._fixed._open').length) {
-          popup.css('top', (0, _jquery2.default)('.menu._fixed._open').length && (0, _jquery2.default)('.menu._fixed._open').height() || 0);
-        } else {
-          popup.css('top', (0, _jquery2.default)('header').length && (0, _jquery2.default)('header').height() || 0);
-        }
-
-        scope.show_profile_info = true;
-
-        scope.body_lock(true);
-      };
-
-      scope.open_history = function () {
-
-        var popup = (0, _jquery2.default)('.js-history-popup');
-
-        if ((0, _jquery2.default)('.menu._fixed._open').length) {
-          popup.css('top', (0, _jquery2.default)('.menu._fixed._open').length && (0, _jquery2.default)('.menu._fixed._open').height() || 0);
-        } else {
-          popup.css('top', (0, _jquery2.default)('header').length && (0, _jquery2.default)('header').height() || 0);
-        }
-
-        scope.show_history = true;
-
-        scope.body_lock(true);
-      };
-
-      scope.close_history = function () {
-
-        scope.show_history = false;
-
-        scope.body_lock(false);
-      };
-
-      scope.open_status_list = function () {
-
-        var popup = (0, _jquery2.default)('.js-status-popup');
-
-        if ((0, _jquery2.default)('.menu._fixed._open').length) {
-          popup.css('top', (0, _jquery2.default)('.menu._fixed._open').length && (0, _jquery2.default)('.menu._fixed._open').height() || 0);
-        } else {
-          popup.css('top', (0, _jquery2.default)('header').length && (0, _jquery2.default)('header').height() || 0);
-        }
-
-        scope.show_statuses_list = true;
-
-        scope.body_lock(true);
-      };
-
-      scope.close_status_list = function () {
-
-        scope.show_statuses_list = false;
-
-        scope.body_lock(false);
-      };
-
-      SailPlay.on('tags.exist.success', function (res) {
-
-        if (res.status === 'ok' && res.tags[0].exist) {
-
-          scope.show_profile_action = false;
-          scope.$apply();
-        }
-      });
-
-      scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').custom_vars.hide_hist === 'Да';
-    }
-  };
-});
-
-exports.default = jeweler.name;
-
-
-setTimeout(function () {
-
-  var app_container = document.getElementsByTagName('sailplay-widgets')[0];
-
-  app_container && _angular2.default.bootstrap(app_container, ['sailplay.widgets']);
-}, 100);
 
 /***/ })
 /******/ ]);

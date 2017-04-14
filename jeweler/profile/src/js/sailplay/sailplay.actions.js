@@ -111,6 +111,7 @@ let SailPlayActions = angular.module('sailplay.actions', [])
       link: function(scope){
 
         scope.actions = SailPlayApi.data('load.actions.list');
+        scope.actions_custom = SailPlayApi.data('load.actions.custom.list');
 
         scope.perform_action = function(action){
 
@@ -184,6 +185,50 @@ let SailPlayActions = angular.module('sailplay.actions', [])
 
     };
 
-  });
+  })
+
+  .directive('sailplayActionCustom', function(SailPlay, $document){
+
+  let init_state;
+
+  return {
+
+    restrict: 'A',
+    replace: false,
+    scope: {
+      action: '='
+    },
+    link: function(scope, elm, attrs){
+
+      let iframe = $document[0].createElement('iframe');
+
+      iframe.style.backgroundColor = "transparent";
+      iframe.frameBorder = "0";
+      iframe.allowTransparency="true";
+
+      elm.append(iframe);
+
+      scope.$watch('action', function(action){
+
+        if(action){
+
+          let config = SailPlay.config();
+
+          iframe.src = (config && ((config.DOMAIN + config.urls.actions.custom.render.replace(':action_id', action.id) + '?auth_hash=' + config.auth_hash + '&lang=' + config.lang))) || '';
+
+          iframe.className = ['sailplay_action_custom_frame', action.type].join(' ');
+
+        }
+        else {
+          iframe.src = '';
+        }
+
+      });
+
+    }
+
+  };
+
+});
 
   export default SailPlayActions.name;

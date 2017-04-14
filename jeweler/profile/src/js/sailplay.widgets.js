@@ -54,7 +54,7 @@ jeweler.run(function ($rootScope, SailPlay, $templateCache) {
 
 });
 
-jeweler.directive('sailplayWidgets', function (SailPlay, ipCookie, $document, $rootScope) {
+jeweler.directive('sailplayWidgets', function (SailPlay, ipCookie, $document, $rootScope, SailPlayApi) {
 
     return {
       restrict: 'E',
@@ -118,6 +118,18 @@ jeweler.directive('sailplayWidgets', function (SailPlay, ipCookie, $document, $r
 
         };
 
+        scope.open_custom_action = function (action) {
+          var popup = $('.js-custom_action-popup');
+
+          if($('.menu._fixed._open').length) {
+            popup.css('top', $('.menu._fixed._open').length && $('.menu._fixed._open').height() || 0)
+          } else {
+            popup.css('top', $('header').length && $('header').height() || 0)
+          }
+
+          scope.custom_action = action;
+        }
+
         scope.open_history = function(){
 
           var popup = $('.js-history-popup');
@@ -133,6 +145,12 @@ jeweler.directive('sailplayWidgets', function (SailPlay, ipCookie, $document, $r
           scope.body_lock(true);
 
         };
+
+        scope.close_custom_action = function() {
+          scope.custom_action = '';
+
+          scope.body_lock(false);
+        }
 
         scope.close_history = function(){
 
