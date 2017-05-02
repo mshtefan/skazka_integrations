@@ -134,3 +134,46 @@
 		}
 		@media (max-width: (@screen-xs-min - 1px)) {
 		}
+
+@media screen and (max-width: 500px) {
+	.status-info-counter__popup {
+		width: auto;
+		&:after {
+			display: none
+		}
+	}
+}
+
+.static.content.header {
+	font-size: 2em;
+	text-align: center;
+}		
+
+.static.row {
+	width: 100%;
+	text-align: center;
+	margin-bottom: 40px;
+}
+
+.static.content.image {
+	width: 100%;
+	height: auto;
+}
+
+.static a {
+	width: auto;
+    line-height: 60px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #f8b01c;
+    text-decoration: none;
+    font-size: 24px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    display: inline-block;
+    cursor: pointer;
+    padding: 0 40px;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}

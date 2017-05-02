@@ -54,7 +54,7 @@ jeweler.run(function ($rootScope, SailPlay, $templateCache) {
 
 });
 
-jeweler.directive('sailplayWidgets', function (SailPlay, ipCookie, $document, $rootScope, SailPlayApi) {
+jeweler.directive('sailplayWidgets', function (SailPlay, ipCookie, $document, $rootScope, SailPlayApi, $timeout) {
 
     return {
       restrict: 'E',
@@ -95,8 +95,8 @@ jeweler.directive('sailplayWidgets', function (SailPlay, ipCookie, $document, $r
           scope.show_profile_action = false;
 
           scope.show_profile_info = false;
-
-          scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').custom_vars.hide_hist === 'Да';
+                    
+          scope.hide_hist = $rootScope.profile.custom_vars['hide_hist'] === 'Да';
 
           scope.body_lock(false);
 
@@ -126,8 +126,20 @@ jeweler.directive('sailplayWidgets', function (SailPlay, ipCookie, $document, $r
           } else {
             popup.css('top', $('header').length && $('header').height() || 0)
           }
-
+          
           scope.custom_action = action;
+        }
+
+        scope.open_static_custom_action = function (action) {
+          var popup = $('.js-static_custom_action-popup');
+          console.log(popup)
+          if($('.menu._fixed._open').length) {
+            popup.css('top', $('.menu._fixed._open').length && $('.menu._fixed._open').height() || 0)
+          } else {
+            popup.css('top', $('header').length && $('header').height() || 0)
+          }
+          
+          scope.static_custom_action = action;
         }
 
         scope.open_history = function(){
@@ -148,6 +160,19 @@ jeweler.directive('sailplayWidgets', function (SailPlay, ipCookie, $document, $r
 
         scope.close_custom_action = function() {
           scope.custom_action = '';
+
+          scope.body_lock(false);
+        }
+
+        scope.refresh = function() {
+          SailPlayApi.call('load.user.info', {all: 1, purchases: 1});
+          SailPlayApi.call('load.actions.list');
+          SailPlayApi.call('load.actions.custom.list'); 
+          SailPlayApi.call('load.user.history');
+        }
+
+        scope.close_static_custom_action = function() {
+          scope.static_custom_action = '';
 
           scope.body_lock(false);
         }
@@ -195,7 +220,14 @@ jeweler.directive('sailplayWidgets', function (SailPlay, ipCookie, $document, $r
 
         });
 
-        scope.hide_hist = ipCookie('profile_form') && ipCookie('profile_form').custom_vars.hide_hist === 'Да';
+        scope.$watch(function () {
+          return angular.toJson([SailPlayApi.data('load.user.info')()]);
+        }, function () {
+          
+          $timeout(function(){
+            scope.hide_hist = $rootScope.profile.custom_vars['hide_hist'] === 'Да';
+          }, 1000)
+        })
 
       }
     }

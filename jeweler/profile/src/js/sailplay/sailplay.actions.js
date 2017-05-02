@@ -120,7 +120,6 @@ let SailPlayActions = angular.module('sailplay.actions', [])
         };
 
         SailPlay.on('actions.perform.success', function(res){
-
           scope.$apply(function(){
 
             scope.on_perform && scope.on_perform(res);

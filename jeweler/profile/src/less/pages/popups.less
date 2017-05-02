@@ -303,8 +303,14 @@
     .clearfix();
   }
   &__dates-col {
-    width: 33.333%;
-    padding-right: 10px;
+    &:first-child {
+      padding-right: 10px
+    }
+
+    &:last-child {
+      padding-left: 10px;
+    }
+    width: 33.333%;    
     float: left;
     @media (max-width: @screen-md-max) {
     }
@@ -313,6 +319,12 @@
     @media (max-width: @screen-xs-max) {
       float: none;
       width: 100%;
+      &:first-child {
+        padding-right: 0;
+      }
+      &:last-child {
+        padding-left: 0;
+      }
       margin-bottom: 15px;
       padding: 0;
       &:last-child {

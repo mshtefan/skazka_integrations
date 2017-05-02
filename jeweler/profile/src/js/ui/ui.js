@@ -14,7 +14,7 @@ let Ui = angular.module('ui', [
 
   .constant('ProfileTag', 'Клиент заполнил профиль')
 
-  .directive('fillProfile', function (SailPlay, $rootScope, $q, ProfileTag, ipCookie, SailPlayApi) {
+  .directive('fillProfile', function (SailPlay, $rootScope, $q, ProfileTag, SailPlayApi) {
 
     return {
 
@@ -48,8 +48,8 @@ let Ui = angular.module('ui', [
           //angular.extend(scope.profile_form.user, user.user);
           //scope.profile_form.user.addPhone = user.user.phone;
           scope.profile_form.user.addEmail = user.user.email;
-          scope.profile_form.user.birthDate = user.user.birth_date || '0000-00-00';
-
+          scope.profile_form.user.birthDate = user.user.birth_date || '0000-00-00';                    
+          $rootScope.profile = scope.profile_form;
 
           SailPlay.send('vars.batch', { names: Object.keys(new_form.custom_vars) });
           SailPlay.on('vars.batch.success', function (res) {
@@ -119,7 +119,6 @@ let Ui = angular.module('ui', [
 
               req_tags.push(ProfileTag);
 
-
               function chunk(array, chunkSize) {
                 return [].concat.apply([], array.map(function (elem, i) {
                   return i % chunkSize ? [] : [array.slice(i, i + chunkSize)];
@@ -172,9 +171,7 @@ let Ui = angular.module('ui', [
                     user: user_res, tags: tags_res, vars: vars_res
                   };
 
-                  if (vars_res.status === 'ok') {
-
-                    ipCookie('profile_form', scope.profile_form);
+                  if (vars_res.status === 'ok') {                    
 
                     $rootScope.$broadcast('notifier:notify', {
 
@@ -491,10 +488,15 @@ let Ui = angular.module('ui', [
   .directive('selectize', function ($timeout) {
 
     return {
-      restrict: 'A', link: function (scope, elm, attrs) {
+      require: 'ngModel',
+      restrict: 'A', link: function (scope, elm, attrs, ngModelCtrl) {
 
         $timeout(function () {
-          $(elm).selectize({});
+          $(elm).selectize({
+            onChange: function(val){            
+                ngModelCtrl.$setViewValue(val);
+            }
+          });
         }, 0);
 
       }
