@@ -228,7 +228,7 @@
           <span class="sp_hist-list__date" data-ng-bind="item.action_date | date:'dd.MM.yyyy'"></span>
 
           <span class="sp_hist-list__name" data-ng-click="history_item_click(item);" data-ng-bind="item | history_item"></span>
-          <a class="sp_hist-list__name" target="_blank" style="text-decoration: underline; color: black" data-ng-show="item.action == 'purchase'" data-ng-href="http://www.bronnitsy.com/company/salons/reviews?id={{ item.store_department_id }}&order_num={{ item.order_num}}">Оставить отзыв</a>
+          <a class="sp_hist-list__name link_review" target="_blank" style="color: black" data-ng-show="item.action == 'purchase'" data-ng-href="http://www.bronnitsy.com/company/salons/reviews?id={{ item.store_department_id }}&order_num={{ item.order_num}}">Оставить отзыв</a>
 
           <div class="sp_hist-list__val" data-ng-if="item.points_delta">
             {{ (item.points_delta | number) || 0 }} {{ item.points_delta | sailplay_pluralize:'балл,балла,баллов' }}

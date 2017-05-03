@@ -6,6 +6,7 @@
   var path = require('path');
   var server = require('gulp-connect');
   var webpack = require('webpack');
+  var less = require('gulp-less');
 
   var WEBPACK_CONFIG = require('./webpack.config');
 
