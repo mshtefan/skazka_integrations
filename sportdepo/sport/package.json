@@ -1,0 +1,55 @@
+{
+  "name": "sport",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "array.prototype.find": "^2.0.4",
+    "browserify": "^14.1.0",
+    "knockout": "^3.4.2",
+    "knockout-mapping": "^2.6.0",
+    "knockout.validation": "^2.0.3",
+    "lodash.find": "^4.6.0",
+    "sailplay-hub": "^2.0.26",
+    "sailplay-hub-actions": "^1.0.8"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ],
+          "plugins": [
+            "transform-object-rest-spread"
+          ]
+        }
+      ],
+      [
+        "browserify-compile-templates",
+        {
+          "extension": ".html"
+        }
+      ],
+      "lessify",
+      "uglifyify"
+    ]
+  },
+  "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babelify": "^7.3.0",
+    "browserify-compile-templates": "^0.3.0",
+    "budo": "^9.4.7",
+    "lessify": "^1.0.1",
+    "uglifyify": "^3.0.4"
+  },
+  "scripts": {
+    "start": "budo src/index.js --live",
+    "build": "NODE_ENV=production browserify src/index.js -o dist/sailplay.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

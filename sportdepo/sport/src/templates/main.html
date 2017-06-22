@@ -1,0 +1,133 @@
+<script type="text/template" id="index">
+    <div class="overlay"></div>
+    <div class="bns_inner_block">
+        <div class="bns_top" data-bind="click: toggle_landing">
+            <span class="bns_top_head">
+                Бонусная программа
+            </span>
+            <div class="bns_top_item">
+                <img src="src/img/top_ic1.png" alt="">
+                <span>Получайте бонусы<br>
+                    за покупки в магазинах<br>
+                    и на сайте СпортDепо</span>
+            </div>
+            <div class="bns_top_item">
+                <img src="src/img/top_ic2.png" alt="">
+                <span>Получайте<br>
+                    персональные<br>
+                    предложения</span>
+            </div>
+            <div class="bns_top_item">
+                <img src="src/img/top_ic3.png" alt="">
+                <span>Тратьте бонусы<br>
+                    на оплату покупок:<br>
+                    1 бонус = 1 рубль</span>
+            </div>
+        </div>
+
+        <div class="bns_text_block" data-bind="visible: landing()">
+            <h2>Программа лояльности</h2>
+            <p>
+                Программа лояльности СпортDепо – это накопительная бонусная система, позволяющая ее участникам совершать выгодные покупки в магазинах и на сайте www.sportdepo.ru и пользоваться дополнительными сервисами и привилегиями.  
+            </p>
+            <hr>
+            <h2>Как стать участником программы</h2>
+            <p>
+                Чтобы стать участником программы лояльности СпортDепо, необходимо получить и активировать карту в любом магазине розничной сети, или пройти регистрацию на сайте.
+            </p>
+            <hr>
+            <h2>Привилегии по командной карте</h2>
+            <p>
+                С каждой покупки в любом розничном магазине СпортDепо и на сайте на Вашу карту начисляются  бонусы - используйте их для оплаты дальнейших покупок. 
+            </p>
+            <p style="margin-left: 1.1em">
+                1 бонус = 1 рубль. 
+            </p>
+            <p>Но это далеко не всё:</p>
+            <ul>
+                <li>Выполняйте задания, участвуйте в акциях – получайте больше баллов.</li>
+                <li>Покупайте больше и переходите на новый уровень.</li>
+                <li>Получайте индивидуальные скидки и спецпредложения.</li>
+                <li>Пользуйтесь профессиональным сервисом на особенных условиях.</li>
+	            <li>Получайте баллы в подарок на Ваш день рождения.</li>                
+            </ul>
+            <div class="bns_cake_block">
+                <div class="bns_cake_item">
+                    <div class="bns_cake_item_img">
+                        <img src="src/img/tort1.png" alt="">
+                    </div>
+                    <span class="bns_cake_bal">
+                       <span class="bns_cake_bal_num">
+                        300
+                       </span>
+                    <span class="bns_cake_bal_text">
+                        бонусов
+                       </span>
+                    </span>
+                    <span class="bns_cake_name">
+                       участнику<br>программы<br>лояльности
+                   </span>
+                </div>
+                <div class="bns_cake_item">
+                    <div class="bns_cake_item_img">
+                        <img src="src/img/tort2.png" alt="">
+                    </div>
+                    <span class="bns_cake_bal">
+                       <span class="bns_cake_bal_num">
+                        1000
+                       </span>
+                    <span class="bns_cake_bal_text">
+                        бонусов
+                       </span>
+                    </span>
+                    <span class="bns_cake_name">
+                       обладателю титула<br>"Вице-Чемпион"
+                   </span>
+                </div>
+                <div class="bns_cake_item">
+                    <div class="bns_cake_item_img">
+                        <img src="src/img/tort3.png" alt="">
+                    </div>
+                    <span class="bns_cake_bal">
+                       <span class="bns_cake_bal_num">
+                        2000
+                       </span>
+                    <span class="bns_cake_bal_text">
+                        бонусов
+                       </span>
+                    </span>
+                    <span class="bns_cake_name">
+                       обладателю титула<br>"Чемпион"
+                   </span>
+                </div>
+            </div>
+        </div>
+
+        <div data-bind="visible: !landing()">
+            <div class="bns_info">
+                <div class="bns_info_left">
+                    <div class="bns_info_text" data-bind="component: 'ko-profile'"></div>
+                    <div class="bns_info_hist" data-bind="component: 'ko-history'"></div>
+                    <div class="bns_info_slide" data-bind="component: {
+                        name: 'ko-slider',
+                        params: { slides: slider_items }
+                    }"></div>
+            </div>
+            <div class="bns_info_right" style="float: right" data-bind="component: 'ko-status'"></div>
+        </div>
+
+        <div class="btn_tab_main" data-bind="component: {
+                name: 'ko-tabs',
+                params: { tabs: [
+                    {id: 'tab_qust', description: 'За выполнение заданий вы получите баллы', name: 'Задания'},
+                ]}
+                }">
+
+            <!--{id: 'tab_achiv', description: 'Полученные вами награды', name: 'Награды'}-->
+            <!--{id: 'tab_gift', description: 'Потратьте ваши накопленные баллы на подарки', name: 'Подарки'},-->
+            <div class="bns_tab bns_tab_qust" data-bind="visible: tabs()[currentTabIndex()].id == 'tab_qust', component: 'ko-quest'"></div>
+            <!--<div class="bns_tab bns_tab_gift" data-bind="visible: tabs()[currentTabIndex()].id == 'tab_gift', component: 'ko-gifts'"></div> -->
+            <!--<div class="bns_tab bns_tab_achiv" data-bind="visible: tabs()[currentTabIndex()].id == 'tab_achiv', component: 'ko-achiv'"></div>                       -->
+        </div>
+    </div>
+</script>

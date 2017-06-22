@@ -1,0 +1,8 @@
+<script type="text/template" id="koAchiv">
+    <!-- ko foreach: achiv -->
+    <span class="bns_achiv_item" data-bind="css: { act:  is_received }, attr: { title: descr }">
+        <img data-bind="attr: { src: thumbs.url_250x250 }" alt="">
+        <span data-bind="text: name"></span>
+    </span>
+    <!-- /ko -->
+</script>
