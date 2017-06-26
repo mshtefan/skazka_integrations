@@ -298,12 +298,14 @@ export default function(messager) {
                     if (!this.data().user.birth_month.isValid()) return;
                     if (!this.data().user.birth_year.isValid()) return;
                 }
-
-                if (this.popupVm.step() == 2) {
-                    console.log(this.popupVm.check_step_2_for_reg())
+//TODO
+                if (this.popupVm.step() == 2 && !this.popupVm.check_step_2_for_reg()) {
+                    // if profile is not complete
+                    this.popupVm.step(this.popupVm.step() + 2);                    
+                } else {
+                    this.popupVm.step(this.popupVm.step() + 1);
                 }
-                
-                this.popupVm.step(this.popupVm.step() + 1);
+
                 if (this.popupVm.step() == 2) this.popupVm.width('650px')
                 else this.popupVm.width('356px')
             },

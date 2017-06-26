@@ -106,8 +106,13 @@
         <div data-bind="visible: !landing()">
             <div class="bns_info">
                 <div class="bns_info_left">
-                    <div class="bns_info_text" data-bind="component: 'ko-profile'"></div>
-                    <div class="bns_info_hist" data-bind="component: 'ko-history'"></div>
+                    <div class="bns_info_container">
+                        <div class="bns_info_text" data-bind="component: 'ko-profile'"></div>
+                        <div class="bns_info_delimeter_container">
+                            <div class="bns_info_delimeter"></div>
+                        </div>
+                        <div class="bns_info_hist" data-bind="component: 'ko-history'"></div>
+                    </div>
                     <div class="bns_info_slide" data-bind="component: {
                         name: 'ko-slider',
                         params: { slides: slider_items }

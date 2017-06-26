@@ -6,23 +6,28 @@
     float: left;
     width: 590px;
     .bns_info_text {
+
       float: left;
-      width: 50%;
-      position: relative;
-      &:before {
-        position: absolute;
-        right: 10px;
-        content: '';
-        display: block;
-        width: 1px;
-        background-color: #c9c9c9;
-        height: 100%;
-        top:0px;
-        -moz-transform: skewX(-7deg);
-        -webkit-transform: skewX(-7deg);
-        -o-transform: skewX(-7deg);
-        -ms-transform: skewX(-7deg);
-        transform: skewX(-7deg);
+      width: 49%;
+      position: static;
+      +.bns_info_delimeter_container {
+        float: left;
+        & .bns_info_delimeter {
+          position: absolute;
+          //right: 10px;
+          content: '';
+          display: block;
+          width: 1px;
+          background-color: #c9c9c9;
+          height: 144px;
+          //height: 100%;
+          //top:0px;
+          -moz-transform: skewX(-7deg);
+          -webkit-transform: skewX(-7deg);
+          -o-transform: skewX(-7deg);
+          -ms-transform: skewX(-7deg);
+          transform: skewX(-7deg);
+        }
       }
       .bns_info_name {
         float: left;
