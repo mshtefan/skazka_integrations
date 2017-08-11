@@ -10,8 +10,9 @@
     </div>
     <div class="bns_info_bon_bal">
         <span class="bns_info_bal_num" style="font-size: 18px; margin: 0" data-bind="text: data() && formatLargeNumber(data().user_points.unconfirmed)"></span>
-        <span class="bns_info_bal_text" style="font-size: 16px; color: #ccc; font-weight: 300">неподтвержденных баллов</span>
-    </div>            
+        <span data-bind="component: 'ko-ub'">
+        </span>
+    </div>
 
     <div data-bind="component: {
         name: 'ko-popup', 

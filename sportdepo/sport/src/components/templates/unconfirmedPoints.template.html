@@ -1,0 +1,13 @@
+<script type="text/template" id="koUb">
+	<span class="bns_info_bal_text" data-bind="click: popupVm.openUb" style="font-size: 16px; color: #ccc; font-weight: 300; border-bottom: 1px dashed; margin-left: 3px; cursor: pointer;">неподтвержденных баллов</span>
+	<div data-bind="component: {
+	    name: 'ko-popup',
+	    params: { data: popupVm }
+	    }">
+	    <h3>Неподтверждённые баллы</h3>
+	    <br><br><br>
+	    <span style="font-size: 16px; line-height: 1.4;">
+	        С каждой покупки Вам начисляются бонусные баллы, которые в течение 2-х недель остаются неподтверждёнными. Это тот срок, когда по закону о правах потребителей Вы можете вернуть, или обменять товар надлежащего качества. В случае полного, или частичного возврата бонусы будут пересчитаны. Через 2 недели бонусы автоматически становятся активными и вы можете ими оплачивать любые, в том числе уценённые, товары и услуги сервиса.
+	    </span>
+	</div>
+</script>

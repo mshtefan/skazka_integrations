@@ -143,6 +143,10 @@ export default function(messager) {
         
         messager.subscribe('profile_update', this.update)
 
+        this.popupUb = {
+
+        }
+
         this.popupVm = {
             opened: ko.observable(false),
             months: ko.observableArray([
@@ -385,5 +389,6 @@ export default function(messager) {
         }
 
         messager.subscribe('open_profile', this.popupVm.openProfile)
+
     };
 }
