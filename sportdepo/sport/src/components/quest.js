@@ -21,7 +21,8 @@ export default function(messager) {
         }
 
         this.verifyEmail = () => {
-            location.href = '/personal/#settings'
+            location.href = '/personal/#settings';
+            location.reload();
         }
 
         sailplay.on('actions.perform.complete', data => {
