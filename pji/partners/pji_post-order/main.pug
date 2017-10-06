@@ -1,0 +1,65 @@
+.container.h-screen--full.h-bg--pj(data-bind="visible: showCustomAction, click: closeOnOverlayCustomAction")
+  .row.h-bg--white.modal
+    a.close(data-bind="click: close")
+    iframe.iframe(data-bind="attr: { src: customActionSrc }")
+
+//- .container.h-screen--full.h-bg--pj(data-bind="visible: showModal, click: closeOnOverlay")
+//-   .row.h-bg--white.modal
+//-     .text.h-fs--30.h-text--upper.h-text--turq(data-bind="text: specificConfig() && specificConfig().texts.popup.title_1")
+//-     .text.h-fs--30.h-text--upper.h-text--turq(data-bind="text: specificConfig() && specificConfig().texts.popup.title_2")
+//-     .text.h-fs--14.h-text--roboto.h-mt--10.h-text--gray(data-bind="text: specificConfig() && specificConfig().texts.popup.motivation")
+//-     a.close(data-bind="click: close_modal")
+//-     a.button.h-mt--45(data-bind="click: redirect, text: specificConfig() && specificConfig().texts.popup.close_button")
+    
+.container.h-border--solid.h-border--gray.h-border--radius-25(data-bind="css: { '__sailplay-h-mw--1100': !inLoyalty() }")
+  <!-- ko if: inLoyalty() -->
+  .row.h-p--32
+    .col.col--6.col-mobile
+      img(data-bind="attr: { src: closestGift() && closestGift().thumbs.url_250x250 }", alt="").h-w-100.h-round
+    .col.col--18.col-mobile
+      .text.h-fs--30.h-text--upper.h-mt--7p #[span(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.first_line_prefix")] #[span.h-text--red(data-bind="text: latestPoints")] #[span.h-text--red(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.points_text")] 
+      .text.h-fs--30.h-text--upper #[span.h-text--red(data-bind="text: pointsNeeded")] #[span.h-text--red(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.points_text")] #[span(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.second_line_postfix")] #[span.h-text--red(data-bind="text: closestGift().name")]
+      .text.h-fs--14.h-text--roboto.h-mt--3p.mobile #[span(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.motivation_prefix")] #[a.h-text--turq.h-text--bold(data-bind="attr: { href: specificConfig() && specificConfig().pjUrl }, text: specificConfig() && specificConfig().texts.in_loyalty.papa_link")] #[span(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.motivation_postfix")]
+  .row.h-border--top.h-border--gray(data-bind="foreach: activeActions")
+    .span.span--8.col-mobile.h-border--left.h-border--gray.actions
+      .row.h-border--gray.action(data-bind="click: $parent.redirect")
+        <!-- ko if: $data.socialType -->        
+        .col.col--9
+          .icon(data-bind=`
+            style: { 'background-image': 'url(' + $parent.getActionIcon(socialType, action) + ')'}
+          `)
+        .col.col--15.h-mt--10
+          .text.h-text--roboto.h-text--light.h-fs--14(data-bind="text: $parent.getActionText(socialType, action)")
+          .text.h-text--roboto.h-text--turq.h-text--bold.h-fs--20(data-bind="text: '+' + points + ' points'")          
+        <!-- /ko -->
+        <!-- ko if: !$data.socialType -->
+        .col.col--9          
+          .icon(data-bind=`
+            style: { 'background-image': 'url(' + 
+              ($parent.getActionCustomIcon(type, $data))
+             + ')'}
+          `)
+        .col.col--15.h-mt--10
+          .text.h-text--roboto.h-text--light.h-fs--14(data-bind="text: $parent.getActionCustomName(type, $data)")
+          .text.h-text--roboto.h-text--turq.h-text--bold.h-fs--20(data-bind="text: '+' + (points || 0) + ' points'")    
+        <!-- /ko -->            
+  <!-- /ko -->
+  <!-- ko if: !inLoyalty() -->
+  .row.out-loyalty
+    .span.span--8.col-mobile.h-p--32.h-border--right.h-border--gray.title
+      .text.h-fs--30.h-text--upper #[span(data-bind="text: specificConfig() && specificConfig().texts.out_loyalty.sign_up_prefix")] #[span.h-text--red(data-bind="text: latestPoints")] #[span.h-text--red(data-bind="text: specificConfig() && specificConfig().texts.out_loyalty.points_text")] 
+      .text.h-fs--30.h-text--upper #[span(data-bind="text: specificConfig() && specificConfig().texts.out_loyalty.sign_up_postfix")]
+      input.input_checkbox(type="checkbox", id="agree", data-bind="checked: agreement")
+      label.h-fs--14.h-text--roboto.h-text--gray.h-mt--7p.mobile.h-text--left(for="agree", data-bind="css: { '__sailplay-h-disabled': agreement() }") #[span(data-bind="text: specificConfig() && specificConfig().texts.out_loyalty.agree_prefix")] #[a.h-text--turq.h-text--bold(data-bind="attr: { href: specificConfig() && specificConfig().pjUrl }, text: specificConfig() && specificConfig().texts.out_loyalty.papa_link")] #[span(data-bind="text: specificConfig() && specificConfig().texts.out_loyalty.agree_postfix")]
+      a.button.h-mt--30(data-bind="css: { '__sailplay-h-disabled': !agreement() }, click: gotoPapaRewards")
+        span(data-bind="text: specificConfig() && specificConfig().texts.out_loyalty.sign_button")
+        span.hidden_default(data-bind="text: specificConfig() && specificConfig().texts.out_loyalty.thanks_button")
+        span.hidden_default(data-bind="text: specificConfig() && specificConfig().texts.out_loyalty.goto_button")
+      
+    .span.span--16.col-mobile
+      .row.h-p--32(data-bind="foreach: minAvailableGifts")
+        .col-big-gutter.col-big-gutter--6.col-mobile.avail-gift(data-bind="css: { '__sailplay-enought': $data.enought, '__sailplay-h-show--3': $parent.specificConfig() && $parent.specificConfig().options.low_price_gifts_mobile == 3, '__sailplay-h-show--2': $parent.specificConfig() && $parent.specificConfig().options.low_price_gifts_mobile == 2, '__sailplay-h-show--1': $parent.specificConfig() && $parent.specificConfig().options.low_price_gifts_mobile == 1 }")
+          img(data-bind="attr: { src: thumbs.url_250x250 }, css: { '__sailplay-h-grayscale': !$data.enought }", alt="").h-w-100.h-round   
+          .text.h-text--roboto.h-text--light.h-fs--14.h-text--center.h-mt--15(data-bind="text: name")      
+          .text.h-text--roboto.h-text--bold.h-fs--20.h-text--turq.h-text--center(data-bind="text: points + ' points'")                
+  <!-- /ko -->

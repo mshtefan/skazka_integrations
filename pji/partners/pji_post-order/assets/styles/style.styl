@@ -1,0 +1,257 @@
+@import 'jeet'
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,600');
+@font-face 
+    font-family: "Knockout";
+    src: url(../fonts/knockout.woff);
+
+.__sailplay-po-  // !!! need to rename in cssRenameLoader
+    &iframe
+        height: 100%;
+        width: 100%;
+        background-color: white !important;
+
+    &mobile-img
+        +below(640px)
+            width: 70%;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 20px;
+
+    &h-show--3
+        &:nth-last-child(-n+1)
+            +below(640px)            
+                display: none !important
+    &h-show--2
+        &:nth-last-child(-n+2)
+            +below(640px)            
+                display: none !important
+    &h-show--1
+        &:nth-last-child(-n+3)
+            +below(640px)            
+                display: none !important
+
+    &close
+        position: absolute;
+        top: 0;
+        right: -10px;
+        &:after
+            content: ''
+            position: absolute;
+            background: url(../img/close.svg) no-repeat center;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+
+    &modal
+        width: 300px;
+        position: absolute;
+        max-width: 300px;
+        left: 50%;
+        top: 50%
+        z-index: 10;
+        transform: translate(-50%, -50%)
+        padding: 40px;
+        +below(640px)
+            width 70%        
+
+    &h-grayscale
+        filter grayscale();
+        opacity: .6;
+
+    &h-bg--pj
+        background: alpha(#0F9675, .8)
+
+    &input_checkbox
+        display: none
+    &input_checkbox:checked + label
+        &:before
+            content: ''
+            position: absolute
+            width: 16px;
+            height: 16px;
+            top: 5px;
+            left: 5px;
+            background-image: url(../img/check.svg);
+            background-color: #0F9675;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 1
+        &:after
+            background: #0F9675            
+
+    &input_checkbox + label
+        max-width: 200px
+        position: relative;
+        display: inline-block;
+        padding-left: 32px
+        &:after
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            width: 23px;
+            height: 23px;
+            top: 0;
+            border-radius: 5px;
+            border: 1px solid #0F9675;                
+
+    &button
+        display: block;
+        font-family: Roboto
+        font-weight: bold
+        font-size: 16px
+        line-height: 50px;
+        width: 100%;
+        text-align: center;
+        background: #0F9675;
+        color: white;
+        height: 50px;
+        border-radius: 5px;
+        position: relative;
+        text-align: center;
+        cursor: pointer;
+        span
+            position: absolute;
+            width: 100%;
+            transition: transform .2s, opacity .2s;
+            transform: translateX(0);
+            display: block;
+            opacity: 1;
+
+        .__sailplay-hidden_default
+            transform: translateX(-5px);
+            opacity: 0;
+
+        +below(360px)
+            font-size: 13px;
+        
+    &enought
+        &:after
+            content: '';
+            position: absolute;
+            background: url(../img/check.svg) no-repeat center center;
+            background-color: #0F9675;
+            border-radius: 50%;
+            top: 0px;
+            right: 0px;
+            width: 32px;
+            height: 32px;
+            border: 3px solid white
+
+    &avail-gift 
+        position: relative;        
+
+    &h-p--32
+        padding: 32px;
+
+    &h-mw--1100
+        max-width: 1100px !important;
+
+    &container
+        max-width: 860px;
+        +below(640px)
+            margin 30px 20px
+        img
+            box-sizing: border-box;
+
+    &text
+        font-family: "Knockout"
+        line-height: 1em;
+
+        &.__sailplay-mobile
+            +below(640px)
+                margin-top: 10%;
+
+    &h-text--roboto
+        font-family: "Roboto"
+        line-height: inherit;
+
+
+    &h-text--light
+        font-weight: 300
+
+
+    &h-text--bold
+        font-weight: 600
+
+
+    &h-text--turq
+        color: #0F9675
+
+
+    &h-text--red
+        color #AB131B
+
+    &h-text--gray
+        color #949494        
+
+    &h-text--center
+        text-align: center        
+    &h-text--left
+        text-align: left
+
+    &h-mt--2
+        margin-top: 2px;
+    &h-mt--7p
+        margin-top: 7%;
+
+    &h-mt--3p
+        margin-top: 3%;
+    
+
+    &action
+        height: 115px;
+        padding: 26px 26px;
+        cursor: pointer;
+        &:hover
+            background: #fcfcfc
+
+    &icon
+        display: block;
+        height: 56px;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+
+    &col
+      &.__sailplay-col-mobile  
+        +below(640px)
+            stack()     
+            left: 0;
+            padding: 0 10% 0;    
+
+    &col-big-gutter
+      &.__sailplay-col-mobile  
+        +below(640px)
+            stack()     
+            left: 0;
+            max-width: 180px;
+            margin-bottom: 20%;
+
+    &span
+      &.__sailplay-col-mobile
+        +below(640px)
+            stack()     
+            left: 0;
+            &.__sailplay-actions
+                border-left: 0
+                border-top: 1px solid black
+                &:first-child
+                    border-top: 0                
+
+    &out-loyalty
+        .__sailplay-col.__sailplay-col-mobile
+            +below(640px)
+                padding: 0
+                margin-top: 10%
+                max-width: 170px 
+
+        .__sailplay-button
+            +below(640px)
+                display: inline-block   
+
+        .__sailplay-button
+            +below(360px)
+                font-size: 13px;                     

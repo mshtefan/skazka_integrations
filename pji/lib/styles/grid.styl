@@ -1,0 +1,38 @@
+.__sailplay-
+  &row
+    min-height: 1px;
+    box-sizing: border-box    
+    clearfix()
+
+  &col
+    for ratio in range(1,24)
+      &&--{ratio}
+        column(ratio/24)
+        box-sizing: border-box
+
+      &.__sailplay-shift--{ratio}
+        move(ratio/24)   
+        box-sizing: border-box       
+
+  &col-big-gutter
+    for ratio in range(1,24)
+      &&--{ratio}
+        column(ratio/24, $gutter: 6)
+        box-sizing: border-box
+
+      &.__sailplay-shift--{ratio}
+        move(ratio/24, $gutter: 6)   
+        box-sizing: border-box 
+
+  &span
+    for ratio in range(1,24)
+      &&--{ratio}
+        span(ratio/24)
+        box-sizing: border-box        
+
+      &.__sailplay-shift--{ratio}
+        move(ratio/24, span)  
+        box-sizing: border-box
+        
+  &container
+    max-width: 1000px

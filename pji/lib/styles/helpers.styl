@@ -1,0 +1,78 @@
+.__sailplay- 
+    &h-screen--full
+        max-width: none !important;
+        z-index: 1;
+        position: fixed;
+        margin: 0 !important;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+
+    &h-bg--gray
+        background: alpha(black, .5)
+
+    &h-bg--white
+        background: white;
+
+    &h-border 
+        &--solid
+            border: 1px solid black;
+
+        &--top
+            border-top: 1px solid black;
+
+        &--bottom
+            border-bottom: 1px solid black;
+
+        &--left
+            border-left: 1px solid black;
+
+        &--right
+            border-right: 1px solid black;                    
+
+        &--gray
+            border-color: #ededed !important;
+
+        &--radius-25
+            border-radius: 5px
+
+    &h-disabled
+        pointer-events: none
+        opacity: .6
+
+    &h-round
+        border-radius: 50%;
+
+    &h-w-100 
+        width: 100%
+    
+    &h-text--upper
+        text-transform: uppercase
+
+    &h-text--bold
+        font-weight: 600
+
+    for num in range(1, 40)
+        &h-fs--{num}
+            font-size: unit(num, px)
+
+    sizes = 5 10 15 20 25 30 35 40 45 50
+    for num in sizes
+        &h-mb--{num}
+            margin-bottom: unit(num, px)
+        &h-mt--{num}
+            margin-top: unit(num, px)
+        &h-ml--{num}
+            margin-left: unit(num, px)
+        &h-mr--{num}
+            margin-right: unit(num, px)
+        &h-pb--{num}
+            padding-bottom: unit(num, px)
+        &h-pt--{num}
+            padding-top: unit(num, px)
+        &h-pl--{num}
+            padding-left: unit(num, px)
+        &h-pr--{num}
+            padding-right: unit(num, px)
