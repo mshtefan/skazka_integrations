@@ -23,6 +23,7 @@ window.SAILPLAY = function (opts) {
         mainFields: ko.observableArray(),
         secondaryFields: ko.observableArray(),
 
+        in_progress: ko.observable(false),
         email: ko.observable(),
         step: ko.observable(1),
         last_step: ko.observable(),
@@ -59,6 +60,10 @@ window.SAILPLAY = function (opts) {
         },
 
         submit() {
+            setTimeout(function(){
+                pji_subform.in_progress(true);
+            });
+
             let valid = true;
             let field_set = pji_subform.step() == 1 ? 'mainFields' : 'secondaryFields'
 
@@ -70,40 +75,61 @@ window.SAILPLAY = function (opts) {
                             valid = f.value.isValid()
                     }
                 }
-
             })
 
             if (!valid) return
+            pji_subform.in_progress(false);
 
             let data = pji_subform.getData(field_set)
             if (!pji_subform.email())
                 pji_subform.email(data.email)
 
             function updateInfo() {
-                return sp.updateUserInfo({
-                    email: pji_subform.email(),
-                    addPhone: data.phone || '',
-                    firstName: data.first_name || '',
-                    lastName: data.last_name || '',
-                    sex: data.gender || '',
-                    birthDate: data.birthday || ''
-                })
+                let data_to_update = {
+                    addPhone: data.phone,
+                    firstName: data.first_name,
+                    lastName: data.last_name,
+                    sex: data.gender,
+                    birthDate: data.birthday
+                }
+
+                return sp.updateUserInfo($.extend(true, {
+                    email: pji_subform.email()
+                }, data_to_update))
             }
 
-            function updateVars() {
-                return sp.updateCustomVars({
+            function updateVars(empty) {
+                if (empty) // нужно всегда иметь список кустом варов даже пустых
+                    return sp.updateCustomVars({
+                        email: pji_subform.email(),
+                        'Registration Code': '',
+                        'ID Number': '',
+                        'Sign Up Date':  '',
+                        'Store':  '',
+                        'Street Address 1': '',
+                        'Street Address 2': '',
+                        'Zip Code': '',
+                        'State': '',
+                        'City': '',
+                        'Region': ''
+                    })
+
+                let data_to_update = {
+                    'Registration Code': data.reg_code,
+                    'ID Number': data.id,
+                    'Sign Up Date': data.sign_up_date,
+                    'Store': data.store,
+                    'Street Address 1': data.address_1,
+                    'Street Address 2': data.address_2,
+                    'Zip Code': data.zip,
+                    'State': data.state,
+                    'City': data.city,
+                    'Region': data.region
+                }
+
+                return sp.updateCustomVars($.extend(true, {
                     email: pji_subform.email(),
-                    'Registration Code': data.reg_code || '',
-                    'ID Number': data.id || '',
-                    'Sign Up Date': data.sign_up_date || '',
-                    'Store': data.store || '',
-                    'Street Address 1': data.address_1 || '',
-                    'Street Address 2': data.address_2 || '',
-                    'Zip Code': data.zip || '',
-                    'State': data.state || '',
-                    'City': data.city || '',
-                    'Region': data.region || ''
-                })
+                }, data_to_update))
             }
 
             function nextStep() {
@@ -123,13 +149,17 @@ window.SAILPLAY = function (opts) {
                         email: pji_subform.email(),
                         phone: ''
                     })
+                        .then(updateVars(1))
                         .then(updateInfo)
-                        .then(updateVars)
+                        .then(updateVars(0))
                         .then(nextStep)
+
+                    pji_subform.in_progress(false);
                     return
                 } else {
                     pji_subform.previous_data = data;
                     nextStep();
+                    pji_subform.in_progress(false);
                     return
                 }
             }
@@ -140,8 +170,9 @@ window.SAILPLAY = function (opts) {
                     email: pji_subform.email(),
                     phone: ''
                 })
+                    .then(updateVars(2))
                     .then(updateInfo)
-                    .then(updateVars)
+                    .then(updateVars(0))
                     .then(nextStep)
 
             if (pji_subform.step() == 2)
@@ -150,8 +181,10 @@ window.SAILPLAY = function (opts) {
                     email: pji_subform.email(),
                     phone: ''
                 })
-                    .then(updateVars)
+                    .then(updateVars(0))
                     .then(nextStep)
+
+            pji_subform.in_progress(false);
         }
     }
 
@@ -293,7 +326,7 @@ window.SAILPLAY = function (opts) {
 
 
     sp.config.subscribe(config => {
-        sp.getConfigByName(opts.config || 'pjsubform')
+        sp.getConfigByName(opts.config || 'pjsub form')
             .then(data => {
 
                 ko.validation.rules.pattern.message = 'Invavid format. Please check the spelling';

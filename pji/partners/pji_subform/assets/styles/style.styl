@@ -1,4 +1,5 @@
 @import 'jeet'
+@import 'nib'
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,600');
 @font-face
     font-family: "Knockout";
@@ -185,6 +186,7 @@
                     right: .7em;
                     vertical-align: middle;
                     margin-top: 3px;
+                    pointer-events: none;
 
                 select
                     opacity: 0;
@@ -200,8 +202,13 @@
                 border: 1px solid #e0e0e0;
                 overflow: hidden;
 
+                label:first-of-type
+                    border-right: 1px solid #e0e0e0;
+                    border-radius: 0;
+
             input[type="radio"].__sailplay-toggle {
                 display: none;
+
                 & + label{
                     font-weight: 300;
                     color: black;
