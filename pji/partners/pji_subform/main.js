@@ -77,8 +77,12 @@ window.SAILPLAY = function (opts) {
                 }
             })
 
-            if (!valid) return
-            pji_subform.in_progress(false);
+            if (!valid) {
+                setTimeout(function(){
+                    pji_subform.in_progress(false);
+                });
+                return
+            }
 
             let data = pji_subform.getData(field_set)
             if (!pji_subform.email())
@@ -139,6 +143,10 @@ window.SAILPLAY = function (opts) {
                     pji_subform.last_step(true);
                 } else
                     pji_subform.congrat(true)
+
+                setTimeout(function(){
+                    pji_subform.in_progress(false);
+                });
             }
 
             if (sp.specificConfig.settings.reg_on_last_step && sp.specificConfig.settings.steps == 2) {
@@ -154,12 +162,16 @@ window.SAILPLAY = function (opts) {
                         .then(updateVars(0))
                         .then(nextStep)
 
-                    pji_subform.in_progress(false);
+                    setTimeout(function(){
+                        pji_subform.in_progress(false);
+                    });
                     return
                 } else {
                     pji_subform.previous_data = data;
                     nextStep();
-                    pji_subform.in_progress(false);
+                    setTimeout(function(){
+                        pji_subform.in_progress(false);
+                    });
                     return
                 }
             }

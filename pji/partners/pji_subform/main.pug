@@ -66,7 +66,7 @@ form.form(data-bind="visible: !congrat()")
  
                 input(data-bind="value: field.value, visible: ['sex', 'birthday', 'sign_up_date'].indexOf(field.type) < 0")  
     a.btn(href="javascript:void(0)", data-bind="click: submit, text: btn_text, css: {'__sailplay-disabled': in_progress }")
-    div.agree(data-bind="visible: last_step")
+    div.agree
         span(data-bind="text: user_agreement_line_1")
         a(data-bind="text: user_agreement_link, attr: { href: user_agreement_link_href }")
         br
