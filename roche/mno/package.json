@@ -1,0 +1,14 @@
+{
+  "name": "sailplay.leads.roche.mno",
+  "version": "0.0.1",
+  "description": "Lead form",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-concat": "~0.5.0",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-ng-annotate": "~0.3.2"
+  },
+  "dependencies": {
+    "grunt-cli": "^1.2.0"
+  }
+}
