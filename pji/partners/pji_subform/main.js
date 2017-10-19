@@ -19,44 +19,71 @@ window.SAILPLAY = function (opts) {
         partner_id: opts.partner || 1737
     })
 
-    let pji_subform = {
-        mainFields: ko.observableArray(),
-        secondaryFields: ko.observableArray(),
+    class PJI_Subform {
+        constructor() {
+            this.mainFields = ko.observableArray(),
+                this.secondaryFields = ko.observableArray(),
 
-        in_progress: ko.observable(false),
+                this.in_progress = ko.observable(false),
 
-        sms_opt: ko.observable(false),
-        email_opt: ko.observable(false),
+                this.sms_opt = ko.observable(false),
+                this.email_opt = ko.observable(false),
 
-        sms_opt_text: ko.observable(),
-        email_opt_text: ko.observable(),
-        sms_opt_on: ko.observable(false),
-        email_opt_on: ko.observable(false),
+                this.sms_opt_text = ko.observable(),
+                this.email_opt_text = ko.observable(),
 
-        email: ko.observable(),
-        step: ko.observable(1),
-        last_step: ko.observable(),
-        congrat: ko.observable(false),
+                this.email = ko.observable(),
+                this.step = ko.observable(1),
+                this.last_step = ko.observable(),
+                this.congrat = ko.observable(false),
 
-        btn_text: ko.observable(),
-        user_agreement_line_1: ko.observable(),
-        user_agreement_line_2: ko.observable(),
-        user_agreement_link: ko.observable(),
-        user_agreement_link_href: ko.observable(),
+                this.btn_text = ko.observable(),
+                this.user_agreement_line_1 = ko.observable(),
+                this.user_agreement_line_2 = ko.observable(),
+                this.user_agreement_link = ko.observable(),
+                this.user_agreement_link_href = ko.observable(),
 
-        title: ko.observable(),
-        title_step_1: ko.observable(),
-        title_step_2: ko.observable(),
+                this.title = ko.observable(),
+                this.title_step_1 = ko.observable(),
+                this.title_step_2 = ko.observable(),
 
-        thank_title: ko.observable(),
-        thank_description: ko.observable(),
-        thank_button: ko.observable(),
-        thank_image: ko.observable(''),
-        thank_link_href: ko.observable(),
+                this.thank_title = ko.observable(),
+                this.thank_description = ko.observable(),
+                this.thank_button = ko.observable(),
+                this.thank_image = ko.observable(''),
+                this.thank_link_href = ko.observable(),
+
+                this.check_email_opt_out_visible = ko.computed(() => {
+                    let visible = true;
+
+                    if (!sp.specificConfig.settings.email_opt) visible = false;
+                    if (sp.specificConfig.settings.reg_on_last_step && !this.last_step()) visible = false;
+
+                    return visible;
+                })
+
+                this.check_sms_opt_out_visible = ko.computed(() => {
+                    let visible = true;
+
+                    if (!sp.specificConfig.settings.sms_opt) visible = false;
+                    if (sp.specificConfig.settings.reg_on_last_step && !this.last_step()) visible = false;
+
+                    return visible;
+                })
+
+                this.submit_available = ko.computed(() => {
+                    let available = true;
+                    if (sp.specificConfig.settings.email_opt && 
+                        (this.last_step() || !sp.specificConfig.settings.reg_on_last_step))
+                        available = this.email_opt()
+                    
+                    return available;
+                })
+        }
 
         getData(field_set) {
             let data = {};
-            ko.utils.arrayForEach(pji_subform[field_set](), chunk => {
+            ko.utils.arrayForEach(this[field_set](), chunk => {
                 for (let f of chunk) {
                     if ((f.type == 'birthday' || f.type == 'sign_up_date') && f.day() != 'Day' && f.month().id && f.year() != 'Year') {
                         data[f.type] = `${f.year()}-${("0" + f.month().id).slice(-2)}-${("0" + f.day()).slice(-2)}`
@@ -66,21 +93,20 @@ window.SAILPLAY = function (opts) {
             })
 
             return data
-        },
+        }
 
         submit() {
-            setTimeout(function(){
-                pji_subform.in_progress(true);
-            });
+            setTimeout(() => this.in_progress(true));
 
+            let self = this;
             let valid = true;
-            let field_set = pji_subform.step() == 1 ? 'mainFields' : 'secondaryFields'
+            let field_set = this.step() == 1 ? 'mainFields' : 'secondaryFields'
 
-            pji_subform.email_opt.isModified(true);
+            this.email_opt.isModified(true);
             if (valid)
-                pji_subform.email_opt.isValid();
+                this.email_opt.isValid();
 
-            ko.utils.arrayForEach(pji_subform[field_set](), chunk => {
+            ko.utils.arrayForEach(this[field_set](), chunk => {
                 for (let f of chunk) {
                     if (f.value.isModified) {
                         f.value.isModified(true)
@@ -91,15 +117,13 @@ window.SAILPLAY = function (opts) {
             })
 
             if (!valid) {
-                setTimeout(function(){
-                    pji_subform.in_progress(false);
-                });
+                setTimeout(() => this.in_progress(false));
                 return
             }
 
-            let data = pji_subform.getData(field_set)
-            if (!pji_subform.email())
-                pji_subform.email(data.email)
+            let data = this.getData(field_set)
+            if (!this.email())
+                this.email(data.email)
 
             function updateInfo() {
                 let data_to_update = {
@@ -111,18 +135,18 @@ window.SAILPLAY = function (opts) {
                 }
 
                 return sp.updateUserInfo($.extend(true, {
-                    email: pji_subform.email()
+                    email: self.email()
                 }, data_to_update))
             }
 
             function updateVars(empty) {
                 if (empty) // нужно всегда иметь список кустом варов даже пустых
                     return sp.updateCustomVars({
-                        email: pji_subform.email(),
+                        email: self.email(),
                         'Registration Code': '',
                         'ID Number': '',
-                        'Sign Up Date':  '',
-                        'Store':  '',
+                        'Sign Up Date': '',
+                        'Store': '',
                         'Street Address 1': '',
                         'Street Address 2': '',
                         'Zip Code': '',
@@ -145,29 +169,29 @@ window.SAILPLAY = function (opts) {
                 }
 
                 return sp.updateCustomVars($.extend(true, {
-                    email: pji_subform.email(),
+                    email: self.email(),
                 }, data_to_update))
             }
 
             function nextStep() {
-                if ((sp.specificConfig.settings.steps || 1) > pji_subform.step()) {
-                    pji_subform.step(pji_subform.step() + 1);
-                    pji_subform.btn_text(sp.specificConfig.settings.texts.button_step_2)
-                    pji_subform.last_step(true);
+                if ((sp.specificConfig.settings.steps || 1) > self.step()) {
+                    self.step(self.step() + 1);
+                    self.btn_text(sp.specificConfig.settings.texts.button_step_2)
+                    self.last_step(true);
                 } else
-                    pji_subform.congrat(true)
+                    self.congrat(true)
 
-                setTimeout(function(){
-                    pji_subform.in_progress(false);
-                });
+                setTimeout(() => self.in_progress(false))
             }
 
             if (sp.specificConfig.settings.reg_on_last_step && sp.specificConfig.settings.steps == 2) {
-                if (pji_subform.last_step()) {
-                    data = $.extend(true, {}, pji_subform.previous_data, data)
-                    sp.addTags(['Marketing Opt-In'], {
+                if (this.last_step()) {
+                    let tags = ['Marketing Opt-In']
+                    if (this.sms_opt()) tags.push('SMS Opt-Out');
+                    data = $.extend(true, {}, this.previous_data, data)
+                    sp.addTags(tags, {
                         auth_hash: '',
-                        email: pji_subform.email(),
+                        email: this.email(),
                         phone: ''
                     })
                         .then(updateVars(1))
@@ -175,24 +199,25 @@ window.SAILPLAY = function (opts) {
                         .then(updateVars(0))
                         .then(nextStep)
 
-                    setTimeout(function(){
-                        pji_subform.in_progress(false);
-                    });
+                    if (!this.sms_opt())
+                        sp.removeTags(['SMS Opt-Out'])
+
+                    setTimeout(() => this.in_progress(false))
                     return
                 } else {
-                    pji_subform.previous_data = data;
+                    this.previous_data = data;
                     nextStep();
-                    setTimeout(function(){
-                        pji_subform.in_progress(false);
-                    });
+                    setTimeout(() => this.in_progress(false))
                     return
                 }
             }
 
-            if (pji_subform.step() == 1)
-                sp.addTags(['Marketing Opt-In', 'Subscription form not finished'], {
+            if (this.step() == 1) {
+                let tags = ['Marketing Opt-In', 'Subscription form not finished']        
+                if (this.sms_opt()) tags.push('SMS Opt-Out');                    
+                sp.addTags(tags, {
                     auth_hash: '',
-                    email: pji_subform.email(),
+                    email: this.email(),
                     phone: ''
                 })
                     .then(updateVars(2))
@@ -200,16 +225,20 @@ window.SAILPLAY = function (opts) {
                     .then(updateVars(0))
                     .then(nextStep)
 
-            if (pji_subform.step() == 2)
+                if (!this.sms_opt())
+                    sp.removeTags(['SMS Opt-Out'])
+            }
+
+            if (this.step() == 2)
                 sp.removeTags(['Subscription form not finished'], {
                     auth_hash: '',
-                    email: pji_subform.email(),
+                    email: this.email(),
                     phone: ''
                 })
                     .then(updateVars(0))
                     .then(nextStep)
 
-            pji_subform.in_progress(false);
+            this.in_progress(false);
         }
     }
 
@@ -277,8 +306,6 @@ window.SAILPLAY = function (opts) {
         pji_subform.thank_image(sp.specificConfig.settings.texts.thank_image)
         pji_subform.thank_link_href(sp.specificConfig.settings.thank_link_href)
 
-        pji_subform.sms_opt_on(sp.specificConfig.settings.sms_opt)
-        pji_subform.email_opt_on(sp.specificConfig.settings.email_opt)
         pji_subform.sms_opt_text(sp.specificConfig.settings.texts.sms_opt_text)
         pji_subform.email_opt_text(sp.specificConfig.settings.texts.email_opt_text)
 
@@ -356,21 +383,22 @@ window.SAILPLAY = function (opts) {
 
 
     sp.config.subscribe(config => {
-        sp.getConfigByName(opts.config || 'pjsub form')
+        sp.getConfigByName(opts.config || 'pjsubform')
             .then(data => {
 
                 ko.validation.rules.pattern.message = 'Invavid format. Please check the spelling';
                 ko.validation.rules.required.message = 'Field is required. Please enter something';
 
                 sp.specificConfig = data.config.config;
+                pji_subform = new PJI_Subform();
+                pji_subform.errors = ko.validation.group(pji_subform);
+                ko.applyBindings(pji_subform, sailplay_element);
                 buildUI()
             })
     })
 
+    let pji_subform;
     let sailplay_element = document.querySelector('sailplay-magic');
     sailplay_element.style.display = 'none';
     sailplay_element.innerHTML = mainTemplate()
-
-    pji_subform.errors = ko.validation.group(pji_subform);
-    ko.applyBindings(pji_subform, sailplay_element);
 }

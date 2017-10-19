@@ -8,15 +8,18 @@ export class SailPlay {
         self.opts = opts;
         self.config = ko.observable();
         self.actions_config = ko.observable();
-        jsonp({
-            url: `${self.opts.domain}/js-api/${self.opts.partner_id}/config`,
-            data: {
-                lang: opts.lang || 'en',
-                dep_id: opts.dep_id,
-            },
-            success: data => {
-                self.config(ko.mapping.fromJS(data).config);
-            }
+        self.ready = new Promise(resolve => {
+            jsonp({
+                url: `${self.opts.domain}/js-api/${self.opts.partner_id}/config`,
+                data: {
+                    lang: opts.lang || 'en',
+                    dep_id: opts.dep_id,
+                },
+                success: data => {
+                    self.config(ko.mapping.fromJS(data).config);
+                    resolve();
+                }
+            })
         })
     }
 

@@ -20,7 +20,7 @@ function shuffle(a) {
 // const domain = 'http://sailplay.ru';
 // const partner_id = 1737
 
-window.SAILPLAY = function (opts) {
+window.SAILPLAY___ = function (opts) {
     if (initiated) return;
     initiated = true;
 
