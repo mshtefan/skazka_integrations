@@ -65,6 +65,16 @@ form.form(data-bind="visible: !congrat()")
                             path(fill="#898989" transform="rotate(90 500 500)" d="M767.9,499.9L291.6,10l-59.4,61.3l416.6,428.7L232.1,928.7l59.5,61.3L767.9,499.9z")
  
                 input(data-bind="value: field.value, visible: ['sex', 'birthday', 'sign_up_date'].indexOf(field.type) < 0")  
+    .form_row(data-bind="visible: sms_opt_on")
+        .form_group.full(data-bind="css: {'__sailplay-error': sms_opt.isValid && !sms_opt.isValid() && sms_opt.isModified()}")
+            input.input_checkbox(type="checkbox", id="sms_opt", data-bind="checked: sms_opt")
+            label(for="sms_opt", data-bind="text: sms_opt_text")
+
+    .form_row(data-bind="visible: email_opt_on")
+        .form_group.full(data-bind="css: {'__sailplay-error': !email_opt.isValid() && email_opt.isModified()}")
+            input.input_checkbox(type="checkbox", id="email_opt", data-bind="checked: email_opt")
+            label(for="email_opt", data-bind="text: email_opt_text")    
+
     a.btn(href="javascript:void(0)", data-bind="click: submit, text: btn_text")
     div.agree(data-bind="visible: last_step")
         span(data-bind="text: user_agreement_line_1")

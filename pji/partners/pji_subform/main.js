@@ -23,6 +23,14 @@ window.SAILPLAY = function (opts) {
         mainFields: ko.observableArray(),
         secondaryFields: ko.observableArray(),
 
+        sms_opt: ko.observable(false),
+        email_opt: ko.observable(false),
+
+        sms_opt_text: ko.observable(),
+        email_opt_text: ko.observable(),
+        sms_opt_on: ko.observable(false),
+        email_opt_on: ko.observable(false),
+
         email: ko.observable(),
         step: ko.observable(1),
         last_step: ko.observable(),
@@ -61,6 +69,10 @@ window.SAILPLAY = function (opts) {
         submit() {
             let valid = true;
             let field_set = pji_subform.step() == 1 ? 'mainFields' : 'secondaryFields'
+
+            pji_subform.email_opt.isModified(true);
+            if (valid)
+                pji_subform.email_opt.isValid();
 
             ko.utils.arrayForEach(pji_subform[field_set](), chunk => {
                 for (let f of chunk) {
@@ -218,6 +230,11 @@ window.SAILPLAY = function (opts) {
         pji_subform.thank_button(sp.specificConfig.settings.texts.thank_button)
         pji_subform.thank_image(sp.specificConfig.settings.texts.thank_image)
         pji_subform.thank_link_href(sp.specificConfig.settings.thank_link_href)
+
+        pji_subform.sms_opt_on(sp.specificConfig.settings.sms_opt)
+        pji_subform.email_opt_on(sp.specificConfig.settings.email_opt)
+        pji_subform.sms_opt_text(sp.specificConfig.settings.texts.sms_opt_text)
+        pji_subform.email_opt_text(sp.specificConfig.settings.texts.email_opt_text)
 
         if (pji_subform.step() == (sp.specificConfig.settings.steps || 1))
             pji_subform.last_step(true)
