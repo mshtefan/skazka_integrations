@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tribune Sender</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="less/main.css?v=114">
+
+    <script src="js/vendor/jquery-1.10.1.min.js"></script>
+    <script src="js/plugins/selectize.min.js"></script>
+    <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="js/libs/sailplay.hub.min.js "></script>
+    <script src="js/libs/angular.min.js"></script>
+
+    <script src="js/sailplay.tribune.js?v=114"></script>
+
+</head>
+<body>
+
+
+<div class="sp_wrapper" id="tribune">
+
+    <section class="sp_header-wrap">
+        <div class="sp_l-centered sp_header">
+            <div class="sp_header__inner">
+                <div class="sp_header__head">Tribune Sender</div>
+                <div class="sp_header__capt">Get in touch with your customers!</div>
+            </div>
+            <!--<a href="#" class="sp_header__sign">sign out</a>-->
+            <!--<div class="sp_profile-b">-->
+            <!--<div class="sp_profile-b__img" style="background-image: url('image/profile.png');"></div>-->
+            <!--<div class="sp_profile-b__name">User name</div>-->
+            <!--</div>-->
+        </div>
+    </section>
+
+    <form name="lead_form" novalidate data-lead class="sp_l-centered sp_form" id="tribune_lead"
+          data-ng-submit="submit()">
+        <div class="sp_form__text">Please fill in customer information:</div>
+        <div class="sp_form__inner">
+
+            <div class="sp_form__inp-set">
+                <div class="sp_form__inp-title">First Name *</div>
+                <input type="text" class="sp_common-input" data-ng-model="form.first_name">
+                <span class="sp_form__inp-error" data-ng-if="!form.first_name && show_errors">Field is required</span>
+            </div>
+            <div class="sp_form__inp-set">
+                <div class="sp_form__inp-title">Last name *</div>
+                <input type="text" class="sp_common-input" data-ng-model="form.last_name">
+                <span class="sp_form__inp-error" data-ng-if="!form.last_name && show_errors">Field is required</span>
+            </div>
+            <div class="sp_form__inp-set">
+                <div class="sp_form__inp-title">Email *</div>
+                <input type="email" name="user_email" class="sp_common-input" data-ng-model="form.email" required>
+                <span class="sp_form__inp-error"
+                      data-ng-if="!lead_form.user_email.$error.email && (!form.phone && !form.email && show_errors)">Field is required</span>
+                <span class="sp_form__inp-error" data-ng-if="show_errors && lead_form.user_email.$error.email">Wrong E-Mail</span>
+            </div>
+            <div class="sp_form__inp-set">
+                <div class="sp_form__inp-title">Phone</div>
+                <input type="text" class="sp_common-input" data-ng-model="form.phone">
+                <span class="sp_form__inp-error"
+                      data-ng-if="!form.email && !form.phone&& show_errors">Field is required</span>
+            </div>
+            <div class="sp_form__inp-set">
+                <div class="sp_form__inp-title">Market *</div>
+                <select data-select class="js-create-select sp_common-selectize market"
+                        data-ng-model="form.market" data-ng-options="m.value as m.label for m in markets"></select>
+                <span class="sp_form__inp-error"
+                      data-ng-if="!form.market && show_errors">Field is required</span>
+            </div>
+            <div class="sp_form__inp-set">
+                <div class="sp_form__inp-title">Account number *</div>
+                <input type="text" class="sp_common-input" data-ng-model="form.account_number">
+                <span class="sp_form__inp-error" data-ng-if="!form.account_number && show_errors">Field is required</span>
+            </div>
+
+            <div class="sp_block-param js-create-checkbox sms">
+
+                <label>
+                    <input type="checkbox" data-ng-model="form.send_sms" value="true" class="sp_common-check">
+                    <span class="sp_param-label">Send SMS</span>
+                </label>
+
+            </div>
+
+            <div class="sp_block-param js-create-checkbox email">
+
+                <label>
+                    <input type="checkbox" data-ng-model="form.send_email" value="true" class="sp_common-check">
+                    <span class="sp_param-label">Send Email</span>
+                </label>
+
+            </div>
+
+            <div class="sp_block-param email_type" data-ng-show="form.send_email">
+
+                <label>
+                    <input type="radio" data-ng-model="form.send_email_type" value="Activation Email">
+                    Activation Email
+                </label>
+
+                <label style="margin-left: 30px;">
+                    <input type="radio" data-ng-model="form.send_email_type" value="New Start Email">
+                    New Start Email
+                </label>
+
+            </div>
+
+            <div class="sp_form__submit-wr" style="margin-top: 50px;margin-bottom: 50px;">
+
+                <input type="submit" class="sp_form__submit" value="Send message">
+
+                <div class="sp_form__status" data-ng-if="submited">
+                    Your message was sent successfully
+                </div>
+
+                <div class="sp_form__status red"
+                     data-ng-if="!form.phone && !form.email && !submited && show_errors">
+                    Please fill out at least one of the following fields: Email, Phone.
+                </div>
+
+                <div class="sp_form__status red"
+                     data-ng-if="!form.phone && form.send_sms && show_errors">
+                    Please specify Phone or unselect "Send SMS" option".
+                </div>
+
+            </div>
+
+            <div class="force_wrap">
+                <a type="submit" class="sp_form__submit" data-ng-show="force_button" data-ng-click="$event.preventDefault();submit(true);">Keep contact details and send message</a>
+            </div>
+
+            <a href="#" class="sp_form__submit" style="line-height: 51px;
+    background: rgba(255, 0, 0, 0.67);" data-ng-click="reset();$event.preventDefault();">Clear form</a>
+
+        </div>
+        <!-- /sp form innner -->
+
+
+        <div class="popup" data-ng-show="attention">
+
+            <div class="popup_overlay"></div>
+
+            <div class="popup_content">
+
+                <div class="popup_content-header">ATTENTION!</div>
+
+                <div class="popup_content-body">
+
+                    <div class="bold" data-ng-bind="attention"></div>
+
+                    <div class="what_to_do">
+
+                        <span class="bold">What to do next?</span>
+
+                        <ol>
+                            <li>Check the contact details you are entering carefully.</li>
+                            <li>In case of any typos edit the required fields and resend the form using 'Send message' button.
+                            </li>
+                            <li>If you believe contact details are correct use 'Keep contact details and send message' button to
+                                complete the process anyway.
+                            </li>
+                        </ol>
+
+                    </div>
+
+                    <span class="popup_content-button" data-ng-click="attention = null;">OK</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+    <!-- /sp form -->
+
+
+    <div class="sp_l-prefooter"></div>
+</div>
+<!-- /sp_wrapper -->
+
+<div class="sp_l-footer sp_footer">
+    <div class="sp_l-section">
+        <a href="https://sailplay.net" target="_blank" class="sp_footer__dev" style="margin-top: 10px;"><img
+                style="    height: 65px;"
+                src="image/logo.png" alt=""></a>
+    </div>
+</div>
+
+</body>
+</html>
