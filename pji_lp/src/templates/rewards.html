@@ -1,0 +1,8 @@
+<div class="rewards__header">MEMBER REWARDS</div>
+<div class="owl-carousel owl-theme" data-bind="foreach: gifts">
+    <div class="gift">
+        <img class="gift__image" data-bind="attr: { src: thumbs.url_250x250 }" alt="">
+        <div class="gift__name" data-bind="text: name"></div>
+        <a class="gift__redeem">Redeem for <span data-bind="text: points"></span> POINTS</a>
+    </div>
+</div>

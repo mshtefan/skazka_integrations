@@ -1,0 +1,18 @@
+<div class="actions">
+    <div class="actions__header">QUESTS FOR POINTS</div>
+    <div class="actions__list" data-bind="foreach: actions">
+        <div class="actions__item">
+            <!-- ko if: type == 'inviteFriend' -->
+            <div class="icon" style="background-image: url(../../assets/icons/invite.svg)"></div>
+            <!-- /ko -->
+            <!-- ko if: type == 'socialSharing' && socialType == 'fb' -->
+            <div class="icon" style="background-image: url(../../assets/icons/fb.svg)"></div>
+            <!-- /ko -->
+            <!-- ko if: type == 'socialSharing' && socialType == 'tw' -->
+            <div class="icon" style="background-image: url(../../assets/icons/tw.svg)"></div>
+            <!-- /ko -->
+            <div class="action__text">Join us on facebook</div>
+        </div>
+    </div>
+
+</div>
