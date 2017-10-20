@@ -1,5 +1,7 @@
 import mainStyle from '@lib/styles/style.styl';
-import { SailPlay } from '@lib/core.js'
+import {
+    SailPlay
+} from '@lib/core.js'
 import ko from 'knockout';
 import 'knockout.validation';
 require('@lib/styles/helpers.styl')
@@ -60,27 +62,29 @@ window.SAILPLAY = function (opts) {
 
                     if (!sp.specificConfig.settings.email_opt) visible = false;
                     if (sp.specificConfig.settings.reg_on_last_step && !this.last_step()) visible = false;
+                    if (!sp.specificConfig.settings.reg_on_last_step && this.last_step()) visible = false;
 
                     return visible;
                 })
 
-                this.check_sms_opt_out_visible = ko.computed(() => {
-                    let visible = true;
+            this.check_sms_opt_out_visible = ko.computed(() => {
+                let visible = true;
 
-                    if (!sp.specificConfig.settings.sms_opt) visible = false;
-                    if (sp.specificConfig.settings.reg_on_last_step && !this.last_step()) visible = false;
+                if (!sp.specificConfig.settings.sms_opt) visible = false;
+                if (sp.specificConfig.settings.reg_on_last_step && !this.last_step()) visible = false;
+                if (!sp.specificConfig.settings.reg_on_last_step && this.last_step()) visible = false;
 
-                    return visible;
-                })
+                return visible;
+            })
 
-                this.submit_available = ko.computed(() => {
-                    let available = true;
-                    if (sp.specificConfig.settings.email_opt && 
-                        (this.last_step() || !sp.specificConfig.settings.reg_on_last_step))
-                        available = this.email_opt()
-                    
-                    return available;
-                })
+            this.submit_available = ko.computed(() => {
+                let available = true;
+                if (sp.specificConfig.settings.email_opt &&
+                    (this.last_step() || !sp.specificConfig.settings.reg_on_last_step))
+                    available = this.email_opt()
+
+                return available;
+            })
         }
 
         getData(field_set) {
@@ -192,17 +196,21 @@ window.SAILPLAY = function (opts) {
                     if (this.sms_opt()) tags.push('SMS Opt-Out');
                     data = $.extend(true, {}, this.previous_data, data)
                     sp.addTags(tags, {
-                        auth_hash: '',
-                        email: this.email(),
-                        phone: ''
-                    })
+                            auth_hash: '',
+                            email: this.email(),
+                            phone: ''
+                        })
                         .then(updateVars(1))
                         .then(updateInfo)
                         .then(updateVars(0))
                         .then(nextStep)
 
                     if (!this.sms_opt())
-                        sp.removeTags(['SMS Opt-Out'])
+                        sp.removeTags(['SMS Opt-Out'], {
+                            auth_hash: '',
+                            email: this.email(),
+                            phone: ''
+                        })
 
                     setTimeout(() => this.in_progress(false))
                     return
@@ -215,20 +223,24 @@ window.SAILPLAY = function (opts) {
             }
 
             if (this.step() == 1) {
-                let tags = ['Marketing Opt-In', 'Subscription form not finished']        
-                if (this.sms_opt()) tags.push('SMS Opt-Out');                    
+                let tags = ['Marketing Opt-In', 'Subscription form not finished']
+                if (this.sms_opt()) tags.push('SMS Opt-Out');
                 sp.addTags(tags, {
-                    auth_hash: '',
-                    email: this.email(),
-                    phone: ''
-                })
+                        auth_hash: '',
+                        email: this.email(),
+                        phone: ''
+                    })
                     .then(updateVars(2))
                     .then(updateInfo)
                     .then(updateVars(0))
                     .then(nextStep)
 
                 if (!this.sms_opt())
-                    sp.removeTags(['SMS Opt-Out'])
+                    sp.removeTags(['SMS Opt-Out'], {
+                        auth_hash: '',
+                        email: this.email(),
+                        phone: ''
+                    })
             }
 
             if (this.step() == 2)
@@ -237,8 +249,8 @@ window.SAILPLAY = function (opts) {
                     email: this.email(),
                     phone: ''
                 })
-                    .then(updateVars(0))
-                    .then(nextStep)
+                .then(updateVars(0))
+                .then(nextStep)
 
             this.in_progress(false);
         }
@@ -317,12 +329,12 @@ window.SAILPLAY = function (opts) {
             pji_subform.last_step(true)
 
         for (let fieldSet of [{
-            inSettings: 'main_fields',
-            inCode: 'mainFields'
-        }, {
-            inSettings: 'secondary_fields',
-            inCode: 'secondaryFields'
-        }]) {
+                inSettings: 'main_fields',
+                inCode: 'mainFields'
+            }, {
+                inSettings: 'secondary_fields',
+                inCode: 'secondaryFields'
+            }]) {
 
             let tempArr = [];
             for (let [index, field] of sp.specificConfig[fieldSet.inSettings].entries()) {
@@ -337,16 +349,27 @@ window.SAILPLAY = function (opts) {
                     type: field.type
                 }
 
-                if (field.required) el.value.extend({ required: true })
+                if (field.required) el.value.extend({
+                    required: true
+                })
                 if (field.type == 'email') el.value.extend({
                     required: true,
                     pattern: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
                 })
 
                 if (~(['birthday', 'sign_up_date'].indexOf(field.type))) {
-                    el.day = ko.observable().extend({ defaultIfNull: 'Day' });
-                    el.month = ko.observable().extend({ defaultIfNull: { id: 0, name: 'Month' } });
-                    el.year = ko.observable().extend({ defaultIfNull: 'Year' });
+                    el.day = ko.observable().extend({
+                        defaultIfNull: 'Day'
+                    });
+                    el.month = ko.observable().extend({
+                        defaultIfNull: {
+                            id: 0,
+                            name: 'Month'
+                        }
+                    });
+                    el.year = ko.observable().extend({
+                        defaultIfNull: 'Year'
+                    });
 
                     el.days =
                         (function () {
