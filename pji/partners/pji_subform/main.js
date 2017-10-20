@@ -32,6 +32,8 @@ window.SAILPLAY = function (opts) {
                 this.sms_opt_text = ko.observable(),
                 this.email_opt_text = ko.observable(),
 
+                this.opt_out_description = ko.observable(),
+
                 this.email = ko.observable(),
                 this.step = ko.observable(1),
                 this.last_step = ko.observable(),
@@ -305,6 +307,8 @@ window.SAILPLAY = function (opts) {
         pji_subform.thank_button(sp.specificConfig.settings.texts.thank_button)
         pji_subform.thank_image(sp.specificConfig.settings.texts.thank_image)
         pji_subform.thank_link_href(sp.specificConfig.settings.thank_link_href)
+
+        pji_subform.opt_out_description(sp.specificConfig.settings.texts.opt_out_description)
 
         pji_subform.sms_opt_text(sp.specificConfig.settings.texts.sms_opt_text)
         pji_subform.email_opt_text(sp.specificConfig.settings.texts.email_opt_text)

@@ -66,16 +66,19 @@ form.form(data-bind="visible: !congrat()")
  
                 input(data-bind="value: field.value, visible: ['sex', 'birthday', 'sign_up_date'].indexOf(field.type) < 0")  
 
-
-    .form_row(data-bind="visible: check_sms_opt_out_visible()")
-        .form_group.full(data-bind="css: {'__sailplay-error': sms_opt.isValid && !sms_opt.isValid() && sms_opt.isModified()}")
-            input.input_checkbox(type="checkbox", id="sms_opt", data-bind="checked: sms_opt")
-            label(for="sms_opt", data-bind="text: sms_opt_text")
+    .form_row(data-bind="visible: check_email_opt_out_visible() || check_sms_opt_out_visible()")
+        .form_group.full
+            label(data-bind="text: opt_out_description")
 
     .form_row(data-bind="visible: check_email_opt_out_visible()")
         .form_group.full(data-bind="css: {'__sailplay-error': !email_opt.isValid() && email_opt.isModified()}")
             input.input_checkbox(type="checkbox", id="email_opt", data-bind="checked: email_opt")
             label(for="email_opt", data-bind="text: email_opt_text")
+
+    .form_row(data-bind="visible: check_sms_opt_out_visible()")
+        .form_group.full(data-bind="css: {'__sailplay-error': sms_opt.isValid && !sms_opt.isValid() && sms_opt.isModified()}")
+            input.input_checkbox(type="checkbox", id="sms_opt", data-bind="checked: sms_opt")
+            label(for="sms_opt", data-bind="text: sms_opt_text")
 
     a.btn(href="javascript:void(0)", data-bind="click: submit, text: btn_text, css: {'__sailplay-disabled': in_progress() || !submit_available() }")
     div.agree
