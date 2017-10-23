@@ -5,6 +5,7 @@
   "scripts": {},
   "dependencies": {
     "angular": "latest",
+    "angular-sanitize": "latest",
     "angular-cookie": "latest",
     "angular-utils-pagination": "^0.11.1",
     "gulp-connect": "^5.0.0",
