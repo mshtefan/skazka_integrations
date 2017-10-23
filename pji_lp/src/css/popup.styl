@@ -1,0 +1,30 @@
+.popup {
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, .1);
+    border: 1px solid rgba(0, 0, 0, .09);
+    border-radius: 5px;
+    margin: 0 40px 0 40px;
+    padding: 0 100px 0px 100px
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    position: relative;
+    transition: margin .2s, max-height .2s, padding .2s, opacity .5s;
+
+    &__active {
+        padding: 100px;
+        margin: 40px;
+        max-height: 1000px;
+        opacity: 1;
+    }
+
+    &__close {
+        width: 17px;
+        height: 17px;
+        background: url(../../assets/icons/cross.svg) no-repeat center;
+        background-size: contain;
+        display: block;
+        position: absolute;
+        top: 13px;
+        right: 13px;
+    }
+}

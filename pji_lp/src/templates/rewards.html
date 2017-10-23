@@ -1,8 +1,21 @@
 <div class="rewards__header">MEMBER REWARDS</div>
 <div class="owl-carousel owl-theme" data-bind="foreach: gifts">
-    <div class="gift">
+    <div class="gift" data-bind="attr: { 'data-id': $index }">
         <img class="gift__image" data-bind="attr: { src: thumbs.url_250x250 }" alt="">
         <div class="gift__name" data-bind="text: name"></div>
-        <a class="gift__redeem">Redeem for <span data-bind="text: points"></span> POINTS</a>
+        <a href="javascript:void(0)" class="gift__redeem">Redeem for <span data-bind="text: points"></span> POINTS</a>
     </div>
 </div>
+<!-- ko if: start_redeem -->
+<popup params="data: { data: active_gift, close: close }">
+    <div class="redeem">
+        <img class="redeem__image" data-bind="attr: { src: thumbs.url_250x250 }" alt="">
+        <div class="redeem__text"</div>
+            <span class="redeem__text-name" data-bind="text: name"></span>&nbsp;
+            <span class="redeem__text-points"><span data-bind="text: points"></span> POINTS</span>
+            <div class="redeem__text-descr" data-bind="text: descr"></div><br>
+            <a href="" class="btn">Confirm</a>
+        </div>
+    </div>
+</popup>
+<!-- /ko -->

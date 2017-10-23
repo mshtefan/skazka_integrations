@@ -34,9 +34,12 @@ class MainView {
     }
 }
 
+ko.virtualElements.allowedBindings.fadeVisible = true;
 ko.components.register('status-bar', require('./components/status-bar'))
 ko.components.register('rewards', require('./components/rewards'))
 ko.components.register('actions', require('./components/actions'))
+ko.components.register('popup', require('./components/popup'))
+
 
 window.SAILPLAY = function (opts = {}) {
     ko.components.register(opts.element || 'sailplay-magic', {

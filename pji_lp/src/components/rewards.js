@@ -9,6 +9,9 @@ jQuery.noConflict();
 class rewardsView {
     constructor() {
         this.gifts = ko.observableArray();
+        this.start_redeem = ko.observable(false);
+        this.active_gift = ko.observable();
+        this.close = this.close.bind(this);
 
         subscribe(gifts => {
             this.gifts(gifts);
@@ -35,6 +38,20 @@ class rewardsView {
             navClass: ['__sailplay-owl-prev', '__sailplay-owl-next'],
             navText: ['', '']
         });
+
+        jQuery(document).on('click', '.__sailplay-gift__redeem', event => {
+            let index = jQuery(event.currentTarget).parent().data('id');
+            this.redeem(index);
+        })
+    }
+
+    close() {
+        this.start_redeem(false)
+    }
+
+    redeem(index) {
+        this.active_gift(this.gifts()[index])
+        this.start_redeem(true);
     }
 }
 
