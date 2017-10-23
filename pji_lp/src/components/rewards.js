@@ -1,7 +1,8 @@
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import '../../imports-loader?jQuery=jquery!owl.carousel';
 import {
-    subscribe
+    subscribe,
+    publish
 } from '../messager';
 
 jQuery.noConflict();
@@ -9,22 +10,32 @@ jQuery.noConflict();
 class rewardsView {
     constructor() {
         this.gifts = ko.observableArray();
+
         this.start_redeem = ko.observable(false);
         this.active_gift = ko.observable();
-        this.close = this.close.bind(this);
+        this.close_redeem_popup = this.close_redeem_popup.bind(this);
+        this.confirm_redeem = this.confirm_redeem.bind(this);
 
         subscribe(gifts => {
             this.gifts(gifts);
-            this.init_owl()
+            setTimeout(() => {
+                this.init_owl();
+            }, 50)
         }, 'gifts.list.success')
+
+        subscribe(instance => {
+            this.sp = instance
+        }, 'instance.success')
     }
 
     init_owl() {
         jQuery('.__sailplay-owl-carousel').owlCarousel({
             stagePadding: 40,
             margin: 20,
-            loop: true,
             items: 4,
+            loop: false,
+            mouseDrag: false,
+            nav: true,
             refreshClass: '__sailplay-owl-refresh',
             loadedClass: '__sailplay-owl-loaded',
             loadingClass: '__sailplay-owl-loading',
@@ -41,17 +52,26 @@ class rewardsView {
 
         jQuery(document).on('click', '.__sailplay-gift__redeem', event => {
             let index = jQuery(event.currentTarget).parent().data('id');
-            this.redeem(index);
+            jQuery('.__sailplay-gift__redeem-active').removeClass('__sailplay-gift__redeem-active');   
+            jQuery(event.currentTarget).addClass('__sailplay-gift__redeem-active')     
+            this.show_redeem_popup(index);
         })
     }
 
-    close() {
-        this.start_redeem(false)
+    close_redeem_popup() {
+        this.start_redeem(false);
+        this.active_gift();
+        jQuery('.__sailplay-gift__redeem-active').removeClass('__sailplay-gift__redeem-active');        
     }
 
-    redeem(index) {
-        this.active_gift(this.gifts()[index])
+    show_redeem_popup(index) {
+        this.active_gift(this.gifts()[index]);
         this.start_redeem(true);
+    }
+
+    confirm_redeem() {
+        this.sp.purchaseGift(this.active_gift())
+            .then(data => location.reload())
     }
 }
 

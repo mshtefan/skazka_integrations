@@ -7,14 +7,14 @@
     </div>
 </div>
 <!-- ko if: start_redeem -->
-<popup params="data: { data: active_gift, close: close }">
+<popup params="data: { data: { gift: active_gift, redeem: confirm_redeem }, close: close_redeem_popup }">
     <div class="redeem">
-        <img class="redeem__image" data-bind="attr: { src: thumbs.url_250x250 }" alt="">
+        <img class="redeem__image" data-bind="attr: { src: gift().thumbs.url_250x250 }" alt="">
         <div class="redeem__text"</div>
-            <span class="redeem__text-name" data-bind="text: name"></span>&nbsp;
-            <span class="redeem__text-points"><span data-bind="text: points"></span> POINTS</span>
-            <div class="redeem__text-descr" data-bind="text: descr"></div><br>
-            <a href="" class="btn">Confirm</a>
+            <span class="redeem__text-name" data-bind="text: gift().name"></span>&nbsp;
+            <span class="redeem__text-points"><span data-bind="text: gift().points"></span> POINTS</span>
+            <div class="redeem__text-descr" data-bind="text: gift().descr"></div><br>
+            <a href="javascript:void(0)" data-bind="click: redeem" class="btn">Confirm</a>
         </div>
     </div>
 </popup>

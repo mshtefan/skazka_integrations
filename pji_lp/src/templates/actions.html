@@ -12,8 +12,8 @@
             <div class="icon" style="background-image: url(../../assets/icons/tw.svg)"></div>
             <!-- /ko -->
             <div class="actions__text">
-                <span>Join us on facebook</span> 
-                <span class="actions__text-points">+5 points</span>
+                <span data-bind="text: $parent.getTitle($data)"></span> 
+                <span class="actions__text-points">+<span data-bind="text: points"></span> points</span>
             </div>
         </div>
     </div>

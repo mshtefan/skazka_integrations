@@ -188,7 +188,8 @@ export class SailPlay {
             jsonp({
                 url: `${this.opts.domain}${this.config().urls.gifts.list()}`,
                 data: {
-                    auth_hash: this.opts.auth_hash
+                    auth_hash: this.opts.auth_hash,
+                    verbose: true
                 },
                 success: resolve
             })
@@ -252,5 +253,29 @@ export class SailPlay {
                 success: resolve
             })
         })        
+    }
+
+    purchaseGift(gift_data) {
+        return new Promise((resolve, reject) => {
+            jsonp({
+                url: `${this.opts.domain}${this.config().urls.gifts.purchase.purchase()}`,
+                data: {
+                    gift_id: gift_data.id,
+                    auth_hash: this.opts.auth_hash,
+                    dep_id: this.config().partner.depId() || ''
+                },
+                success: (data) => {
+                    jsonp({
+                        url: `${this.opts.domain}${this.config().urls.gifts.purchase.force_confirm()}`,
+                        data: {
+                            gift_public_key: data.gift_public_key,
+                            auth_hash: this.opts.auth_hash,
+                            no_user_sms: true
+                        },
+                        success: resolve
+                    })
+                }
+            })
+        })
     }
 }
