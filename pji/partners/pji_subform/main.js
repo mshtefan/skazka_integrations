@@ -193,7 +193,7 @@ window.SAILPLAY = function (opts) {
             if (sp.specificConfig.settings.reg_on_last_step && sp.specificConfig.settings.steps == 2) {
                 if (this.last_step()) {
                     let tags = ['Marketing Opt-In']
-                    if (this.sms_opt()) tags.push('SMS Opt-Out');
+                    if (!this.sms_opt()) tags.push('SMS Opt-Out');
                     data = $.extend(true, {}, this.previous_data, data)
                     sp.addTags(tags, {
                             auth_hash: '',
@@ -205,7 +205,7 @@ window.SAILPLAY = function (opts) {
                         .then(updateVars(0))
                         .then(nextStep)
 
-                    if (!this.sms_opt())
+                    if (this.sms_opt())
                         sp.removeTags(['SMS Opt-Out'], {
                             auth_hash: '',
                             email: this.email(),
@@ -224,7 +224,7 @@ window.SAILPLAY = function (opts) {
 
             if (this.step() == 1) {
                 let tags = ['Marketing Opt-In', 'Subscription form not finished']
-                if (this.sms_opt()) tags.push('SMS Opt-Out');
+                if (!this.sms_opt()) tags.push('SMS Opt-Out');
                 sp.addTags(tags, {
                         auth_hash: '',
                         email: this.email(),
@@ -235,7 +235,7 @@ window.SAILPLAY = function (opts) {
                     .then(updateVars(0))
                     .then(nextStep)
 
-                if (!this.sms_opt())
+                if (this.sms_opt())
                     sp.removeTags(['SMS Opt-Out'], {
                         auth_hash: '',
                         email: this.email(),
