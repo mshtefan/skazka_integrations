@@ -69,6 +69,8 @@ export default function(messager) {
                 messager.publish(value.user_points.confirmed, 'user_points');
                 messager.publish(value.purchases.sum, 'user_purchases_sum');
 
+                this.data().user['child_array'] = ko.observableArray()
+
                 sailplay.jsonp.get(config.DOMAIN + config.urls.users.custom_variables.batch_get, {
                     names: JSON.stringify(this.vars),
                     auth_hash: config.auth_hash
@@ -76,9 +78,13 @@ export default function(messager) {
                     if (result.vars.length) {
                         ko.utils.arrayForEach(result.vars, item => {
                             if (item.name == 'child_birthdate') {
-                                this.data().user['child_bday'](item.value.split('-')[2]);
-                                this.data().user['child_bmonth'](this.popupVm.months().find(i => i && i.index == item.value.split('-')[1]));
-                                this.data().user['child_byear'](item.value.split('-')[0]);
+                                console.log(this.popupVm.months(), this.popupVm.months().find(i => i && i.index == item.value.split('-')[1]))
+                                this.data().user['child_array'].push({
+                                  child_bday: item.value.split('-')[2],
+                                  child_bmonth: this.popupVm.months().find(i => i && i.index == item.value.split('-')[1]),
+                                  child_byear: item.value.split('-')[0]
+                                })
+                                console.log(this.data().user['child_array']())
                             } else if (this.data().user[item.name]) this.data().user[item.name](item.value)
                         })
                     }
@@ -170,7 +176,8 @@ export default function(messager) {
             is_profile: true,
             active_games: ko.observableArray([]),
             for_who: ko.observableArray(),
-            getField: (field, arr) => {                
+            child_array: ko.observableArray(),
+            getField: (field, arr) => {
                 if (!this.data()) return '';
                 if (!this.data().user[field]) {                    
                     if (arr) this.data().user[field] = ko.observableArray()                    
@@ -182,7 +189,7 @@ export default function(messager) {
                 if (field == 'child_byear') this.data().user[field].extend({min: 1863, pattern: { message: "wrong", params: '^[0-9]{4}$' }})
                 if (field == 'city') this.data().user[field].extend({required: true})
                 if (field == 'address') this.data().user[field].extend({required: true})                
-
+                if (field == 'child_array') console.log(this.data().user[field])
                 return this.data().user[field]
             },
             width: ko.observable('356px'),
@@ -190,6 +197,9 @@ export default function(messager) {
                 document.body.className += ' no_scrol';
                 this.popupVm.step(1);
                 this.popupVm.width('356px')
+                if (this.data().user['child_array']) 
+                    console.log(this.data().user['child_array']()[0].child_bmonth)
+                    this.popupVm.child_array(this.data().user['child_array']())
                 if (this.data().user['active_games'] && this.data().user['active_games'].length)
                     this.popupVm.active_games(this.data().user['active_games']);
 
@@ -332,9 +342,22 @@ export default function(messager) {
                 if (user.birth_day && user.birth_month && user.birth_year)
                     primary['birthDate'] = `${user.birth_year}-${user.birth_month.index}-${user.birth_day}`
 
+                if (user.child_array.length>0){
+                    user.child_array.forEach( function(element, index) {
+                        var keyName = void 0
+                        if(index==1){
+                            keyName = 'child_birthdate'
+                        } else {
+                            keyName = 'child_birthdate_' + index
+                        }
+                        secondary[keyName] = `${element.child_byear}-${element.child_bmonth.index}-${element.child_bday}`
+                    });
+                }
+                console.info(user.child_array)
+/*
                 if (user.child_bday && user.child_bmonth && user.child_byear)
                     secondary['child_birthdate'] = `${user.child_byear}-${user.child_bmonth.index}-${user.child_bday}`
-
+*/
                 let current_tags = [].concat(this.popupVm.for_who(), user.training, this.popupVm.active_games());
                 let all_tags = [].concat(this.training_tags, this.games_tags, this.for_who_tags);
                 let diff_tags = arr_diff(current_tags, all_tags);
