@@ -52,8 +52,8 @@
               if ($('.js-badges-slider').length) {
                 $('.js-badges-slider').slick({
                   adaptiveHeight: true,
-                  slidesToShow: api.user.program == 'V2' ? 3 : 3,
-                  slidesToScroll: api.user.program == 'V2' ? 3 : 3,
+                  slidesToShow: 4,
+                  slidesToScroll: 4,
                   arrows: false,
                   speed: 150,
                   infinite: false,
