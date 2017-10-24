@@ -1325,6 +1325,32 @@ void 0!==c?e&&"set"in e&&void 0!==(d=e.set(a,c,b))?d:a[b]=c:e&&"get"in e&&null!=
 
   });
 
+  // SOCIAL GOOGLE PLUS CHANGE HEIGHT
+  sp.on('actions.social.gp.like.mouseenter', function(){
+    var elms = document.querySelectorAll('iframe[iframe-action-gp-like], iframe.gp.like');
+    var originWidth,
+      w,
+      h = 500;
+    for(var i = 0, len = elms.length; i < len; i++){
+      elms[i].removeAttribute("style");
+      originWidth = elms[i].parentNode. offsetWidth;
+      w = +originWidth + 70;
+      elms[i].style.cssText = 'width: ' + w + 'px !important;height: ' + h + 'px !important;margin-left: -35px !important;z-index: 10 !important;';
+      elms[i].parentNode.style.setProperty ("overflow", "visible", "important");
+    }
+  });
+
+  sp.on('actions.social.gp.like.mouseleave', function(){
+    var elms = document.querySelectorAll('iframe[iframe-action-gp-like], iframe.gp.like');
+    var w = 150,
+      h = 27;
+    for(var i = 0, len = elms.length; i < len; i++){
+      elms[i].removeAttribute("style");
+      elms[i].style.cssText = 'width: ' + w + 'px !important;height: ' + h + 'px !important;margin-left: auto !important;';
+      elms[i].parentNode.style.setProperty ("overflow", "hidden", "important");
+    }
+  });
+
   var Actions = {};
 
   Actions.social_init = function(actions){
@@ -1821,6 +1847,24 @@ STANDALONEMONTH:"January February March April May June July August September Oct
 minFrac:2,minInt:1,negPre:"-\u00a4",negSuf:"",posPre:"\u00a4",posSuf:""}]},id:"en-us",localeID:"en_US",pluralCat:function(a,c){var e=a|0,f=c;void 0===f&&(f=Math.min(b(a),3));Math.pow(10,f);return 1==e&&0==f?"one":"other"}})}]),B(function(){we(u.document,Uc)}))})(window);!window.angular.$$csp().noInlineStyle&&window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 //# sourceMappingURL=angular.min.js.map
 
+/*
+ AngularJS v1.6.6
+ (c) 2010-2017 Google, Inc. http://angularjs.org
+ License: MIT
+*/
+(function(s,d){'use strict';function J(d){var k=[];w(k,B).chars(d);return k.join("")}var x=d.$$minErr("$sanitize"),C,k,D,E,p,B,F,G,w;d.module("ngSanitize",[]).provider("$sanitize",function(){function g(a,e){var c={},b=a.split(","),f;for(f=0;f<b.length;f++)c[e?p(b[f]):b[f]]=!0;return c}function K(a){for(var e={},c=0,b=a.length;c<b;c++){var f=a[c];e[f.name]=f.value}return e}function H(a){return a.replace(/&/g,"&amp;").replace(L,function(a){var c=a.charCodeAt(0);a=a.charCodeAt(1);return"&#"+(1024*(c-
+55296)+(a-56320)+65536)+";"}).replace(M,function(a){return"&#"+a.charCodeAt(0)+";"}).replace(/</g,"&lt;").replace(/>/g,"&gt;")}function I(a){for(;a;){if(a.nodeType===s.Node.ELEMENT_NODE)for(var e=a.attributes,c=0,b=e.length;c<b;c++){var f=e[c],h=f.name.toLowerCase();if("xmlns:ns1"===h||0===h.lastIndexOf("ns1:",0))a.removeAttributeNode(f),c--,b--}(e=a.firstChild)&&I(e);a=t("nextSibling",a)}}function t(a,e){var c=e[a];if(c&&F.call(e,c))throw x("elclob",e.outerHTML||e.outerText);return c}var y=!1;this.$get=
+["$$sanitizeUri",function(a){y&&k(n,z);return function(e){var c=[];G(e,w(c,function(b,c){return!/^unsafe:/.test(a(b,c))}));return c.join("")}}];this.enableSvg=function(a){return E(a)?(y=a,this):y};C=d.bind;k=d.extend;D=d.forEach;E=d.isDefined;p=d.lowercase;B=d.noop;G=function(a,e){null===a||void 0===a?a="":"string"!==typeof a&&(a=""+a);var c=u(a);if(!c)return"";var b=5;do{if(0===b)throw x("uinput");b--;a=c.innerHTML;c=u(a)}while(a!==c.innerHTML);for(b=c.firstChild;b;){switch(b.nodeType){case 1:e.start(b.nodeName.toLowerCase(),
+K(b.attributes));break;case 3:e.chars(b.textContent)}var f;if(!(f=b.firstChild)&&(1===b.nodeType&&e.end(b.nodeName.toLowerCase()),f=t("nextSibling",b),!f))for(;null==f;){b=t("parentNode",b);if(b===c)break;f=t("nextSibling",b);1===b.nodeType&&e.end(b.nodeName.toLowerCase())}b=f}for(;b=c.firstChild;)c.removeChild(b)};w=function(a,e){var c=!1,b=C(a,a.push);return{start:function(a,h){a=p(a);!c&&A[a]&&(c=a);c||!0!==n[a]||(b("<"),b(a),D(h,function(c,h){var d=p(h),g="img"===a&&"src"===d||"background"===
+d;!0!==v[d]||!0===m[d]&&!e(c,g)||(b(" "),b(h),b('="'),b(H(c)),b('"'))}),b(">"))},end:function(a){a=p(a);c||!0!==n[a]||!0===h[a]||(b("</"),b(a),b(">"));a==c&&(c=!1)},chars:function(a){c||b(H(a))}}};F=s.Node.prototype.contains||function(a){return!!(this.compareDocumentPosition(a)&16)};var L=/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,M=/([^#-~ |!])/g,h=g("area,br,col,hr,img,wbr"),q=g("colgroup,dd,dt,li,p,tbody,td,tfoot,th,thead,tr"),l=g("rp,rt"),r=k({},l,q),q=k({},q,g("address,article,aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5,h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,section,table,ul")),
+l=k({},l,g("a,abbr,acronym,b,bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s,samp,small,span,strike,strong,sub,sup,time,tt,u,var")),z=g("circle,defs,desc,ellipse,font-face,font-face-name,font-face-src,g,glyph,hkern,image,linearGradient,line,marker,metadata,missing-glyph,mpath,path,polygon,polyline,radialGradient,rect,stop,svg,switch,text,title,tspan"),A=g("script,style"),n=k({},h,q,l,r),m=g("background,cite,href,longdesc,src,xlink:href"),r=g("abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,scope,scrolling,shape,size,span,start,summary,tabindex,target,title,type,valign,value,vspace,width"),
+l=g("accent-height,accumulate,additive,alphabetic,arabic-form,ascent,baseProfile,bbox,begin,by,calcMode,cap-height,class,color,color-rendering,content,cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,font-size,font-stretch,font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,gradientUnits,hanging,height,horiz-adv-x,horiz-origin-x,ideographic,k,keyPoints,keySplines,keyTimes,lang,marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,mathematical,max,min,offset,opacity,orient,origin,overline-position,overline-thickness,panose-1,path,pathLength,points,preserveAspectRatio,r,refX,refY,repeatCount,repeatDur,requiredExtensions,requiredFeatures,restart,rotate,rx,ry,slope,stemh,stemv,stop-color,stop-opacity,strikethrough-position,strikethrough-thickness,stroke,stroke-dasharray,stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,stroke-opacity,stroke-width,systemLanguage,target,text-anchor,to,transform,type,u1,u2,underline-position,underline-thickness,unicode,unicode-range,units-per-em,values,version,viewBox,visibility,width,widths,x,x-height,x1,x2,xlink:actuate,xlink:arcrole,xlink:role,xlink:show,xlink:title,xlink:type,xml:base,xml:lang,xml:space,xmlns,xmlns:xlink,y,y1,y2,zoomAndPan",
+!0),v=k({},m,l,r),u=function(a,e){function c(b){b="<remove></remove>"+b;try{var c=(new a.DOMParser).parseFromString(b,"text/html").body;c.firstChild.remove();return c}catch(e){}}function b(a){d.innerHTML=a;e.documentMode&&I(d);return d}var h;if(e&&e.implementation)h=e.implementation.createHTMLDocument("inert");else throw x("noinert");var d=(h.documentElement||h.getDocumentElement()).querySelector("body");d.innerHTML='<svg><g onload="this.parentNode.remove()"></g></svg>';return d.querySelector("svg")?
+(d.innerHTML='<svg><p><style><img src="</style><img src=x onerror=alert(1)//">',d.querySelector("svg img")?c:b):function(b){b="<remove></remove>"+b;try{b=encodeURI(b)}catch(c){return}var e=new a.XMLHttpRequest;e.responseType="document";e.open("GET","data:text/html;charset=utf-8,"+b,!1);e.send(null);b=e.response.body;b.firstChild.remove();return b}}(s,s.document)}).info({angularVersion:"1.6.6"});d.module("ngSanitize").filter("linky",["$sanitize",function(g){var k=/((ftp|https?):\/\/|(www\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>"\u201d\u2019]/i,
+p=/^mailto:/i,s=d.$$minErr("linky"),t=d.isDefined,y=d.isFunction,w=d.isObject,x=d.isString;return function(d,q,l){function r(a){a&&m.push(J(a))}function z(a,d){var c,b=A(a);m.push("<a ");for(c in b)m.push(c+'="'+b[c]+'" ');!t(q)||"target"in b||m.push('target="',q,'" ');m.push('href="',a.replace(/"/g,"&quot;"),'">');r(d);m.push("</a>")}if(null==d||""===d)return d;if(!x(d))throw s("notstring",d);for(var A=y(l)?l:w(l)?function(){return l}:function(){return{}},n=d,m=[],v,u;d=n.match(k);)v=d[0],d[2]||
+d[4]||(v=(d[3]?"http://":"mailto:")+v),u=d.index,r(n.substr(0,u)),z(v,d[0].replace(p,"")),n=n.substring(u+d[0].length);r(n);return g(m.join(""))}}])})(window,window.angular);
+//# sourceMappingURL=angular-sanitize.min.js.map
+
 angular.module("ivpusic.cookie",["ipCookie"]),angular.module("ipCookie",["ng"]).factory("ipCookie",["$document",function(e){"use strict";function i(e){try{return decodeURIComponent(e)}catch(i){}}return function(){function t(t,n,r){var o,s,p,u,a,c,d,x,f;r=r||{};var g=r.decode||i,l=r.encode||encodeURIComponent;if(void 0!==n)return n="object"==typeof n?JSON.stringify(n):n+"","number"==typeof r.expires&&(f=r.expires,r.expires=new Date,-1===f?r.expires=new Date("Thu, 01 Jan 1970 00:00:00 GMT"):void 0!==r.expirationUnit?"hours"===r.expirationUnit?r.expires.setHours(r.expires.getHours()+f):"minutes"===r.expirationUnit?r.expires.setMinutes(r.expires.getMinutes()+f):"seconds"===r.expirationUnit?r.expires.setSeconds(r.expires.getSeconds()+f):"milliseconds"===r.expirationUnit?r.expires.setMilliseconds(r.expires.getMilliseconds()+f):r.expires.setDate(r.expires.getDate()+f):r.expires.setDate(r.expires.getDate()+f)),e[0].cookie=[l(t),"=",l(n),r.expires?"; expires="+r.expires.toUTCString():"",r.path?"; path="+r.path:"",r.domain?"; domain="+r.domain:"",r.secure?"; secure":""].join("");for(s=[],x=e[0].cookie,x&&(s=x.split("; ")),o={},d=!1,p=0;s.length>p;++p)if(s[p]){if(u=s[p],a=u.indexOf("="),c=u.substring(0,a),n=g(u.substring(a+1)),angular.isUndefined(n))continue;if(void 0===t||t===c){try{o[c]=JSON.parse(n)}catch(m){o[c]=n}if(t===c)return o[c];d=!0}}return d&&void 0===t?o:void 0}return t.remove=function(e,i){var n=void 0!==t(e);return n&&(i||(i={}),i.expires=-1,t(e,"",i)),n},t}()}]);
 (function () {
 
@@ -1829,7 +1873,8 @@ angular.module("ivpusic.cookie",["ipCookie"]),angular.module("ipCookie",["ng"]).
   angular.module('sg', [
     'sg.services',
     'sg.ui',
-    'sg.directives'
+    'sg.directives',
+    'ngSanitize'
   ])
 
     .directive('sailplaySg', ["api", "sp", function (api, sp) {
@@ -2122,12 +2167,16 @@ angular.module("ivpusic.cookie",["ipCookie"]),angular.module("ipCookie",["ng"]).
               scope.show_auth = false;
             }
 
-            api.user.tags.exist({tags: ['Program v2']}).then(function (res) {
-              api.user.program = 'V1'              
-              if (res.tags[0].exist) {
-                api.user.program = 'V2'
-              }
-            })            
+            if(window.ONLY_V2) {
+              api.user.program = 'V2'
+            } else {
+              api.user.tags.exist({tags: ['Program v2']}).then(function (res) {
+                api.user.program = 'V1'              
+                if (res.tags[0].exist) {
+                  api.user.program = 'V2'
+                }
+              })
+            }
 
 
             if(!ipCookie(login_cookie)) {
@@ -2137,11 +2186,13 @@ angular.module("ivpusic.cookie",["ipCookie"]),angular.module("ipCookie",["ng"]).
 
             auth = true;
             api.user.info().then(function () {
-              api.badges.list().then(function () {
-                api.user.history().then(function () {
-                  api.actions.list().then(function () {
-                    api.gifts.list().then(function () {
-                      api.auth = true;
+              api.magic_config().then(function () {
+                api.badges.list().then(function () {
+                  api.user.history().then(function () {
+                    api.actions.list().then(function () {
+                      api.gifts.list().then(function () {
+                        api.auth = true;
+                      });
                     });
                   });
                 });
@@ -2191,11 +2242,11 @@ angular.module("ivpusic.cookie",["ipCookie"]),angular.module("ipCookie",["ng"]).
 
   angular.module('sg.directives.badges', [])
 
-    .directive('badgesD', ["api", "badgeS", "sp", function (api, badgeS, sp) {
+    .directive('badgesD', ["api", "badgeS", "sp", "$timeout", function (api, badgeS, sp, $timeout) {
       return {
         restrict: 'E',
         replace: false,
-        template: "<section class=\"sp_l-centered sp_badges-sec\" data-ng-show=\"badges && badges.length\">\n    <div class=\"sp_common-sec-head\">Badges</div>\n    <div class=\"sp_badges-sec__row\">\n        \n        <div class=\"sp_badges-sec__col\" data-ng-repeat=\"item in badges\">\n            <div class=\"sp_badges-cell\">\n                <div class=\"sp_badges-cell__img\"><img data-ng-src=\"{{ item.thumbs.url_250x250 }}\" alt=\"\"></div>\n                <div class=\"sp_badges-cell__name\" data-ng-bind=\"item.name\"></div>\n            </div>\n        </div>\n      \n    </div>\n</section>",
+        template: '<section data-ng-class="{v2: program_v == \'V2\'}" class=\"sp_l-centered sp_badges-sec\" data-ng-show=\"badges && badges.length\">\n            <div class=\"sp_common-sec-head\">Badges</div>\n            <div class=\"sp_badges-sec__row\" data-ng-show="program_v != \'V0\'">\n                \n\n                <div class="sp_gifts-slider js-badges-slider">\n\n                  <div data-ng-repeat=\"item in badges\">\n                      <div class=\"sp_badges-cell\">\n                          <div class=\"sp_badges-cell__img\"><img data-ng-src=\"{{ item.thumbs.url_250x250 }}\" alt=\"\"></div>\n                          <div class=\"sp_badges-cell__name\" data-ng-bind=\"item.name\"></div>\n                      </div>\n\n                  </div>\n                </div>\n              \n            </div>\n            <div class=\"sp_badges-sec__row\" data-ng-show="program_v == \'V0\'">\n                \n                <div class=\"sp_badges-sec__col\" data-ng-repeat=\"item in badges\">\n                    <div class=\"sp_badges-cell\">\n                        <div class=\"sp_badges-cell__img\"><img data-ng-src=\"{{ item.thumbs.url_250x250 }}\" alt=\"\"></div>\n                        <div class=\"sp_badges-cell__name\" data-ng-bind=\"item.name\"></div>\n                    </div>\n                </div>\n              \n            </div>\n        </section>',
         scope: true,
         link: function (scope, el) {
           scope.badges = api.data('badges.list')() && api.data('badges.list')().one_level_badges.filter(function (item) {
@@ -2207,6 +2258,43 @@ angular.module("ivpusic.cookie",["ipCookie"]),angular.module("ipCookie",["ng"]).
           sp.on('actions.perform.success', function (data) {
             update();
           });
+          scope.program_v = api.user.program
+          function initBadges(time) {
+            $timeout(function () {
+              // badges slider
+              if ($('.js-badges-slider').length) {
+                $('.js-badges-slider').slick({
+                  adaptiveHeight: true,
+                  slidesToShow: 4,
+                  slidesToScroll: 4,
+                  arrows: false,
+                  speed: 150,
+                  infinite: false,
+                  swipeToSlide: false,
+                  dots: true,
+                  edgeFriction: 0.5,
+                  responsive: [
+                    {
+                      breakpoint: 960,
+                      settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                      }
+                    },
+                    {
+                      breakpoint: 600,
+                      settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                      }
+                    }
+                  ]
+                });
+              }
+              scope.hidden = false;
+            }, time || 1000);
+          }
+          initBadges(2100)
         }
       }
 
@@ -2221,12 +2309,14 @@ angular.module("ivpusic.cookie",["ipCookie"]),angular.module("ipCookie",["ng"]).
       return {
         restrict: 'E',
         replace: false,
-        template: '<section class="sp_l-section sp_gifts-sec">\n    <div class="sp_common-sec-head">Redeem Your Points For These Gifts</div>\n    <span data-ng-if="!gifts || !gifts() || !gifts().length">List is empty</span>\n\n    <div class="sp_gifts-slider js-gifts-slider" data-ng-class="{ type_hidden : hidden }">\n        <div data-ng-repeat="gift in gifts()">\n            <div class="sp_gifts-slider__slide-wrap">\n                <div class="sp_gifts-slider__slide" data-ng-class="{ \'not_enough_points\' : (user().user_points.confirmed < gift.points)}">\n                    <div class="sp_gifts-slider__slide-img"\n                         style="background-image: url(\'{{ gift.thumbs.url_250x250 }}\');"></div>\n                    <div class="sp_gifts-slider__slide-name" data-ng-bind="gift.name"></div>\n                    <div class="sp_gifts-slider__slide-bonus">{{ gift.points }} Points</div>\n                    <a href="#" class="sp_gifts-slider__slide-btn sp_common-btn"\n                       data-ng-class="{ \'this-disabled\' : (user().user_points.confirmed < gift.points)\n                        ,not_enough :(user().user_points.confirmed < gift.points) }"\n                       data-ng-bind="user().user_points.confirmed < gift.points ? \'Not enough Points\' : \'Get\' "\n                       data-ng-click="getGift(gift);$event.preventDefault();"></a>\n                </div>\n            </div>\n        </div>\n    </div>\n\n</section>\n\n\n<!-- popups -->\n<div class="sp_widget sp_history-popup js-gift-popup" style="display: none;position: fixed;">\n    <div class="sp_history-popup__close js-close-popup"></div>\n    <div class="sp_common-popup-head-wr">\n        <div class="sp_common-popup-head">Your gift is waiting for you!</div>\n    </div>\n    <div class="sp_common-popup-body" data-ng-show="order_gift">\n        <div class="sp_history-popup__title">\n            Please make sure that your gift is in stock and ready for picking up by giving a call to one of our\n            locations<br> (<a href="http://www.showgrow.com/stores"\n                              class="sp_widget sp_info-counter__hist" target="_blank">check full locations list here</a>).\n\n        </div>\n        <div class="sp_gifts-slider__slide-img"\n             style="background-image: url(\'{{ order_gift.thumbs.url_250x250 }}\');"></div>\n        <div class="sp_gifts-slider__slide-name" data-ng-bind="order_gift.name"></div>\n        <div class="sp_gifts-slider__slide-desc" data-ng-bind="order_gift.descr"></div>\n<div class="sp_gifts-slider__slide-desc">Your coupon number is <span class=" sp_bold" ng-bind="coupon_number"></span></div>\n        <div class="sp_gifts-slider__slide-bonus">{{ order_gift.points }} Points</div>\n        <div class="sp_common-btn js-close-popup">OK</div>\n    </div>\n\n</div>\n',
+        template: '<section class="sp_l-section sp_gifts-sec" data-ng-class="{v2: program_v == \'V2\'}">\n            <div class="sp_common-sec-head">Redeem Your Points For These Gifts</div>\n            <span data-ng-if="!gifts || !gifts() || !gifts().length">List is empty</span>\n\n            <div class="sp_gifts-slider js-gifts-slider" data-ng-class="{ type_hidden : hidden }">\n                <div data-ng-repeat="gift in gifts()">\n                    <div class="sp_gifts-slider__slide-wrap">\n                        <div class="sp_gifts-slider__slide" data-ng-class="{ \'not_enough_points\' : (user().user_points.confirmed < gift.points)}">\n                            <div class="sp_gifts-slider__slide-img"\n                                 style="background-image: url(\'{{ gift.thumbs.url_250x250 }}\');"></div>\n                            <div class="sp_gifts-slider__slide-name" data-ng-bind="gift.name"></div>\n                            <div class="sp_gifts-slider__slide-bonus">{{ gift.points }} Points</div>\n                            <a href="#" class="sp_gifts-slider__slide-btn sp_common-btn"\n                               data-ng-class="{ \'this-disabled\' : (user().user_points.confirmed < gift.points)\n                                ,not_enough :(user().user_points.confirmed < gift.points) }"\n                               data-ng-bind="user().user_points.confirmed < gift.points ? \'Not enough Points\' : \'Get\' "\n                               data-ng-click="openGift(gift);$event.preventDefault();"></a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n        </section>\n\n\n        <!-- popups -->\n        <div class="sp_widget sp_history-popup js-gift-popup" style="display: none;position: fixed;">\n            <div class="sp_history-popup__close js-close-popup"></div>\n            <div class="sp_common-popup-head-wr">\n                <div class="sp_common-popup-head">Your gift is waiting for you!</div>\n            </div>\n\n            <div class="sp_common-popup-body" data-ng-show="order_gift && order_page == \'1\'">\n                <div class="sp_history-popup__title">\n                    Please make sure that your gift is in stock and ready for picking up by giving a call to one of our\n                    locations<br> (<a href="http://www.showgrow.com/stores"\n                                      class="sp_widget sp_info-counter__hist" target="_blank">check full locations list here</a>).\n\n                </div>\n                <div class="sp_gifts-slider__slide-img"\n                     style="background-image: url(\'{{ order_gift.thumbs.url_250x250 }}\');"></div>\n                <div class="sp_gifts-slider__slide-name" data-ng-bind="order_gift.name"></div>\n                <div class="sp_gifts-slider__slide-desc" data-ng-bind="order_gift.descr"></div>\n                <div class="sp_gifts-slider__slide-bonus">{{ order_gift.points }} Points</div>\n                <div data-ng-click="getGift(order_gift);" class="sp_common-btn">Purchase Gift</div>\n            </div>\n\n            <div class="sp_common-popup-body" data-ng-show="order_gift && order_page == \'2\'">\n                <div class="sp_history-popup__title">\n                    Please make sure that your gift is in stock and ready for picking up by giving a call to one of our\n                    locations<br> (<a href="http://www.showgrow.com/stores"\n                                      class="sp_widget sp_info-counter__hist" target="_blank">check full locations list here</a>).\n\n                </div>\n                <div class="sp_gifts-slider__slide-img"\n                     style="background-image: url(\'{{ order_gift.thumbs.url_250x250 }}\');"></div>\n                <div class="sp_gifts-slider__slide-name" data-ng-bind="order_gift.name"></div>\n                <div class="sp_gifts-slider__slide-desc" data-ng-bind="order_gift.descr"></div>\n                <div class="sp_gifts-slider__slide-desc">Your coupon number is <span class=" sp_bold" ng-bind="coupon_number"></span></div>\n                <div class="sp_gifts-slider__slide-bonus">{{ order_gift.points }} Points</div>\n                <div class="sp_common-btn js-close-popup">OK</div>\n            </div>\n\n        </div>',
         scope: true,
         link: function (scope, el) {
           scope.gifts = api.data('gifts.list');
           scope.user = api.data('user.info');
           scope.hidden = true;
+
+          scope.program_v = api.user.program
 
           function initGifts(time) {
             $timeout(function () {
@@ -2278,15 +2368,14 @@ angular.module("ivpusic.cookie",["ipCookie"]),angular.module("ipCookie",["ng"]).
 
           initGifts(2000);
 
-          scope.getGift = function (gift) {
-            var g = angular.copy(gift);
-            if (scope.user().user_points.confirmed < g.points) {
+          scope.openGift = function (gift) {
+            if (scope.user().user_points.confirmed < gift.points) {
               return;
             }
+            scope.order_page = 1
+            var g = angular.copy(gift);
             scope.order_gift = g;
-            scope.coupon_number = ''
-            api.user.tags.add(['Trig Received a gift']).then(function(){
-              $('.js-gift-popup').bPopup({
+            $('.js-gift-popup').bPopup({
                 speed: 450,
                 transition: 'fadeIn',
                 closeClass: 'js-close-popup',
@@ -2297,9 +2386,20 @@ angular.module("ivpusic.cookie",["ipCookie"]),angular.module("ipCookie",["ng"]).
                 modalColor: '#000000',
                 opacity: 0.5
               });
+          }
+
+          scope.getGift = function (gift) {
+
+            if (scope.user().user_points.confirmed < gift.points) {
+              return;
+            }
+            
+            scope.coupon_number = ''
+            api.user.tags.add(['Trig Received a gift']).then(function(){
+              scope.order_page = 2
             });
             
-            sp.send('gifts.purchase', {gift: g});
+            sp.send('gifts.purchase', {gift: gift});
           };
 
           sp.on('gifts.purchase.success', function (res) {
@@ -2485,37 +2585,44 @@ angular.module("ivpusic.cookie",["ipCookie"]),angular.module("ipCookie",["ng"]).
 
   angular.module('sg.directives.status', [])
 
-    .directive('statusD', ["api", function (api) {
+    .directive('statusD', ["api", "$timeout", function (api, $timeout) {
       return {
         restrict: 'E',
         replace: false,
-        template: "\n    <section class=\"sp_l-centered sp_status-descr\">\n        <div class=\"sp_status-descr__row\">\n            <div class=\"sp_status-descr__col\">\n                <div class=\"sp_status-descr-cell js-status-tabs-tr\" data-tab=\"1\">\n                    <span class=\"sp_status-descr-cell__bridge\"></span>\n\n                    <div class=\"sp_status-descr-cell__head\">ShowGrow Green Member</div>\n                    <ul class=\"sp_status-descr-cell__list\">\n                        <li ng-bind=\"green_spend\">$1 spent = 1 Showpoint</li>\n                    </ul>\n                    Click to see all benefits…\n                </div>\n            </div>\n            <!-- /col -->\n            <div class=\"sp_status-descr__col\">\n                <div class=\"sp_status-descr-cell js-status-tabs-tr\" data-tab=\"2\">\n                    <span class=\"sp_status-descr-cell__bridge\"></span>\n\n                    <div class=\"sp_status-descr-cell__head\">ShowGrow Gold Member</div>\n                    <ul class=\"sp_status-descr-cell__list\">\n                        <li>All Green Member benefits</li>\n                        <li ng-bind=\"gold_spend\">$1 spent = 2 Points</li>\n                        <li>Birthday treat </li>\n                    </ul>\n                    Click to see all benefits…\n                </div>\n            </div>\n            <!-- /col -->\n            <div class=\"sp_status-descr__col\">\n                <div class=\"sp_status-descr-cell js-status-tabs-tr\" data-tab=\"3\">\n                    <span class=\"sp_status-descr-cell__bridge\"></span>\n                    <div class=\"sp_status-descr-cell__head\">ShowGrow Platinum Member</div>\n                    <ul class=\"sp_status-descr-cell__list\">\n                        <li>All Gold Member benefits</li>\n                        <li ng-bind=\"platinum_spend\">$1 spent = 3 Points</li>\n                        <li>10% off all purchases</li>\n                    </ul>\n                    Click to see all benefits…\n\n                </div>\n            </div>\n            <!-- /col -->\n            <div class=\"sp_status-descr__col\">\n                <div class=\"sp_status-descr-cell js-status-tabs-tr\" data-tab=\"4\">\n                    <span class=\"sp_status-descr-cell__bridge\"></span>\n                    <div class=\"sp_status-descr-cell__head\">ShowGrow Ambassador:</div>\n                    <ul class=\"sp_status-descr-cell__list\">\n                        <li>All Platinum Member benefits</li>\n                        <li ng-if=\"ambassador_spend\" ng-bind=\"ambassador_spend\">$1 spent = 3 Points</li><li>Your personal consultant!</li>\n                    </ul>\n                    Click to learn more…\n                </div>\n            </div>\n            <!-- /col -->\n        </div>\n        <!-- /row -->\n\n        <div class=\"js-tabs-anchor\"></div>\n\n        <div class=\"sp_status-descr-tabs js-status-tabs js-tab-1\" style=\"display: none;\">\n            <div class=\"sp_status-descr-tabs__row\">\n                <div class=\"sp_status-descr-tabs__col\">\n                    Our Green level is anything but basic. Green members earn, redeem and enjoy exclusive benefits at our ShowGrow locations around the world. Start your complimentary membership today.\n                </div>\n                <div class=\"sp_status-descr-tabs__col\">\n                    <ul class=\"sp_status-descr-tabs__list\">\n                        <li>Earn 1 ShowPoint for every U.S. dollar spent</li>\n                        <li>Free gift with purchase at sign up</li>\n                        <li>Complimentary vendor samplings</li>\n                    </ul>\n                </div>\n                \n                <div class=\"sp_status-descr-tabs__col\">\n                    <ul class=\"sp_status-descr-tabs__list\">\n                        <li>Custom offers on items you enjoy, sent directly to your email</li>\n                        <li>Early access to new products</li>\n                        <li>Rewards you can count on — your Points never expire as long as you show account activity once a year</li>\n                        <li>Spend any amount, don’t limit yourself to grams, eighths, or any fixed sizes </li>\n                    </ul>\n                </div>\n            </div>\n        </div>\n        <!-- /sp_status-descr-tabs -->\n\n        <div class=\"sp_status-descr-tabs js-status-tabs js-tab-2\" style=\"display: none;\">\n            <div class=\"sp_status-descr-tabs__row\">\n                <div class=\"sp_status-descr-tabs__col\">\n                    Members enjoy all the exclusive benefits of Gold status after collecting over 500 points worth of purchases in a calendar year. You keep your status for the rest of the year plus the next year.\n                </div>\n\n                <div class=\"sp_status-descr-tabs__col\">\n                    <ul class=\"sp_status-descr-tabs__list\">\n                        <li>Double your rewards - earn 2 Points for every U.S. dollar spent </li>\n                        <li>Birthday treat on us</li>\n                        <li>Complimentary vendor samplings with full products instead of just samples for you!*</li>\n                    </ul>\n                    *Only applicable to certain samplings\n                </div>\n                \n                <div class=\"sp_status-descr-tabs__col\">\n                    <ul class=\"sp_status-descr-tabs__list\">\n                        <li>Custom offers on items you enjoy</li>\n                        <li>Early access to new products </li>\n                        <li>Rewards you can count on — your Points never expire as long as you show account activity once a year</li>\n                    </ul>\n                </div>\n            </div>\n        </div>\n        <!-- /sp_status-descr-tabs -->\n\n        <div class=\"sp_status-descr-tabs js-status-tabs js-tab-3\" style=\"display: none;\">\n            <div class=\"sp_status-descr-tabs__row\">\n                <div class=\"sp_status-descr-tabs__col\">\n                    Members enjoy all the exclusive benefits of Platinum status after collecting over 4000 points worth of purchases in a calendar year. You keep your status for the rest of the year plus the next year.\n                </div>\n\n                <div class=\"sp_status-descr-tabs__col\">\n                    <ul class=\"sp_status-descr-tabs__list\">\n                        <li>Triple your rewards - earn 3 Points for every U.S. dollar spent </li>\n                        <li>10% off all of your purchases</li>\n                        <li>Invites to Exclusive ShowGrow Events</li>\n                        <li>Birthday treat on us</li>\n                        <li>Priority Access – your marked with a Platinum star in our system and you’ll get faster service from our bud tenders who know you are a loyal Platinum Member </li>\n                    </ul>\n                </div>\n                \n                <div class=\"sp_status-descr-tabs__col\">\n                    <ul class=\"sp_status-descr-tabs__list\">\n                        <li>Complimentary vendor samplings with full products instead of just samples for you!*</li>\n                        <li>Custom offers on items you enjoy</li>\n                        <li>Early access to new products </li>\n                        <li>Rewards you can count on — your Points never expire as long as you show account activity once a year</li>\n                        <li>Personalized Platinum Card</li>\n                    </ul>\n                    *Only applicable to certain samplings\n                </div>\n            </div>\n        </div>\n        <!-- /sp_status-descr-tabs -->\n\n        <div class=\"sp_status-descr-tabs js-status-tabs js-tab-4\" style=\"display: none;\">\n            <div class=\"sp_status-descr-tabs__row\">\n                <div class=\"sp_status-descr-tabs__col\">\n                    Members enjoy all the exclusive benefits of Ambassador status after collecting over 20,000 points worth of purchases in a calendar year. You keep your status for the rest of the year plus the next year.\n                </div>\n\n                <div class=\"sp_status-descr-tabs__col\">\n                    <ul class=\"sp_status-descr-tabs__list\">\n                        <li>All the benefits of a Platinum member plus…</li>\n                        <li>Your own ShowGrow Ambassador who you can email, text, or call for any of your cannabis needs or questions. ShowGrow Ambassadors have the knowledge, training and resources to help you with whatever you need — anywhere, anytime.</li>\n                        <li>Personalized service, your ambassador knows what you like and will recommend top products and flower you need to try and even sometimes give you free samples</li>\n                    </ul>\n                </div>\n                \n                <div class=\"sp_status-descr-tabs__col\">\n                    <ul class=\"sp_status-descr-tabs__list\">\n                        <li>Your ambassador will hand pick the best of the best flowers you love and save it for when you visit or even call you if you’d like</li>\n                        <li>Have your order all ready for you before you even show up to the shop</li>\n                        <li>Free delivery to certain locations</li>\n                    </ul>\n                </div>\n            </div>\n        </div>\n        <!-- /sp_status-descr-tabs -->\n    </section>\n",
+        template: "<section class=\"sp_l-centered sp_status-descr\" data-ng-class=\"{v2: program_v == 'V2'}\">\n        <div class=\"sp_status-descr__row\">\n            <div class=\"sp_status-descr__col\" data-ng-repeat=\"item in config\">\n                <div class=\"sp_status-descr-cell js-status-tabs-tr\" data-tab=\"{{$index}}\">\n                    <span class=\"sp_status-descr-cell__bridge\"></span>\n\n                    <div class=\"sp_status-descr-cell__head\" data-ng-bind=\"item.name\"></div>\n                    <span data-ng-bind-html=\"item.description\"></span>\n                    Click to see all benefits…\n                </div>\n            </div>\n        </div>\n        <!-- /row -->\n\n        <div class=\"js-tabs-anchor\"></div>\n\n        <div class=\"sp_status-descr-tabs js-status-tabs\" data-ng-class=\"'js-tab-'+$index\" style=\"display: none;\" data-ng-repeat=\"item in config\">\n            <div class=\"sp_status-descr-tabs__row\">\n                <div class=\"sp_status-descr-tabs__col\" data-ng-repeat=\"col in item.more_description\" data-ng-bind-html=\"col\"></div>\n            </div>\n        </div>\n        <!-- /sp_status-descr-tabs -->\n\n    </section>\n",
         scope: true,
         link: function (scope, el) {
 
+          scope.program_v = api.user.program
+          scope.config = api.config.$MAGIC.data.statuses[api.user.program]
+
           // tabs
-          var tabsTr = $('.js-status-tabs-tr');
-          var tabs = $('.js-status-tabs');
-          var tabsAnchor = $('.js-tabs-anchor');
-          tabsTr.click(function () {
-            var $this = $(this);
-            if (!$this.hasClass('this-active')) {
-              tabsTr.removeClass('this-active');
-              $this.addClass('this-active');
-              tabs.slideUp(300).filter('.js-tab-' + $this.data('tab')).slideDown(300);
-              if (Modernizr.mq('(max-width: 768px)')) {
-                $.scrollTo(tabsAnchor, 1000);
+          $timeout(function(){
+            var tabsTr = $('.js-status-tabs-tr');
+            var tabs = $('.js-status-tabs');
+            var tabsAnchor = $('.js-tabs-anchor');
+            tabsTr.click(function () {
+              var $this = $(this);
+              if (!$this.hasClass('this-active')) {
+                tabsTr.removeClass('this-active');
+                $this.addClass('this-active');
+                tabs.slideUp(300).filter('.js-tab-' + $this.data('tab')).slideDown(300);
+                if (Modernizr.mq('(max-width: 768px)')) {
+                  $.scrollTo(tabsAnchor, 1000);
+                }
               }
-            }
-          });
-          $('body').click(function (e) {
-            e = e || window.event;
-            var target = e.target || e.srcElement;
-            if (!$(target).parents('.js-status-tabs-tr').length && !$(target).filter('.js-status-tabs-tr').length && !$(target).parents('.js-status-tabs').length && !$(target).filter('.js-status-tabs').length) {
-              tabsTr.removeClass('this-active');
-              tabs.slideUp(300);
-            }
-          });
+            });
+            $('body').click(function (e) {
+              e = e || window.event;
+              var target = e.target || e.srcElement;
+              if (!$(target).parents('.js-status-tabs-tr').length && !$(target).filter('.js-status-tabs-tr').length && !$(target).parents('.js-status-tabs').length && !$(target).filter('.js-status-tabs').length) {
+                tabsTr.removeClass('this-active');
+                tabs.slideUp(300);
+              }
+            });
+
+          }, 1000)
+
 
           scope.green_spend = '$1 spent = 1 Showpoint';
           scope.gold_spend = '$1 spent = 2 Points';
@@ -2670,6 +2777,18 @@ angular.module("ivpusic.cookie",["ipCookie"]),angular.module("ipCookie",["ng"]).
           sp.send('load.actions.list');
         });
       };
+
+      self.config = void 0;
+
+      self.magic_config = function () {
+        return $q(function (resolve, reject) {
+          sp.on('magic.config.success', function (res) {
+            self.config = res.config.config
+            resolve(res)
+          })
+          sp.send('magic.config', window.MAGIC_CONFIG);
+        })
+      }
 
       self.actions.custom = function () {
         return $q(function (resolve, reject) {

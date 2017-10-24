@@ -24,12 +24,16 @@
               scope.show_auth = false;
             }
 
-            api.user.tags.exist({tags: ['Program v2']}).then(function (res) {
-              api.user.program = 'V1'              
-              if (res.tags[0].exist) {
-                api.user.program = 'V2'
-              }
-            })            
+            if(window.ONLY_V2) {
+              api.user.program = 'V2'
+            } else {
+              api.user.tags.exist({tags: ['Program v2']}).then(function (res) {
+                api.user.program = 'V1'              
+                if (res.tags[0].exist) {
+                  api.user.program = 'V2'
+                }
+              })
+            }
 
 
             if(!ipCookie(login_cookie)) {
@@ -39,11 +43,13 @@
 
             auth = true;
             api.user.info().then(function () {
-              api.badges.list().then(function () {
-                api.user.history().then(function () {
-                  api.actions.list().then(function () {
-                    api.gifts.list().then(function () {
-                      api.auth = true;
+              api.magic_config().then(function () {
+                api.badges.list().then(function () {
+                  api.user.history().then(function () {
+                    api.actions.list().then(function () {
+                      api.gifts.list().then(function () {
+                        api.auth = true;
+                      });
                     });
                   });
                 });
