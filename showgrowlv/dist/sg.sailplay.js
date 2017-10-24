@@ -2246,34 +2246,7 @@ angular.module("ivpusic.cookie",["ipCookie"]),angular.module("ipCookie",["ng"]).
       return {
         restrict: 'E',
         replace: false,
-        template: `<section data-ng-class="{v2: program_v == 'V2'}" class=\"sp_l-centered sp_badges-sec\" data-ng-show=\"badges && badges.length\">
-            <div class=\"sp_common-sec-head\">Badges</div>
-            <div class=\"sp_badges-sec__row\" data-ng-show="program_v != 'V0'">
-                
-
-                <div class="sp_gifts-slider js-badges-slider">
-
-                  <div data-ng-repeat=\"item in badges\">
-                      <div class=\"sp_badges-cell\">
-                          <div class=\"sp_badges-cell__img\"><img data-ng-src=\"{{ item.thumbs.url_250x250 }}\" alt=\"\"></div>
-                          <div class=\"sp_badges-cell__name\" data-ng-bind=\"item.name\"></div>
-                      </div>
-
-                  </div>
-                </div>
-              
-            </div>
-            <div class=\"sp_badges-sec__row\" data-ng-show="program_v == 'V0'">
-                
-                <div class=\"sp_badges-sec__col\" data-ng-repeat=\"item in badges\">
-                    <div class=\"sp_badges-cell\">
-                        <div class=\"sp_badges-cell__img\"><img data-ng-src=\"{{ item.thumbs.url_250x250 }}\" alt=\"\"></div>
-                        <div class=\"sp_badges-cell__name\" data-ng-bind=\"item.name\"></div>
-                    </div>
-                </div>
-              
-            </div>
-        </section>`,
+        template: '<section data-ng-class="{v2: program_v == \'V2\'}" class=\"sp_l-centered sp_badges-sec\" data-ng-show=\"badges && badges.length\">\n            <div class=\"sp_common-sec-head\">Badges</div>\n            <div class=\"sp_badges-sec__row\" data-ng-show="program_v != \'V0\'">\n                \n\n                <div class="sp_gifts-slider js-badges-slider">\n\n                  <div data-ng-repeat=\"item in badges\">\n                      <div class=\"sp_badges-cell\">\n                          <div class=\"sp_badges-cell__img\"><img data-ng-src=\"{{ item.thumbs.url_250x250 }}\" alt=\"\"></div>\n                          <div class=\"sp_badges-cell__name\" data-ng-bind=\"item.name\"></div>\n                      </div>\n\n                  </div>\n                </div>\n              \n            </div>\n            <div class=\"sp_badges-sec__row\" data-ng-show="program_v == \'V0\'">\n                \n                <div class=\"sp_badges-sec__col\" data-ng-repeat=\"item in badges\">\n                    <div class=\"sp_badges-cell\">\n                        <div class=\"sp_badges-cell__img\"><img data-ng-src=\"{{ item.thumbs.url_250x250 }}\" alt=\"\"></div>\n                        <div class=\"sp_badges-cell__name\" data-ng-bind=\"item.name\"></div>\n                    </div>\n                </div>\n              \n            </div>\n        </section>',
         scope: true,
         link: function (scope, el) {
           scope.badges = api.data('badges.list')() && api.data('badges.list')().one_level_badges.filter(function (item) {
