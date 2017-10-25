@@ -25,6 +25,15 @@ module.exports = {
     }
   },
 
+  output: {
+      libraryTarget: "var",
+      library: "Foo"
+  },
+
+  externals: {
+    "jquery": "jQuery"
+  },
+
   module: {
     rules: [
       {
@@ -48,6 +57,14 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|svg|otf|woff|woff2|ttf|eot|ico)$/,
         loader: 'url-loader'
+      },
+      {
+        test: /\.css$/,
+        use: [{
+          loader: "style-loader"
+        }, {
+          loader: "css-loader"
+        }]
       },
       {
         test: /\.styl$/,
@@ -75,6 +92,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'pj',
       template: 'src/index.pug'
+    })
+    ,
+
+    new webpack.ProvidePlugin({
+      "$":"jquery",
+      "jQuery":"jquery",
+      "window.jQuery":"jquery"
     })
   ]
 };

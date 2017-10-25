@@ -64,8 +64,9 @@ form.form(data-bind="visible: !congrat()")
                         svg(viewBox="0 0 1000 1000")
                             path(fill="#898989" transform="rotate(90 500 500)" d="M767.9,499.9L291.6,10l-59.4,61.3l416.6,428.7L232.1,928.7l59.5,61.3L767.9,499.9z")
  
-                input(data-bind="value: field.value, visible: ['sex', 'birthday', 'sign_up_date'].indexOf(field.type) < 0")  
-
+                input(data-bind="value: field.value, valueUpdate:'blur', visible: ['sex', 'birthday', 'sign_up_date'].indexOf(field.type) < 0, attr: {'data-type': field.type}")
+                
+                
     .form_row(data-bind="visible: check_email_opt_out_visible() || check_sms_opt_out_visible()")
         .form_group.full
             label(data-bind="text: opt_out_description")

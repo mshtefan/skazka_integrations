@@ -4,7 +4,10 @@ import {
 } from '@lib/core.js'
 import ko from 'knockout';
 import 'knockout.validation';
-require('@lib/styles/helpers.styl')
+import $ from 'jquery';
+require('@lib/styles/helpers.styl');
+require('@lib/jquery-ui.min.js');
+require('@lib/jquery-ui.min.css');
 
 import mainTemplate from './main.pug';
 require('./assets/styles/style.styl')
@@ -179,6 +182,27 @@ window.SAILPLAY = function (opts) {
                 }, data_to_update))
             }
 
+            function updateTagsArray(){
+                var tagsArray = []
+                $.each(data, (k,v)=>{
+                    ['mainFields', 'secondaryFields'].forEach((fieldsGroupName)=>{
+                        pji_subform[fieldsGroupName]().forEach((fieldsGroup)=>{
+                            fieldsGroup.forEach(function(field){
+                                if(field.autocomplete && (field.name.toLowerCase()==k.toLowerCase())){
+                                    field.autocomplete.forEach((entry)=>{
+                                        if(v && (entry.name.toLowerCase() == v.toLowerCase()) && entry.tag){
+                                            tagsArray.push(entry.tag)
+                                        }
+                                    })
+                                }
+                            })
+                        })
+                    })
+                })
+                return tagsArray
+
+            }
+
             function nextStep() {
                 if ((sp.specificConfig.settings.steps || 1) > self.step()) {
                     self.step(self.step() + 1);
@@ -250,6 +274,17 @@ window.SAILPLAY = function (opts) {
                     phone: ''
                 })
                 .then(updateVars(0))
+                .then(()=>{
+                    var tagsArray = updateTagsArray()
+                    if(tagsArray.length){
+                        sp.addTags(tagsArray, {
+                            auth_hash: '',
+                            email: this.email(),
+                            phone: ''
+                        })                        
+                    }
+
+                })
                 .then(nextStep)
 
             this.in_progress(false);
@@ -349,6 +384,10 @@ window.SAILPLAY = function (opts) {
                     type: field.type
                 }
 
+                if(field.autocomplete){
+                    el.autocomplete = field.autocomplete
+                }
+
                 if (field.required) el.value.extend({
                     required: true
                 })
@@ -400,9 +439,26 @@ window.SAILPLAY = function (opts) {
                 })
 
                 tempArr.push(el)
+
             }
 
             pji_subform[fieldSet.inCode].push(tempArr)
+
+
+
+            pji_subform[fieldSet.inCode]().forEach(function(fieldArray){
+                fieldArray.forEach(function(field){
+                    if(field.autocomplete){
+                        
+                        var autocomplete = field.autocomplete.map(function(x){return x.name})
+                        
+                        $('[data-type=' + field.type + ']').autocomplete({
+                            source: autocomplete
+                        });
+                    }
+                })
+            })
+
         }
 
         document.querySelector('sailplay-magic').style.display = 'block';
