@@ -182,10 +182,10 @@ window.SAILPLAY = function (opts) {
                 }, data_to_update))
             }
 
-            function updateTagsArray(){
+            function updateTagsArray(fieldGroupsArray){
                 var tagsArray = []
                 $.each(data, (k,v)=>{
-                    ['mainFields', 'secondaryFields'].forEach((fieldsGroupName)=>{
+                    fieldGroupsArray.forEach((fieldsGroupName)=>{
                         pji_subform[fieldsGroupName]().forEach((fieldsGroup)=>{
                             fieldsGroup.forEach(function(field){
                                 if(field.autocomplete && (field.name.toLowerCase()==k.toLowerCase())){
@@ -203,6 +203,17 @@ window.SAILPLAY = function (opts) {
 
             }
 
+            function updateTags(fieldGroupsArray){
+                var tagsArray = updateTagsArray(fieldGroupsArray)
+                if(tagsArray.length){
+                    sp.addTags(tagsArray, {
+                        auth_hash: '',
+                        email: this.email(),
+                        phone: ''
+                    })
+                }
+            }
+
             function nextStep() {
                 if ((sp.specificConfig.settings.steps || 1) > self.step()) {
                     self.step(self.step() + 1);
@@ -216,7 +227,7 @@ window.SAILPLAY = function (opts) {
 
             if (sp.specificConfig.settings.reg_on_last_step && sp.specificConfig.settings.steps == 2) {
                 if (this.last_step()) {
-                    let tags = ['Marketing Opt-In']
+                    let tags = ['Marketing Opt-In'].concat(updateTagsArray(['mainFields', 'secondaryFields']))
                     if (!this.sms_opt()) tags.push('SMS Opt-Out');
                     data = $.extend(true, {}, this.previous_data, data)
                     sp.addTags(tags, {
@@ -247,7 +258,7 @@ window.SAILPLAY = function (opts) {
             }
 
             if (this.step() == 1) {
-                let tags = ['Marketing Opt-In', 'Subscription form not finished']
+                let tags = ['Marketing Opt-In', 'Subscription form not finished'].concat(updateTagsArray(['mainFields']))
                 if (!this.sms_opt()) tags.push('SMS Opt-Out');
                 sp.addTags(tags, {
                         auth_hash: '',
@@ -274,17 +285,7 @@ window.SAILPLAY = function (opts) {
                     phone: ''
                 })
                 .then(updateVars(0))
-                .then(()=>{
-                    var tagsArray = updateTagsArray()
-                    if(tagsArray.length){
-                        sp.addTags(tagsArray, {
-                            auth_hash: '',
-                            email: this.email(),
-                            phone: ''
-                        })                        
-                    }
-
-                })
+                .then(updateTags(['secondaryFields']))
                 .then(nextStep)
 
             this.in_progress(false);
