@@ -454,7 +454,17 @@ window.SAILPLAY = function (opts) {
                         var autocomplete = field.autocomplete.map(function(x){return x.name})
                         
                         $('[data-type=' + field.type + ']').autocomplete({
-                            source: autocomplete
+                            source: (request, response)=>{
+                                var res = autocomplete.filter(x=>x.toLowerCase().includes(request.term.toLowerCase()))
+                                if(res.length){
+                                    response(res)
+                                } else {
+                                    response([{
+                                        label: sp.specificConfig.settings.texts.autocomplete_no_results_text || "No suggestions",
+                                        value: request.term
+                                    }])
+                                }
+                            }
                         });
                     }
                 })
