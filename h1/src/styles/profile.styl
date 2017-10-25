@@ -1,0 +1,90 @@
+.profile {
+    width: 100%;
+    height: vw(330px);
+    background: linear-gradient(left, dark-red, light-red);
+    position: relative;
+    overflow: hidden;
+    border-radius: top 10px;
+
+    &:after {
+        content: '';
+        height: vw(190px);
+        width: 50%;
+        position: absolute;
+        right: -5%;
+        bottom: -15%;
+        box-shadow: -20px 0px 100px -23px rgba(0, 0, 0, 0.31);
+        transform: rotateZ(-45deg);
+        transform-origin: left;
+        // for ie
+        clip: rect(vw(-25px), 0, vw(195px), vw(-100px));
+    }
+
+    &__name {
+        font-size: vw(77px);
+        font-weight: 700;
+        color: white;
+        relative: top 50%;
+        margin-left: vw(80px);
+        float: left;
+    }
+
+    &__title {
+        margin-right: vw(80px);
+        background-image: url('~assets/keyhole.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: vw(82px);
+        relative: top 50%;
+        float: right;
+        padding-left: vw(105px);
+        color: white;
+
+        div:nth-child(1) {
+            font-size: vw(24px);
+            line-height: 0.9em;
+        }
+
+        div:nth-child(2) {
+            font-size: vw(92px);
+            line-height: 0.6em;
+            margin-left: vw(-6px);
+        }
+    }
+
+    &__info {
+        border-style: solid;
+        border-width: 1px;
+        border-color: transparent #cecac9 #cecac9 #cecac9;
+        background: default;
+        border-radius: bottom 10px;
+        clearfix();
+
+        .points {
+            margin-left: vw(82px);
+            float: left;
+            color: #666;
+            padding: vw(24px) 0;
+
+            .value {
+                font-size: vw(77px);
+            }
+
+            .text {
+                font-size: vw(33px);
+                vertical-align: super;
+                margin-left: vw(32px);
+                font-weight: 700;
+            }
+        }
+
+        .details {
+            float: right;
+            font-size: vw(32px);
+            font-weight: 700;
+            color: link;
+            line-height: 4.4em;
+            margin-right: vw(82px);
+        }
+    }
+}
