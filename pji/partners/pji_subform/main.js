@@ -387,6 +387,11 @@ window.SAILPLAY = function (opts) {
 
                 if(field.autocomplete){
                     el.autocomplete = field.autocomplete
+                    if(field.autocomplete_required){
+                        el.value.extend({
+                            autocompleteRequired: field.autocomplete.map(x=>x.name)
+                        })
+                    }
                 }
 
                 if (field.required) el.value.extend({
@@ -450,9 +455,7 @@ window.SAILPLAY = function (opts) {
             pji_subform[fieldSet.inCode]().forEach(function(fieldArray){
                 fieldArray.forEach(function(field){
                     if(field.autocomplete){
-                        
                         var autocomplete = field.autocomplete.map(function(x){return x.name})
-                        
                         $('[data-type=' + field.type + ']').autocomplete({
                             source: (request, response)=>{
                                 var res = autocomplete.filter(x=>x.toLowerCase().includes(request.term.toLowerCase()))
@@ -480,8 +483,15 @@ window.SAILPLAY = function (opts) {
         sp.getConfigByName(opts.config || 'pjsubform')
             .then(data => {
 
-                ko.validation.rules.pattern.message = 'Invavid format. Please check the spelling';
+                ko.validation.rules.pattern.message = 'Invalid format. Please check the spelling';
                 ko.validation.rules.required.message = 'Field is required. Please enter something';
+                ko.validation.rules['autocompleteRequired'] = {
+                    validator: function(val, autocompleteArray){
+                        return autocompleteArray.some((entry)=>val && (entry.toLowerCase()==val.toLowerCase()))
+                    },
+                    message: data.config.config.settings.texts.autocomplete_required_error || "Incorrect value"
+                };
+                ko.validation.registerExtenders();
 
                 sp.specificConfig = data.config.config;
                 pji_subform = new PJI_Subform();
