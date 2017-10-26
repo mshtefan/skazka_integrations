@@ -1,6 +1,6 @@
 @import 'nib';
 @import 'jeet';
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,600,700');
 
 page-width = 2040px;
 light-red = #d93440;
@@ -13,11 +13,16 @@ vw(size) {
     unit(size / page-width * 100, 'vw');
 }
 
+.no-scroll {
+    overflow: hidden;
+}
+
 default-block() {
     border-radius: 10px;
     border: 1px solid border;
     background-position: center;
     background-size: cover;
+    background-color: default;
     padding: vw(80px);
     margin-bottom: vw(64px);
 }
@@ -56,9 +61,19 @@ sailplay-magic {
     padding: vw(20px) vw(35px);
     display: inline-block;
     text-decoration: none;
+    border: none;
+    outline: none;
+    cursor pointer;
+
+    &:hover {
+        opacity: .8
+    }
 }
 
+@import 'base';
 @import './profile';
 @import './status';
 @import './questions';
 @import './banner';
+@import './history';
+@import './dialog';

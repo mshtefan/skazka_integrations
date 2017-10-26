@@ -1,0 +1,99 @@
+.history {
+    default-block();
+
+    &__title {
+        title();
+    }
+
+    &__pager {
+        clearfix();
+        text();
+        margin-bottom: vw(32px);
+
+        &-pos {
+            float: left;
+        }
+
+        &-controls {
+            float: right;
+        }
+
+        &-to-left, &-to-right {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            margin-top: vw(9px);
+            cursor: pointer;
+            &:hover {
+                opacity: .8;
+            }
+        }
+
+        &-to-left {
+            float: left;
+            margin-right: vw(18px);
+            border-width: vw(10px) vw(17.3px) vw(10px) 0;
+            border-color: transparent #666 transparent transparent;
+        }
+
+        &-to-right {
+            float: right;
+            margin-left: vw(18px);
+            border-width: vw(10px) 0 vw(10px) vw(17.3px);
+            border-color: transparent transparent transparent #666;
+        }
+
+        &-page {
+            display: inline-block;
+
+            &.active a {
+                color: light-red;
+                font-weight: 700;
+            }
+
+            a {
+                text();
+                font-weight: 400;
+                text-decoration: none;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+
+    &__table {
+        background: white;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: vw(40px) 0;
+        border-bottom: 1px solid border;
+        font-size: vw(32px);
+
+        &:last-of-type {
+            border: none;
+        }
+
+        &-date {
+            text();
+        }
+
+        &-name {
+            color: link;
+        }
+
+        &-price {
+            text();
+        }
+
+        &-points {
+            font-weight: 700;
+            color: light-red;
+        }
+    }
+}

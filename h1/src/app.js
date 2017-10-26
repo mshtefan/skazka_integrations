@@ -1,5 +1,8 @@
 import './styles/app.styl';
 import ko from 'knockout';
+import jQuery from 'jquery';
+jQuery.noConflict();
+
 window.ko = ko;
 
 class MainView {
@@ -11,8 +14,10 @@ class MainView {
 for (let component of [
     'profile',
     'status',
+    'status-bar',
     'questions',
-    'banner'
+    'banner',
+    'history'
 ]) {
     ko.components.register(`sailplay-${component}`, require(`./components/${component}`))
 }

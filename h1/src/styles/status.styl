@@ -20,3 +20,65 @@
         margin-top: vw(35px);
     }
 }
+
+.status-bar {
+    default-block();
+
+    &__title {
+        title();
+    }
+
+    &__text {
+        text();
+    }
+
+    &__collected {
+        font-size: vw(32px);
+        color: light-red;
+        font-weight: 700;
+
+        .value {
+            font-size: vw(77px);
+            font-weight: 400;
+        }
+    }
+
+    &__line {
+        margin-top: vw(32px);
+        border-radius: 5px;
+        border: 1px solid border;
+        background-color: white;        
+        height: vw(32px);
+    }
+
+    &__hint {
+        width: 80%;
+        margin-top: vw(64px);
+        padding: vw(30px) vw(38px);
+        background: white;
+        border-radius: 10px;
+        border: 1px solid border;
+        position: relative;
+
+        &:before {
+            content: '';
+            size(vw(30px), vw(15px));
+            background-image: url('~assets/triangle.svg');
+            background-size: contain;
+            display: block;
+            absolute: bottom vw(-15px) left 50%;
+        }
+
+        &.arrow_pos_1:before {
+            left: vw(100px);
+        }
+
+        &.arrow_pos_2:before {
+            left: vw(200px);
+        }
+
+        &.arrow_pos_3:before {
+            left: vw(300px);
+        }
+    }
+}

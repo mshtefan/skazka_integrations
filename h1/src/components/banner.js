@@ -1,6 +1,7 @@
 class BannerView {
     constructor(params) {
-        this.background = ko.observable(params.image)
+        this.background = ko.observable(params.image);
+        this.backgroundColor = ko.observable(params.color);
     }
 
     getBackground() {
@@ -9,7 +10,7 @@ class BannerView {
     }
 
     getBackgroundColor() {
-        return '#f9f9f9'
+        return this.backgroundColor() || '#f9f9f9';
     }
 }
 

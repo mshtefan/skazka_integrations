@@ -16,7 +16,7 @@ module.exports = {
   resolve: {
     alias: {
       '@templates': path.resolve(appPath, 'templates'),
-      'assets': path.resolve(appPath, 'assets'),
+      'assets': path.resolve(appPath, 'assets')
     }
   },
 
@@ -95,6 +95,10 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: 'index.html'
+    }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
     })
   ]
 };
