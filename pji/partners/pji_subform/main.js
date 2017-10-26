@@ -483,17 +483,20 @@ window.SAILPLAY = function (opts) {
         sp.getConfigByName(opts.config || 'pjsubform')
             .then(data => {
 
-                ko.validation.rules.pattern.message = 'Invalid format. Please check the spelling';
-                ko.validation.rules.required.message = 'Field is required. Please enter something';
+                sp.specificConfig = data.config.config;
+
+                var texts = sp.specificConfig.settings.texts
+
+                ko.validation.rules.pattern.message = texts.form_errors && texts.form_errors.pattern || 'Invalid format. Please check the spelling';
+                ko.validation.rules.required.message = texts.form_errors && texts.form_errors.required || 'Field is required. Please enter something';
                 ko.validation.rules['autocompleteRequired'] = {
                     validator: function(val, autocompleteArray){
                         return autocompleteArray.some((entry)=>val && (entry.toLowerCase()==val.toLowerCase()))
                     },
-                    message: data.config.config.settings.texts.autocomplete_required_error || "Incorrect value"
+                    message: texts.form_errors && texts.form_errors.autocomplete_required || "Incorrect value"
                 };
                 ko.validation.registerExtenders();
 
-                sp.specificConfig = data.config.config;
                 pji_subform = new PJI_Subform();
                 pji_subform.errors = ko.validation.group(pji_subform);
                 ko.applyBindings(pji_subform, sailplay_element);
