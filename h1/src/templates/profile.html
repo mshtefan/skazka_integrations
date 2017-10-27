@@ -1,5 +1,5 @@
 <div class="profile">
-    <div class="profile__name">Mila Witjes</div>
+    <div class="profile__name" data-bind="text: user().name"></div>
     <div class="profile__title">
         <div class="brand">hotelsone</div>
         <div class="rewards">rewards</div>
@@ -7,7 +7,7 @@
 </div>
 <div class="profile__info">
     <div class="points">
-        <span class="value">1,286</span>
+        <span class="value" data-bind="text: user_points().confirmed">0</span>
         <span class="text">hotelsone rewards points</span>
     </div>
     <a href="#" class="details" data-bind="click: openProfile">Member details</a>

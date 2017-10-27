@@ -1,13 +1,20 @@
 import './styles/app.styl';
 import ko from 'knockout';
+import 'knockout-mapping';
 import jQuery from 'jquery';
 jQuery.noConflict();
 
 window.ko = ko;
+let sp = require('@lib/sp');
+
 
 class MainView {
     constructor(options) {
-        this.auth_hash = options.auth_hash
+        sp.init(options);
+        
+        sp.config.subscribe(() => {
+            sp.getUserInfo();
+        })
     }
 }
 
@@ -22,13 +29,11 @@ for (let component of [
     ko.components.register(`sailplay-${component}`, require(`./components/${component}`))
 }
 
-let auth_hash = 'a04986fc79c818e7aef48ffa2ea351909f7e00b2';
-
 ko.components.register('sailplay-magic', {
     viewModel: {
         createViewModel: () => {
             return new MainView({
-                auth_hash: auth_hash
+                auth_hash: 'a04986fc79c818e7aef48ffa2ea351909f7e00b2'
             })
         }
     },

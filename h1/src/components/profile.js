@@ -1,7 +1,7 @@
 import $ from 'jquery'
+let sp = require('@lib/sp');
 
 $.noConflict();
-window.kk = $
 require('maskedinput');
 
 class ProfileEditor {
@@ -22,7 +22,7 @@ class ProfileEditor {
                 .css('-ms-transform', 'translateY(0)')
                 .css('-o-transform', 'translateY(0)')                
                 .css('transform', 'translateY(0)')
-                
+
             $template.find('.__sailplay-date-input').mask("99 / 99 / 9999",{placeholder:"MM / DD / YYYY"});
         })
     }
@@ -30,7 +30,13 @@ class ProfileEditor {
 
 class ProfileView {
     constructor() {
-        
+        this.user = ko.observable(0);
+        this.user_points = ko.observable(0);
+
+        sp.user.subscribe(data => {
+            this.user(data.user);
+            this.user_points(data.user_points);
+        })
     }
 
     openProfile() {

@@ -15,6 +15,7 @@ module.exports = {
 
   resolve: {
     alias: {
+      '@lib': path.resolve(appPath, '..', 'lib'),
       '@templates': path.resolve(appPath, 'templates'),
       'assets': path.resolve(appPath, 'assets'),
       'maskedinput': path.resolve(appPath, '..', 'node_modules', 'jquery.maskedinput', 'src', 'jquery.maskedinput.js')
