@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@claviska/jquery-dropdown": "^2.0.3",
     "angular": "^1.6.6",
     "angularjs": "^0.0.1",
     "babel": "^6.23.0",

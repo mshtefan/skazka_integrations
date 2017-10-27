@@ -1,5 +1,9 @@
 import $ from 'jquery'
 
+$.noConflict();
+require('@claviska/jquery-dropdown')
+require("@claviska/jquery-dropdown/jquery.dropdown.css")
+
 class ProfileEditor {
     constructor() {
         let template = require('@templates/edit_profile.html');
@@ -9,6 +13,7 @@ class ProfileEditor {
         $('body').addClass('__sailplay-no-scroll');
 
         setTimeout(() => {
+            $template.attr('aria-hidden', false)
             $template.closest('.__sailplay-dialog__shadow').css('opacity', 1);
             $template.find('.__sailplay-dialog')
                 .css('opacity', 1)

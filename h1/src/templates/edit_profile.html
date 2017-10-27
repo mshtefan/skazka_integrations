@@ -35,14 +35,20 @@
                 </div>
                 <div class="form-group half-margin">
                     <input type="text" class="span_2-5" placeholder="Postcode*">
-                    <label for="country">Country
-                        <select name="" id="country">
-                            <option value="1">Russia</option>
-                            <option value="2">Bangladesh</option>
-                        </select>
-                    </label>
+                    <div id="jq-dropdown-1" class="jq-dropdown jq-dropdown-tip">
+                        <ul class="jq-dropdown-menu">
+                            <li><a href="#1">Item 1</a></li>
+                            <li><a href="#2">Item 2</a></li>
+                            <li><a href="#3">Item 3</a></li>
+                            <li class="jq-dropdown-divider"></li>
+                            <li><a href="#4">Item 4</a></li>
+                            <li><a href="#5">Item 5</a></li>
+                            <li><a href="#5">Item 6</a></li>
+                        </ul>
+                    </div>
+                    <a href="#" data-jq-dropdown="#jq-dropdown-1">dropdown</a>                    
                 </div>
-                <button type="submit" class="btn">Save</button>
+                <button type="submit" class="btn">Update profile</button>
             </form>
         </div>
     </div>

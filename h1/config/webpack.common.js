@@ -22,6 +22,10 @@ module.exports = {
 
   module: {
     rules: [{
+      test: /[\/\\]node_modules[\/\\]@claviska[\/\\]jquery-dropdown[\/\\]index\.js$/,
+      loader: "import-loader?this=>window"
+    },
+      {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
@@ -58,7 +62,7 @@ module.exports = {
       {
         test: /\.styl$/,
         use: [{
-          loader: "style-loader"
+          loader: "style-loader?paths=node_modules/@claviska/jquery-dropdown/"
         }, {
           loader: "css-loader"
         }, {
