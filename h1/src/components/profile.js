@@ -1,8 +1,8 @@
 import $ from 'jquery'
 
 $.noConflict();
-require('@claviska/jquery-dropdown')
-require("@claviska/jquery-dropdown/jquery.dropdown.css")
+window.kk = $
+require('maskedinput');
 
 class ProfileEditor {
     constructor() {
@@ -22,6 +22,8 @@ class ProfileEditor {
                 .css('-ms-transform', 'translateY(0)')
                 .css('-o-transform', 'translateY(0)')                
                 .css('transform', 'translateY(0)')
+                
+            $template.find('.__sailplay-date-input').mask("99 / 99 / 9999",{placeholder:"MM / DD / YYYY"});
         })
     }
 }

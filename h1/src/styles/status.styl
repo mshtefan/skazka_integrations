@@ -48,7 +48,41 @@
         border-radius: 5px;
         border: 1px solid border;
         background-color: white;        
-        height: vw(32px);
+        height: vw(40px);
+        width: auto;
+        display: inline-block;
+        overflow: hidden;
+    }
+
+    &__night {
+        background-image: url('~assets/circle.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        float: left;
+        size(vw(40px));
+
+        &.collected-night {
+            background-color: light-red;
+            background-image: none;
+            &.receive-status {
+                background-image: url('~assets/circle-white.svg');                
+            }
+        }
+
+        &.collected-last {
+            border-radius: right 10px;
+        }
+
+        &.receive-status {
+            margin-top: vw(-2px);
+            size(vw(45px));
+            background-size: cover;
+
+            &:last-of-type {
+                background-image: url('~assets/circle-gold.svg');                
+            }
+        }
     }
 
     &__hint {
@@ -70,7 +104,7 @@
         }
 
         &.arrow_pos_1:before {
-            left: vw(100px);
+            left: vw(167px);
         }
 
         &.arrow_pos_2:before {

@@ -16,15 +16,16 @@ module.exports = {
   resolve: {
     alias: {
       '@templates': path.resolve(appPath, 'templates'),
-      'assets': path.resolve(appPath, 'assets')
+      'assets': path.resolve(appPath, 'assets'),
+      'maskedinput': path.resolve(appPath, '..', 'node_modules', 'jquery.maskedinput', 'src', 'jquery.maskedinput.js')
     }
   },
 
   module: {
     rules: [{
-      test: /[\/\\]node_modules[\/\\]@claviska[\/\\]jquery-dropdown[\/\\]index\.js$/,
-      loader: "import-loader?this=>window"
-    },
+        test: /[\/\\]node_modules[\/\\]jquery\.maskedinput[\/\\]src[\/\\]jquery\.maskedinput\.js$/,
+        loader: "imports-loader?define=>false&this=>window"
+      },
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
@@ -62,7 +63,7 @@ module.exports = {
       {
         test: /\.styl$/,
         use: [{
-          loader: "style-loader?paths=node_modules/@claviska/jquery-dropdown/"
+          loader: "style-loader"
         }, {
           loader: "css-loader"
         }, {

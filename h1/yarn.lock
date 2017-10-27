@@ -2,10 +2,6 @@
 # yarn lockfile v1
 
 
-"@claviska/jquery-dropdown@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@claviska/jquery-dropdown/-/jquery-dropdown-2.0.3.tgz#42b0e9322a644116451c7bfe803226a059843207"
-
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -2520,6 +2516,10 @@ isstream@~0.1.2:
 jeet@^7.2.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/jeet/-/jeet-7.2.0.tgz#2aa562a2dc1d74cc99527113f16a821e974e30ee"
+
+jquery.maskedinput@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/jquery.maskedinput/-/jquery.maskedinput-1.4.1.tgz#3ea8f4cdc4eafce7354c27b66a73d0f44defc327"
 
 jquery@>=1.8.3, jquery@^3.2.1:
   version "3.2.1"
