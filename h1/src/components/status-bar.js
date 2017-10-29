@@ -1,6 +1,20 @@
+let sp = require('@lib/sp');
+
 class StatusBarView {
     constructor() {
-        this.collected = 5;
+        this.user = ko.observable();
+        sp.user.subscribe(data => {
+            this.user(data.user);
+        })
+
+        this.since = ko.pureComputed(() => {
+            if (!this.user()) return ''
+
+            let date_split = this.user().register_date().split('-');
+            return `${sp.months[parseInt(date_split[1]) - 1]} ${date_split[2]}, ${date_split[0]}`
+        });
+
+        this.collected = 12;
         this.nights = [
             {index: 1},
             {index: 2},

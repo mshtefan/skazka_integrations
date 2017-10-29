@@ -1,43 +1,51 @@
-<div class="dialog__shadow">
+<div class="dialog__shadow" data-bind="click: close">
     <div class="dialog">
         <div class="dialog__header">Member details</div>
         <div class="dialog__body">
             <form action="" class="dialog__form">
                 <div class="form-group">
                     <label for="email">Email*</label>
-                    <input id="email" type="text" placeholder="Email">
+                    <input id="email" data-bind="value: user.email, css: { '__sailplay-error': !user.email.isValid() }" type="text" placeholder="Email">
                 </div>
                 <div class="form-group">
                     <label for="first_name">Name*</label>
-                    <input id="first_name" class="span_1-2" type="text" placeholder="First Name">
-                    <input id="last_name" class="span_1-2" type="text" placeholder="Last Name">
+                    <input id="first_name" data-bind="value: user.first_name, css: { '__sailplay-error': !user.first_name.isValid() }" class="span_1-2" type="text" placeholder="First Name">
+                    <input id="last_name" data-bind="value: user.last_name, css: { '__sailplay-error': !user.last_name.isValid() }" class="span_1-2" type="text" placeholder="Last Name">
                 </div>
                 <div class="form-group">
                     <label class="span_2-5">
                         <span>Date of birth</span>
-                        <input class="date-input" type="text" placeholder="MM / DD / YYYY">
+                        <input class="date-input" type="text" data-bind="
+                            masked: user.birth_date, 
+                            mask: '99 / 99 / 9999', 
+                            mask_options: { placeholder: 'MM / DD / YYYY' },
+                            css: { '__sailplay-error': !user.birth_date.isValid() }" placeholder="MM / DD / YYYY">
                     </label>
                     <label class="span_3-5">
                         <span>Mobile Phone Number</span>
-                        <input type="text" placeholder="">
+                        <input type="text" data-bind="
+                            masked: user.phone, 
+                            mask: '+1 (999) 9999 999', 
+                            mask_options: { placeholder: '+1 (XXX) XXXX XXX' }" placeholder="+1 (XXX) XXXX XXX">
                     </label>
                 </div>
                 <div class="form-group half-margin">
                     <label for="address_1">Address</label>
-                    <input id="address_1" type="text" placeholder="Address line 1">
+                    <input id="address_1" data-bind="value: address_line_1" type="text" placeholder="Address line 1">
                 </div>
                 <div class="form-group half-margin">
-                    <input type="text" placeholder="Address line 2">
+                    <input type="text" data-bind="value: address_line_2" placeholder="Address line 2">
                 </div>
                 <div class="form-group half-margin">
-                    <input type="text" class="span_2-5" placeholder="State/Province">
-                    <input type="text" class="span_3-5" placeholder="City">
+                    <input type="text" data-bind="value: state" class="span_2-5" placeholder="State/Province">
+                    <input type="text" data-bind="value: city" class="span_3-5" placeholder="City">
                 </div>
                 <div class="form-group half-margin">
-                    <input type="text" class="span_2-5" placeholder="Postcode*">
-                    <input type="text" class="span_3-5" placeholder="Country*">                    
+                    <input type="text" data-bind="value: post_code, css: { '__sailplay-error': post_code.isValid && !post_code.isValid() }" class="span_2-5" placeholder="Postcode*">
+                    <input type="text" data-bind="value: country, css: { '__sailplay-error': country.isValid && !country.isValid() }" class="span_3-5" placeholder="Country*">
                 </div>
-                <button type="submit" class="btn">Update profile</button>
+                <button type="submit" class="btn" data-bind="click: update, css: { '__sailplay-disabled': errors().length }">Update profile</button>&nbsp;
+                <button type="submit" class="btn" data-bind="click: close.bind($data, true)">Close</button>                
             </form>
         </div>
     </div>

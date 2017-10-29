@@ -1,5 +1,8 @@
 <div class="profile">
-    <div class="profile__name" data-bind="text: user().name"></div>
+    <div class="profile__name">
+        <span data-bind="text: user().first_name"></span>
+        <span data-bind="text: user().last_name"></span>
+    </div>
     <div class="profile__title">
         <div class="brand">hotelsone</div>
         <div class="rewards">rewards</div>

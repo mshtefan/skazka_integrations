@@ -1,17 +1,30 @@
 import './styles/app.styl';
 import ko from 'knockout';
-import 'knockout-mapping';
+import 'knockout.validation';
 import jQuery from 'jquery';
 jQuery.noConflict();
 
+ko.mapping = require('knockout.mapping')
 window.ko = ko;
 let sp = require('@lib/sp');
-
 
 class MainView {
     constructor(options) {
         sp.init(options);
-        
+        sp.months = [
+            'January',
+            'Febrary',
+            'March',
+            'April',   
+            'May',         
+            'June',
+            'Jule',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+        ]
         sp.config.subscribe(() => {
             sp.getUserInfo();
         })

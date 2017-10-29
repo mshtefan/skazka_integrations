@@ -2618,7 +2618,21 @@ knockout-mapping@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/knockout-mapping/-/knockout-mapping-2.6.0.tgz#052759d01ecf30d4947e8ebe64ad2c82933f06ff"
 
-knockout@^3.4.2:
+knockout-validation@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/knockout-validation/-/knockout-validation-0.1.1.tgz#219775f9f97b6f9036a3d65717fbda8d7a125552"
+
+knockout.mapping@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/knockout.mapping/-/knockout.mapping-2.4.3.tgz#c9009bf26b2b89b6b7bb7968421d895c563b157b"
+  dependencies:
+    knockout "^3.1.0"
+
+knockout.validation@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/knockout.validation/-/knockout.validation-2.0.3.tgz#899de5232364e1ecd5d946e080f6a26293046329"
+
+knockout@^3.1.0, knockout@^3.4.2:
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/knockout/-/knockout-3.4.2.tgz#e87958de77ad1e936f7ce645bab8b5d7c456d937"
 
@@ -4575,6 +4589,10 @@ uglifyjs-webpack-plugin@^0.4.6:
 uid-number@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
+
+underscore@^1.8.3:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
 
 uniq@^1.0.1:
   version "1.0.1"

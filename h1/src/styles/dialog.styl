@@ -2,6 +2,7 @@
 [aria-hidden="false"] { display: block; }
 
 .dialog {
+    font-family: "Roboto";
     width: vw(900px);
     margin: vw(100px) auto;
     border-radius: 10px;
@@ -9,6 +10,15 @@
     transition: opacity 0.2s, transform 0.2s;
     opacity: 0;
     transform: translateY(-50px);
+
+    .error {
+        border-color: light-red !important;
+    }
+
+    .disabled {
+        opacity: .4;
+        pointer-events: none;
+    }
 
     &__header {
         height: vw(64px);
