@@ -1,6 +1,8 @@
 <div class="dialog__shadow" data-bind="click: close">
     <div class="dialog">
-        <div class="dialog__header">Member details</div>
+        <div class="dialog__header">
+            <a href="#" class="dialog__close" data-bind="click: close.bind($data, true)"></a>
+            Member details</div>
         <div class="dialog__body">
             <form action="" class="dialog__form">
                 <div class="form-group">
@@ -9,8 +11,10 @@
                 </div>
                 <div class="form-group">
                     <label for="first_name">Name*</label>
-                    <input id="first_name" data-bind="value: user.first_name, css: { '__sailplay-error': !user.first_name.isValid() }" class="span_1-2" type="text" placeholder="First Name">
-                    <input id="last_name" data-bind="value: user.last_name, css: { '__sailplay-error': !user.last_name.isValid() }" class="span_1-2" type="text" placeholder="Last Name">
+                    <input id="first_name" data-bind="value: user.first_name, css: { '__sailplay-error': !user.first_name.isValid() }" class="span_1-2"
+                        type="text" placeholder="First Name">
+                    <input id="last_name" data-bind="value: user.last_name, css: { '__sailplay-error': !user.last_name.isValid() }" class="span_1-2"
+                        type="text" placeholder="Last Name">
                 </div>
                 <div class="form-group">
                     <label class="span_2-5">
@@ -41,11 +45,12 @@
                     <input type="text" data-bind="value: city" class="span_3-5" placeholder="City">
                 </div>
                 <div class="form-group half-margin">
-                    <input type="text" data-bind="value: post_code, css: { '__sailplay-error': post_code.isValid && !post_code.isValid() }" class="span_2-5" placeholder="Postcode*">
-                    <input type="text" data-bind="value: country, css: { '__sailplay-error': country.isValid && !country.isValid() }" class="span_3-5" placeholder="Country*">
+                    <input type="text" data-bind="value: post_code, css: { '__sailplay-error': post_code.isValid && !post_code.isValid() }" class="span_2-5"
+                        placeholder="Postcode*">
+                    <input type="text" data-bind="value: country, css: { '__sailplay-error': country.isValid && !country.isValid() }" class="span_3-5"
+                        placeholder="Country*">
                 </div>
                 <button type="submit" class="btn" data-bind="click: update, css: { '__sailplay-disabled': errors().length }">Update profile</button>&nbsp;
-                <button type="submit" class="btn" data-bind="click: close.bind($data, true)">Close</button>                
             </form>
         </div>
     </div>

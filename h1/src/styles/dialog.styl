@@ -34,13 +34,21 @@
         &:after {
             background-image: url('~assets/keyhole.png');
             background-size: contain;
-            background-repeat: no-repeat;
+            background-repeat: no-repeat;100
             content: '';
             margin-right: vw(24px);
             float: left;
             margin-top: vw(-10px);
             size(vw(86px));
         }
+    }
+
+    &__title {
+        title();
+    }
+
+    &__text {
+        text();
     }
 
     &__body {
@@ -55,6 +63,16 @@
         fixed: top left bottom right;
         background: rgba(0, 0, 0, 0.6);
         overflow-y: scroll;
+        z-index: 1000;
+    }
+
+    &__close {
+        background: url("~assets/close.svg") no-repeat center;
+        background-size: contain;
+        size(vw(60px));
+        display: block;
+        absolute: right 5% top 50%;
+        margin-top: vw(-30px)
     }
 
     &__form {
@@ -63,6 +81,10 @@
 
         button {
             margin-top: vw(48px);
+        }
+
+        &.center {
+            text-align: center;
         }
 
         &-side {

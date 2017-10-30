@@ -1,0 +1,20 @@
+<div class="dialog__shadow" data-bind="click: close">
+    <div class="dialog">
+        <div class="dialog__header">
+            <a href="#" class="dialog__close" data-bind="click: close.bind($data, true)"></a>
+            You redeemed a coupon</div>
+        <div class="dialog__body">
+            <div class="dialog__form center">
+                <div class="dialog__title">
+                    <div data-bind="text: coupon.gift_help_text"></div>
+
+                </div>
+                <div class="dialog__text">
+                    <div>Coupon:
+                        <strong data-bind="text: coupon.coupon_number"></strong>.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>

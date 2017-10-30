@@ -1,23 +1,54 @@
 <div class="history">
-    <div class="history__title">4 Nights Collected</div>
+    <!-- ko if: type == 'purchase' -->
+    <div class="history__title">
+        <span data-bind="text: collected"></span> Nights Collected</div>
     <div class="history__pager">
-        <div class="history__pager-pos"> 10 of 100 items</div>
-        <div class="history__pager-controls">
-            <div class="history__pager-to-left"></div>
-            <div class="history__pager-to-right"></div>            
-            <div class="history__pager-page"><a href="#">1</a></div>
-            <div class="history__pager-page active"><a href="#">2</a></div>
-            <div class="history__pager-page"><a href="#">3</a></div>
-            <div class="history__pager-page"><a href="#">4</a></div>
-            <div class="history__pager-page"><a href="#">5</a></div>
-        </div>    
-    </div>
-    <div class="history__table">
-        <div class="history__item">
-            <div class="history__item-date">Sep 15, 2017</div>
-            <div class="history__item-name">Econo Lodge Times Square</div>
-            <div class="history__item-price">$195</div>
-            <div class="history__item-points">195 pts</div>
+        <div class="history__pager-pos">
+            <span data-bind="text: (page() * 10) + listCurrentPage().length "></span> of
+            <span data-bind="text: purchase_history().length"></span> items</div>
+        <div class="history__pager-controls" data-bind="visible: pageCount() > 1">
+            <div class="history__pager-to-left" data-bind="click: prevPage, visible: page() > 0"></div>
+            <div class="history__pager-to-right" data-bind="click: nextPage, visible: page() + 1 < pageCount()"></div>
+            <!-- ko foreach: ko.utils.range(1, pageCount()) -->
+            <div class="history__pager-page" data-bind="
+                css: { '__sailplay-active': $data == $parent.page() + 1 }">
+                <a href="#" data-bind="text: $data, click: $parent.setPage.bind($parent, $data)"></a>
+            </div>
+            <!-- /ko -->
         </div>
     </div>
+    <div class="history__table" data-bind="foreach: listCurrentPage()">
+        <div class="history__item">
+            <div class="history__item-date" data-bind="dateText: action_date"></div>
+            <div class="history__item-name" data-bind="text: order_num">Econo Lodge Times Square</div>
+            <div class="history__item-price">$
+                <span data-bind="text: price"></span>
+            </div>
+            <div class="history__item-points">
+                <span data-bind="text: points_delta"></span> pts</div>
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <!-- ko if: type == 'activity' -->
+    <div class="history__title">Your Memberships Activity</div>
+    <div class="history__table activity">
+        <div class="history__item" data-bind="if: registered">
+            <div class="history__item-indicator red"></div>
+            <div class="history__item-date" data-bind="dateText: registered()"></div>
+            <div class="history__item-text">Thanks for joining <strong>HotelsOne</strong> Rewards</div>
+        </div>
+        <!-- ko foreach: listCurrentPage() -->
+        <div class="history__item">
+            <div class="history__item-indicator"></div>
+            <div class="history__item-date" data-bind="dateText: action_date"></div>
+            <div class="history__item-text" data-bind="html: $parent.getTexts($data)"></div>
+        </div>
+        <!-- /ko -->
+    </div>
+    <div class="history__table activity" data-bind="visible: pageCount() <= limitPerPage() && !allLoaded()">
+        <a href="javascript:void(0)" class="btn gray wide" data-bind="click: loadAll">
+            <i class="icon-arrow"></i> Load all activity</a>
+    </div>
+    <!-- /ko -->
 </div>

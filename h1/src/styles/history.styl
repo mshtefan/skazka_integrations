@@ -24,8 +24,9 @@
             border-style: solid;
             margin-top: vw(9px);
             cursor: pointer;
+
             &:hover {
-                opacity: .8;
+                opacity: 0.8;
             }
         }
 
@@ -65,9 +66,48 @@
 
     &__table {
         background: white;
+
+        &.activity {
+            background: transparent;
+
+            .btn {
+                margin-top: vw(24px);
+            }
+            .history__item {
+                border: none;
+                padding: vw(24px) 0;
+                display: block;
+
+                &-indicator {
+                    float: left;
+                }
+
+                &-date {
+                    float: left;                    
+                    width: 30%;
+                    margin-left: 1em; 
+                }
+
+                &-text {
+                    overflow: ellipsis;
+                }
+            }
+        }
     }
 
     &__item {
+        &:first-of-type {
+            .history__item-indicator:before {
+                content: none;
+            }
+        }
+
+        &:last-of-type {
+            .history__item-indicator:after {
+                content: none;
+            }
+        }
+
         display: flex;
         align-items: center;
         justify-content: space-around;
@@ -79,12 +119,49 @@
             border: none;
         }
 
+        &-indicator {
+            position: relative;
+            size(vw(36px));
+            border: 1px solid border;
+            border-radius: 50%;
+
+            &.red {
+                background: light-red;
+            }
+
+            &.gray {
+                background: #9ba1a8
+            }
+
+            &:after, &:before {
+                background: border;
+            }
+
+            &:after {
+                content: '';
+                size(1px, 140%);
+                absolute: left 50% top 100%;
+            }
+
+            &:before {
+                content: '';
+                size(1px, 100%);
+                absolute: left 50% top -100%;
+            }
+        }
+
+        &-text {
+            text();
+        }
+
         &-date {
             text();
         }
 
         &-name {
             color: link;
+            width: 40%;
+            overflow: ellipsis;
         }
 
         &-price {

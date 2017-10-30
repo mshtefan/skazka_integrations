@@ -10,23 +10,23 @@ let sp = require('@lib/sp');
 
 class MainView {
     constructor(options) {
+        this.config = ko.observable();        
+
         sp.init(options);
-        sp.months = [
-            'January',
-            'Febrary',
-            'March',
-            'April',   
-            'May',         
-            'June',
-            'Jule',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
-        ]
-        sp.config.subscribe(() => {
-            sp.getUserInfo();
+
+        sp.config.subscribe(data => {
+            sp.getUserInfo({
+                user_status: 1
+            }).then(() => {
+                sp.tagsList({
+                    show_calculated_values: 1
+                })
+            });
+
+            this.config(data.partner.loyalty_page_config);
+
+
+            sp.getUserHistory();
         })
     }
 }
@@ -37,7 +37,8 @@ for (let component of [
         'status-bar',
         'questions',
         'banner',
-        'history'
+        'history',
+        'coupons'
     ]) {
     ko.components.register(`sailplay-${component}`, require(`./components/${component}`))
 }

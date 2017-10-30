@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import { Dialog } from '@lib/dialog'
 let sp = require('@lib/sp');
 
 $.noConflict();
@@ -18,7 +19,7 @@ ko.validation.rules['date'] = {
         if (day > 31) valid = false;
         if (year < 1900) valid = false;
         if (year > 2017) valid = false;
-        
+
         return valid;
     },
     message: 'error'
@@ -49,26 +50,50 @@ ko.bindingHandlers.masked = {
     }
 };
 
-class ProfileEditor {
-    constructor() {
-        let template = require('@templates/edit_profile.html');
-        this.$template = $(template);
+class ProfileEditor extends Dialog {
+    init() {
+        this.$template = $(require('@templates/edit_profile.html'));
 
         this.user = ko.mapping.fromJS(ko.mapping.toJS(sp.user().user));
 
-        this.user.email.extend({ required: true, pattern: '@' })
-        this.user.first_name.extend({ required: true });
-        this.user.last_name.extend({ required: true });
-        this.user.birth_date.extend({ date: true });
+        this.user.email.extend({
+            required: true,
+            pattern: '@'
+        })
+        this.user.first_name.extend({
+            required: true
+        });
+        this.user.last_name.extend({
+            required: true
+        });
+        this.user.birth_date.extend({
+            date: true
+        });
 
         this.address_line_1 = ko.observable();
         this.address_line_2 = ko.observable();
         this.state = ko.observable();
         this.city = ko.observable();
-        this.post_code = ko.observable('').extend({ required: true });
-        this.country = ko.observable('').extend({ required: true })
+        this.post_code = ko.observable('').extend({
+            required: true
+        });
+        this.country = ko.observable('').extend({
+            required: true
+        })
 
-        this.errors = ko.validation.group(this);
+        this.errors = ko.validation.group({
+            email: this.user.email,
+            firstName: this.user.first_name,
+            lastName: this.user.last_name,
+            birthDate: this.user.birth_date,
+            postCode: this.post_code,
+            country: this.country
+        });
+        
+        setInterval(() => {
+            console.log(this.errors())
+
+        }, 1000)
 
         sp.getCustomVars({
             names: JSON.stringify(['Address 1', 'Address 2', 'State/Province', 'Postcode', 'City', 'Country']),
@@ -94,44 +119,8 @@ class ProfileEditor {
                         this.country(item.value);
                         break;
                 }
-            })           
+            })
         })
-
-        this.$template.appendTo('body')
-        $('body').addClass('__sailplay-no-scroll');
-
-        setTimeout(() => {
-            this.$template.attr('aria-hidden', false)
-            this.$template.closest('.__sailplay-dialog__shadow').css('opacity', 1);
-            this.$template.find('.__sailplay-dialog')
-                .css('opacity', 1)
-                .css('-webkit-transform', 'translateY(0)')
-                .css('-moz-transform', 'translateY(0)')
-                .css('-ms-transform', 'translateY(0)')
-                .css('-o-transform', 'translateY(0)')
-                .css('transform', 'translateY(0)')
-        })
-
-        ko.applyBindings(this, this.$template[0])
-    }
-
-    close(obj, ev) {
-        if (obj !== true && ev && !/shadow/.test(ev.target.className))
-            return
-
-        $('body').removeClass('__sailplay-no-scroll');
-        this.$template.closest('.__sailplay-dialog__shadow').css('opacity', 0);
-        this.$template.find('.__sailplay-dialog')
-            .css('opacity', 0)
-            .css('-webkit-transform', 'translateY(-50px)')
-            .css('-moz-transform', 'translateY(-50px)')
-            .css('-ms-transform', 'translateY(-50px)')
-            .css('-o-transform', 'translateY(-50px)')
-            .css('transform', 'translateY(-50px)')
-
-        setTimeout(() => {
-            this.$template.remove()
-        }, 200)
     }
 
     update() {

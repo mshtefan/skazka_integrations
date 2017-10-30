@@ -33,7 +33,8 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env', 'es2015']
+            presets: ['env', 'es2015'],
+            plugins: ['transform-object-rest-spread']
           }
         }
       },
@@ -104,7 +105,8 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       $: "jquery",
-      jQuery: "jquery"
+      jQuery: "jquery",
+      'window.jQuery': 'jquery'
     })
   ]
 };

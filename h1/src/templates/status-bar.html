@@ -1,18 +1,21 @@
 <div class="status-bar">
     <div class="status-bar__title">Your status progress</div>
-    <div class="status-bar__text">Since <span data-bind="text: since"></span></div>
-    <div class="status-bar__hint arrow_pos_1">
-        <div class="status-bar__collected"><span class="value" data-bind="text: collected"></span>&nbsp;nights collected</div>
-        <div class="status-bar__text">Collect <strong>10</strong> nights by Month XX, 2018 to become a <strong>Silver</strong> member.</div>
+    <div class="status-bar__text">Since
+        <span data-bind="text: since"></span>
     </div>
-    <div class="status-bar__line">
-        <!-- ko foreach: nights -->
+    <div class="status-bar__hint arrow_pos_1">
+        <div class="status-bar__collected">
+            <span class="value" data-bind="text: collected"></span>&nbsp;nights collected</div>
+        <div class="status-bar__text">Collect
+            <strong>10</strong> nights by Month XX, 2018 to become a
+            <strong>Silver</strong> member.</div>
+    </div>
+    <div class="status-bar__line" data-bind="foreach: ko.utils.range(1,25)">
         <div class="status-bar__night" data-bind="
             css: {
-                '__sailplay-receive-status': status, 
-                '__sailplay-collected-night': index <= $parent.collected,
-                '__sailplay-collected-last': index == $parent.collected,
+                '__sailplay-receive-status': $parent.isCheckpoint($data), 
+                '__sailplay-collected-night': $data <= $parent.collected,
+                '__sailplay-collected-last': $data == $parent.collected,
             }"></div>
-        <!-- /ko -->
     </div>
 </div>

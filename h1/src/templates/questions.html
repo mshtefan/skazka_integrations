@@ -1,22 +1,13 @@
 <div class="questions">
     <div class="questions__title">Got Questions?</div>
-    <ol class="questions__list">
+    <ol class="questions__list" data-bind="foreach: questions">
         <li>
-            <a href="#">How do i earn points?</a>
-        </li>
-        <li>
-            <a href="#">When are my points awarded?</a>
-        </li>
-        <li>
-            <a href="#">How do I redeem points?</a>
-        </li>
-        <li>
-            <a href="#">What is my rewards details and loyalty status?</a>
+            <a href="#" data-bind="text: question, attr: { href: link }"></a>
         </li>
     </ol>
     <div class="questions__desc">
         For further information check out our
-        <a href="#">FAQ’s page</a>
+        <a href="#" data-bind="attr: { href: faq_link }">FAQ’s page</a>
         page to find all the information you’ll need and more!
     </div>
 </div>
