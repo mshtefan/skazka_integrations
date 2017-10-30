@@ -118,11 +118,11 @@
                     <div class="select-style bns_input_block_m child_bmonth" data-bind="
                     css: { selected: child_bmonth }">
                         <select data-bind="
-                        options: parent.months,
+                        options: $parent.months,
                         optionsText: function(item) {
                             return item && item.name || ''
                         },
-                        value: child_bmonth.name
+                        value: child_bmonth
                         "></select>
                     </div>                    
                     <input type="number" min="1900" class="bns_input_block_y child_byear" placeholder="Год" data-bind="value: child_byear">
