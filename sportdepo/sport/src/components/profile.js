@@ -30,7 +30,7 @@ export default function(messager) {
         this.email_verified = ['Подтверждение контактных данных']
         this.registration = ['Пользователь заполнил профиль'];
         this.is_register = ko.observable(false);    
-        this.vars = ['city', 'address', 'child_birthdate', 'game_other'];
+        this.vars = ['city', 'address', 'children_length', 'game_other'];
         this.tooltip_opened = ko.observable(false);
 
         this.tooltipOpen = () => {
@@ -77,14 +77,34 @@ export default function(messager) {
                 }, result => {
                     if (result.vars.length) {
                         ko.utils.arrayForEach(result.vars, item => {
-                            if (item.name == 'child_birthdate') {
-                                console.log(this.popupVm.months(), this.popupVm.months().find(i => i && i.index == item.value.split('-')[1]))
-                                this.data().user['child_array'].push({
-                                  child_bday: item.value.split('-')[2],
-                                  child_bmonth: this.popupVm.months().find(i => i && i.index == item.value.split('-')[1]),
-                                  child_byear: item.value.split('-')[0]
+                            if (item.name == 'children_length' && item.value>0) {
+                                var children_vars_names = []
+                                for (var i = 1; i <= item.value; i++) {
+                                    children_vars_names.push('child_birthdate' + (i==1 ? '' : '_'+i))
+                                };
+                                sailplay.jsonp.get(config.DOMAIN + config.urls.users.custom_variables.batch_get, {
+                                    names: JSON.stringify(children_vars_names),
+                                    auth_hash: config.auth_hash
+                                }, result => {
+                                    if (result.vars.length) {
+                                        var sortedResult = result.vars.sort((x,y)=>{
+                                            function getIndex(item){
+                                                var regexResult = /_(\d+$)/.exec(item.name)
+                                                return regexResult ? regexResult[1] : "1"
+                                            }
+                                            var xIndex = getIndex(x)
+                                            var yIndex = getIndex(y)
+                                            return xIndex>yIndex
+                                        })
+                                        ko.utils.arrayForEach((sortedResult), item => {
+                                            this.data().user['child_array'].push({
+                                              child_bday: item.value.split('-')[2],
+                                              child_bmonth: this.popupVm.months().find(i => i && i.index == item.value.split('-')[1]),
+                                              child_byear: item.value.split('-')[0]
+                                            })
+                                        })
+                                    }
                                 })
-                                console.log(this.data().user['child_array']())
                             } else if (this.data().user[item.name]) this.data().user[item.name](item.value)
                         })
                     }
@@ -210,6 +230,14 @@ export default function(messager) {
                 this.popupVm.opened(true)                    
             },
 
+            addChildrenBDay: ()=>{
+                this.popupVm['child_array'].push({
+                    child_bday: "1", 
+                    child_bmonth: this.popupVm.months()[1],
+                    child_byear: "1970"
+                })
+            },
+
             back: () => {
                 this.popupVm.step(this.popupVm.step() - 1);
                 this.popupVm.width('356px')
@@ -266,7 +294,7 @@ export default function(messager) {
                         .className = document.getElementsByClassName('check_training')[0].className
                         .replace(' error', '')                        
 
-                    if (!this.data().user.child_bday() || !/^[0-9]{1,2}$/.test(this.data().user.child_bday())) {
+/*                    if (!this.data().user.child_bday() || !/^[0-9]{1,2}$/.test(this.data().user.child_bday())) {
                         document.getElementsByClassName('child_bday')[0]
                             .className += ' error'
                         
@@ -298,7 +326,7 @@ export default function(messager) {
                             .className = document.getElementsByClassName('child_byear')[0].className
                             .replace(' error', '')                                                                        
                     }
-                }
+*/                }
 
                 return register_complete
             },
@@ -345,15 +373,17 @@ export default function(messager) {
                 if (user.child_array.length>0){
                     user.child_array.forEach( function(element, index) {
                         var keyName = void 0
-                        if(index==1){
+                        if(index==0){
                             keyName = 'child_birthdate'
                         } else {
-                            keyName = 'child_birthdate_' + index
+                            keyName = 'child_birthdate_' + (index+1)
                         }
+                        console.log(keyName)
                         secondary[keyName] = `${element.child_byear}-${element.child_bmonth.index}-${element.child_bday}`
                     });
+                    secondary['children_length'] = user.child_array.length
                 }
-                console.info(user.child_array)
+                console.info(secondary)
 /*
                 if (user.child_bday && user.child_bmonth && user.child_byear)
                     secondary['child_birthdate'] = `${user.child_byear}-${user.child_bmonth.index}-${user.child_bday}`

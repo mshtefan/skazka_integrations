@@ -113,19 +113,25 @@
                 <br><br>                
                 <label>День рождения ребенка</label>
                 <br><br>
-                <div data-bind="foreach: child_array">
-                    <input type="number" min="1" class="child_bday bns_input_block_d" placeholder="День" data-bind="value: child_bday">
-                    <div class="select-style bns_input_block_m child_bmonth" data-bind="
-                    css: { selected: child_bmonth }">
-                        <select data-bind="
-                        options: $parent.months,
-                        optionsText: function(item) {
-                            return item && item.name || ''
-                        },
-                        value: child_bmonth
-                        "></select>
-                    </div>                    
-                    <input type="number" min="1900" class="bns_input_block_y child_byear" placeholder="Год" data-bind="value: child_byear">
+                <div class="child-controls">
+                    <div data-bind="foreach: child_array">
+                        <div class="child-entry">
+                            <input type="number" min="1" max="31" class="child_bday bns_input_block_d" placeholder="День" data-bind="value: child_bday">
+                            <div class="select-style bns_input_block_m child_bmonth" data-bind="
+                            css: { selected: child_bmonth }">
+                                <select data-bind="
+                                options: $parent.months,
+                                optionsText: function(item) {
+                                    return item && item.name || ''
+                                },
+                                value: child_bmonth
+                                "></select>
+                            </div>                    
+                            <input type="number" min="1900" class="bns_input_block_y child_byear" placeholder="Год" data-bind="value: child_byear">
+                            <div class="delete"></div>
+                        </div>
+                    </div> 
+                    <div data-bind="click: addChildrenBDay" class="child-add-btn"><div class="plus-sign"></div>Добавить ещё</div>
                 </div>
             </div>
             <div class="bns_input_block">
