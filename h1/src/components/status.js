@@ -6,6 +6,12 @@ class StatusView {
         this.statusName = ko.observable();
 
         sp.user.subscribe(data => {
+            if (!data) {
+                this.statusBadge(0);
+                this.statusName(0);
+                return
+            }
+
             this.statusBadge(data.user_status.pic())
             this.statusName(data.user_status.name())
         })

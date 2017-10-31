@@ -23,7 +23,7 @@ export class Dialog {
     }
 
     close(obj, ev) {
-        if (obj !== true && ev && !/shadow/.test(ev.target.className))
+        if (this.preventClose || obj !== true && ev && !/shadow/.test(ev.target.className))
             return
 
         $('body').removeClass('__sailplay-no-scroll');

@@ -10,8 +10,10 @@
             this.custom_variables = ko.observableArray();
             this.history = ko.observableArray();
             this.tags = ko.observableArray();
+            this.force_close_popup = ko.observable();
 
             this.latest_user_options = {};
+            this.latest_tags_options = {};
 
             this.user_had_phone = false;
             this.user_had_email = false;
@@ -24,7 +26,7 @@
 
             self.inited(true);
             self.options.partner_id = 1781;
-            self.options.domain = 'http://sailplay.net';
+            self.options.domain = 'https://sailplay.net';
             self.auth_hash = options.auth_hash;
 
             jsonp({
@@ -128,6 +130,7 @@
             if (!this.inited())
                 throw new Error('sp not inited');
 
+            this.latest_tags_options = options;
             return new Promise((resolve, reject) => {
                 jsonp({
                     url: `${this.options.domain}${this.config().urls.tags.list}`,
@@ -142,6 +145,26 @@
                     }
                 })
             })
+        }
+
+        tagsAdd(options) {
+            if (!this.inited())
+                throw new Error('sp not inited');
+
+            return new Promise((resolve, reject) => {
+                jsonp({
+                    url: `${this.options.domain}${this.config().urls.tags.add}`,
+                    data: {
+                        ...options,
+                        origin_user_id: this.user().user.origin_user_id(),
+                        auth_hash: this.auth_hash,
+                    },
+                    success: result => {
+                        this.tagsList(this.latest_tags_options)
+                        resolve(result);
+                    }
+                })
+            })            
         }
 
         updateUserInfo(data) {
@@ -194,6 +217,22 @@
                     success: resolve
                 })
             })
+        }
+
+        purchaseGet(id) {
+            if (!this.inited())
+                throw new Error('sp not inited');
+
+            return new Promise((resolve, reject) => {
+                jsonp({
+                    url: `${this.options.domain}${this.config().urls.purchases.get}`,
+                    data: {
+                        id: id,
+                        auth_hash: this.auth_hash
+                    },
+                    success: resolve
+                })
+            })                
         }
 
         purchaseGift(gift_data) {

@@ -1,0 +1,9 @@
+<div class="dialog__shadow" data-bind="click: close">
+    <div class="dialog login">
+        <div class="dialog__header">
+            <a href="#" class="dialog__close" data-bind="click: close.bind($data, true)"></a>
+            Sign in / Sign Up</div>
+        <div class="dialog__body">
+            <iframe data-bind="attr: { src: login_uri }" frameborder="0"></iframe>
+        </div>
+    </div>

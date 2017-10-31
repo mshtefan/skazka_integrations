@@ -16,7 +16,7 @@ class CoupunsView {
     constructor(params) {
         this.coupons = ko.observableArray();
 
-        sp.config.subscribe(() => {
+        sp.user.subscribe(() => {
             sp.getGifts()
                 .then(data => {
                     this.coupons(ko.utils.arrayFilter(data.gifts, item => {
@@ -39,6 +39,11 @@ class CoupunsView {
 
     initOwl() {
         $(document).ready(() => {
+            $('.__sailplay-owl-carousel').find('.__sailplay-owl-stage-outer').remove();
+            $('.__sailplay-owl-carousel').find('.__sailplay-owl-nav').remove()
+            $('.__sailplay-owl-carousel').find('.__sailplay-owl-dots').remove()
+            
+            $('.__sailplay-owl-carousel').trigger('destroy.owl.carousel');
             $('.__sailplay-owl-carousel').owlCarousel({
                 items: 1,
                 loop: false,

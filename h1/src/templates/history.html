@@ -2,7 +2,7 @@
     <!-- ko if: type == 'purchase' -->
     <div class="history__title">
         <span data-bind="text: collected"></span> Nights Collected</div>
-    <div class="history__pager">
+    <div class="history__pager" data-bind="if: purchase_history().length">
         <div class="history__pager-pos">
             <span data-bind="text: (page() * 10) + listCurrentPage().length "></span> of
             <span data-bind="text: purchase_history().length"></span> items</div>
@@ -17,10 +17,11 @@
             <!-- /ko -->
         </div>
     </div>
+    <div class="history__item-text">You have no purchases</div>
     <div class="history__table" data-bind="foreach: listCurrentPage()">
         <div class="history__item">
             <div class="history__item-date" data-bind="dateText: action_date"></div>
-            <div class="history__item-name" data-bind="text: order_num">Econo Lodge Times Square</div>
+            <div class="history__item-name" data-bind="text: order_num, click: $parent.redirectToProduct.bind($data)">Econo Lodge Times Square</div>
             <div class="history__item-price">$
                 <span data-bind="text: price"></span>
             </div>
@@ -46,7 +47,7 @@
         </div>
         <!-- /ko -->
     </div>
-    <div class="history__table activity" data-bind="visible: pageCount() <= limitPerPage() && !allLoaded()">
+    <div class="history__table activity" data-bind="visible: pageCount() > 1 && pageCount() <= limitPerPage() && !allLoaded()">
         <a href="javascript:void(0)" class="btn gray wide" data-bind="click: loadAll">
             <i class="icon-arrow"></i> Load all activity</a>
     </div>

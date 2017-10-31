@@ -1,7 +1,7 @@
 <div class="dialog__shadow" data-bind="click: close">
     <div class="dialog">
         <div class="dialog__header">
-            <a href="#" class="dialog__close" data-bind="click: close.bind($data, true)"></a>
+            <a href="#" class="dialog__close" data-bind="visible: !preventClose, click: close.bind($data, true)"></a>
             Member details</div>
         <div class="dialog__body">
             <form action="" class="dialog__form">
@@ -29,8 +29,8 @@
                         <span>Mobile Phone Number</span>
                         <input type="text" data-bind="
                             masked: user.phone, 
-                            mask: '+1 (999) 9999 999', 
-                            mask_options: { placeholder: '+1 (XXX) XXXX XXX' }" placeholder="+1 (XXX) XXXX XXX">
+                            mask: '9 (999) 9999 999', 
+                            mask_options: { placeholder: 'X (XXX) XXXX XXX' }" placeholder="X (XXX) XXXX XXX">
                     </label>
                 </div>
                 <div class="form-group half-margin">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group half-margin">
                     <input type="text" data-bind="value: state" class="span_2-5" placeholder="State/Province">
-                    <input type="text" data-bind="value: city" class="span_3-5" placeholder="City">
+                    <input type="text" data-bind="value: city, css: { '__sailplay-error': city.isValid && !city.isValid() }" class="span_3-5" placeholder="City*">
                 </div>
                 <div class="form-group half-margin">
                     <input type="text" data-bind="value: post_code, css: { '__sailplay-error': post_code.isValid && !post_code.isValid() }" class="span_2-5"
