@@ -88,6 +88,8 @@ form.form(data-bind="visible: !congrat()")
             a(data-bind="text: user_agreement_link, attr: { href: user_agreement_link_href }")
             br
             span(data-bind="text: user_agreement_line_2")
+    div.legal-text(data-bind="html: legal_text_html")
+
 
 .congrat(data-bind="visible: congrat")
     .form
