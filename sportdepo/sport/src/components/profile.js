@@ -17,7 +17,6 @@ function arr_diff (a1, a2) {
 
 export default function(messager) {
     return function(params) {
-        self = this
         this.data = ko.observable();
         this.games_tags = ['Хоккей', 'Футбол', 'Фигурное катание', 'Легкая атлетика', 'Беговые лыжи', 'Единоборства'];
         this.for_who_tags = ['Покупаю: Себе', 'Покупаю: Ребенку', 'Покупаю: В подарок'];
@@ -79,7 +78,10 @@ export default function(messager) {
                     if (result.vars.length) {
                         ko.utils.arrayForEach(result.vars, item => {
                             if (item.name == 'children_length' && item.value>0) {
+                                // если есть дети, то делаем запрос на получених их из их юзерварса, каждая дата это один юзерварс
+                                // children_length это общее количество записей дат рождения детей
                                 var children_vars_names = []
+                                // например если там 3 даты, то они будут иметь название child_birthdate, child_birthdate_2, child_birthdate_3
                                 for (var i = 1; i <= item.value; i++) {
                                     children_vars_names.push('child_birthdate' + (i==1 ? '' : '_'+i))
                                 };
@@ -88,6 +90,7 @@ export default function(messager) {
                                     auth_hash: config.auth_hash
                                 }, result => {
                                     if (result.vars.length) {
+                                        // сортируем полченные даты чтобы отображались по порядку на всякий случай
                                         var sortedResult = result.vars.sort((x,y)=>{
                                             function getIndex(item){
                                                 var regexResult = /_(\d+$)/.exec(item.name)
@@ -103,6 +106,12 @@ export default function(messager) {
                                               child_bmonth: this.popupVm.months().find(i => i && i.index == item.value.split('-')[1]),
                                               child_byear: item.value.split('-')[0]
                                             })
+                                        })
+                                        // костыль для дизайна, пустая дата в конец
+                                        this.data().user['child_array'].push({
+                                            child_bday: void 0, 
+                                            child_bmonth: void 0,
+                                            child_byear: void 0
                                         })
                                     }
                                 })
@@ -219,7 +228,6 @@ export default function(messager) {
                 this.popupVm.step(1);
                 this.popupVm.width('356px')
                 if (this.data().user['child_array']) 
-                    console.log(this.data().user['child_array']()[0].child_bmonth)
                     this.popupVm.child_array(this.data().user['child_array']())
                 if (this.data().user['active_games'] && this.data().user['active_games'].length)
                     this.popupVm.active_games(this.data().user['active_games']);
@@ -231,8 +239,8 @@ export default function(messager) {
                 this.popupVm.opened(true)                    
             },
 
-            removeChildrenBDay: ()=>{
-
+            removeChildrenBDay: (item)=>{
+                this.popupVm['child_array'].remove(item)
             },
 
             addChildrenBDay: ()=>{
@@ -376,7 +384,12 @@ export default function(messager) {
                     primary['birthDate'] = `${user.birth_year}-${user.birth_month.index}-${user.birth_day}`
 
                 if (user.child_array.length>0){
-                    user.child_array.forEach( function(element, index) {
+                    console.log(user.child_array)
+                    var filteredArray = user.child_array.filter( function(element, index) {
+                        return element.child_byear && element.child_bmonth && element.child_bday
+                    })
+
+                    filteredArray.forEach( function(element, index) {
                         var keyName = void 0
                         if(index==0){
                             keyName = 'child_birthdate'
@@ -386,7 +399,8 @@ export default function(messager) {
                         console.log(keyName)
                         secondary[keyName] = `${element.child_byear}-${element.child_bmonth.index}-${element.child_bday}`
                     });
-                    secondary['children_length'] = user.child_array.length
+                    
+                    secondary['children_length'] = filteredArray.length
                 }
                 console.info(secondary)
 /*

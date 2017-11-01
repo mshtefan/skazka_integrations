@@ -128,7 +128,7 @@
                                 "></select>
                             </div>                    
                             <input type="number" min="1900" class="bns_input_block_y child_byear" placeholder="Год" data-bind="value: child_byear">
-                            <div class="delete"></div>
+                            <div data-bind="click: $parent.removeChildrenBDay" class="delete"></div>
                         </div>
                     </div> 
                     <div data-bind="click: addChildrenBDay" class="child-add-btn"><div class="plus-sign"></div>Добавить ещё</div>
