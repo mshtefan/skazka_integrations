@@ -5,8 +5,7 @@
   angular.module('sg', [
     'sg.services',
     'sg.ui',
-    'sg.directives',
-    'ngSanitize'
+    'sg.directives'
   ])
 
     .directive('sailplaySg', function (api, sp) {
