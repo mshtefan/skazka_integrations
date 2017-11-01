@@ -13,8 +13,6 @@
           scope.user = api.data('user.info');
           scope.hidden = true;
 
-          scope.config = api.config.$MAGIC.data.statuses[api.user.program]
-
           scope.texts = api.config.$MAGIC.data.gifts.texts
 
           scope.program_v = api.user.program
