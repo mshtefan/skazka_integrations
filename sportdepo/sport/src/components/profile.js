@@ -219,7 +219,7 @@ export default function(messager) {
                 if (field == 'child_byear') this.data().user[field].extend({min: 1863, pattern: { message: "wrong", params: '^[0-9]{4}$' }})
                 if (field == 'city') this.data().user[field].extend({required: true})
                 if (field == 'address') this.data().user[field].extend({required: true})                
-                if (field == 'child_array') console.log(this.data().user[field])
+                //if (field == 'child_array') console.log(this.data().user[field])
                 return this.data().user[field]
             },
             width: ko.observable('356px'),
@@ -384,7 +384,6 @@ export default function(messager) {
                     primary['birthDate'] = `${user.birth_year}-${user.birth_month.index}-${user.birth_day}`
 
                 if (user.child_array.length>0){
-                    console.log(user.child_array)
                     var filteredArray = user.child_array.filter( function(element, index) {
                         return element.child_byear && element.child_bmonth && element.child_bday
                     })
@@ -396,13 +395,11 @@ export default function(messager) {
                         } else {
                             keyName = 'child_birthdate_' + (index+1)
                         }
-                        console.log(keyName)
                         secondary[keyName] = `${element.child_byear}-${element.child_bmonth.index}-${element.child_bday}`
                     });
                     
                     secondary['children_length'] = filteredArray.length
                 }
-                console.info(secondary)
 /*
                 if (user.child_bday && user.child_bmonth && user.child_byear)
                     secondary['child_birthdate'] = `${user.child_byear}-${user.child_bmonth.index}-${user.child_bday}`
