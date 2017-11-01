@@ -64,7 +64,7 @@
                         value: getField('birth_month')
                     "></select>
                 </div>
-                <input type="number" min="1900" class="bns_input_block_y" placeholder="Год" data-bind="value: getField('birth_year'), 
+                <input type="number" min="1900" max="3000" class="bns_input_block_y" placeholder="Год" data-bind="value: getField('birth_year'), 
                     css: { 
                         error: getField('birth_year').isValid && !getField('birth_year').isValid(),
                         disabled: getField('birth_disabled')
@@ -111,7 +111,7 @@
             </div>
             <div class="bns_input_block bns_input_block_date">
                 <br><br>                
-                <label>День рождения ребенка</label>
+                <label>Дата рождения ребенка</label>
                 <br><br>
                 <div class="child-controls">
                     <div data-bind="foreach: child_array">

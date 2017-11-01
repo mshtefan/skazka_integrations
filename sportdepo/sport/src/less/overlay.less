@@ -72,7 +72,7 @@
       }
     }
     &:before {
-      padding-left: 8px;
+      padding-left: 12px;
       top: 10px;
       pointer-events: none;
       content: 'Месяц';
@@ -83,7 +83,7 @@
 }
 
 .select-style select {
-    padding: 0 8px;
+    padding: 0 12px;
     line-height: 42px;
     width: 100%;
     font-size: 16px;
@@ -94,9 +94,6 @@
     -webkit-appearance: none;
        -moz-appearance: none;
             appearance: none;
-    &:placeholder {
-      padding: 0 8px;
-    }
 }
 
 .select-style select:focus {
@@ -465,7 +462,7 @@
       font-size: 16px;
       font-weight: 300;
       max-width: 296px;
-      &.error {
+      &.error, &:invalid, &:focus:invalid {
         border-color: red;
       }
       &.bns_input_block_d {
@@ -552,6 +549,7 @@
       flex-direction: column;
     }
     .child-entry {
+      min-width: 346px;
       height: 42px;
       display: flex;
       align-items: center;

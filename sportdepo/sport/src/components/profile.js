@@ -1,5 +1,6 @@
 import ko from 'knockout';
 import sailplay from 'sailplay-hub';
+var $ = window.$
 
 // http://stackoverflow.com/questions/1187518/javascript-array-difference
 function arr_diff (a1, a2) {
@@ -71,6 +72,13 @@ export default function(messager) {
 
                 this.data().user['child_array'] = ko.observableArray()
 
+                // костыль для дизайна, пустая дата в конец
+                this.data().user['child_array'].push({
+                    child_bday: ko.observable(), 
+                    child_bmonth: ko.observable(),
+                    child_byear: ko.observable()
+                })
+
                 sailplay.jsonp.get(config.DOMAIN + config.urls.users.custom_variables.batch_get, {
                     names: JSON.stringify(this.vars),
                     auth_hash: config.auth_hash
@@ -98,20 +106,14 @@ export default function(messager) {
                                             }
                                             var xIndex = getIndex(x)
                                             var yIndex = getIndex(y)
-                                            return xIndex>yIndex
+                                            return xIndex<yIndex
                                         })
                                         ko.utils.arrayForEach((sortedResult), item => {
-                                            this.data().user['child_array'].push({
+                                            this.data().user['child_array'].unshift({
                                               child_bday: ko.observable(item.value.split('-')[2]),
                                               child_bmonth: ko.observable(this.popupVm.months().find(i => i && i.index == item.value.split('-')[1])),
                                               child_byear: ko.observable(item.value.split('-')[0])
                                             })
-                                        })
-                                        // костыль для дизайна, пустая дата в конец
-                                        this.data().user['child_array'].push({
-                                            child_bday: ko.observable(), 
-                                            child_bmonth: ko.observable(),
-                                            child_byear: ko.observable()
                                         })
                                     }
                                 })
@@ -366,7 +368,7 @@ export default function(messager) {
             },
 
             finish: (_last) => {
-                
+                if($('.bns_inner_block :invalid').length) return false
 
                 let user = ko.toJS(this.data().user);
                 let obj = { auth_hash: this.config.auth_hash },                
@@ -383,7 +385,9 @@ export default function(messager) {
                 if (user.birth_day && user.birth_month && user.birth_year)
                     primary['birthDate'] = `${user.birth_year}-${user.birth_month.index}-${user.birth_day}`
 
-                if (user.child_array.length>0){
+//                if (user.child_array.length>0){
+//              теперь всегда проверяем длинну массива
+                if (true){
                     var filteredArray = user.child_array.filter( function(element, index) {
                         return element.child_byear && element.child_bmonth && element.child_bday
                     })
