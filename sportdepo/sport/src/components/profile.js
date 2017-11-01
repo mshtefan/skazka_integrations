@@ -17,6 +17,7 @@ function arr_diff (a1, a2) {
 
 export default function(messager) {
     return function(params) {
+        self = this
         this.data = ko.observable();
         this.games_tags = ['Хоккей', 'Футбол', 'Фигурное катание', 'Легкая атлетика', 'Беговые лыжи', 'Единоборства'];
         this.for_who_tags = ['Покупаю: Себе', 'Покупаю: Ребенку', 'Покупаю: В подарок'];
@@ -230,11 +231,15 @@ export default function(messager) {
                 this.popupVm.opened(true)                    
             },
 
+            removeChildrenBDay: ()=>{
+
+            },
+
             addChildrenBDay: ()=>{
                 this.popupVm['child_array'].push({
-                    child_bday: "1", 
-                    child_bmonth: this.popupVm.months()[1],
-                    child_byear: "1970"
+                    child_bday: void 0, 
+                    child_bmonth: void 0,
+                    child_byear: void 0
                 })
             },
 
