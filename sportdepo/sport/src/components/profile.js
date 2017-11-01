@@ -102,16 +102,16 @@ export default function(messager) {
                                         })
                                         ko.utils.arrayForEach((sortedResult), item => {
                                             this.data().user['child_array'].push({
-                                              child_bday: item.value.split('-')[2],
-                                              child_bmonth: this.popupVm.months().find(i => i && i.index == item.value.split('-')[1]),
-                                              child_byear: item.value.split('-')[0]
+                                              child_bday: ko.observable(item.value.split('-')[2]),
+                                              child_bmonth: ko.observable(this.popupVm.months().find(i => i && i.index == item.value.split('-')[1])),
+                                              child_byear: ko.observable(item.value.split('-')[0])
                                             })
                                         })
                                         // костыль для дизайна, пустая дата в конец
                                         this.data().user['child_array'].push({
-                                            child_bday: void 0, 
-                                            child_bmonth: void 0,
-                                            child_byear: void 0
+                                            child_bday: ko.observable(), 
+                                            child_bmonth: ko.observable(),
+                                            child_byear: ko.observable()
                                         })
                                     }
                                 })
@@ -245,9 +245,9 @@ export default function(messager) {
 
             addChildrenBDay: ()=>{
                 this.popupVm['child_array'].push({
-                    child_bday: void 0, 
-                    child_bmonth: void 0,
-                    child_byear: void 0
+                    child_bday: ko.observable(), 
+                    child_bmonth: ko.observable(),
+                    child_byear: ko.observable()
                 })
             },
 
