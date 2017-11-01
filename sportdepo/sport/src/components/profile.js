@@ -1,6 +1,5 @@
 import ko from 'knockout';
 import sailplay from 'sailplay-hub';
-var $ = window.$
 
 // http://stackoverflow.com/questions/1187518/javascript-array-difference
 function arr_diff (a1, a2) {
@@ -368,7 +367,7 @@ export default function(messager) {
             },
 
             finish: (_last) => {
-                if($('.bns_inner_block :invalid').length) return false
+                if(window.$('.bns_inner_block :invalid').length) return false
 
                 let user = ko.toJS(this.data().user);
                 let obj = { auth_hash: this.config.auth_hash },                
