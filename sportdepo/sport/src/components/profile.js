@@ -30,7 +30,7 @@ export default function(messager) {
         this.email_verified = ['Подтверждение контактных данных']
         this.registration = ['Пользователь заполнил профиль'];
         this.is_register = ko.observable(false);    
-        this.vars = ['city', 'address', 'children_length', 'game_other'];
+        this.vars = ['city', 'address', 'children', 'game_other'];
         this.tooltip_opened = ko.observable(false);
 
         this.tooltipOpen = () => {
@@ -78,48 +78,58 @@ export default function(messager) {
                     child_byear: ko.observable()
                 })
 
+                this.oldChildLength = 0
+
                 sailplay.jsonp.get(config.DOMAIN + config.urls.users.custom_variables.batch_get, {
                     names: JSON.stringify(this.vars),
                     auth_hash: config.auth_hash
                 }, result => {
                     if (result.vars.length) {
                         ko.utils.arrayForEach(result.vars, item => {
-                            if (item.name == 'children_length' && item.value>0) {
-                                // если есть дети, то делаем запрос на получених их из их юзерварса, каждая дата это один юзерварс
-                                // children_length это общее количество записей дат рождения детей
-                                var children_vars_names = []
-                                // например если там 3 даты, то они будут иметь название child_birthdate, child_birthdate_2, child_birthdate_3
-                                for (var i = 1; i <= item.value; i++) {
-                                    children_vars_names.push('child_birthdate' + (i==1 ? '' : '_'+i))
-                                };
-                                sailplay.jsonp.get(config.DOMAIN + config.urls.users.custom_variables.batch_get, {
-                                    names: JSON.stringify(children_vars_names),
-                                    auth_hash: config.auth_hash
-                                }, result => {
-                                    if (result.vars.length) {
-                                        // сортируем полченные даты чтобы отображались по порядку на всякий случай
-                                        var sortedResult = result.vars.sort((x,y)=>{
-                                            function getIndex(item){
-                                                var regexResult = /_(\d+$)/.exec(item.name)
-                                                return regexResult ? regexResult[1] : "1"
-                                            }
-                                            var xIndex = getIndex(x)
-                                            var yIndex = getIndex(y)
-                                            return xIndex<yIndex
-                                        })
-                                        ko.utils.arrayForEach((sortedResult), item => {
-                                            this.data().user['child_array'].unshift({
-                                              child_bday: ko.observable(item.value.split('-')[2]),
-                                              child_bmonth: ko.observable(this.popupVm.months().find(i => i && i.index == item.value.split('-')[1])),
-                                              child_byear: ko.observable(item.value.split('-')[0])
-                                            })
-                                        })
-                                    }
-                                })
+                            if (item.name == 'children' && item.value>0) {
+                                this.oldChildLength = item.value
+                                getChildrenVars(item.value)
                             } else if (this.data().user[item.name]) this.data().user[item.name](item.value)
                         })
+                        if(!result.vars.find(x=>x.name=='children')){
+                            getChildrenVars(1)
+                        }
                     }
                 })
+
+                var getChildrenVars = (childrenQuantity) => {
+                    // если есть дети, то делаем запрос на получених их из их юзерварса, каждая дата это один юзерварс
+                    // children это общее количество записей дат рождения детей
+                    var children_vars_names = []
+                    // например если там 3 даты, то они будут иметь название child_birthdate, child_birthdate_2, child_birthdate_3
+                    for (var i = 1; i <= childrenQuantity; i++) {
+                        children_vars_names.push('child_birthdate' + (i==1 ? '' : '_'+i))
+                    };
+                    sailplay.jsonp.get(config.DOMAIN + config.urls.users.custom_variables.batch_get, {
+                        names: JSON.stringify(children_vars_names),
+                        auth_hash: config.auth_hash
+                    }, result => {
+                        if (result.vars.length) {
+                            // сортируем полченные даты чтобы отображались по порядку на всякий случай
+                            var sortedResult = result.vars.sort((x,y)=>{
+                                function getIndex(item){
+                                    var regexResult = /_(\d+$)/.exec(item.name)
+                                    return regexResult ? regexResult[1] : "1"
+                                }
+                                var xIndex = getIndex(x)
+                                var yIndex = getIndex(y)
+                                return xIndex<yIndex
+                            })
+                            ko.utils.arrayForEach((sortedResult), item => {
+                                this.data().user['child_array'].unshift({
+                                  child_bday: ko.observable(item.value.split('-')[2]),
+                                  child_bmonth: ko.observable(this.popupVm.months().find(i => i && i.index == item.value.split('-')[1])),
+                                  child_byear: ko.observable(item.value.split('-')[0])
+                                })
+                            })
+                        }
+                    })
+                }
 
                 let tags = [].concat(this.training_tags, this.games_tags, this.for_who_tags, this.registration, this.email_verified),
                     tags_to_process = [];
@@ -392,16 +402,25 @@ export default function(messager) {
                     })
 
                     filteredArray.forEach( function(element, index) {
-                        var keyName = void 0
-                        if(index==0){
-                            keyName = 'child_birthdate'
-                        } else {
-                            keyName = 'child_birthdate_' + (index+1)
-                        }
+                        var keyName = getNameByIndex(index+1)
                         secondary[keyName] = `${element.child_byear}-${element.child_bmonth.index}-${element.child_bday}`
                     });
+
+                    function getNameByIndex(index){
+                        if(index==1){
+                            return 'child_birthdate'
+                        } else {
+                            return 'child_birthdate_' + (index)
+                        }
+                    }
                     
-                    secondary['children_length'] = filteredArray.length
+                    secondary['children'] = filteredArray.length
+
+                    for (var i = filteredArray.length+1; i <= this.oldChildLength; i++) {
+                        secondary[getNameByIndex(i)] = 'deleted'
+                    };
+
+                    this.oldChildLength = filteredArray.length
                 }
 /*
                 if (user.child_bday && user.child_bmonth && user.child_byear)
