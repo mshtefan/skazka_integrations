@@ -1,0 +1,50 @@
+<div class="overlay">
+    <div class="overlay_iner overlay_wel" data-ng-show="user && user() && gifts && gifts()">
+
+        <h2>[[ user().user.first_name || 'Здравствуйте' ]], приветствуем Вас в&nbsp;Элитной программе ИЛЬ&nbsp;ДЕ&nbsp;БОТЭ!</h2>
+
+        <h3 data-ng-if="enough">
+            Теперь за свои самые обычные покупки в ИЛЬ&nbsp;ДЕ&nbsp;БОТЭ Вы накапливаете бонусы, которые можете поменять
+            на приятные привелегии!
+            <br><br>
+            У Вас уже накоплено [[ user().user_points.confirmed ]] [[ plural(user().user_points.confirmed, ['бонус',
+            'бонуса', 'бонусов']) ]] и Вам [[ plural(count, ['доступна','доступны', 'доступно']) ]] [[ count ]] [[
+            plural(count, ['привилегия','привилегии', 'привилегий']) ]],
+            ознакомьтесь с [[ count == 1 ? 'ней' : 'ними' ]] в
+            <a href="#/gifts">Сокровищнице привилегий</a>.
+        </h3>
+
+        <h3 data-ng-if="!enough">
+            Вам осталось накопить совсем немного [[ plural((last.points - user().user_points.confirmed), ['бонус',
+            'бонуса', 'бонусов']) ]], а именно [[ last.points - user().user_points.confirmed ]] и
+            Вам [[ getMinimalCounts() > 1 ? 'станут' : 'станет' ]] [[ plural(getMinimalCounts(),
+            ['доступна','доступны',
+            'доступно']) ]] [[ getMinimalCounts() ]] [[ plural(getMinimalCounts(), ['привилегия','привилегии',
+            'привилегий']) ]]! Чтобы
+            узнать, [[ getMinimalCounts() > 1 ? 'какие' : 'какая' ]], перейдите в <a href="#/gifts">Сокровищницу
+            привилегий</a>!
+            <br><br>
+            Также Вы можете получать дополнительные бонусы за участие в акциях, опросах и других мероприятиях.
+        </h3>
+
+        <div class="wel_link">
+
+            <a href="#/actions" class="wl_icon1">
+                Получите больше<br> бонусов
+            </a>
+            <a href="#/gifts" class="wl_icon2">
+                Сокровищница<br> привилегий
+            </a>
+            <a href="#/page/helpful_info" class="wl_icon3">
+                Правила Элитной программы ИЛЬ ДЕ БОТЭ
+            </a>
+            <a href="#/history" class="wl_icon4">
+                История<br> покупок
+            </a>
+
+            <span>ИЛЬ ДЕ БОТЭ. ЗДЕСЬ ЖИВЕТ КРАСОТА</span>
+
+        </div>
+
+    </div>
+</div>

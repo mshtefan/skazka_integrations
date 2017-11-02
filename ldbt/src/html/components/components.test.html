@@ -1,0 +1,29 @@
+<div class="opros_main">
+
+    <span class="opros_head">
+        Прохождение опроса
+        <b>+ [[ model.points ]] балла</b>
+    </span>
+
+    <div class="opros_item">
+        <span class="qust_from">[[ step + 1 ]] вопрос из [[ model.data.length ]]</span>
+        <span class="qust_text" data-ng-bind="model.data[step].q"></span>
+        <div class="answer">
+
+            <div data-ng-repeat="item in model.data[step].a">
+              <div class="check" data-ng-show="item.type !== 'custom'">
+                <input type="radio" id="ans[[ $index ]]" name="[[ step ]]" data-ng-click="setAnswer(item, model.data[step].a)"/>
+                <label for="ans[[ $index ]]" data-ng-bind="item.text"></label>
+              </div>
+              <div data-ng-show="item.type === 'custom'">
+                <input data-ng-init="custom_tag" type="text" data-ng-model="custom_tag" placeholder="[[ item.text ]]" data-ng-change="item.tag = ('Свой вариант подарка: ' + custom_tag); item.val = !!custom_tag;">
+              </div>
+            </div>
+
+
+            <textarea name="user_ansver" data-ng-model="customAnswer" data-ng-show="showCustomAnswer" placeholder="Напишите свой вариант"></textarea>
+        </div>
+        <a href="#" class="next_qust" data-ng-click="next();$event.preventDefault();" data-ng-class="{ disabled : !isValid() }">Далее</a>
+    </div>
+
+</div>

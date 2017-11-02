@@ -1,0 +1,19 @@
+<div class="header">
+    <a href="#/" class="logo"></a>
+    <div class="top_line"></div>
+    <div class="menu">
+        <a href="#" data-ng-if="!item.hide" data-ng-repeat="item in model track by $index"
+           data-ng-bind="item.label"
+           data-ng-class="{type_active: item.active}"
+           data-ng-href="[[ generateUrl(item.key) ]]"></a>
+        <div class="user_menu">
+            <a href="#" data-ng-click="exit();$event.preventDefault();">выход</a>
+        </div>
+    </div>
+    <div class="sub_menu">
+        <a href="#" data-ng-if="getSubmenu() && !item.hide" data-ng-repeat="item in getSubmenu()"
+           data-ng-bind="item.label"
+           data-ng-class="{type_active: item.active}"
+           data-ng-href="[[ generateUrl(item.key) ]]"></a>
+    </div>
+</div>

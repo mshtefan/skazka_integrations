@@ -1,0 +1,30 @@
+<div class="list_privil" style="margin-top: 0;">
+    <div class="list_privil_left">
+        <span class="lpl_head">Архив привилегий</span>
+    </div>
+    <div class="list_privil_menu">
+        <a href="#" data-ng-class="{ act: type == 'used' }"
+           data-ng-click="filterBy('used');$event.preventDefault();">Полученные</a>
+        <a href="#" data-ng-class="{ act: type == 'inactive' }"
+           data-ng-click="filterBy('inactive');$event.preventDefault();">Закончившиеся</a>
+    </div>
+</div>
+
+<div class="archiv_privil_main">
+
+    <div class="archiv_privil_item" data-ng-repeat="item in current_data track by $index " data-ng-cloak>
+        <div class="img_block"><img data-ng-src="[[ item.gift ? item.gift.thumbs.url_250x250 : item.thumbs.url_250x250 ]]" alt=""></div>
+        <span class="arch_name" data-ng-bind="item.gift ? item.gift.name : item.name"></span>
+        <span class="arch_bon"
+              data-ng-bind="(item.gift ? item.gift.points : item.points) + ' ' + plural(item.gift ? item.gift.points : item.points, ['бонус', 'бонуса', 'бонусов'])"></span>
+        <span class="when_use" data-ng-if="item.purchase_date">Использованно [[ item.purchase_date | date:'dd.MM.yyyy' ]]</span>
+        <span class="when_use" data-ng-if="!item.purchase_date">Срок действия истек</span>
+    </div>
+
+    <tools-pagination data-ng-cloak
+                      data-page="page"
+                      data-per-page="per_page"
+                      data-items="per_page * total_pages"
+                      data-on_change="change_page"></tools-pagination>
+
+</div>

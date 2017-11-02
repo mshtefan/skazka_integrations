@@ -1,0 +1,102 @@
+<div class="lk_top_info" data-ng-if="user() && !gift_detail">
+    <div class="lk_top_info_left">
+					<span class="clien_name" data-ng-bind="user().user.first_name + ','"></span>
+					<span class="clien_sub">
+						Получайте бонусы за свои обычные покупки в ИЛЬ ДЕ БОТЭ и обменивайте их на привилегии!
+					</span>
+    </div>
+    <div class="lk_top_info_right">
+        <div class="bonus_num ">
+            <span class="big" data-ng-bind="user().user_points.confirmed"></span>
+            <span class="text" style="width: 95px;">[[ plural(user().user_points.confirmed, ['бонус', 'бонуса', 'бонусов']) ]]<br> ИЛЬ ДЕ БОТЭ</span>
+        </div>
+        <div class="bonus_num pr_num" data-ng-if="gifts.avaliable.length">
+            <span class="big" data-ng-bind="gifts.avaliable.length"></span>
+            <span class="text">[[ plural(gifts.avaliable.length, ['доступная','доступные', 'доступных']) ]] [[ plural(gifts.avaliable.length, ['привилегия','привилегии', 'привилегий']) ]]</span>
+        </div>
+        <span class="lk_top_info_right_note">
+            Каждая привилегия может быть выбрана однократно, кроме детских игровых комнат.
+        </span>
+    </div>
+    <div class="list_privil">
+        <div class="list_privil_left">
+            <span class="lpl_head">Перечень привилегий</span>
+        </div>
+        <div class="list_privil_menu">
+            <a href="#" class="two_l" data-ng-class="{ act: type == 'avaliable' }"
+               data-ng-click="filterBy('avaliable');$event.preventDefault();">Выбирайте прямо<br>сейчас</a>
+            <a href="#" data-ng-class="{ act: type == 'not_avaliable' }"
+               data-ng-click="filterBy('not_avaliable');$event.preventDefault();">Накопите и получите</a>
+            <!--<a href="#">Эксклюзивные</a>-->
+        </div>
+    </div>
+</div>
+<div class="archiv_privil_main archiv_privil_lk_main" data-ng-if="!gift_detail">
+
+    <div class="archiv_privil_item" data-ng-repeat="gift in data" data-ng-if="user() && data"
+         data-ng-click="openGift(gift);$event.preventDefault();">
+        <div class="img_block">
+            <img data-ng-src="[[ gift.thumbs.url_250x250 ]]" alt="">
+        </div>
+        <!--<span class="company">Carolina Herrera</span>-->
+        <span class="arch_name" data-ng-bind="gift.name"></span>
+        <span class="arch_bon">[[ gift.points + ' ' + plural(gift.points, ['бонус', 'бонуса', 'бонусов']) ]]</span>
+        <a href="#" data-ng-bind="user().user_points.confirmed >= gift.points ? 'Получить' : 'Подробнее'"></a>
+    </div>
+
+</div>
+<div data-ng-if="gift_detail">
+    <a href="#" class="back_link no_ml" data-ng-click="$parent.gift_detail = null;$event.preventDefault();">Перечень
+        привилегий</a>
+    <div class="one_privil">
+        <div class="op_left">
+            <img data-ng-src="[[ $parent.gift_detail.thumbs.url_250x250 ]]" alt="">
+            <a href="#" data-ng-click="$parent.gift_ok = $parent.gift_detail;$event.preventDefault();"
+               data-ng-show="$parent.user().user_points.confirmed >= $parent.gift_detail.points">Получить</a>
+        </div>
+        <div class="op_right">
+            <span class="op_head">
+                [[ $parent.gift_detail.name ]]
+                <b>[[ $parent.gift_detail.points  + ' ' + plural($parent.gift_detail.points, ['бонус', 'бонуса', 'бонусов']) ]]</b>
+            </span>
+            <div class="op_info">
+                <span data-ng-bind-html="$parent.gift_detail.descr"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" data-ng-if="get_gift && get_gift.show">
+    <div class="overlay_iner overlay_congr">
+        <div class="congr_right">
+            <span class="congr_head">Спасибо! Вы выбрали привилегию!</span>
+            <span class="congr_text">С Вашего бонусного счета было списано [[ get_gift.points + ' ' + plural(get_gift.points, ['бонус', 'бонуса', 'бонусов']) ]]. Подробная информация по получению привилегии направлена Вам на электронную почту.</span>
+            <a href="#" data-ng-click="$parent.get_gift = null;$event.preventDefault();">Закрыть</a>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" data-ng-if="gift_ok">
+    <div class="overlay_iner overlay_congr">
+        <div class="congr_right">
+            <span class="congr_head">Пожалуйста, подтвердите получение привилегии</span>
+            <span class="congr_text">
+                С вашего бонусного счета будет списано [[ gift_ok.points  + ' ' + plural(gift_ok.points, ['бонус', 'бонуса', 'бонусов']) ]].<br>
+Приняли решение? Подтвердите, пожалуйста, свой выбор привилегии и списание бонусов.
+            </span>
+            <a href="#" data-ng-click="$parent.gift_purchase($parent.gift_ok);$event.preventDefault();"
+            >Продолжить</a>
+            <a href="#" data-ng-click="$parent.gift_ok = null;$event.preventDefault();" style="float: right;">Назад</a>
+
+        </div>
+    </div>
+</div>
+
+<div class="overlay" data-ng-if="gift_limit">
+    <div class="overlay_iner overlay_enter">
+        <h3>К сожалению, Вы не можете выбрать эту привилегию, так как уже получали её и превысили лимит. Пожалуйста,
+            выберите другие Привилегии из раздела Сокровищница привилегий.</h3>
+        <a href="#" class="sorry_return"
+           data-ng-click="$parent.gift_limit= false;$event.preventDefault();">Назад</a>
+    </div>
+</div>

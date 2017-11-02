@@ -1,0 +1,51 @@
+<div class="content_head history">История покупок</div>
+
+<h2 class="content_head history">
+  На Вашем бонусном счете: <span style="color: #B50069;">[[ user().user_points.confirmed ]] [[ plural(user().user_points.confirmed, ['бонус', 'бонуса', 'бонусов']) ]]</span>
+</h2>
+
+<span class="table_info">
+    [[ history && history().length ? 'Здесь Вы можете увидеть историю Ваших покупок, начисленных бонусов и полученных привилегий' : 'История пуста' ]]
+    </span>
+<div class="hist_main">
+  <table class="hist_table" cellspacing="0">
+    <tr data-ng-repeat="item in history_data">
+      <td>
+        <span data-ng-bind="history_date_format(item.action_date)"></span>
+      </td>
+      <td>
+        <span><b data-ng-bind="get_history_name(item)"></b></span>
+        <span data-ng-if="item.action === 'gift_purchase'">
+          <b>[[ item.name ]]</b>
+        </span>
+
+        <span data-ng-if="item.action === 'purchase'">
+          <b data-ng-bind="'Номер чека: ' + item.order_num" data-ng-click="history_item_click(item);" class="history_purchase_link"></b>
+        </span>
+
+        <span data-ng-show="item.action === 'purchase' && item.purchase_data" data-ng-repeat="info in item.purchase_data">
+          <b data-ng-bind="info.product.name"></b>
+        </span>
+
+      </td>
+      <td>
+
+        <span data-ng-bind="(item.points_delta > 0 ? '+' : '') + item.points_delta + ' ' + plural(item.points_delta, ['бонус', 'бонуса', 'бонусов'])" data-ng-class="{type_disabled : item.points_delta < 0}"></span>
+
+        <span data-ng-if="item.action === 'purchase'" class="type_disabled">
+         [[ item.price ]] руб.
+        </span>
+
+        <span data-ng-if="item.action === 'purchase' && item.purchase_data" class="type_disabled" data-ng-repeat="info in item.purchase_data">
+          [[ info.price ]] руб.
+        </span>
+
+      </td>
+    </tr>
+  </table>
+  <tools-pagination data-ng-if="history_data"
+                    data-page="page"
+                    data-items="history().length"
+                    data-per-page="per_page"
+                    data-on_change="change_page"></tools-pagination>
+</div>

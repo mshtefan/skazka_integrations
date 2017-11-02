@@ -1,0 +1,36 @@
+<h2 class="content_head">Форма обратной связи</h2>
+<div class="faq_main">
+
+    <div class="text">
+
+        <p>
+            Если ответа на Ваш вопрос нет среди часто задаваемых вопросов, пожалуйста, напишите нам через Форму обратной
+            связи или позвоните Персональному менеджеру по номеру:
+        </p>
+
+        <ul class="margin_10" style="padding-left: 15px;">
+            <li>в г.Санкт-Петербург и г.Краснодар: 8-800-2001-700, нажать «0» после гудка,</li>
+            <li>в г.Пермь: 8-342-214-42-82.</li>
+        </ul>
+
+        <p>
+            Вы получите оперативный ответ по СМС.
+        </p>
+
+    </div>
+
+    <div class="feedback_main">
+        <form action="#" class="fedback_form" data-ng-submit="sendFeedBack();$event.preventDefault();">
+            <div class="fb_row">
+                <label style="font-weight: bold;padding-left: 0;">Сообщение</label>
+                <textarea placeholder="Напишите сообщение" data-ng-model="msg"></textarea>
+            </div>
+            <div class="fb_row">
+                <div class="input_block">
+                    <input type="submit" value="Отправить" data-ng-disabled="!msg">
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

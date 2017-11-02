@@ -1,0 +1,99 @@
+<h2 style="font-size: 18px;">Изменить профиль</h2>
+
+<form action="#" data-ng-submit="edit();$event.preventDefault();" style="width: 650px;">
+    <div class="input_block">
+        <label for="name">Имя</label>
+        <input type="text" id="name" data-ng-model="form.first_name"
+               data-ng-disabled="user().user.first_name"
+               autocomplete="off" placeholder="Введите Ваше имя">
+    </div>
+    <div class="input_block">
+        <label for="s_name">Фамилия</label>
+        <input type="text" id="s_name" data-ng-model="form.last_name"
+               data-ng-disabled="user().user.last_name"
+               placeholder="Введите Вашу фамилию">
+    </div>
+    <div class="input_block">
+        <label for="date">Дата рождения</label>
+        <date-picker data-model="form.birth_date" id="date"></date-picker>
+    </div>
+    <div class="input_block">
+        <label for="woman">Пол</label>
+
+        <div class="input_gender">
+            <div class="check">
+                <input type="radio" id="woman" name="gender" data-ng-model="form.sex" value="2"
+                       data-ng-disabled="user().user.sex"/>
+                <label for="woman">Женский</label>
+            </div>
+            <div class="check">
+                <input type="radio" id="man" name="gender" data-ng-model="form.sex" value="1"
+                       data-ng-disabled="user().user.sex"/>
+                <label for="man">Мужской</label>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="input_block">
+        <label for="email">Email</label>
+        <input type="text" id="email" data-ng-model="form.email"
+               placeholder="Введите Ваш Email">
+    </div>
+
+    <div class="input_block">
+        <label for="phone">Телефон</label>
+        <input type="text" class="inp_ch" id="phone" data-ng-model="form.phone"
+               placeholder="+7 (___) ___ - __ - __" data-ui-mask="+7 (***) *** - ** - **">
+    </div>
+
+    <div class="input_block">
+        <label for="password">Пароль</label>
+        <input type="password" id="password" data-ng-model="form.password"
+               placeholder="Придумайте себе пароль для последующего входа">
+    </div>
+
+    <div class="input_block">
+
+        <label for="shop">Город</label>
+
+        <div class="select_block select_shop">
+
+            <select data-ng-model="form.city" id="city"
+                    data-ng-options="o as o for o in city_list"
+                    onclick="document.getElementById('city_label').style.display = 'none'">
+            </select>
+            <label for="city" id="city_label" style="top: 13px;">Выберите город</label>
+        </div>
+
+    </div>
+
+    <div class="input_block">
+
+        <label for="shop">Любимый магазин</label>
+
+        <div class="select_block select_shop">
+
+            <select data-ng-model="form.store" id="shop"
+                    data-ng-options="o.tag as o.name for o in get_stores(form.city)"
+                    onclick="document.getElementById('shop_label').style.display = 'none'">
+            </select>
+            <label for="shop" id="shop_label">Выберите
+                любимый магазин, в котором Вы будете<br>
+                забирать привилегии</label>
+        </div>
+
+    </div>
+
+    <div class="input_block input_block_entr">
+        <input type="submit" value="Сохранить" data-ng-disabled="!changed()">
+    </div>
+</form>
+
+<div class="overlay" data-ng-if="result_popup" style="z-index: 3;">
+    <div class="overlay_iner overlay_enter">
+        <h3 data-ng-bind="$parent.result_popup"></h3>
+        <a href="#" class="sorry_return"
+           data-ng-click="$parent.result_popup = false;$event.preventDefault();">ЗАКРЫТЬ</a>
+    </div>
+</div>

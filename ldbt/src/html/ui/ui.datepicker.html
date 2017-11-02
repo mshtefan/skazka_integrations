@@ -1,0 +1,18 @@
+<div class="input_date" data-ng-if="model">
+    <div class="select_block select_day" data-ng-class="{ disabled : $parent.disabled }">
+        <select data-ng-model="$parent.model[0]" data-ng-disabled="$parent.disabled"
+                data-ng-options="day for day in $parent.range(1, $parent.days[$parent.model[1] || 1])">
+            <option value="">День</option>
+        </select>
+    </div>
+    <div class="select_block select_month" data-ng-class="{ disabled : $parent.disabled }">
+        <select data-ng-model="$parent.model[1]" data-ng-options="+index as month for (index, month) in $parent.months" data-ng-disabled="$parent.disabled">
+            <option value="">Месяц</option>
+        </select>
+    </div>
+    <div class="select_block select_year" data-ng-class="{ disabled : $parent.disabled }">
+        <select data-ng-model="$parent.model[2]" data-ng-options="year for year in $parent.years" data-ng-disabled="$parent.disabled">
+            <option value="">Год</option>
+        </select>
+    </div>
+</div>
