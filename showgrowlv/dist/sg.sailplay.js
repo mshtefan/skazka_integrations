@@ -1873,7 +1873,8 @@ angular.module("ivpusic.cookie",["ipCookie"]),angular.module("ipCookie",["ng"]).
   angular.module('sg', [
     'sg.services',
     'sg.ui',
-    'sg.directives'
+    'sg.directives',
+    'ngSanitize'
   ])
 
     .directive('sailplaySg', ["api", "sp", function (api, sp) {
