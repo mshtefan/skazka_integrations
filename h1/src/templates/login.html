@@ -1,9 +1,20 @@
 <div class="dialog__shadow" data-bind="click: close">
     <div class="dialog login">
         <div class="dialog__header">
-            <a href="#" class="dialog__close" data-bind="click: close.bind($data, true)"></a>
+            <a href="#" class="dialog__close" data-bind="click: close.bind($data, true), visible: !preventClose()"></a>
             Sign in / Sign Up</div>
         <div class="dialog__body">
             <iframe data-bind="attr: { src: login_uri }" frameborder="0"></iframe>
+            <div data-bind="if: show_doi_message" class="doi-message">
+                <div class="dialog__text dialog__message">
+                    Please, check your email to complete the registration
+                </div>
+                <!-- ko if: redirect -->
+                <a data-bind="attr: { href: redirect_url }" class="btn">Continue</a>
+                <!-- /ko -->
+                <!-- ko ifnot: redirect -->
+                <a href="javascript:void(0)" class="btn" data-bind="click: close.bind($data, true)">Continue</a>
+                <!-- /ko -->
+            </div>
         </div>
     </div>

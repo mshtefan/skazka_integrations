@@ -70,7 +70,7 @@ class HistoryView {
                 }
             }
 
-            if (!registered) {
+            if (!registered && !sp.redirect) {
                 console.warn('Registered tag not exists');
                 return
             }

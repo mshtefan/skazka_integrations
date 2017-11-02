@@ -15,14 +15,29 @@ class CouponRedeemed extends Dialog {
 class CoupunsView {
     constructor(params) {
         this.coupons = ko.observableArray();
+        this.user_points = ko.observable();
+        this.user_currency = ko.observable();
+        this.filtered_coupons = ko.computed(() => {
+            return ko.utils.arrayFilter(this.coupons(), item => {
+                return item.type == 'coupon' && item.category == this.user_currency()
+            })
+        })
 
-        sp.user.subscribe(() => {
+        sp.user.subscribe(data => {
+            if (!data) return
+
+            this.user_points(sp.user().user_points.confirmed());
             sp.getGifts()
                 .then(data => {
-                    this.coupons(ko.utils.arrayFilter(data.gifts, item => {
-                        return item.type == 'coupon'
-                    }))
+                    ko.utils.arrayForEach(sp.custom_variables(), item => {
+                        switch (item.name) {
+                            case 'Currency':
+                                this.user_currency(item.value)
+                                break;
+                        }
+                    })
 
+                    this.coupons(data.gifts)
                     setTimeout(this.initOwl, 50)
                 })
         })
@@ -42,7 +57,7 @@ class CoupunsView {
             $('.__sailplay-owl-carousel').find('.__sailplay-owl-stage-outer').remove();
             $('.__sailplay-owl-carousel').find('.__sailplay-owl-nav').remove()
             $('.__sailplay-owl-carousel').find('.__sailplay-owl-dots').remove()
-            
+
             $('.__sailplay-owl-carousel').trigger('destroy.owl.carousel');
             $('.__sailplay-owl-carousel').owlCarousel({
                 items: 1,

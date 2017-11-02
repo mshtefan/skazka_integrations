@@ -55,7 +55,10 @@ class ProfileEditor extends Dialog {
     init(preventClose) {
         this.$template = $(require('@templates/edit_profile.html'));
 
-        this.preventClose = preventClose;
+        this.user_currency = ko.observable();
+        this.user_currencies = ko.observableArray();
+
+        this.preventClose = ko.observable(preventClose);
         this.user = ko.mapping.fromJS(ko.mapping.toJS(sp.user().user));
 
         this.user.email.extend({
@@ -95,28 +98,45 @@ class ProfileEditor extends Dialog {
             city: this.city
         });
 
-        ko.utils.arrayForEach(sp.custom_variables(), item => {
-            switch (item.name) {
-                case 'Address 1':
-                    this.address_line_1(item.value);
-                    break;
-                case 'Address 2':
-                    this.address_line_2(item.value);
-                    break;
-                case 'Postcode':
-                    this.post_code(item.value);
-                    break;
-                case 'State/Province':
-                    this.state(item.value);
-                    break;
-                case 'City':
-                    this.city(item.value);
-                    break;
-                case 'Country':
-                    this.country(item.value);
-                    break;
-            }
+        window.suka = this;
+
+        sp.getGiftsCategories()
+            .then(data => {
+                this.user_currencies(data.categories);
+                ko.utils.arrayForEach(sp.custom_variables(), item => {
+                    switch (item.name) {
+                        case 'Address 1':
+                            this.address_line_1(item.value);
+                            break;
+                        case 'Address 2':
+                            this.address_line_2(item.value);
+                            break;
+                        case 'Postcode':
+                            this.post_code(item.value);
+                            break;
+                        case 'State/Province':
+                            this.state(item.value);
+                            break;
+                        case 'City':
+                            this.city(item.value);
+                            break;
+                        case 'Country':
+                            this.country(item.value);
+                            break;
+                        case 'Currency':
+                            this.user_currency(item.value)
+                            break;
+                    }
+                })
+            })
+    }
+
+    getCurrencyName() {
+        let currency = ko.utils.arrayFirst(this.user_currencies(), item => {
+            return item.id == this.user_currency()
         })
+
+        return currency && currency.name || ''
     }
 
     update() {
@@ -129,10 +149,11 @@ class ProfileEditor extends Dialog {
             'State/Province': this.state() || '',
             'Postcode': this.post_code() || '',
             'City': this.city() || '',
-            'Country': this.country() || ''
+            'Country': this.country() || '',
+            'Currency': this.user_currency() || ''
         });
 
-        this.preventClose = false;
+        this.preventClose(false);
         this.close();
     }
 }
@@ -153,7 +174,7 @@ class ProfileView {
 
             if (sp.auth_hash) {
                 sp.getCustomVars({
-                    names: JSON.stringify(['Address 1', 'Address 2', 'State/Province', 'Postcode', 'City', 'Country']),
+                    names: JSON.stringify(['Address 1', 'Address 2', 'State/Province', 'Postcode', 'City', 'Country', 'Currency']),
                 }).then(data => {
                     ko.utils.arrayForEach(data.vars, item => {
                         switch (item.name) {

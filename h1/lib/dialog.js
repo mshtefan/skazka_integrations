@@ -1,5 +1,7 @@
 export class Dialog {
     constructor(options) {
+        this.preventClose = ko.observable(true);
+
         if (this.init) this.init(options)
         else 
             throw new Error('You need to implement init() method')
@@ -23,8 +25,8 @@ export class Dialog {
     }
 
     close(obj, ev) {
-        if (this.preventClose || obj !== true && ev && !/shadow/.test(ev.target.className))
-            return
+        if (this.preventClose() || obj !== true && ev && !/shadow/.test(ev.target.className))
+            return true
 
         $('body').removeClass('__sailplay-no-scroll');
         this.$template.closest('.__sailplay-dialog__shadow').css('opacity', 0);

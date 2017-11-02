@@ -11,6 +11,9 @@
             this.history = ko.observableArray();
             this.tags = ko.observableArray();
             this.force_close_popup = ko.observable();
+            this.show_doi_message = ko.observable();
+            this.actions = ko.observable();
+            this.actions_config = ko.observable();
 
             this.latest_user_options = {};
             this.latest_tags_options = {};
@@ -26,7 +29,7 @@
 
             self.inited(true);
             self.options.partner_id = 1781;
-            self.options.domain = 'https://sailplay.net';
+            self.options.domain = options.domain || 'https://sailplay.net';
             self.auth_hash = options.auth_hash;
 
             jsonp({
@@ -36,6 +39,18 @@
                     dep_id: options.dep_id || 1,
                 },
                 success: data => {
+                    if (window._config) {
+                        jsonp({
+                            url: `${self.options.domain}${data.config.urls.loyalty_page_config_by_name}`,
+                            data: {
+                                name: window._config
+                            },
+                            success: config_data => {
+                                data.config.partner.loyalty_page_config = config_data.config.config;
+                                self.config(data.config);                                
+                            }
+                        })
+                    } else
                     self.config(data.config);
                 }
             })
@@ -67,6 +82,42 @@
                         if (this.user().user.phone())
                             this.user_had_phone = this.user().user.phone()
                         resolve(data);
+                    }
+                })
+            })
+        }
+
+        getCustomActions() {
+            if (!this.inited())
+                throw new Error('sp not inited');
+
+            return new Promise((resolve, reject) => {
+                jsonp({
+                    url: `${this.options.domain}${this.config().urls.actions.custom.list}`,
+                    data: {
+                        auth_hash: this.auth_hash
+                    },
+                    success: resolve
+                })
+            })
+        }
+
+        getActions() {
+            if (!this.inited())
+                throw new Error('sp not inited');
+
+            return new Promise((resolve, reject) => {
+                jsonp({
+                    url: `${this.options.domain}${this.config().urls.actions.load}`,
+                    data: {
+                        auth_hash: this.auth_hash
+                    },
+                    success: data => {
+                        this.actions(data.data);
+
+                        let config = {...data};
+                        this.actions_config(config.data);
+                        resolve(data)
                     }
                 })
             })
@@ -126,6 +177,25 @@
             })
         }
 
+        getGiftsCategories() {
+            if (!this.inited())
+                throw new Error('sp not inited');
+
+            return new Promise((resolve, reject) => {
+
+                jsonp({
+                    url: `${this.options.domain}${this.config().urls.gifts.categories_list}`,
+                    data: {
+                        // auth_hash: this.auth_hash
+                    },
+                    success: result => {
+                        // this.history(result.history)
+                        resolve(result)
+                    }
+                })
+            })            
+        }
+
         tagsList(options) {
             if (!this.inited())
                 throw new Error('sp not inited');
@@ -147,6 +217,22 @@
             })
         }
 
+        tagsExist(tags_arr = [], auth_hash) {
+            if (!this.inited())
+                throw new Error('sp not inited');            
+
+            return new Promise((resolve, reject) => {
+                jsonp({
+                    url: `${this.options.domain}${this.config().urls.tags.exist}`,
+                    data: {
+                        tags: JSON.stringify(tags_arr),
+                        auth_hash: auth_hash || this.auth_hash
+                    },
+                    success: resolve
+                })
+            })
+        }
+
         tagsAdd(options) {
             if (!this.inited())
                 throw new Error('sp not inited');
@@ -164,7 +250,7 @@
                         resolve(result);
                     }
                 })
-            })            
+            })
         }
 
         updateUserInfo(data) {
@@ -232,7 +318,7 @@
                     },
                     success: resolve
                 })
-            })                
+            })
         }
 
         purchaseGift(gift_data) {
@@ -272,6 +358,90 @@
                 })
             })
         }
+
+        popupWindow(url, title, w, h) {
+            var width, height, left, top;
+            if (w !== undefined && h !== undefined) {
+                width = w;
+                height = h;
+                left = (screen.width / 2) - (w / 2);
+                top = (screen.height / 2) - (h / 2);
+            } else {
+                width = screen.width / 2;
+                height = screen.height / 2;
+                left = width - (width / 2);
+                top = height - (height / 2);
+            }
+
+            return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
+        };
+
+        openSocialRegNeedPopup(action) {
+            var w;
+            if (action.socialType == 'vk')
+                w = this.popupWindow(this.actions_config().social.vk.authUrl, 'social_reg', 840, 400);
+            else if (action)
+                w = this.popupWindow(this.actions_config().social[action.socialType].authUrl, 'social_reg');
+
+            console.log(this.actions_config().social[action.socialType].authUrl, 'social_reg'
+            )
+            var checkPopupInterval = setInterval(() => {
+                if (w == null || w.closed) {
+                    this.performComplete()
+                    clearInterval(checkPopupInterval);
+                }
+            }, 100);
+        }
+
+        performAction(action) {
+            if (action.socialType && this.actions_config().connectedAccounts) {
+                if (this.actions_config().connectedAccounts[action.socialType] && action.socialType != 'tw' && action.socialType != 'gp') {
+                    this.openSocialRegNeedPopup(action);
+                } else {
+                    this.share(action);
+                }
+            } else if (!action.socialType && !action.content) {
+                var frameUrl = `${this.options.domain}/popup/${this.config().partner.id}/widgets/custom/${action.type}/?auth_hash=${this.auth_hash}`;
+                frameUrl += '&lang=' + this.config().lang || 'en';
+                frameUrl += '&from_sdk=0';
+                var actionFrame = this.popupWindow(frameUrl, 'SailPlay', 600, 400);
+                var checkPopupInterval = setInterval(() => {
+                    if (actionFrame == null || actionFrame.closed) {
+                        this.performComplete()
+                        clearInterval(checkPopupInterval);
+                    }
+                }, 200);
+            } else {
+                let name = this.config_name;
+                let config = this.config;
+
+                // iframe.style.backgroundColor = "transparent";
+                // iframe.frameBorder = "0";
+                // iframe.allowTransparency="true";
+
+                var iframeUrl = `${this.options.domain}${this.config().urls.actions.custom.render.replace(':action_id', action.id)}?auth_hash=${this.auth_hash}&lang=${this.options.lang || 'en'}`
+            };
+        }
+
+        share(action) {
+            var frameUrl = `${this.options.domain}/js-api/${this.config().partner.id}/actions/social-widget/?auth_hash=${this.auth_hash}`;
+            frameUrl += '&socialType=' + action.socialType + '&action=' + action.action + '&link=' + action.shortLink + '&pic=' + (this.actions_config().partnerCustomPic ? this.actions_config().partnerCustomPic : this.config().partner.logo);
+            frameUrl += '&msg=' + this.actions_config().messages[action.action];
+            frameUrl += '&_actionId=' + action['_actionId'];
+
+            if (action.action == 'purchase') {
+                frameUrl += '&purchasePublicKey=' + this.actions_config().purchasePublicKey;
+            }
+
+            var socialFrame = this.popupWindow(frameUrl, 'social_action', 200, 210);
+            var checkPopupInterval = setInterval(() => {
+                if (socialFrame == null || socialFrame.closed) {
+                    this.performComplete()
+                    clearInterval(checkPopupInterval);
+                }
+            }, 200);
+
+        };
     }
 
     let sp = new SailPlay()

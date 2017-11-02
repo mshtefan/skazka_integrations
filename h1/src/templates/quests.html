@@ -1,0 +1,24 @@
+<div class="quests">
+    <div class="quests__title">More way to earn</div>
+    <div class="quests__text">Earn <strong>Bonus Points</strong> when you complete these actions below</div>
+    <div class="quests__list" data-bind="foreach: quests">
+        <!-- ko if: type != 'static_page' -->
+        <div class="quests__item">
+            <div class="quests__item-img" data-bind="style: { backgroundImage: 'url(\''+ $parent.getIcon($data) + '\')' }"></div>            
+            <div class="quests__item-title"><strong data-bind="text: $parent.getTitle($data)"></strong></div>
+            <div class="quests__item-text" data-bind="text: $parent.getDesc($data)">Text</div>
+            <div class="quests__item-points"><strong data-bind="text: points"></strong> <strong>points</strong></div>
+            <a href="javascipr:void(0)" data-bind="click: $parent.perform.bind($data)" class="btn">View Quest</a>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: type == 'static_page' -->
+        <div class="quests__item">
+            <div class="quests__item-img" data-bind="style: { backgroundImage: 'url(\''+ $data.icon + '\')' }"></div>
+            <div class="quests__item-title"><strong data-bind="text: name"></strong></div>
+            <div class="quests__item-text" data-bind="text: description">Text</div>
+            <div class="quests__item-points"><strong data-bind="text: points"></strong> <strong>points</strong></div>
+            <a href="javascipr:void(0)" class="btn" data-bind="text: button_text, attr: { href: content.url }"></a>
+        </div>
+        <!-- /ko  -->
+    </div>
+</div>

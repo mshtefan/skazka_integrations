@@ -15,11 +15,6 @@
         border-color: light-red !important;
     }
 
-    .disabled {
-        opacity: .4;
-        pointer-events: none;
-    }
-
     iframe {
         border: none;
         position: relative;
@@ -58,6 +53,17 @@
 
     &__text {
         text();
+    }
+
+    .doi-message {
+        padding: 2em;
+        text-align: center;
+    }
+
+    &__message {
+        font-size: 1.5em;
+        padding: 2em;
+        padding-top: 0;
     }
 
     &__body {
@@ -155,11 +161,18 @@
 
         .select-box {
             box-sizing: border-box;
-            font-size: vw(24px);
             border: 1px solid border;
             border-radius: 5px;
             padding: vw(5px) vw(10px);
             position: relative;
+            font-size: vw(24px);
+            color: black;
+
+            select {
+                absolute: left top;
+                size(100%);
+                opacity: 0;                
+            }
 
             &:after {
                 absolute: right vw(10px) top 50%;

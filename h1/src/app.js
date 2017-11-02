@@ -13,7 +13,11 @@ let sp = require('@lib/sp');
 class Login extends Dialog {
     init(redirect) {
         this.$template = $(require('@templates/login.html'));
-        sp.redirect = 1;
+        this.show_doi_message = ko.observable();
+        this.redirect_url = sp.config().partner.loyalty_page_config.lp_url;
+        sp.redirect = redirect;
+        this.redirect = redirect;
+        this.preventClose(!redirect);
 
         let params = {
             background: 'transparent',
@@ -23,7 +27,7 @@ class Login extends Dialog {
             texts: JSON.stringify({
                 'email_placeholder': ' ',
                 'password_placeholder': ' ',
-                'login': 'Sign In'
+                'login': 'Continue'
             })
         }
 
@@ -35,39 +39,65 @@ class Login extends Dialog {
             params_string += key + "=" + encodeURIComponent(params[key]);
         }
 
-        this.login_uri = ko.observable('https://sailplay.net/users/auth-page?' + params_string);
+        this.login_uri = ko.observable(sp.options.domain + '/users/auth-page?' + params_string);
         window.addEventListener('message', this.onMessage, false)
         sp.force_close_popup.subscribe(() => {
             this.close();
+        })
+
+        sp.show_doi_message.subscribe(data => {
+            this.$template.find('iframe').remove();
+            this.preventClose(data);
+            this.show_doi_message(1);
         })
     }
 
     onMessage(event) {
         let data = ko.utils.parseJson(event.data)
 
+        function authorize(auth_hash) {
+            cookie.set('sp_auth_hash', auth_hash);
+            sp.auth_hash = auth_hash;
+
+            sp.getUserInfo({
+                user_status: 1
+            }).then(() => {
+                sp.tagsAdd({
+                    tags: sp.config().partner.loyalty_page_config.registered_tag
+                }).then(() => {
+                    if (sp.redirect) {
+                        location.assign(sp.config().partner.loyalty_page_config.lp_url);
+                        return
+                    }
+                })
+
+                sp.tagsList({
+                    show_calculated_values: 1
+                })
+            });
+
+            sp.getUserHistory();
+        }
+
         if (data && data.name) {
             if (data.name == 'login.check' && data.auth_hash && data.auth_hash != 'None') {
-                if (sp.redirect) {
-                    location.assign(sp.config().partner.loyalty_page_config.lp_url);
-                    return
-                }
-
-                sp.force_close_popup(1);
-                cookie.set('sp_auth_hash', data.auth_hash);
-                sp.auth_hash = data.auth_hash;
-
-                sp.getUserInfo({
-                    user_status: 1
-                }).then(() => {
-                    sp.tagsAdd({
-                        tags: sp.config().partner.loyalty_page_config.registered_tag
+                sp.tagsExist([sp.config().partner.loyalty_page_config.doi_tag], data.auth_hash)
+                    .then(result => {
+                        if (!result.tags[0].exist) {
+                            if (!sp.redirect) {
+                                sp.show_doi_message(0)
+                                authorize(data.auth_hash);
+                            } else {
+                                sp.show_doi_message(1)
+                                cookie.set('sp_auth_hash', data.auth_hash);                                
+                            }
+                            return
+                        } else {
+                            authorize(data.auth_hash);
+                            sp.force_close_popup(1);
+                        }
                     })
-                    sp.tagsList({
-                        show_calculated_values: 1
-                    })
-                });
 
-                sp.getUserHistory();
             } else if (sp.auth_hash) {
                 sp.user(false)
             }
@@ -93,8 +123,9 @@ class MainView {
                 return
 
             if (!sp.auth_hash) {
-                if (window._prompt_login)
+                if (window._prompt_login) {
                     new Login()
+                }
             }
             if (sp.auth_hash) {
                 sp.getUserInfo({
@@ -123,13 +154,15 @@ window._logout = () => {
     req.width = 0;
     req.height = 0;
     req.style.border = 'none';
-    req.src = 'https://sailplay.net/users/logout';
+    req.src = sp.options.domain + '/users/logout';
     document.body.appendChild(req);
     req.onload = () => {
         cookie.remove('sp_auth_hash')
         document.body.removeChild(req);
         sp.auth_hash = '';
         sp.user(false);
+        if (sp.config().partner.loyalty_page_config.logout_url)
+            location.assign(sp.config().partner.loyalty_page_config.lp_url)
     }
 }
 
@@ -140,18 +173,25 @@ for (let component of [
     'questions',
     'banner',
     'history',
-    'coupons'
+    'coupons',
+    'quests'
 ]) {
     ko.components.register(`sailplay-${component}`, require(`./components/${component}`))
 }
 
+let template_name = 'magic';
+if (window._quests)
+    template_name = 'quests_page'
+
 ko.components.register('sailplay-magic', {
     viewModel: {
         createViewModel: () => {
-            return new MainView({})
+            return new MainView({
+                domain: window._domain
+            })
         }
     },
-    template: require('@templates/magic.html')
+    template: require(`@templates/${template_name}.html`)
 });
 
 ko.applyBindings();
