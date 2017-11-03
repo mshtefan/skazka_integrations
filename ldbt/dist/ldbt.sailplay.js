@@ -47,6 +47,30 @@ try {
   module = angular.module('htmlTemplates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('/html/ui/ui.datepicker.html',
+    '<div class="input_date" data-ng-if="model"><div class="select_block select_day" data-ng-class="{ disabled : $parent.disabled }"><select data-ng-model="$parent.model[0]" data-ng-disabled="$parent.disabled" data-ng-options="day for day in $parent.range(1, $parent.days[$parent.model[1] || 1])"><option value="">День</option></select></div><div class="select_block select_month" data-ng-class="{ disabled : $parent.disabled }"><select data-ng-model="$parent.model[1]" data-ng-options="+index as month for (index, month) in $parent.months" data-ng-disabled="$parent.disabled"><option value="">Месяц</option></select></div><div class="select_block select_year" data-ng-class="{ disabled : $parent.disabled }"><select data-ng-model="$parent.model[2]" data-ng-options="year for year in $parent.years" data-ng-disabled="$parent.disabled"><option value="">Год</option></select></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('htmlTemplates');
+} catch (e) {
+  module = angular.module('htmlTemplates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('/html/ui/ui.menu.html',
+    '<div><div class="main-wrapper _js_main-wrapper"><div class="newMainMenu _js_newMainMenu _js_level_navigation menu_closed"><div class="newMainMenu__shadow" style="display: none;"></div><span class="menu-close _js_menu-close"></span><ul class="newMainMenu__list"><li data-ng-if="!item.hide" data-ng-repeat="item in model track by $index" class="newMainMenu__item _js_highlighted_item"><a class="newMainMenu__link linkMenu _js_mm_item" href="/shop/" data-ng-bind="item.label" data-ng-class="{type_active_header: item.active}" data-ng-href="[[ generateUrl(item.key) ]]"></a></li><li class="newMainMenu__item _js_highlighted_item _withSeparator"><a class="newMainMenu__link linkMenu _js_mm_item" data-ng-click="exit();$event.preventDefault();">ВЫХОД</a></li></ul></div><div class="sub_menu" data-ng-if="getSubmenu()"><a href="#" data-ng-if="!item.hide" data-ng-repeat="item in getSubmenu()" data-ng-bind="item.label" data-ng-class="{type_active: item.active}" data-ng-href="[[ generateUrl(item.key) ]]"></a></div></div></div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('htmlTemplates');
+} catch (e) {
+  module = angular.module('htmlTemplates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/html/routes/routes.actions.html',
     '<div data-ng-show="!currentTest"><h2 class="content_head">Получите больше бонусов</h2><span class="text">Выполняйте задания и получайте за них бонусы, которые Вы можете потратить на привилегии!</span> <span class="text" data-ng-show="hidden" style="margin-top: 20px;">Подождите, пожалуйста, задания загружаются.</span><div class="select_qust" data-ng-show="!hidden"><div class="sq_item" data-ng-repeat="action in actions()"><div class="sq_item_left"><span class="name" data-ng-bind="transformTitle(action)"></span> <span class="sum_bonus">[[ action.points ]] бонусов</span> <a href="#"><span data-ng-if="action.socialType && user" href="#" class="tasks-cell__iframe-wrap" data-sp-action="[[ action._actionId ]]" data-styles="[[ css_link ]]">Получить</span></a></div><div class="sq_item_right [[ getIcon(action) ]]"></div></div><div class="sq_item" data-ng-repeat="item in testsData" data-ng-if="!item.exist"><div class="sq_item_left"><span class="name" data-ng-bind="item.name"></span> <span class="sum_bonus">[[ item.points + \' \' + (plural(item.points, [\'бонус\', \'бонуса\', \'бонусов\']))]]</span> <a href="#" class="bg" data-ng-click="openTest(item);$event.preventDefault();">Пройти</a></div><div class="sq_item_right sir_qust"></div></div></div></div><test-cmp data-ng-show="currentTest" data-model="currentTest" data-on-finish="onFinish"></test-cmp><div class="overlay" data-ng-show="finish_test"><div class="overlay_iner overlay_enter"><h3 class="mt_n">Спасибо за Ваше участие! Бонусы будут начислены на Ваш счет!</h3><a href="#" data-ng-click="$event.preventDefault();finish_test = false;" class="sorry_return">Назад</a></div></div>');
 }]);
@@ -184,30 +208,6 @@ module.run(['$templateCache', function($templateCache) {
 }]);
 })();
 
-(function(module) {
-try {
-  module = angular.module('htmlTemplates');
-} catch (e) {
-  module = angular.module('htmlTemplates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('/html/ui/ui.datepicker.html',
-    '<div class="input_date" data-ng-if="model"><div class="select_block select_day" data-ng-class="{ disabled : $parent.disabled }"><select data-ng-model="$parent.model[0]" data-ng-disabled="$parent.disabled" data-ng-options="day for day in $parent.range(1, $parent.days[$parent.model[1] || 1])"><option value="">День</option></select></div><div class="select_block select_month" data-ng-class="{ disabled : $parent.disabled }"><select data-ng-model="$parent.model[1]" data-ng-options="+index as month for (index, month) in $parent.months" data-ng-disabled="$parent.disabled"><option value="">Месяц</option></select></div><div class="select_block select_year" data-ng-class="{ disabled : $parent.disabled }"><select data-ng-model="$parent.model[2]" data-ng-options="year for year in $parent.years" data-ng-disabled="$parent.disabled"><option value="">Год</option></select></div></div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('htmlTemplates');
-} catch (e) {
-  module = angular.module('htmlTemplates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('/html/ui/ui.menu.html',
-    '<div><div class="header"><a href="#/" class="logo"></a><div class="top_line"></div><div class="menu"><a href="#" data-ng-if="!item.hide" data-ng-repeat="item in model track by $index" data-ng-bind="item.label" data-ng-class="{type_active: item.active}" data-ng-href="[[ generateUrl(item.key) ]]"></a><div class="user_menu"><a href="#" data-ng-click="exit();$event.preventDefault();">выход</a></div></div><div class="sub_menu"><a href="#" data-ng-if="getSubmenu() && !item.hide" data-ng-repeat="item in getSubmenu()" data-ng-bind="item.label" data-ng-class="{type_active: item.active}" data-ng-href="[[ generateUrl(item.key) ]]"></a></div></div><div class="newHeader _js_newHeader _hasPromoBar"><div class="newHeader__main"><div class="newHeader__main__in _js_newHeader__main__in"><span class="newHeader__burgerWrap _js_newHeader__burger"><span class="newHeader__burger"></span></span> <a class="newHeader__logo" href="/"></a></div></div></div><div class="main-wrapper _js_main-wrapper"><div class="newMainMenu _js_newMainMenu _js_level_navigation menu_closed"><div class="newMainMenu__shadow" style="display: none;"></div><span class="menu-close _js_menu-close"></span><ul class="newMainMenu__list"><li class="newMainMenu__item _js_highlighted_item"><a class="newMainMenu__link linkMenu _js_mm_item" href="/shop/">Online-магазин</a><div class="submenu"><ul><li></li><li></li><li></li></ul></div></li><li class="newMainMenu__item _js_highlighted_item _selected _active"><a class="newMainMenu__link linkMenu _js_mm_item" href="/shop/brands/">Бренды</a></li><li class="newMainMenu__item _js_highlighted_item"><a class="newMainMenu__link linkMenu _js_mm_item" href="/company/actions/">Акции</a></li><li class="newMainMenu__item _js_highlighted_item"><a class="newMainMenu__link linkMenu _js_mm_item" href="/company/news/">Новости</a></li><li class="newMainMenu__item _js_highlighted_item"><a class="newMainMenu__link linkMenu _js_mm_item" href="/company/shops/">Магазины</a></li><li class="newMainMenu__item _js_highlighted_item _noPointer"><a class="newMainMenu__link linkMenu _js_mm_item" href="#">Сервисы</a></li><li class="newMainMenu__item _js_highlighted_item _withSeparator"><a class="newMainMenu__link linkMenu _js_mm_item" href="/krasota-i-stil-zhizni/">Вдохновляйся</a></li></ul></div></div></div>');
-}]);
-})();
-
 (function () {
 
   angular.module('iledebeaute', [
@@ -225,7 +225,7 @@ module.run(['$templateCache', function($templateCache) {
     'htmlTemplates'
   ])
 
-    .run(function (sp, config, $location, api, $window, $timeout, routeService, $rootScope, tagS, $http) {
+    .run(["sp", "config", "$location", "api", "$window", "$timeout", "routeService", "$rootScope", "tagS", "$http", function (sp, config, $location, api, $window, $timeout, routeService, $rootScope, tagS, $http) {
 
       if (config.auth_hash && config.auth_hash != 'None') {
         sp.config().auth_hash = config.auth_hash;
@@ -322,14 +322,24 @@ module.run(['$templateCache', function($templateCache) {
         $('.preloader').hide()
       });
 
-    })
+    }])
 
-    .directive('iledebeaute', function (api, $location, $rootScope) {
+    .directive('iledebeaute', ["api", "$location", "$rootScope", function (api, $location, $rootScope) {
 
       return {
         restrict: 'E',
         replace: false,
         template: '' +
+          '<div class="newHeader _js_newHeader _hasPromoBar">'+
+            '<div class="newHeader__main">'+
+                '<div class="newHeader__main__in _js_newHeader__main__in">' +
+                    '<span class="newHeader__burgerWrap _js_newHeader__burger">' +
+                        '<span class="newHeader__burger"></span>' +
+                    '</span>' +
+                    '<a class="newHeader__logo" href="/"></a>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
         '<div data-ng-if="ready">' +
         '<auth></auth>' +
         ' <div class="iner_block">' +
@@ -359,7 +369,7 @@ module.run(['$templateCache', function($templateCache) {
         }
       }
 
-    });
+    }]);
 
 
 }());
@@ -367,7 +377,7 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('iledebeaute.directives.authorization', [])
 
-    .directive('auth', function (config, api, $location, tagS, authApi, countries, sp, userService, $window) {
+    .directive('auth', ["config", "api", "$location", "tagS", "authApi", "countries", "sp", "userService", "$window", function (config, api, $location, tagS, authApi, countries, sp, userService, $window) {
       return {
         restrict: 'E',
         replace: true,
@@ -702,14 +712,14 @@ module.run(['$templateCache', function($templateCache) {
         }
       }
 
-    });
+    }]);
 
 }());
 (function () {
 
   angular.module('iledebeaute.directives.test', [ ])
 
-    .directive('testCmp', function (config, $q, api, tools) {
+    .directive('testCmp', ["config", "$q", "api", "tools", function (config, $q, api, tools) {
       return {
         restrict: 'E',
         replace: true,
@@ -795,14 +805,14 @@ module.run(['$templateCache', function($templateCache) {
         }
       }
 
-    });
+    }]);
 
 }());
 (function () {
 
   angular.module('core.api', [])
 
-    .factory('sp_resolve', function ($q, sp, config) {
+    .factory('sp_resolve', ["$q", "sp", "config", function ($q, sp, config) {
 
       return function () {
 
@@ -838,7 +848,7 @@ module.run(['$templateCache', function($templateCache) {
 
       }
 
-    })
+    }])
 
     .service('routeService', function () {
 
@@ -880,7 +890,7 @@ module.run(['$templateCache', function($templateCache) {
 
     })
 
-    .service('sp', function ($window, $log) {
+    .service('sp', ["$window", "$log", function ($window, $log) {
 
       if (!$window.SAILPLAY) {
         $log.error('SAILPLAY HUB not found');
@@ -889,9 +899,9 @@ module.run(['$templateCache', function($templateCache) {
 
       return $window.SAILPLAY;
 
-    })
+    }])
 
-    .service('api', function (sp, $q, $http, config, $location) {
+    .service('api', ["sp", "$q", "$http", "config", "$location", function (sp, $q, $http, config, $location) {
 
       var self = this;
 
@@ -1267,7 +1277,7 @@ module.run(['$templateCache', function($templateCache) {
         };
       };
 
-    })
+    }])
 
     .service('plural', function () {
       var self = this;
@@ -1381,19 +1391,19 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('routes.actions', [])
 
-    .config(function ($routeProvider, config) {
+    .config(["$routeProvider", "config", function ($routeProvider, config) {
 
       $routeProvider.when('/actions', {
 
         controller: 'Actions',
         templateUrl: '/html/routes/routes.actions.html',
         resolve: {
-          checkout: function (api, $location, routeService) {
+          checkout: ["api", "$location", "routeService", function (api, $location, routeService) {
             $('.preloader').show();
             if ($location.path()) {
               routeService.setPrev($location.path());
             }
-          },
+          }],
           loadInfo: ['api', function (api) {
             return api.user.info();
           }],
@@ -1406,9 +1416,9 @@ module.run(['$templateCache', function($templateCache) {
 
       });
 
-    })
+    }])
 
-    .controller('Actions', function (sp, api, $scope, tools, actionService, $timeout, plural) {
+    .controller('Actions', ["sp", "api", "$scope", "tools", "actionService", "$timeout", "plural", function (sp, api, $scope, tools, actionService, $timeout, plural) {
       $scope.hidden = true;
       $scope.currentTest = null;
       $scope.css_link = actionService.getActionsCssLink();
@@ -1492,7 +1502,7 @@ module.run(['$templateCache', function($templateCache) {
       $scope.transformTitle = actionService.getTitle;
       $scope.getIcon = actionService.getIcon;
 
-    });
+    }]);
 
 }());
 
@@ -1500,21 +1510,21 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('routes.auth', [])
 
-  .config(function($routeProvider, config){
+  .config(["$routeProvider", "config", function($routeProvider, config){
 
     $routeProvider.when('/', {
 
       controller: 'Auth',
       resolve: {
-        checkout: function (api, $location, routeService) {
+        checkout: ["api", "$location", "routeService", function (api, $location, routeService) {
           $('.preloader').show();
           $location.path('/menu');
-        }
+        }]
       }
 
     });
 
-  })
+  }])
 
   .controller('Auth', function(){
     $('.preloader').hide();
@@ -1526,30 +1536,30 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('routes.faq', ['ngSanitize'])
 
-    .config(function ($routeProvider, config) {
+    .config(["$routeProvider", "config", function ($routeProvider, config) {
 
       $routeProvider.when('/faq', {
 
         controller: 'Faq',
         templateUrl: '/html/routes/routes.faq.html',
         resolve: {
-          checkout: function (api, $location, routeService) {
+          checkout: ["api", "$location", "routeService", function (api, $location, routeService) {
             $('.preloader').show();
             if ($location.path()) {
               routeService.setPrev($location.path());
             }
             $('.preloader').hide();
-          },
+          }],
         }
 
       });
 
-    })
+    }])
 
-    .controller('Faq', function ($scope, faqService) {
+    .controller('Faq', ["$scope", "faqService", function ($scope, faqService) {
       $('.preloader').hide();
       $scope.data = faqService.data();
-    });
+    }]);
 
 }());
 
@@ -1557,27 +1567,27 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('routes.feedback', [])
 
-    .config(function ($routeProvider, config) {
+    .config(["$routeProvider", "config", function ($routeProvider, config) {
 
       $routeProvider.when('/feedback', {
 
         controller: 'Feedback',
         templateUrl: '/html/routes/routes.feedback.html',
         resolve: {
-          checkout: function (api, $location, routeService) {
+          checkout: ["api", "$location", "routeService", function (api, $location, routeService) {
             $('.preloader').show();
             if ($location.path()) {
               routeService.setPrev($location.path());
             }
             $('.preloader').hide();
-          }
+          }]
         }
 
       });
 
-    })
+    }])
 
-    .controller('Feedback', function ($scope, api, faqService) {
+    .controller('Feedback', ["$scope", "api", "faqService", function ($scope, api, faqService) {
       $('.preloader').hide();
       $scope.msg = '';
       $scope.sendFeedBack = function () {
@@ -1590,7 +1600,7 @@ module.run(['$templateCache', function($templateCache) {
           })
         })
       };
-    });
+    }]);
 
 }());
 
@@ -1598,39 +1608,39 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('routes.gift_archive', [])
 
-    .config(function ($routeProvider) {
+    .config(["$routeProvider", function ($routeProvider) {
 
       $routeProvider.when('/gift_archive', {
 
         controller: 'GiftArchive',
         templateUrl: '/html/routes/routes.gift_archive.html',
         resolve: {
-          checkout: function (api, $location, routeService) {
+          checkout: ["api", "$location", "routeService", function (api, $location, routeService) {
             $('.preloader').show();
             if ($location.path()) {
               routeService.setPrev($location.path());
             }
-          },
-          loadGift: function (api) {
+          }],
+          loadGift: ["api", function (api) {
             return api.gifts.list({
               verbose: 1,
               show_disabled: 1
             });
-          },
-          loadArchive: function (api) {
+          }],
+          loadArchive: ["api", function (api) {
             if (!api.auth) {
               $('.preloader').hide();
             }
             return api.gifts.archive({per_page: 8})
 
-          }
+          }]
         }
 
       });
 
-    })
+    }])
 
-    .controller('GiftArchive', function (tools, api, $scope, plural, $q) {
+    .controller('GiftArchive', ["tools", "api", "$scope", "plural", "$q", function (tools, api, $scope, plural, $q) {
 
       $scope.plural = plural.get;
 
@@ -1698,7 +1708,7 @@ module.run(['$templateCache', function($templateCache) {
 
       $('.preloader').hide();
 
-    });
+    }]);
 
 }());
 
@@ -1706,22 +1716,22 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('routes.gifts', [])
 
-    .config(function ($routeProvider, config) {
+    .config(["$routeProvider", "config", function ($routeProvider, config) {
 
       $routeProvider.when('/gifts', {
 
         controller: 'Gifts',
         templateUrl: '/html/routes/routes.gifts.html',
         resolve: {
-          checkout: function (api, $location, routeService) {
+          checkout: ["api", "$location", "routeService", function (api, $location, routeService) {
             $('.preloader').show();
             if ($location.path()) {
               routeService.setPrev($location.path());
             }
-          },
-          loadInfo: function (api) {
+          }],
+          loadInfo: ["api", function (api) {
             return api.user.info();
-          },
+          }],
           loadGifts: ['api', function (api) {
             return api.gifts.list({verbose: 1}).then(function () {
               $('.preloader').hide();
@@ -1732,9 +1742,9 @@ module.run(['$templateCache', function($templateCache) {
 
       });
 
-    })
+    }])
 
-    .controller('Gifts', function (sp, api, $scope, $timeout, plural) {
+    .controller('Gifts', ["sp", "api", "$scope", "$timeout", "plural", function (sp, api, $scope, $timeout, plural) {
 
       var _default = {
         avaliable: [],
@@ -1825,7 +1835,7 @@ module.run(['$templateCache', function($templateCache) {
       });
 
 
-    });
+    }]);
 
 }());
 
@@ -1833,19 +1843,19 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('routes.history', [])
 
-    .config(function ($routeProvider, config) {
+    .config(["$routeProvider", "config", function ($routeProvider, config) {
 
       $routeProvider.when('/history', {
 
         controller: 'History',
         templateUrl: '/html/routes/routes.history.html',
         resolve: {
-          checkout: function (api, $location, routeService) {
+          checkout: ["api", "$location", "routeService", function (api, $location, routeService) {
             $('.preloader').show();
             if ($location.path()) {
               routeService.setPrev($location.path());
             }
-          },
+          }],
           loadInfo: ['api', function (api) {
             return api.user.info();
           }],
@@ -1859,9 +1869,9 @@ module.run(['$templateCache', function($templateCache) {
 
       })
 
-    })
+    }])
 
-    .controller('History', function (sp, api, $scope, userService, plural) {
+    .controller('History', ["sp", "api", "$scope", "userService", "plural", function (sp, api, $scope, userService, plural) {
 
       $scope.user = api.data('user.info');
       $scope.history = api.data('user.history');
@@ -1908,7 +1918,7 @@ module.run(['$templateCache', function($templateCache) {
         update();
       });
 
-    });
+    }]);
 
 }());
 
@@ -1938,18 +1948,18 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('routes.menu', [])
 
-    .config(function ($routeProvider, config) {
+    .config(["$routeProvider", "config", function ($routeProvider, config) {
 
       $routeProvider.when('/menu', {
         controller: 'Menu',
         templateUrl: '/html/routes/routes.menu.html',
         resolve: {
-          checkout: function (api, $location, routeService) {
+          checkout: ["api", "$location", "routeService", function (api, $location, routeService) {
             $('.preloader').show();
             if($location.path()){
               routeService.setPrev($location.path());
             }
-          },
+          }],
           loadInfo: ['api', function (api) {
             return api.user.info();
           }],
@@ -1962,9 +1972,9 @@ module.run(['$templateCache', function($templateCache) {
         }
       });
 
-    })
+    }])
 
-    .controller('Menu', function ($scope, api, plural) {
+    .controller('Menu', ["$scope", "api", "plural", function ($scope, api, plural) {
       $scope.user = api.data('user.info');
       $scope.gifts = api.data('gifts.list');
       $scope.enough = false;
@@ -2008,7 +2018,7 @@ module.run(['$templateCache', function($templateCache) {
       }
 
 
-    });
+    }]);
 
 }());
 
@@ -2016,25 +2026,25 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('routes.pages', [])
 
-    .config(function ($routeProvider, config) {
+    .config(["$routeProvider", "config", function ($routeProvider, config) {
 
       $routeProvider.when('/page/:pageName', {
         controller: 'Pages',
         templateUrl: '/html/routes/routes.pages.html',
         resolve: {
-          checkout: function (api, $location, routeService) {
+          checkout: ["api", "$location", "routeService", function (api, $location, routeService) {
             $('.preloader').show();
             if ($location.path()) {
               routeService.setPrev($location.path());
             }
             $('.preloader').hide();
-          }
+          }]
         }
       });
 
-    })
+    }])
 
-    .controller('Pages', function ($scope, $location, pageService, $routeParams) {
+    .controller('Pages', ["$scope", "$location", "pageService", "$routeParams", function ($scope, $location, pageService, $routeParams) {
 
       var name = $routeParams.pageName;
       if (pageService.getPage(name)) {
@@ -2043,7 +2053,7 @@ module.run(['$templateCache', function($templateCache) {
       } else {
         $location.path('/')
       }
-    });
+    }]);
 
 }());
 
@@ -2051,28 +2061,28 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('routes.profile', [])
 
-    .config(function ($routeProvider) {
+    .config(["$routeProvider", function ($routeProvider) {
 
       $routeProvider.when('/profile/edit', {
         controller: 'ProfileEdit',
         templateUrl: '/html/routes/routes.profile.edit.html',
         resolve: {
-          checkout: function (api, $location, routeService) {
+          checkout: ["api", "$location", "routeService", function (api, $location, routeService) {
             $('.preloader').show();
             if ($location.path()) {
               routeService.setPrev($location.path());
             }
             $('.preloader').hide();
-          },
-          loadInfo: function (api) {
+          }],
+          loadInfo: ["api", function (api) {
             return api.user.info();
-          }
+          }]
         }
       });
 
-    })
+    }])
 
-    .controller('ProfileEdit', function ($scope, api, userService) {
+    .controller('ProfileEdit', ["$scope", "api", "userService", function ($scope, api, userService) {
 
       $('.preloader').show();
 
@@ -2334,7 +2344,7 @@ module.run(['$templateCache', function($templateCache) {
       };
 
 
-    });
+    }]);
 
 }());
 
@@ -2342,7 +2352,7 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('routes.sorry', [])
 
-    .config(function ($routeProvider, config) {
+    .config(["$routeProvider", "config", function ($routeProvider, config) {
 
       $routeProvider.when('/sorry', {
         controller: 'Sorry',
@@ -2350,11 +2360,11 @@ module.run(['$templateCache', function($templateCache) {
         resolve: {}
       });
 
-    })
+    }])
 
-    .controller('Sorry', function ($scope) {
+    .controller('Sorry', ["$scope", function ($scope) {
       $('.preloader').hide();
-    });
+    }]);
 
 }());
 
@@ -2601,7 +2611,7 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('iledebeaute.services.faq', [])
 
-    .service('faqService', function (api) {
+    .service('faqService', ["api", function (api) {
 
       var self = this;
 
@@ -2613,14 +2623,14 @@ module.run(['$templateCache', function($templateCache) {
 
       return self;
 
-    });
+    }]);
 
 })();
 (function () {
 
   angular.module('iledebeaute.services.pages', [])
 
-    .service('pageService', function (api) {
+    .service('pageService', ["api", function (api) {
 
       var self = this;
 
@@ -2630,14 +2640,14 @@ module.run(['$templateCache', function($templateCache) {
 
       return self;
 
-    });
+    }]);
 
 }());
 (function (angular, sp) {
 
   angular.module('iledebeaute.services.users', [])
 
-    .service('userService', function (api) {
+    .service('userService', ["api", function (api) {
 
       var self = this;
 
@@ -2764,7 +2774,7 @@ module.run(['$templateCache', function($templateCache) {
       return self;
 
 
-    });
+    }]);
 
 }(window.angular, window.SAILPLAY));
 (function () {
@@ -2819,7 +2829,7 @@ module.run(['$templateCache', function($templateCache) {
 
     })
 
-    .directive('datePicker', function (config, dateService) {
+    .directive('datePicker', ["config", "dateService", function (config, dateService) {
       return {
         restrict: 'E',
         replace: true,
@@ -2845,7 +2855,7 @@ module.run(['$templateCache', function($templateCache) {
         }
       }
 
-    });
+    }]);
 
 
 }());
@@ -3623,7 +3633,7 @@ module.run(['$templateCache', function($templateCache) {
       return this;
     })
 
-    .directive('menu', function (menuService, $location, config, $rootScope, api, $window) {
+    .directive('menu', ["menuService", "$location", "config", "$rootScope", "api", "$window", function (menuService, $location, config, $rootScope, api, $window) {
       return {
         restrict: 'E',
         replace: true,
@@ -3685,7 +3695,7 @@ module.run(['$templateCache', function($templateCache) {
         }
       }
 
-    });
+    }]);
 
 }());
 
@@ -3742,12 +3752,12 @@ module.run(['$templateCache', function($templateCache) {
 
   angular.module('ui.url.static', [])
 
-    .filter('static', function (config) {
+    .filter('static', ["config", function (config) {
       return function (url) {
 
         return config.static_url + url;
 
       };
-    });
+    }]);
 
 }());

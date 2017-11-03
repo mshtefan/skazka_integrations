@@ -40,6 +40,7 @@ body {
 }
 
 .overlay {
+  z-index: 999;
   position: fixed;
   left: 0px;
   top: 0px;
@@ -724,11 +725,13 @@ input[disabled], .check input:checked[disabled] + label {
 }
 
 .sub_menu {
-  float: left;
-  height: 30px;
-  font-family: 'Carisma Classic Regular';
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+  height: 46px;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
   width: 100%;
-  background-color: #EFEFEF;
   box-sizing: border-box;
   padding-left: 12px;
 }
@@ -736,11 +739,14 @@ input[disabled], .check input:checked[disabled] + label {
 .sub_menu a {
   color: #000000;
   float: left;
-  font-size: 12px;
+  font-size: 14px;
   text-transform: uppercase;
   margin: 0px 8px;
   text-decoration: none;
-  line-height: 30px;
+  line-height: 46px;
+  &+a {
+    margin-left: 20px;
+  }
 }
 
 .content {
@@ -1758,6 +1764,10 @@ input[disabled], .check input:checked[disabled] + label {
 .calend_prev {
   background-image: url(img/calend_prev.png);
   right: 21px;
+}
+
+.type_active_header {
+  border-bottom: 2px solid black;
 }
 
 .type_active {

@@ -120,6 +120,16 @@
         restrict: 'E',
         replace: false,
         template: '' +
+          '<div class="newHeader _js_newHeader _hasPromoBar">'+
+            '<div class="newHeader__main">'+
+                '<div class="newHeader__main__in _js_newHeader__main__in">' +
+                    '<span class="newHeader__burgerWrap _js_newHeader__burger">' +
+                        '<span class="newHeader__burger"></span>' +
+                    '</span>' +
+                    '<a class="newHeader__logo" href="/"></a>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
         '<div data-ng-if="ready">' +
         '<auth></auth>' +
         ' <div class="iner_block">' +
