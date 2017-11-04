@@ -8,7 +8,9 @@ let sp = require('@lib/sp')
 class CouponRedeemed extends Dialog {
     init(coupon_data) {
         this.$template = $(require('@templates/coupon_redeemed.html'));
+        this.preventClose(false);
         this.coupon = coupon_data;
+        this.coupon_header = sp.config().partner.loyalty_page_config.texts.coupon_redeemed_header
     }
 }
 
@@ -38,7 +40,7 @@ class CoupunsView {
                     })
 
                     this.coupons(data.gifts)
-                    setTimeout(this.initOwl, 50)
+                    setTimeout(params.no_owl ? this.initNative : this.initOwl, 50)
                 })
         })
     }
@@ -50,6 +52,14 @@ class CoupunsView {
                     new CouponRedeemed(result);
                 }
             })
+    }
+
+    initNative() {
+        $(document).ready(() => {
+            $('.__sailplay-owl-carousel')
+                .removeClass('__sailplay-owl-carousel')
+                .addClass('__sailplay-owl-native')
+        })
     }
 
     initOwl() {

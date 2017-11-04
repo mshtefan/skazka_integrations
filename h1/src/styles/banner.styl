@@ -1,5 +1,6 @@
 .banner {
     default-block()
+    clearfix()
 
     .center {
         text-align: center;
@@ -11,10 +12,19 @@
 
     &__title {
         title();
+        &.small {
+            font-size: vw(42px);
+        }
     }
 
     &__text {
         text()
+        &.small {
+            font-size: vw(28px);
+        }
+        &.big {
+            font-size: vw(42px);
+        }
     }
 
     &__image {
@@ -22,6 +32,18 @@
         margin: 0 auto;
         display: block;
         margin-bottom: vw(64px);
+
+        &.small {
+            width: vw(150px);
+            margin-bottom: 0;
+        }
+    }
+
+    &__list {
+        margin-left: vw(36px);
+        li {
+            margin-bottom: 1.5em;
+        }
     }
 
     &__insider-logo {

@@ -83,6 +83,10 @@ class Login extends Dialog {
             if (data.name == 'login.check' && data.auth_hash && data.auth_hash != 'None') {
                 sp.tagsExist([sp.config().partner.loyalty_page_config.doi_tag], data.auth_hash)
                     .then(result => {
+                        sp.tagsAdd({
+                            tags: sp.config().partner.loyalty_page_config.after_register_tag
+                        })
+
                         if (!result.tags[0].exist) {
                             if (!sp.redirect) {
                                 sp.show_doi_message(0)

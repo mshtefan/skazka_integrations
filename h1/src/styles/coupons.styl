@@ -1,6 +1,49 @@
 .coupons {
     default-block();
 
+    .owl-native {
+        display: flex;
+        justify-content: space-between;        
+        background: default;
+        .coupons__item {
+            flex-direction: column;
+            position: relative;
+            height: auto;
+            &:last-of-type:before {
+                content: none;
+            }
+            &:before {
+                content: '';
+                width: 1px;
+                height: vw(250px);
+                position: absolute;
+                background: #e0e0e0;
+                right: -8%;
+                top: 25%;
+            }
+
+            &-title {
+                text();
+                display: inline;
+            }
+            &-text {
+                text();
+                display: inline-block;
+                margin-top: vw(32px);
+                margin-bottom: vw(42px);
+            }
+            
+            &-info {
+                text-align: center;
+            }
+
+            &-image {
+                width: vw(400px) !important;
+                height: vw(400px)
+            }
+        }
+    }
+
     &__title {
         title();
     }

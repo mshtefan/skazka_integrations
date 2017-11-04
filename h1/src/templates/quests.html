@@ -4,7 +4,7 @@
     <div class="quests__list" data-bind="foreach: quests">
         <!-- ko if: type != 'static_page' -->
         <div class="quests__item">
-            <div class="quests__item-img" data-bind="style: { backgroundImage: 'url(\''+ $parent.getIcon($data) + '\')' }"></div>            
+            <div class="quests__item-img" data-bind="style: { backgroundImage: 'url(\''+ $parent.getIcon($data) + '\')' }"></div>
             <div class="quests__item-title"><strong data-bind="text: $parent.getTitle($data)"></strong></div>
             <div class="quests__item-text" data-bind="text: $parent.getDesc($data)">Text</div>
             <div class="quests__item-points"><strong data-bind="text: points"></strong> <strong>points</strong></div>
