@@ -8,6 +8,13 @@
 *
     box-sizing: border-box;
 
+//reset page&bootstrap styles first
+.__sailplay-form
+    line-height: initial;
+    color: initial;
+    & label
+        margin-bottom: initial;
+        font-weight: 300;
 
 .__sailplay-
     &input_checkbox
@@ -260,14 +267,16 @@
 
                 & + label{
                     font-weight: 300;
-                    color: black;
+                    color: black !important;
                     cursor: pointer;
                     display: inline-block;
                     margin-top: 0;
                     padding: 18px 0;
                     background: transparent;
                     width: 50%;
+                    z-index: 228;
                     &:after{
+                        z-index: -3;
                         background: #0f9675;
                         content: "";
                         height: 100%;
@@ -285,6 +294,7 @@
                         border-top-left-radius: 5px;
                         border-bottom-left-radius: 5px;
                         left: 100%
+                        z-index: 228;
                     }
                 }
                 &.__sailplay-toggle_right + label{
@@ -292,16 +302,18 @@
                         border-top-right-radius: 5px;
                         border-bottom-right-radius: 5px;
                         left: -100%;
+                        z-index: 228;
                     }
                 }
                 &:checked + label {
                     cursor: default;
-                    color: #fff;
+                    color: #fff !important;
                     background: transparent;
                     transition: color 200ms;
                     &:after{
                         opacity: 1;                        
                         left: 0;
+                        z-index: -3;
                     }
                 }
             }
@@ -315,7 +327,7 @@
         display: inline-block;
         padding: 20px 25px;
         border-radius: 5px;
-        color: white;
+        color: white !important;
         text-decoration: none;
         font-family: "Roboto";
         width: 45%;
