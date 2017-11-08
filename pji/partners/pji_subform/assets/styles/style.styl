@@ -90,7 +90,7 @@
         font-family: "Knockout";
         font-size: 64px;
         text-transform: uppercase;
-        @media(max-width: 767px)
+        +below(767px)
             font-size: 52px;
 
     &description
@@ -156,6 +156,14 @@
             position: absolute;
             bottom: 0;
             border-bottom: 2px solid rgba(0, 0, 0, .08);
+
+    &congrat .__sailplay-form
+        +below(599px)
+            padding 10% 12% !important;
+
+    &last_img_tablet
+        +below(599px)
+            left: 0 !important;
 
     &form
         +between(600px, 1000px)
