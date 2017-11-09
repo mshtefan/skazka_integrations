@@ -73,41 +73,58 @@
             .btn {
                 margin-top: vw(24px);
             }
+
             .history__item {
                 border: none;
                 padding: vw(24px) 0;
                 display: block;
+                position: relative;
 
                 &-indicator {
                     float: left;
                 }
 
                 &-date {
-                    float: left;                    
+                    float: left;
                     width: 30%;
-                    margin-left: 1em; 
+                    margin-left: 1em;
                 }
 
                 &-text {
                     overflow: ellipsis;
+                }
+
+                &:last-of-type {
+                    &:after {
+                        content: none;
+                    }
+                }
+
+                &:after {
+                    content: '';
+                    width: 1px;
+                    height: 100%;
+                    position: absolute;
+                    left: 9px;
+                    top: 30px;
+                    background: #cecac9;
                 }
             }
         }
     }
 
     &__item {
-        &:first-of-type {
-            .history__item-indicator:before {
-                content: none;
-            }
-        }
+        // &:first-of-type {
+        // .history__item-indicator:before {
+        // content: none;
+        // }
+        // }
 
-        &:last-of-type {
-            .history__item-indicator:after {
-                content: none;
-            }
-        }
-
+        // &:last-of-type {
+        // .history__item-indicator:after {
+        // content: none;
+        // }
+        // }
         display: flex;
         align-items: center;
         justify-content: space-around;
@@ -124,29 +141,18 @@
             size(vw(36px));
             border: 1px solid border;
             border-radius: 50%;
+            background: #f9f9f9;
 
             &.red {
                 background: light-red;
             }
 
             &.gray {
-                background: #9ba1a8
+                background: #9ba1a8;
             }
 
             &:after, &:before {
                 background: border;
-            }
-
-            &:after {
-                content: '';
-                size(1px, 140%);
-                absolute: left 50% top 100%;
-            }
-
-            &:before {
-                content: '';
-                size(1px, 100%);
-                absolute: left 50% top -100%;
             }
         }
 

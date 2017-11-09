@@ -73,7 +73,7 @@ class Login extends Dialog {
 
                 sp.tagsList({
                     show_calculated_values: 1
-                })
+                }, auth_hash)
             });
 
             sp.getUserHistory();
@@ -85,7 +85,7 @@ class Login extends Dialog {
                     .then(result => {
                         sp.tagsAdd({
                             tags: sp.config().partner.loyalty_page_config.after_register_tag
-                        })
+                        }, data.auth_hash)
 
                         if (!result.tags[0].exist) {
                             if (!sp.redirect) {

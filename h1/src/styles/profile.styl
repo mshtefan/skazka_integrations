@@ -1,14 +1,15 @@
 .profile {
     width: 100%;
-    height: vw(330px);
+    // height: vw(330px);
     background: linear-gradient(left, dark-red, light-red);
     position: relative;
     overflow: hidden;
     border-radius: top 10px;
+    clearfix();
 
     &:after {
         content: '';
-        height: vw(190px);
+        height vw(190px);
         width: 50%;
         position: absolute;
         right: -5%;
@@ -25,12 +26,13 @@
         max-width: 48%;
         text-overflow: ellipsis;
         overflow: hidden;
-        
         font-size: vw(77px);
         font-weight: 700;
         color: white;
-        relative: top 50%;
+        position: relative;
+        margin-top:  70px;
         margin-left: vw(80px);
+        margin-bottom: 50px;        
         float: left;
     }
 
@@ -40,7 +42,9 @@
         background-repeat: no-repeat;
         background-size: contain;
         height: vw(82px);
-        relative: top 50%;
+        position: relative;
+        margin-top 70px;
+        margin-bottom: 50px;
         float: right;
         padding-left: vw(105px);
         color: white;

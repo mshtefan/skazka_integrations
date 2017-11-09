@@ -196,7 +196,7 @@
             })            
         }
 
-        tagsList(options) {
+        tagsList(options, auth_hash) {
             if (!this.inited())
                 throw new Error('sp not inited');
 
@@ -206,8 +206,8 @@
                     url: `${this.options.domain}${this.config().urls.tags.list}`,
                     data: {
                         ...options,
-                        origin_user_id: this.user().user.origin_user_id(),
-                        auth_hash: this.auth_hash,
+                        origin_user_id: this.user() && this.user().user.origin_user_id() || 0,
+                        auth_hash: auth_hash || this.auth_hash,
                     },
                     success: result => {
                         this.tags(result.tags);
@@ -233,7 +233,7 @@
             })
         }
 
-        tagsAdd(options) {
+        tagsAdd(options, auth_hash) {
             if (!this.inited())
                 throw new Error('sp not inited');
 
@@ -242,8 +242,8 @@
                     url: `${this.options.domain}${this.config().urls.tags.add}`,
                     data: {
                         ...options,
-                        origin_user_id: this.user().user.origin_user_id(),
-                        auth_hash: this.auth_hash,
+                        origin_user_id: this.user() && this.user().user.origin_user_id() || 0,
+                        auth_hash: auth_hash || this.auth_hash,
                     },
                     success: result => {
                         this.tagsList(this.latest_tags_options)

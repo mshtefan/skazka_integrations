@@ -1,6 +1,6 @@
 .banner {
-    default-block()
-    clearfix()
+    default-block();
+    clearfix();
 
     .center {
         text-align: center;
@@ -12,18 +12,29 @@
 
     &__title {
         title();
+
         &.small {
             font-size: vw(42px);
+        }
+
+        &.half {
+            width: 65%;
         }
     }
 
     &__text {
-        text()
+        text();
+
         &.small {
             font-size: vw(28px);
         }
+
         &.big {
             font-size: vw(42px);
+        }
+
+        &.half {
+            width: 65%;
         }
     }
 
@@ -37,10 +48,15 @@
             width: vw(150px);
             margin-bottom: 0;
         }
+
+        &.big {
+            width: 195px;    
+        }
     }
 
     &__list {
         margin-left: vw(36px);
+
         li {
             margin-bottom: 1.5em;
         }
@@ -48,7 +64,7 @@
 
     &__insider-logo {
         margin-top: vw(80px);
-        background: url("~assets/keyhole.png");
+        background: url('~assets/keyhole.png');
         background-repeat: no-repeat;
         background-size: contain;
         color: white;

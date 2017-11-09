@@ -3,12 +3,13 @@
 
     .owl-native {
         display: flex;
-        justify-content: space-between;        
+        justify-content: space-around;        
         background: default;
         .coupons__item {
             flex-direction: column;
             position: relative;
             height: auto;
+            box-sizing: border-box;
             &:last-of-type:before {
                 content: none;
             }
@@ -18,7 +19,7 @@
                 height: vw(250px);
                 position: absolute;
                 background: #e0e0e0;
-                right: -8%;
+                right: 0;
                 top: 25%;
             }
 
@@ -38,8 +39,9 @@
             }
 
             &-image {
-                width: vw(400px) !important;
-                height: vw(400px)
+                width: 100% !important;
+                object-fit: contain;
+                height: auto;
             }
         }
     }
@@ -121,6 +123,7 @@
         transform: translateZ(0) scale(1.0, 1.0);
         img {
             width: 50% !important;
+            object-fit: contain;            
         }
 
         &-text {
