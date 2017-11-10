@@ -60,6 +60,8 @@
             border: 1px solid #0F9675;
 
     &congrat
+        +above(930px)
+            display: flex;
         position: relative;
         max-width: 1370px;
         .__sailplay-form
@@ -98,42 +100,42 @@
         font-size: 34px;
         margin-top: 7%;
         width: 80%;
-        +below(599px)
+        +below(1230px)
             width: 100%;
 
     &tablet
-        +below(1000px)
+        +below(930px)
             display: block;
         display: none;
 
         &.__sailplay-last_img_tablet
             position: relative;
-            width: 135%;
-            left: -18%;
+            width: 100%;
             margin-top: 50px;
+            left: 0;
 
     &ib-50
-        +below(1000px)
+        +below(930px)
             width: 100%;
             display: block;
+        +above(930px)
+            width: 50%
 
         display: inline-block;
         width: 50%;
 
-        .__sailplay-btn
-            +below(1000px)     
-                width: 100%;   
-            width: 80%;
+        .__sailplay-btn     
+            width: 100%;
 
     &last_img
-        +below(1000px)
+        +below(930px)
             display: none;         
 
-        position: absolute;
+        position: static;
         width: 92%;
         bottom: 0;
         height: 100%;
-        z-index: -1;
+        z-index: 0;
         background-repeat: no-repeat;
         background-position: right;
         background-size: contain;
@@ -163,11 +165,13 @@
             border-bottom: 2px solid rgba(0, 0, 0, .08);
 
     &congrat .__sailplay-form
-        +below(599px)
+        +above(930px)
+            display: flex;
+        +below(930px)
             padding 10% 12% !important;
 
     &last_img_tablet
-        +below(599px)
+        +below(930px)
             left: 0 !important;
 
     &form
