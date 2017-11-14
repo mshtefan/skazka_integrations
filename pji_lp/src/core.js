@@ -255,6 +255,18 @@ export class SailPlay {
         })        
     }
 
+    getReferral() {
+        return new Promise((resolve, reject) => {
+            jsonp({
+                url: `${this.opts.domain}${this.config().urls.users.referral()}`,
+                data: {
+                    auth_hash: this.opts.auth_hash
+                },
+                success: resolve
+            })            
+        })
+    }
+
     purchaseGift(gift_data) {
         return new Promise((resolve, reject) => {
             jsonp({

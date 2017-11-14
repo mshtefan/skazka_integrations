@@ -1,21 +1,40 @@
-<div class="actions">
-    <div class="actions__header">QUESTS FOR POINTS</div>
-    <div class="actions__list" data-bind="foreach: actions">
-        <div class="actions__item">
-            <!-- ko if: type == 'inviteFriend' -->
-            <div class="icon" style="background-image: url(../../assets/icons/invite.svg)"></div>
-            <!-- /ko -->
-            <!-- ko if: type == 'socialSharing' && socialType == 'fb' -->
-            <div class="icon" style="background-image: url(../../assets/icons/fb.svg)"></div>
-            <!-- /ko -->
-            <!-- ko if: type == 'socialSharing' && socialType == 'tw' -->
-            <div class="icon" style="background-image: url(../../assets/icons/tw.svg)"></div>
-            <!-- /ko -->
-            <div class="actions__text">
-                <span data-bind="text: $parent.getTitle($data)"></span> 
-                <span class="actions__text-points">+<span data-bind="text: points"></span> points</span>
-            </div>
+<div class="actions__header">QUESTS FOR POINTS</div>
+<div class="actions__list" data-bind="foreach: actions">
+    <div class="actions__item" data-bind="click: $parent.perform.bind($parent)">
+        <!-- ko if: type == 'poll' -->
+        <div class="icon" style="background-image: url(../../assets/icons/survey.svg)"></div>
+        <!-- /ko -->
+        <!-- ko if: type == 'inviteFriend' -->
+        <div class="icon" style="background-image: url(../../assets/icons/invite.svg)"></div>
+        <!-- /ko -->
+        <!-- ko if: type == 'socialSharing' && socialType == 'fb' -->
+        <div class="icon" style="background-image: url(../../assets/icons/fb.svg)"></div>
+        <!-- /ko -->
+        <!-- ko if: type == 'socialSharing' && socialType == 'tw' -->
+        <div class="icon" style="background-image: url(../../assets/icons/tw.svg)"></div>
+        <!-- /ko -->
+        <div class="actions__text">
+            <span data-bind="text: $parent.getTitle($data)"></span>
+            <span class="actions__text-points">+
+                <span data-bind="text: points"></span> points</span>
         </div>
     </div>
-
 </div>
+
+<!-- ko if: start_invite -->
+<popup params="data: { data: { refer_link: refer_link, copy_link: copy_refer_link }, close: close_invite_popup }">
+    <div class="popup__title">
+        <span class="popup__title-name">
+            INVITE YOUR FRIENDS AND RECEIVE
+        </span>
+        <span class="popup__title-points">
+            5 POINTS FOR EACH
+        </span>
+        <div class="popup__title-descr">
+                Send this link to friends that are not yet registered in Papa John's. For every friend subscribed using this link, you will recieve additional 75 points.
+        </div>
+        <input type="text" class="refer-input" readonly data-bind="value: refer_link">
+        <a href="javascript:void(0)" class="btn" data-bind="click: copy_link">Copy Link</a>
+    </div>
+</popup>
+<!-- /ko -->
