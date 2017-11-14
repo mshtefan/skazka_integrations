@@ -1,6 +1,51 @@
 .coupons {
     default-block();
 
+    .owl-native {
+        display: flex;
+        justify-content: space-around;        
+        background: default;
+        .coupons__item {
+            flex-direction: column;
+            position: relative;
+            height: auto;
+            box-sizing: border-box;
+            &:last-of-type:before {
+                content: none;
+            }
+            &:before {
+                content: '';
+                width: 1px;
+                height: vw(250px);
+                position: absolute;
+                background: #e0e0e0;
+                right: 0;
+                top: 25%;
+            }
+
+            &-title {
+                text();
+                display: inline;
+            }
+            &-text {
+                text();
+                display: inline-block;
+                margin-top: vw(32px);
+                margin-bottom: vw(42px);
+            }
+            
+            &-info {
+                text-align: center;
+            }
+
+            &-image {
+                width: 100% !important;
+                object-fit: contain;
+                height: auto;
+            }
+        }
+    }
+
     &__title {
         title();
     }
@@ -78,6 +123,7 @@
         transform: translateZ(0) scale(1.0, 1.0);
         img {
             width: 50% !important;
+            object-fit: contain;            
         }
 
         &-text {

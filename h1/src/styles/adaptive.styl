@@ -1,0 +1,129 @@
+.profile {
+    +below(910px) {
+        &__name, &__title {
+            float: none !important;
+            display: block;
+            margin-left: vw(80px);
+            padding-right: 38px;
+            max-width: none;
+        }
+
+        &__name {
+            margin-bottom: 0 !important;
+        }
+
+        &__title {
+            margin-top: 25px !important;
+        }
+    }
+
+    &__info {
+        .points {
+            +below(840px) {
+                display: block;
+                float: none;
+            }
+        }
+
+        .details {
+            +below(840px) {
+                margin-top: -20px;
+                margin-left: vw(82px);
+                display: block;
+                float: none;
+            }
+        }
+    }
+}
+
+.status-bar {
+    &__line {
+        +below(940px) {
+            display: none;
+        }
+    }
+
+    .status-bar__hint:before {
+        +below(940px) {
+            content: none;
+        }
+    }
+}
+
+.coupons {
+    .coupons__item {
+        height: auto;
+        text-align: center;
+
+        +below(940px) {
+            flex-direction: column;
+
+            .image {
+                width: auto;
+            }
+        }
+    }
+
+    .coupons__list {
+        +below(940px) {
+            .owl-dots {
+                margin-top: 20px;
+            }
+        }
+    }
+}
+
++below(980px) {
+    .history__table.activity .history__item-date {
+        float: none;
+        margin-left: 2em;
+        width: none;
+    }
+
+    .history__table.activity .history__item-text {
+        margin-top: 20px;
+        margin-left: 30px;
+        margin-bottom: 20px;
+        white-space: normal;
+    }
+
+    .history__item-indicator:after {
+        height: 370%;
+    }
+}
+
++below(880px) {
+    .banner__image.small {
+        margin-bottom: 20px;
+    }
+}
++below(840px) {
+    .coupons .owl-native {
+        flex-direction: column;
+
+        .coupons__item  {
+            margin-bottom: 40px;
+        }
+        .coupons__item:before {
+            content: none;
+        }
+        .coupons__item-image {
+            width: 50% !important;
+        }
+    }
+
+    .quests__item {
+        width: 100%
+    }
+
+    .quests__list {
+        flex-direction: column;
+    }
+}
+
++below(430px) {
+    .coupons__item img {
+        width: 100% !important
+    }
+}
+

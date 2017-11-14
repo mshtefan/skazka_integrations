@@ -1,4 +1,4 @@
-<div class="profile">
+<div class="profile" data-bind="if: user">
     <div class="profile__name">
         <span data-bind="text: user().first_name"></span>
         <span data-bind="text: user().last_name"></span>
@@ -8,7 +8,7 @@
         <div class="rewards">rewards</div>
     </div>
 </div>
-<div class="profile__info">
+<div class="profile__info" data-bind="if: user_points">
     <div class="points">
         <span class="value" data-bind="text: user_points().confirmed">0</span>
         <span class="text">hotelsone rewards points</span>

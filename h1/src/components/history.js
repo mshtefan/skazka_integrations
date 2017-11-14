@@ -9,7 +9,6 @@ ko.bindingHandlers.dateText = {
     },
     update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         let data = new Date(valueAccessor());
-        console.log(data, valueAccessor())
         ko.utils.setTextContent(element, `${data.toLocaleString('en-us', { month: 'short' })} ${data.getDate()}, ${data.getFullYear()}`);
     }
 };
@@ -22,6 +21,8 @@ class HistoryView {
         this.limitPerPage = ko.observable(10);
         this.allLoaded = ko.observable();
         this.registered = ko.observable();
+        this.night_counter = ko.observable();
+        this.collected = ko.observable(0);
 
         switch (this.type) {
             case 'purchase':
@@ -52,14 +53,24 @@ class HistoryView {
             return Math.ceil(this[this.collection]().length / this.limitPerPage())
         })
 
-        this.collected = 12;
-
         sp.tags.subscribe(data => {
+            this.night_counter(sp.config().partner.loyalty_page_config.night_counter_tag);
+
             let registered = ko.utils.arrayFirst(data, item => {
                 return item.tag == sp.config().partner.loyalty_page_config.registered_tag
             })
 
-            if (!registered) {
+            if (this.night_counter) {
+                let counter = ko.utils.arrayFirst(data, item => {
+                    return item.tag == this.night_counter()
+                })
+
+                if (counter) {
+                    this.collected(counter.calculated_value || 0)
+                }
+            }
+
+            if (!registered && !sp.redirect) {
                 console.warn('Registered tag not exists');
                 return
             }
@@ -70,6 +81,13 @@ class HistoryView {
         sp.history.subscribe(data => {
             this.history(ko.mapping.toJS(data));
         })
+    }
+
+    redirectToProduct(item) {
+        sp.purchaseGet(item.id)
+            .then(data => {
+                location.assign(`https://www.hotelsone.com/gsl.html?dsti=${data.cart.cart.positions[0].product.sku}&dstt=8`)
+            })
     }
 
     listCurrentPage() {
@@ -104,7 +122,7 @@ class HistoryView {
         let texts = {
             "purchase": "Purchase",
             "gift_purchase": item => {
-                return `You redeemed a <strong>${item.name}</strong>(${item.coupon_number})`
+                return `You've redeemed a <strong>${item.name}</strong>(${item.coupon_number})`
             },
             "badge": "Badge",
             "extra": "Points Added",
