@@ -1,7 +1,7 @@
 <div class="dialog__shadow" data-bind="click: close">
     <div class="dialog">
         <div class="dialog__header">
-            <a href="#" class="dialog__close" data-bind="visible: !preventClose, click: close.bind($data, true)"></a>
+            <a href="#" class="dialog__close" data-bind="visible: !preventClose(), click: close.bind($data, true)"></a>
             Member details</div>
         <div class="dialog__body">
             <form action="" class="dialog__form">

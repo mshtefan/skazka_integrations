@@ -9,11 +9,15 @@
                 <div class="dialog__text dialog__message">
                     Please, check your email to complete the registration
                 </div>
-                <!-- ko if: redirect -->
                 <a data-bind="attr: { href: redirect_url }" class="btn">Continue</a>
-                <!-- /ko -->
-                <!-- ko ifnot: redirect -->
-                <a href="javascript:void(0)" class="btn" data-bind="click: close.bind($data, true)">Continue</a>
+                
+                <!-- ko if: false -->
+                    <!-- ko if: redirect -->     
+                    <a data-bind="attr: { href: redirect_url }" class="btn">Continue</a>                
+                    <!-- /ko -->
+                    <!-- ko ifnot: redirect -->
+                    <a href="javascript:void(0)" class="btn" data-bind="click: close.bind($data, true)">Continue</a>
+                    <!-- /ko -->
                 <!-- /ko -->
             </div>
         </div>

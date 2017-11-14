@@ -8,6 +8,9 @@ jQuery.noConflict();
 
 ko.mapping = require('knockout.mapping')
 window.ko = ko;
+
+let cookie_domain = window._cookie_domain || '';
+let auth_callback = window._auth_callback;
 let sp = require('@lib/sp');
 
 class Login extends Dialog {
@@ -55,13 +58,15 @@ class Login extends Dialog {
     onMessage(event) {
         let data = ko.utils.parseJson(event.data)
 
-        function authorize(auth_hash) {
-            cookie.set('sp_auth_hash', auth_hash);
+        function authorize(auth_hash, exec_callback) {
+            cookie.set('sp_auth_hash', auth_hash, { path: '', domain: cookie_domain});
             sp.auth_hash = auth_hash;
 
             sp.getUserInfo({
                 user_status: 1
             }).then(() => {
+                if (auth_callback && exec_callback) auth_callback();
+
                 sp.tagsAdd({
                     tags: sp.config().partner.loyalty_page_config.registered_tag
                 }).then(() => {
@@ -83,21 +88,24 @@ class Login extends Dialog {
             if (data.name == 'login.check' && data.auth_hash && data.auth_hash != 'None') {
                 sp.tagsExist([sp.config().partner.loyalty_page_config.doi_tag], data.auth_hash)
                     .then(result => {
+                        
                         sp.tagsAdd({
                             tags: sp.config().partner.loyalty_page_config.after_register_tag
                         }, data.auth_hash)
 
                         if (!result.tags[0].exist) {
+                            
                             if (!sp.redirect) {
-                                sp.show_doi_message(0)
+                                // это на самом деле не то, смотри строчку 52
+                                sp.show_doi_message(1)
                                 authorize(data.auth_hash);
                             } else {
                                 sp.show_doi_message(1)
-                                cookie.set('sp_auth_hash', data.auth_hash);                                
+                                cookie.set('sp_auth_hash', data.auth_hash, { path: '', domain: cookie_domain} );                                
                             }
                             return
                         } else {
-                            authorize(data.auth_hash);
+                            authorize(data.auth_hash, true);
                             sp.force_close_popup(1);
                         }
                     })
@@ -161,7 +169,7 @@ window._logout = () => {
     req.src = sp.options.domain + '/users/logout';
     document.body.appendChild(req);
     req.onload = () => {
-        cookie.remove('sp_auth_hash')
+        cookie.remove('sp_auth_hash', { path: '', domain: cookie_domain})
         document.body.removeChild(req);
         sp.auth_hash = '';
         sp.user(false);
