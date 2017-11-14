@@ -4,6 +4,7 @@ import {
 
 class popupView {
     constructor(params, componentInfo) {
+        console.log(params.data.data)
         this.data = params.data.data;
         this._close = params.data.close;
     }

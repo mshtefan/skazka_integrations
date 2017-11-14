@@ -21,6 +21,34 @@
     </div>
 </div>
 
+<!-- ko if: start_survey -->
+<popup class="poll" params="data: { data: { questions: current_survey }, close: close_invite_popup }">
+    <div class="poll" data-bind="foreach: questions().content.questions">
+        <div class="popup__title poll__question">
+            <div class="popup__title-name popup__title-uppercase" data-bind="text: text"></div>
+            <div class="poll__choices" data-bind="foreach: options">
+                <!-- ko if: value.type == 'custom' -->
+                <div class="poll__choice">
+                    <input class="input_text" type="text" placeholder="Leave your comment">
+                </div>                        
+                <!-- /ko -->
+                <!-- ko if: value.type == 'default' -->                
+                <div class="poll__choice">
+                    <input data-bind="attr: { 
+                            id: 'check_' + $parentContext.$index() + '_' + $index(), 
+                            type: $parent.type,
+                            name: 'question_' + $parentContext.$index()
+                        }" class="input_poll">
+                    <label data-bind="text: text, attr: { for: 'check_' + $parentContext.$index() + '_' + $index() }"></label>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+    <a href="javascript:void(0)" class="btn">Complete the survey</a>    
+</popup>
+<!-- /ko -->
+
 <!-- ko if: start_invite -->
 <popup params="data: { data: { refer_link: refer_link, copy_link: copy_refer_link }, close: close_invite_popup }">
     <div class="popup__title">
@@ -31,7 +59,8 @@
             5 POINTS FOR EACH
         </span>
         <div class="popup__title-descr">
-                Send this link to friends that are not yet registered in Papa John's. For every friend subscribed using this link, you will recieve additional 75 points.
+            Send this link to friends that are not yet registered in Papa John's. For every friend subscribed using this link, you will
+            recieve additional 75 points.
         </div>
         <input type="text" class="refer-input" readonly data-bind="value: refer_link">
         <a href="javascript:void(0)" class="btn" data-bind="click: copy_link">Copy Link</a>

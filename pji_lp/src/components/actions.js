@@ -1,11 +1,14 @@
 import {
     subscribe, subscribeAll
 } from '../messager';
+import $ from 'jquery';
 
 class actionsView {
     constructor() {
         this.actions = ko.observableArray();
         this.start_invite = ko.observable();
+        this.start_survey = ko.observable();
+        this.current_survey = ko.observable();
         this.close_invite_popup = this.close_invite_popup.bind(this);
 
         subscribeAll(result => {
@@ -29,18 +32,27 @@ class actionsView {
     }
 
     perform(act) {
+        this.start_invite(0);
+        this.start_survey(0);        
+
         if (act.type == 'inviteFriend') {
             this.start_invite(1);
+        }
+
+        if (act.type == 'poll') {
+            this.current_survey(act);
+            this.start_survey(1);
         }
     }
 
     close_invite_popup() {
         this.start_invite(0);
+        this.start_survey(0);        
         jQuery('.__sailplay-gift__redeem-active').removeClass('__sailplay-gift__redeem-active');        
     }
 
     copy_refer_link() {
-        $('.__sailplay-refer-input');
+        $('.__sailplay-refer-input').select();
         document.execCommand('copy')
     }
 

@@ -34,7 +34,7 @@ class rewardsView {
             margin: 20,
             items: 4,
             loop: false,
-            mouseDrag: false,
+            mouseDrag: true,
             nav: true,
             refreshClass: '__sailplay-owl-refresh',
             loadedClass: '__sailplay-owl-loaded',
