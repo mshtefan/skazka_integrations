@@ -142,6 +142,25 @@ class ProfileEditor extends Dialog {
     update() {
         if (this.errors().length) return
 
+        let filled = true;
+        let test = ko.mapping.toJS(this.user);
+        if (!test.email) filled = false;
+        if (!test.first_name) filled = false;
+        if (!test.last_name) filled = false;
+        if (!test.birth_date) filled = false;
+        if (!test.phone) filled = false;
+        if (!this.address_line_1() && !this.address_line_2()) filled = false;
+        if (!this.state()) filled = false;
+        if (!this.post_code()) filled = false;
+        if (!this.city()) filled = false;
+        if (!this.user_currency()) filled = false;
+        if (!this.country()) filled = false;
+
+        if (filled) {
+            sp.tagsAdd({
+                tags: sp.config().partner.loyalty_page_config.filled_profile_tag
+            })
+        }
         sp.updateUserInfo(ko.mapping.toJS(this.user));
         sp.updateCustomVars({
             'Address 1': this.address_line_1() || '',

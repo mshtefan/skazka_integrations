@@ -9,17 +9,16 @@
                 <div class="banner__text">
                     <ul class="banner__list">
                         <li>
-                            <strong>Login:</strong> Always log in before you book to ensure you can collect
-                            your points. You can check out your upcoming, cancelled and completed booking anytime
+                            <strong>Login:</strong> Always log in before you book to ensure you can collect your points. You can
+                            check out your upcoming, cancelled and completed booking anytime
                         </li>
                         <li>
-                            <strong>Booking:</strong> Points will add up quickly, so make sure you book your next business
-                            trip or family holiday with <a href="http://www.hotelsone.com">HotelOne.com</a> and see them
-                            add up!
+                            <strong>Booking:</strong> Points will add up quickly, so make sure you book your next business trip or
+                            family holiday with
+                            <a href="http://www.hotelsone.com">HotelOne.com</a> and see them add up!
                         </li>
                         <li>
-                            <strong>Any Hotel:</strong> Watch the points rack up points when you stay at any hotel booked
-                            through
+                            <strong>Any Hotel:</strong> Watch the points rack up points when you stay at any hotel booked through
                             <a href="http://www.hotelsone.com">HotelOne.com!</a>
                         </li>
                     </ul>
@@ -36,16 +35,19 @@
                 <div class="banner__title">2. Earn</div>
                 <div class="banner__text">
                     <ul class="banner__list">
-                        <li><strong>Check Out:</strong> Once you’ve completed your stay and checked out, your well earned points
+                        <li>
+                            <strong>Check Out:</strong> Once you’ve completed your stay and checked out, your well earned points
                             will automatically be added onto your account.automatically be added onto your account.</li>
-                        <li><strong>Earned Nights:</strong> And don’t forgot each night you’ve just stayed also gets you one
-                            sleep closer to a status upgrade.</li>
+                        <li>
+                            <strong>Earned Nights:</strong> And don’t forgot each night you’ve just stayed also gets you one sleep
+                            closer to a status upgrade.</li>
                         <!-- ko if: $parent.config() -->
-                        <li><strong>Statues Progress:</strong> Stay 10 nights and be upgraded to
+                        <li>
+                            <strong>Statues Progress:</strong> Stay 10 nights and be upgraded to
                             <a href="#" data-bind="
                         attr: { href: $parent.config().other_links.silver_member }, 
                         text: $parent.config().statuses[0].name">Silver</a> status. Stay 25 and be upgraded to
-                                <a href="#" data-bind="
+                            <a href="#" data-bind="
                         attr: { href: $parent.config().other_links.gold_member,
                             text: $parent.config().statuses[1].name }">Gold</a> status where you will earn points 3x as fast!</li>
                         <!-- /ko -->
@@ -63,12 +65,20 @@
                 <div class="banner__title">3. Save</div>
                 <div class="banner__text">
                     <ul class="banner__list">
-                        <li><strong>Cash Coupons:</strong> Here comes the fun bit. Use your points to redeem cash coupons to
-                            save on your next booking through <a href="http://www.hotelsone.com">HotelOne.com!</a></li>
-                        <li><strong>Redeem:</strong> To redeem your cash coupon, select an eligible hotel and click on ‘Book
-                            Now’. Remember to be logged in to apply your cash coupon.</li>
-                        <li><strong>Lowest Price Guarantee:</strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                            sed diam nonummy nibh euismod tincidunt ut</li>
+                        <li>
+                            <strong>Cash Coupons:</strong> Here comes the fun bit. Use your points to redeem cash coupons to save
+                            on your next booking through
+                            <a href="http://www.hotelsone.com">HotelOne.com!</a>
+                        </li>
+                        <li>
+                            <strong>Redeem:</strong> To redeem your cash coupon, select an eligible hotel and click on ‘Book Now’.
+                            Remember to be logged in to apply your cash coupon.</li>
+                        <li>
+                            <strong>Lowest Price Guarantee:</strong> For <a href="#" data-bind="
+                            attr: { href: $parent.config().other_links.gold_member,
+                                text: $parent.config().statuses[1].name }">Gold</a> members, if you placed a prepaid booking and find a
+                            lower rate on another website for the same room type and stay dates, we will refund the difference
+                            to your account in points. Terms and conditions apply.</li>
                     </ul>
                 </div>
             </div>
@@ -84,7 +94,8 @@
                     <div class="grid__3-4">
                         <div class="banner__text big">
                             265,000 Eligible Hotels
-                        </div><br>
+                        </div>
+                        <br>
                         <div class="banner__text small">
                             Members can collect points on more than 265,000 eligible hotels in over 195 countries.
                         </div>
@@ -101,7 +112,8 @@
                     <div class="grid__3-4">
                         <div class="banner__text big">
                             Insider Prices
-                        </div><br>
+                        </div>
+                        <br>
                         <div class="banner__text small">
                             Unlock instant savings with up to 50% off hotels with member-only Insider Prices.
                         </div>
@@ -118,15 +130,16 @@
             <sailplay-banner>
                 <div class="banner__title small">More rewards, sooner</div>
                 <div class="banner__text">
-                    Travel a lot? Earn an upgrade to <strong class="red">Hotelsone Rewards</strong>
+                    Travel a lot? Earn an upgrade to
+                    <strong class="red">Hotelsone Rewards</strong>
                     <!-- ko if: $parent.config() -->
                     <a href="#" data-bind="
                         attr: { href: $parent.config().other_links.silver_member }, 
                         text: $parent.config().statuses[0].name">Silver</a> or
-                        <a href="#" data-bind="
+                    <a href="#" data-bind="
                         attr: { href: $parent.config().other_links.gold_member,
                             text: $parent.config().statuses[1].name }">Gold</a> membership and earn your points faster.
-                            <!-- /ko -->
+                    <!-- /ko -->
                 </div>
             </sailplay-banner>
         </div>

@@ -266,12 +266,12 @@
             if (data.email) _data.email = data.email
             if (data.phone) _data.phone = data.phone
 
-            if (this.user_had_email && _data.email && this.user_had_email != _data.email) {
+            if (!this.user_had_email && _data.email && this.user_had_email != _data.email) {
                 _data.addEmail = _data.email;
                 delete _data['email']
             }
 
-            if (this.user_had_phone && _data.phone && this.user_had_phone != _data.phone) {
+            if (!this.user_had_phone && _data.phone && this.user_had_phone != _data.phone) {
                 _data.addPhone = _data.phone;
                 delete _data['phone']
             }
