@@ -9,6 +9,7 @@ class actionsView {
         this.start_invite = ko.observable();
         this.start_survey = ko.observable();
         this.current_survey = ko.observable();
+        this.current_survey_result = ko.observable();
         this.close_invite_popup = this.close_invite_popup.bind(this);
 
         subscribeAll(result => {
@@ -16,7 +17,7 @@ class actionsView {
                 (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
             );
 
-            this.actions(flatten(result))
+            this.actions(ko.mapping.fromJS(flatten(result)))
         }, ['actions.list.success', 'custom_actions.list.success'])
 
         subscribe(result => {
@@ -35,14 +36,31 @@ class actionsView {
         this.start_invite(0);
         this.start_survey(0);        
 
-        if (act.type == 'inviteFriend') {
+        if (act.type() == 'inviteFriend') {
             this.start_invite(1);
         }
 
-        if (act.type == 'poll') {
+        if (act.type() == 'poll') {
             this.current_survey(act);
             this.start_survey(1);
         }
+    }
+
+    completePoll(act) {
+        
+        let tags = [];
+        let customVars = {};
+
+        for (let question of act.content.questions()) {
+            tags = tags.concat(question.result())
+
+            if (question.options().slice(-1)[0].value.type() == 'custom') {
+                customVars[question.options().slice(-1)[0].value.custom_var()] = question.options().slice(-1)[0].value.value()
+            }
+        }
+
+        console.log(tags, customVars)
+
     }
 
     close_invite_popup() {
@@ -57,10 +75,11 @@ class actionsView {
     }
 
     getTitle(act) {
-        if (act.type == 'poll') return this.titles()['survey']
-        if (act.socialType == 'tw') return this.titles()['tw']
-        if (act.socialType == 'fb') return this.titles()['fb']
-        if (act.type == 'inviteFriend') return this.titles()['invite']
+        if (act.type() == 'poll') return this.titles()['survey'];
+        else if (act.type() == 'inviteFriend') return this.titles()['invite'];
+        else if (act.socialType() == 'tw') return this.titles()['tw'];
+        else if (act.socialType() == 'fb') return this.titles()['fb'];
+        else return ''
     }
 }
 

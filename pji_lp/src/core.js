@@ -218,6 +218,18 @@ export class SailPlay {
         })
     }
 
+    getBadges() {
+        return new Promise((resolve, reject) => {
+            jsonp({
+                url: `${this.opts.domain}${this.config().urls.badges.list()}`,
+                data: {
+                    auth_hash: this.opts.auth_hash
+                },
+                success: resolve
+            })
+        })
+    }
+
     getActions() {
         return new Promise((resolve, reject) => {
             jsonp({

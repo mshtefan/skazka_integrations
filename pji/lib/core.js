@@ -253,4 +253,12 @@ export class SailPlay {
             })
         })        
     }
+
+    performPoll(poll) {
+        return new Promise((resolve, reject) => {
+            
+            
+
+        })
+    }
 }

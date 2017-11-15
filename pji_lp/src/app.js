@@ -36,6 +36,7 @@ class MainView {
         this.sp.getActions().then(data => publish(data.data.actions, 'actions.list.success'));
         this.sp.getCustomActions().then(data => publish(data.actions, 'custom_actions.list.success'));
         this.sp.getReferral().then(data => publish(`${this.domain}${data.referrer}`, 'referral.info'));
+        this.sp.getBadges().then(data => console.log(data))
         publish(this.sp, 'instance.success');
     }
 }

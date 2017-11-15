@@ -1,16 +1,16 @@
 <div class="actions__header">QUESTS FOR POINTS</div>
-<div class="actions__list" data-bind="foreach: actions">
+<div class="actions__list" data-bind="foreach: actions()">
     <div class="actions__item" data-bind="click: $parent.perform.bind($parent)">
-        <!-- ko if: type == 'poll' -->
+        <!-- ko if: type() == 'poll' -->
         <div class="icon" style="background-image: url(../../assets/icons/survey.svg)"></div>
         <!-- /ko -->
-        <!-- ko if: type == 'inviteFriend' -->
+        <!-- ko if: type() == 'inviteFriend' -->
         <div class="icon" style="background-image: url(../../assets/icons/invite.svg)"></div>
         <!-- /ko -->
-        <!-- ko if: type == 'socialSharing' && socialType == 'fb' -->
+        <!-- ko if: type() == 'socialSharing' && socialType() == 'fb' -->
         <div class="icon" style="background-image: url(../../assets/icons/fb.svg)"></div>
         <!-- /ko -->
-        <!-- ko if: type == 'socialSharing' && socialType == 'tw' -->
+        <!-- ko if: type() == 'socialSharing' && socialType() == 'tw' -->
         <div class="icon" style="background-image: url(../../assets/icons/tw.svg)"></div>
         <!-- /ko -->
         <div class="actions__text">
@@ -22,30 +22,31 @@
 </div>
 
 <!-- ko if: start_survey -->
-<popup class="poll" params="data: { data: { questions: current_survey }, close: close_invite_popup }">
-    <div class="poll" data-bind="foreach: questions().content.questions">
+<popup class="poll" params="data: { data: { survey: current_survey, complete: completePoll }, close: close_invite_popup }">
+    <div class="poll" data-bind="foreach: survey().content.questions">
         <div class="popup__title poll__question">
             <div class="popup__title-name popup__title-uppercase" data-bind="text: text"></div>
             <div class="poll__choices" data-bind="foreach: options">
-                <!-- ko if: value.type == 'custom' -->
+                <!-- ko if: value.type() == 'custom' -->
                 <div class="poll__choice">
-                    <input class="input_text" type="text" placeholder="Leave your comment">
+                    <input class="input_text" type="text" placeholder="Leave your comment" data-bind="value: value.value">
                 </div>                        
                 <!-- /ko -->
-                <!-- ko if: value.type == 'default' -->                
+                <!-- ko if: value.type() == 'default' -->                
                 <div class="poll__choice">
                     <input data-bind="attr: { 
                             id: 'check_' + $parentContext.$index() + '_' + $index(), 
                             type: $parent.type,
-                            name: 'question_' + $parentContext.$index()
-                        }" class="input_poll">
+                            name: 'question_' + $parentContext.$index(),
+                            value: value.event
+                        }, checked: $parent.result" class="input_poll">
                     <label data-bind="text: text, attr: { for: 'check_' + $parentContext.$index() + '_' + $index() }"></label>
                 </div>
                 <!-- /ko -->
             </div>
         </div>
     </div>
-    <a href="javascript:void(0)" class="btn">Complete the survey</a>    
+    <a href="javascript:void(0)" data-bind="click: complete.bind($data, survey())" class="btn">Complete the survey</a>    
 </popup>
 <!-- /ko -->
 
