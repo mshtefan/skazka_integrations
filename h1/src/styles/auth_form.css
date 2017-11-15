@@ -140,3 +140,27 @@ form[data-ng-show*="restore_pass_3"] .email_field:after {
     -os-transform: translateX(-2px);
     transform: translateX(-2px);
 }
+
+@media (max-width: 767px) {
+    .auth_wrapper {
+    	box-sizing: border-box;
+    	padding: 40px 40px 0 40px;
+    	max-width: none;
+    }
+    form[name="form_login"] > div {
+        display: flex;
+        flex-direction: column;
+    }
+    form[name="form_login"] > div > div:first-child {
+    	order: 2;
+    	top: auto;
+        margin-top: 10px !important;
+    }
+    form[name="form_login"] > div > div:last-child {
+        margin-top: 0px !important;
+    }
+    .show_restore_pass {
+    	margin-top: 16px !important;
+    	float: left!important;
+    }
+}
