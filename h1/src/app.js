@@ -3,7 +3,7 @@ import ko from 'knockout';
 import 'knockout.validation';
 import jQuery from 'jquery';
 import { Dialog } from '@lib/dialog';
-import cookie from 'js.cookie'
+import cookie from 'js-cookie'
 jQuery.noConflict();
 
 ko.mapping = require('knockout.mapping')
@@ -101,7 +101,7 @@ class Login extends Dialog {
                                 authorize(data.auth_hash);
                             } else {
                                 sp.show_doi_message(1)
-                                cookie.set('sp_auth_hash', data.auth_hash, { path: '', domain: cookie_domain} );                                
+                                cookie.set('sp_auth_hash', data.auth_hash, { path: '/', domain: cookie_domain} );                                
                             }
                             return
                         } else {
@@ -162,19 +162,21 @@ window._remoteLogin = () => {
 }
 
 window._logout = () => {
+    cookie.remove('sp_auth_hash', { path: '/', domain: cookie_domain})
+
     let req = document.createElement('iframe');
-    req.width = 0;
+    req.width = 0;    
     req.height = 0;
     req.style.border = 'none';
     req.src = sp.options.domain + '/users/logout';
     document.body.appendChild(req);
     req.onload = () => {
-        cookie.remove('sp_auth_hash', { path: '', domain: cookie_domain})
         document.body.removeChild(req);
         sp.auth_hash = '';
         sp.user(false);
-        if (sp.config().partner.loyalty_page_config.logout_url)
-            location.assign(sp.config().partner.loyalty_page_config.lp_url)
+        if (sp.config().partner.loyalty_page_config.logout_url) {
+            location.assign(sp.config().partner.loyalty_page_config.logout_url)
+        }
     }
 }
 

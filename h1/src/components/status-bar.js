@@ -37,8 +37,8 @@ class StatusBarView {
 
         sp.user.subscribe(data => {
             if (!data) {
-                this.user(0);
-                this.user_status(0);
+                this.user(false);
+                this.user_status(false);
                 return
             }
 

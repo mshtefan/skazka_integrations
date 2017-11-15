@@ -7,8 +7,8 @@ class StatusView {
 
         sp.user.subscribe(data => {
             if (!data) {
-                this.statusBadge(0);
-                this.statusName(0);
+                this.statusBadge(false);
+                this.statusName(false);
                 return
             }
 

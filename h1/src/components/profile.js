@@ -183,6 +183,8 @@ class ProfileView {
         this.user_points = ko.observable(0);
 
         sp.user.subscribe(data => {
+            if (!data) return
+            
             this.user(data.user);
             this.user_points(data.user_points);
 

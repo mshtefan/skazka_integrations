@@ -4,7 +4,9 @@ class QuestsView {
     constructor(params) {
         this.quests = ko.observableArray()
 
-        sp.user.subscribe(() => {
+        sp.user.subscribe(data => {
+            if (!data) return
+            
             Promise.all([sp.getActions(), sp.getCustomActions()])
                 .then(data => {
                     let merge = data[0].data.actions.concat(data[1].actions);
