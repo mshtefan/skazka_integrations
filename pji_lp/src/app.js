@@ -27,7 +27,20 @@ class MainView {
             this.getData()
         })
 
-        subscribe(() => this.getData(), 'update')
+        subscribe(() => this.getData(), 'update');
+        subscribe(data => {
+            Promise.all([
+                this.sp.addTags(data[0]),
+                this.sp.updateCustomVars({...data[1], ...{ auth_hash: this.auth_hash }})               
+            ]).then(() => {
+                this.sp.completeAction(data[2])
+            })
+            
+        }, 'poll.complete');
+
+        subscribe(action => {
+            this.sp.performAction(action)
+        }, 'action.perform');
     }
 
     getData() {
@@ -36,7 +49,7 @@ class MainView {
         this.sp.getActions().then(data => publish(data.data.actions, 'actions.list.success'));
         this.sp.getCustomActions().then(data => publish(data.actions, 'custom_actions.list.success'));
         this.sp.getReferral().then(data => publish(`${this.domain}${data.referrer}`, 'referral.info'));
-        this.sp.getBadges().then(data => console.log(data))
+        this.sp.getHistory().then(data => publish(data.history, 'load.user.history'));
         publish(this.sp, 'instance.success');
     }
 }
@@ -45,6 +58,7 @@ ko.components.register('status-bar', require('./components/status-bar'))
 ko.components.register('rewards', require('./components/rewards'))
 ko.components.register('actions', require('./components/actions'))
 ko.components.register('popup', require('./components/popup'))
+ko.components.register('history', require('./components/history'))
 
 
 window.SAILPLAY = function (opts = {}) {

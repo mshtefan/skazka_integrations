@@ -131,7 +131,7 @@ export class SailPlay {
         })
     }
 
-    addTags(tags_arr = [], opts) {
+    addTags(tags_arr = [], opts = {}) {
         return new Promise((resolve, reject) => {
             let auth_hash = this.opts.auth_hash;
             if (opts.auth_hash !== undefined) {
@@ -279,6 +279,19 @@ export class SailPlay {
         })
     }
 
+    completeAction(action_id) {
+        return new Promise((resolve, reject) => {
+            jsonp({
+                url: `${this.opts.domain}${this.config().urls.actions.custom.complete()}`,
+                data: {
+                    action_id: action_id,
+                    auth_hash: this.opts.auth_hash
+                },
+                success: resolve
+            })
+        })
+    }
+ 
     purchaseGift(gift_data) {
         return new Promise((resolve, reject) => {
             jsonp({

@@ -15,6 +15,7 @@ class rewardsView {
         this.active_gift = ko.observable();
         this.close_redeem_popup = this.close_redeem_popup.bind(this);
         this.confirm_redeem = this.confirm_redeem.bind(this);
+        this.user = ko.observable();
 
         subscribe(gifts => {
             this.gifts(gifts);
@@ -22,6 +23,10 @@ class rewardsView {
                 this.init_owl();
             }, 50)
         }, 'gifts.list.success')
+
+        subscribe(user => {
+            this.user(user)
+        }, 'load.user.info');
 
         subscribe(instance => {
             this.sp = instance

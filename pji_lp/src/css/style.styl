@@ -10,6 +10,7 @@
 @import './rewards'
 @import './actions'
 @import './popup'
+@import './history'
 
 .container {
     font-family: "Roboto";
@@ -24,6 +25,11 @@
     border-radius: 5px;
     display: inline-block;
     text-decoration: none;
+}
+
+.disabled {
+    opacity: .4;
+    pointer-events: none;
 }
 
 *[class="__sailplay-owl-prev disabled"] {

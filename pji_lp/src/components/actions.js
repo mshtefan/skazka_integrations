@@ -1,5 +1,5 @@
 import {
-    subscribe, subscribeAll
+    subscribe, subscribeAll, publish
 } from '../messager';
 import $ from 'jquery';
 
@@ -38,11 +38,11 @@ class actionsView {
 
         if (act.type() == 'inviteFriend') {
             this.start_invite(1);
-        }
-
-        if (act.type() == 'poll') {
+        } else if (act.type() == 'poll') {
             this.current_survey(act);
             this.start_survey(1);
+        } else {
+            publish(ko.mapping.toJS(act), 'action.perform');
         }
     }
 
@@ -59,8 +59,7 @@ class actionsView {
             }
         }
 
-        console.log(tags, customVars)
-
+        publish([tags, customVars, act.id()], 'poll.complete');
     }
 
     close_invite_popup() {

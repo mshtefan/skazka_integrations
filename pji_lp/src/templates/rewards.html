@@ -7,14 +7,19 @@
     </div>
 </div>
 <!-- ko if: start_redeem -->
-<popup params="data: { data: { gift: active_gift, redeem: confirm_redeem }, close: close_redeem_popup }">
+<popup params="data: { data: { gift: active_gift, redeem: confirm_redeem, user: user }, close: close_redeem_popup }">
     <div class="redeem">
         <img class="redeem__image" data-bind="attr: { src: gift().thumbs.url_250x250 }" alt="">
         <div class="redeem__text"</div>
             <span class="redeem__text-name" data-bind="text: gift().name"></span>&nbsp;
             <span class="redeem__text-points"><span data-bind="text: gift().points"></span> POINTS</span>
             <div class="redeem__text-descr" data-bind="text: gift().descr"></div><br>
+            <!-- ko if: gift().points <= user().user_points.confirmed -->
             <a href="javascript:void(0)" data-bind="click: redeem" class="btn">Confirm</a>
+            <!-- /ko -->
+            <!-- ko if: gift().points > user().user_points.confirmed -->
+            <a href="javascript:void(0)" class="btn disabled">Not enought points</a>
+            <!-- /ko -->
         </div>
     </div>
 </popup>
