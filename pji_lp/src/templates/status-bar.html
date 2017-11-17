@@ -3,13 +3,13 @@
         You have earned <span data-bind="text: points"></span> POINTS
     </div>
     <div class="status-bar__legend">
-        <div class="status-bar__legend-item status-bar__legend-item-active">10</div>
-        <div class="status-bar__legend-item">20</div>
-        <div class="status-bar__legend-item">30</div>
-        <div class="status-bar__legend-item">40+</div>
+        <div class="status-bar__legend-item" data-bind="css: { '__sailplay-status-bar__legend-item-active': points() > 10 }">10</div>
+        <div class="status-bar__legend-item" data-bind="css: { '__sailplay-status-bar__legend-item-active': points() > 20 }">20</div>
+        <div class="status-bar__legend-item" data-bind="css: { '__sailplay-status-bar__legend-item-active': points() > 30 }">30</div>
+        <div class="status-bar__legend-item" data-bind="css: { '__sailplay-status-bar__legend-item-active': points() > 40 }">40+</div>
     </div>
     <div class="status-bar__line">
-        <div class="status-bar__fill"></div>
+        <div class="status-bar__fill" data-bind="style: { width: fill }"></div>
         <div class="status-bar__section" points="10"></div>
         <div class="status-bar__section" points="20"></div>
         <div class="status-bar__section" points="30"></div>

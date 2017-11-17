@@ -37,7 +37,7 @@
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
-    "start": "./node_modules/.bin/webpack-dev-server --inline --port 8080",
+    "start": "./node_modules/.bin/webpack-dev-server --inline --host 0.0.0.0 --port 8080",
     "build": "./node_modules/.bin/rimraf dist && ./node_modules/.bin/webpack --config config/webpack.prod.js --profile --bail",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

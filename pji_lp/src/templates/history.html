@@ -2,6 +2,9 @@
     <div class="history__title">YOUR REWARDS HISTORY</div>
     <div class="history__table">
         <div class="history__header">
+            <div class="history__column history__column-50">Date / Order Number</div>   
+            <div class="history__column history__column-50">Points / Balance</div>                
+            
             <div class="history__column">Date</div>
             <div class="history__column">Order Number</div>
             <div class="history__column">Status</div>
@@ -9,8 +12,17 @@
             <div class="history__column">Expires</div>
             <div class="history__column">Balance</div>
         </div>
-        <!-- ko foreach: history -->
-        
+        <!-- ko foreach: history_filtered -->
+        <div class="history__row">
+            <div class="history__column history__column-50" data-bind="html: $parent.getDate(action_date) + '<br>#' + order_num"></div>
+            <div class="history__column history__column-50" data-bind="html: points_delta"></div>            
+            <div class="history__column" data-bind="text: $parent.getDate(action_date)"></div>
+            <div class="history__column">#<span data-bind="text: order_num"></span></div>
+            <div class="history__column">Earned</div>
+            <div class="history__column" data-bind="text: points_delta"></div>
+            <div class="history__column"></div>
+            <div class="history__column"></div>
+        </div>
         <!-- /ko -->
     </div>
 </div>

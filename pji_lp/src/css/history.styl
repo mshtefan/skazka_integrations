@@ -1,8 +1,12 @@
 .history {
+    margin-bottom: 40px;
     &__title {
         font-family: 'Changa One';
         font-size: 48px;
-        margin: 80px 0 20px 40px;
+        margin: 80px 40px 20px 40px;
+        +below(550px) {
+            font-size: 24px;
+        }
     }
 
     &__header {
@@ -18,13 +22,18 @@
 
     &__column {
         float: left;
-
-        &:nth-child(0) {
-            width: 15%;
+        padding: 10px;
+        box-sizing: border-box;
+        +below(550px) {
+            display: none;
         }
 
-        &:nth-child(1) {
-            width: 15%;
+        &-50 {
+            display: none;
+            +below(550px) {
+                display: block !important;
+                width: 50% !important;
+            }
         }
 
         &:nth-child(2) {
@@ -41,6 +50,25 @@
 
         &:nth-child(5) {
             width: 15%;
+        }
+
+        &:nth-child(6) {
+            width: 15%;
+        }
+
+        &:nth-child(7) {
+            width: 15%;
+        }
+
+    }
+
+    &__row {
+        border: 1px solid #e6e6e6;
+        border-bottom-color: transparent;
+        clearfix();
+
+        &:last-child {
+            border-bottom-color: #e6e6e6;
         }
     }
 }

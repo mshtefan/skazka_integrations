@@ -16,6 +16,10 @@
         margin: 40px;
         max-height: 1000px;
         opacity: 1;
+
+        +below(620px) {
+            padding: 40px;
+        }
     }
 
     &__close {
@@ -38,17 +42,26 @@
         }
 
         &-name {
+            +below(520px) {
+                font-size: 20px
+            }
             font-size: 32px;
             font-family: 'Knockout';
         }
 
         &-descr {
+            +below(520px) {
+                font-size: 18px
+            }
             font-size: 24px;
             font-family: 'Roboto';
             margin-top: 20px;
         }
 
         &-points {
+            +below(520px) {
+                font-size: 20px
+            }
             font-size: 32px;
             font-family: 'Knockout';
             color: #bf151f;

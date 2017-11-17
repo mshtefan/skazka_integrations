@@ -81,7 +81,10 @@
 .rewards__header {
     font-family: 'Changa One';
     font-size: 48px;
-    margin: 80px 0 20px 40px;
+    margin: 80px 40px 20px 40px;
+    +below(550px) {
+        font-size: 24px;
+    }
 }
 
 .redeem__image {
@@ -89,6 +92,10 @@
     width: 35%;
     max-width: 250px;
     border: 1px solid rgba(0, 0, 0, 0.2)
+
+    +below(550px) {
+        width: 100%;
+    }
 }
 
 .redeem__text {
@@ -97,12 +104,24 @@
     vertical-align: top;
     margin-left: 40px;
 
+    +below(550px) {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 20px;
+    }
+
     &-name {
         font-size: 32px;
         font-family: 'Knockout';
+        +below(550px) {
+            font-size: 24px;
+        }
     }
 
     &-descr {
+        +below(550px) {
+            font-size: 16px;
+        }
         font-size: 24px;
         font-family: 'Roboto';
         margin-top: 20px;
@@ -112,5 +131,8 @@
         font-size: 32px;
         font-family: 'Knockout';
         color: #bf151f;
+        +below(550px) {
+            font-size: 24px;
+        }
     }
 }

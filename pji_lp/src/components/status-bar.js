@@ -8,7 +8,11 @@ class statusBarView {
 
         subscribe(data => {
             this.points(data.user_points.confirmed)
-        }, 'load.user.info')
+        }, 'load.user.info');
+
+        this.fill = ko.computed(() => {
+            return `${this.points() / 40 * 100}%`;
+        })
     }
 }
 

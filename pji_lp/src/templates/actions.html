@@ -30,9 +30,9 @@
                 <!-- ko if: value.type() == 'custom' -->
                 <div class="poll__choice">
                     <input class="input_text" type="text" placeholder="Leave your comment" data-bind="value: value.value">
-                </div>                        
+                </div>
                 <!-- /ko -->
-                <!-- ko if: value.type() == 'default' -->                
+                <!-- ko if: value.type() == 'default' -->
                 <div class="poll__choice">
                     <input data-bind="attr: { 
                             id: 'check_' + $parentContext.$index() + '_' + $index(), 
@@ -46,7 +46,7 @@
             </div>
         </div>
     </div>
-    <a href="javascript:void(0)" data-bind="click: complete.bind($data, survey())" class="btn">Complete the survey</a>    
+    <a href="javascript:void(0)" data-bind="click: complete.bind($data, survey())" class="btn">Complete the survey</a>
 </popup>
 <!-- /ko -->
 
@@ -63,8 +63,9 @@
             Send this link to friends that are not yet registered in Papa John's. For every friend subscribed using this link, you will
             recieve additional 75 points.
         </div>
-        <input type="text" class="refer-input" readonly data-bind="value: refer_link">
-        <a href="javascript:void(0)" class="btn" data-bind="click: copy_link">Copy Link</a>
     </div>
+
+    <input type="text" class="refer-input" readonly data-bind="value: refer_link">
+    <a href="javascript:void(0)" class="btn" data-bind="click: copy_link">Copy Link</a>
 </popup>
 <!-- /ko -->

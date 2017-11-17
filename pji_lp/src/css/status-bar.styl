@@ -1,8 +1,8 @@
 .status-bar {
-    margin-top: 50px;
+    margin: 50px 40px 0;
 
     &__legend {
-        width: 800px;
+        max-width: 800px;
         position: relative;
         left: 10px;
         top: 30px;
@@ -27,10 +27,13 @@
         font-family: 'Knockout';
         text-align: center;
         font-size: 38px;
+        +below(550px) {
+            font-size: 26px;
+        }
     }
 
     &__line {
-        width: 800px;
+        max-width: 800px;
         border: 1px solid #e1dfe1;
         height: 35px;
         background-color: #f2f0f2;
@@ -42,7 +45,6 @@
 
     &__fill {
         background-color: #bf151f;
-        width: 30%;
         height: 100%;
         position: absolute;
     }

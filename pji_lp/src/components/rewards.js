@@ -37,7 +37,7 @@ class rewardsView {
         jQuery('.__sailplay-owl-carousel').owlCarousel({
             stagePadding: 40,
             margin: 20,
-            items: 4,
+            items: 1,
             loop: false,
             mouseDrag: true,
             nav: true,
@@ -52,7 +52,20 @@ class rewardsView {
             stageOuterClass: '__sailplay-owl-stage-outer',
             grabClass: '__sailplay-owl-grab',
             navClass: ['__sailplay-owl-prev', '__sailplay-owl-next'],
-            navText: ['', '']
+            navText: ['', ''],
+            responsive: {
+                1024: {
+                    items: 4
+                },
+
+                800: {
+                    items: 3
+                },
+
+                600: {
+                    items: 2
+                }
+            }
         });
 
         jQuery(document).on('click', '.__sailplay-gift__redeem', event => {
