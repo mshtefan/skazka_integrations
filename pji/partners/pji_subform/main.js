@@ -1,16 +1,17 @@
-import mainStyle from '@lib/styles/style.styl';
+import mainStyle from '@lib/styles/style.important.styl';
 import {
     SailPlay
 } from '@lib/core.js'
 import ko from 'knockout';
 import 'knockout.validation';
 import $ from 'jquery';
-require('@lib/styles/helpers.styl');
+require('@lib/styles/helpers.important.styl');
 require('@lib/jquery-ui.min.js');
 require('@lib/jquery-ui.min.css');
 
 import mainTemplate from './main.pug';
-require('./assets/styles/style.styl')
+require('./assets/styles/style.native.styl')
+require('./assets/styles/style.important.styl')
 
 let initiated = false;
 

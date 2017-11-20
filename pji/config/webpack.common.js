@@ -26,8 +26,8 @@ module.exports = {
   },
 
   output: {
-      libraryTarget: "var",
-      library: "Foo"
+    libraryTarget: "var",
+    library: "Foo"
   },
 
   externals: {
@@ -64,10 +64,24 @@ module.exports = {
           loader: "style-loader"
         }, {
           loader: "css-loader"
+        }, {
+          loader: "cssimportant-loader"
         }]
       },
       {
-        test: /\.styl$/,
+        test: /\.important.styl$/,
+        use: [{
+          loader: "style-loader"
+        }, {
+          loader: "css-loader"
+        }, {
+          loader: "cssimportant-loader"
+        }, {
+          loader: "stylus-loader",
+        }]
+      },
+      {
+        test: /\.native.styl$/,
         use: [{
           loader: "style-loader"
         }, {
@@ -96,9 +110,9 @@ module.exports = {
     ,
 
     new webpack.ProvidePlugin({
-      "$":"jquery",
-      "jQuery":"jquery",
-      "window.jQuery":"jquery"
+      "$": "jquery",
+      "jQuery": "jquery",
+      "window.jQuery": "jquery"
     })
   ]
 };
