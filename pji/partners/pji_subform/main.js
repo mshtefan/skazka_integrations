@@ -40,6 +40,9 @@ window.SAILPLAY = function (opts) {
                 this.sms_opt_text = ko.observable(),
                 this.email_opt_text = ko.observable(),
 
+                this.gender_male = ko.observable(),
+                this.gender_female = ko.observable(),
+
                 this.opt_out_description = ko.observable(),
                 this.legal_text_html = ko.observable(),
 
@@ -366,6 +369,16 @@ window.SAILPLAY = function (opts) {
         pji_subform.sms_opt_text(sp.specificConfig.settings.texts.sms_opt_text)
         pji_subform.email_opt_text(sp.specificConfig.settings.texts.email_opt_text)
 
+        var genders = {}
+
+        if (sp.specificConfig.settings.texts.gender) {
+            genders.male = sp.specificConfig.settings.texts.gender.male
+            genders.female = sp.specificConfig.settings.texts.gender.female
+        }
+
+        pji_subform.gender_male(genders.male || 'Male')
+        pji_subform.gender_female(genders.female || 'Female')
+
         if (pji_subform.step() == (sp.specificConfig.settings.steps || 1))
             pji_subform.last_step(true)
 
@@ -407,18 +420,26 @@ window.SAILPLAY = function (opts) {
                     pattern: /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
                 })
 
+                var dateTexts = {}
+
+                if (sp.specificConfig.settings.texts.date){
+                    dateTexts.day = sp.specificConfig.settings.texts.date.day
+                    dateTexts.month = sp.specificConfig.settings.texts.date.month
+                    dateTexts.year = sp.specificConfig.settings.texts.date.year
+                }
+
                 if (~(['birthday', 'sign_up_date'].indexOf(field.type))) {
                     el.day = ko.observable().extend({
-                        defaultIfNull: 'Day'
+                        defaultIfNull: dateTexts.day || 'Day'
                     });
                     el.month = ko.observable().extend({
                         defaultIfNull: {
                             id: 0,
-                            name: 'Month'
+                            name: dateTexts.month || 'Month'
                         }
                     });
                     el.year = ko.observable().extend({
-                        defaultIfNull: 'Year'
+                        defaultIfNull: dateTexts.year || 'Year'
                     });
 
                     el.days =

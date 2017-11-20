@@ -10,9 +10,9 @@ form.form(data-bind="visible: !congrat()")
                 div(data-bind="if: field.type == 'sex'")
                     .toggle_bar
                         input#toggle_male.toggle.toggle_left(name="toggle" type="radio" value="1" data-bind="checked: field.value")
-                        label.btn(for="toggle_male") Male
+                        label.btn(for="toggle_male" data-bind="text: $root.gender_male")
                         input#toggle_female.toggle.toggle_right(name="toggle" type="radio" value="2" data-bind="checked: field.value")
-                        label.btn(for="toggle_female") Female
+                        label.btn(for="toggle_female" data-bind="text: $root.gender_female")
                 div(data-bind="if: ~(['sign_up_date', 'birthday'].indexOf(field.type))")
                     label.select(style="width: 28%")
                         div.select_value(data-bind="text: field.day")
@@ -43,9 +43,9 @@ form.form(data-bind="visible: !congrat()")
                 div(data-bind="if: field.type == 'sex'")
                     .toggle_bar
                         input#toggle_male.toggle.toggle_left(name="toggle" type="radio" value="1" data-bind="checked: field.value")
-                        label.btn(for="toggle_male") Male
+                        label.btn(for="toggle_male" data-bind="text: $root.gender_male")
                         input#toggle_female.toggle.toggle_right(name="toggle" type="radio" value="2" data-bind="checked: field.value")
-                        label.btn(for="toggle_female") Female
+                        label.btn(for="toggle_female" data-bind="text: $root.gender_female")
                 div(data-bind="if: ~(['sign_up_date', 'birthday'].indexOf(field.type))")
                     label.select(style="width: 28%")
                         div.select_value(data-bind="text: field.day")
