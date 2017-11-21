@@ -7,7 +7,7 @@
   "main": "./dist/prod/sailplay-sorcery.js",
   "scripts": {
     "start": "gulp webpack-dev-server",
-    "prod": "gulp deploy",
+    "prod": "webpack --config webpack.config.prod.js",
     "prod-server": "gulp production-server",
     "bundle": "rm -rf node_modules/ && npm install"
   },

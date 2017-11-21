@@ -21,6 +21,7 @@ export default angular.module('questions.textarea', [])
 		}
 		this.onChange = () => {
 			var model = angular.copy(this.model)
+			model.completed = !!model.value
 			this.NgModel.$setViewValue(model);
 		}
 	}

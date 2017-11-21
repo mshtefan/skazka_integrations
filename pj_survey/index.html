@@ -28,7 +28,10 @@
       config: params.config || "sorcery"
 
     }
-    var sAuth = "9056f9faf26dd9a8d17f7663bf11063e301f2fe3"
+    var sAuth = {
+      auth_key: params.auth_key || 'email',
+      auth_value: params.auth_value || 'example@exsdfsdample.com'
+    }
 
   </script>
   <style>

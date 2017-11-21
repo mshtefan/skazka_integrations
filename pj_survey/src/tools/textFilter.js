@@ -4,7 +4,7 @@ export default angular.module('sorcery.tools.filters.text', [])
 
 .filter('text', function(apiService){
 	return function(value){
-		if(value.startsWith('$texts')){
+		if(value && value.startsWith('$texts')){
 			var splitValue = value.slice(1).split('.')
 			var text = splitValue.reduce((acc, v)=>{
 				return acc[v]

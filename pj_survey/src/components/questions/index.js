@@ -24,7 +24,6 @@ export default angular.module('sorcery.components.questions', [stars.name, texta
 			}
 		}
 		this.onChange = () => {
-			console.warn(this.model)
 			this.NgModel.$setViewValue(this.model);
 		}
 	}

@@ -65,16 +65,9 @@ gulp.task('deploy.magic', (callback) => {
 
 });
 
-gulp.task('deploy.migrator', (callback) => {
-
-  let bundler = webpack(migrator);
-
-  bundler.run(callback);
-
-});
 
 gulp.task('deploy', (callback) => {
 
-  run('deploy.magic', 'deploy.migrator', callback);
+  run('deploy.magic', callback);
 
 });

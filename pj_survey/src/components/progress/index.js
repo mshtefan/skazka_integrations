@@ -15,16 +15,22 @@ export default angular.module('sorcery.components.progress', [])
 		this.$onInit = ()=>{
 			this.NgModel.$render = ()=>{
 				cssService.addRelativeToElement($element, $scope.$id, this.styles)
-				this.progress = progressWeight.calculateWeight(this.NgModel.$modelValue)
-				console.info(this.progress)
+				this.renderProgress()
 			}
+		}
+		this.renderProgress = (percentage) => {
+			const weight = progressWeight.calculateWeight(this.NgModel.$modelValue)
+			var progress = progressWeight.getCompletionPercentage(weight)
+			this.currentScale = progress/100
 		}
 	}
 })
 
 .service('progressWeight', function(){
+	this.getCompletionPercentage = (calculatedWeight) => {
+		return (calculatedWeight.current / calculatedWeight.max ) * 100
+	}
 	this.calculateWeight = (page) => {
-		console.info(page)
 		return page.questons.reduce((acc, v, k)=>{
 			var max = 0
 			var current = 0

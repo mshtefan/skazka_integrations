@@ -23,7 +23,6 @@ export default angular.module('sorcery', [ Cookies, NgTouch, uiRouter, directive
 				return loginService.login().
 					then(
 						(res)=>{
-							console.log('loginn', loginService.getConfig())
 							return loginService.getConfig()
 						},
 						(res)=> { //если не получилось залогиниться
@@ -36,6 +35,20 @@ export default angular.module('sorcery', [ Cookies, NgTouch, uiRouter, directive
 		url: "/loginfail",
 		name: "loginFailure",
 		template: "login fail"
+	})
+	$stateProvider.state({
+		url: "/success",
+		name: "end",
+		template: "<end data-ng-model='$resolve.login'></end>",
+		resolve: {
+			login: (loginService, $state ) => {
+				return loginService.login().
+					then(
+						(res)=>{
+							return loginService.getConfig()
+						})
+			}
+		}
 	})
 	$urlRouterProvider.when('', '/');
 })

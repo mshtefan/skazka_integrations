@@ -22,7 +22,14 @@ export default angular.module('questions.stars', [])
 			var ngModelCopy = angular.copy(this.model)
 			angular.extend(ngModelCopy, this.model)
 			ngModelCopy.values[index] = row
+			if(ngModelCopy.required){
+				ngModelCopy.completed = requiredValidation(ngModelCopy.values)
+			}
+			console.info(ngModelCopy)
 			this.NgModel.$setViewValue(ngModelCopy);
+		}
+		function requiredValidation(values) {
+			return values.every((x)=>x.completed)
 		}
 	}
 })

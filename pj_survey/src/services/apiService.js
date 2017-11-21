@@ -1,6 +1,7 @@
 import angular from 'angular'
 import SAILPLAY from 'sailplay-hub'
 
+// копипаста апи с шогро
 export default angular.module('sorcery.services.api', [])
 
     .service('spService', function ($log) {

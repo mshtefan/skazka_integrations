@@ -130,7 +130,6 @@ let prodPlugins = plugins.concat(
           drop_console: true,
           unsafe:       false
         },
-        
         mangle: false
       })
     )

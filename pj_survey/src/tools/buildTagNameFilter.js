@@ -7,8 +7,7 @@ export default angular.module('sorcery.tools.filters.buildTagName', [])
 		/*
 			на вход получам объект, в котором например
 		 	{
-		 		pattern: '[name]-[index]',
-				name: 'tagname',
+		 		pattern: 'tagname-[index]',
 				index '3',
 		 	}
 		 	на выход получаем

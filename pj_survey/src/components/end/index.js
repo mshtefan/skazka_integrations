@@ -1,9 +1,9 @@
 import angular from 'angular'
 import template from './index.html'
 
-export default angular.module('sorcery.components.main', [])
+export default angular.module('sorcery.components.end', [])
 
-.component('mainComponent', {
+.component('end', {
 	template,
 	require: {
 		NgModel: 'ngModel'
@@ -12,14 +12,13 @@ export default angular.module('sorcery.components.main', [])
 		this.$onInit = ()=>{
 			this.NgModel.$render = ()=>{
 				this.config = this.NgModel.$modelValue
-				this.content = this.config.content
-				var pages = this.content.pages
-				this.currentPage = pages[0]
+				console.log(this.config)
+				this.page = this.config.content.endPage
 				var styleHrefs = this.config.styleLinks
 
+
 				styleHrefs && styleHrefs.forEach(this.addStyleElement)
-				cssService.addRelativeToElement($element, $scope.$id, this.content.styles)
-				this.progress = this.config.progress
+				cssService.addRelativeToElement($element, $scope.$id, this.page.styles)
 			}
 		},
 		this.addStyleElement = (link)=>{
@@ -27,15 +26,6 @@ export default angular.module('sorcery.components.main', [])
 			linkElement.setAttribute('rel', 'stylesheet')
 			linkElement.setAttribute('href', link)
 			document.querySelector('head').appendChild(linkElement)
-		}
-		this.onChange = () => {
-			this.isValid = preSaveValidationService.isValid(this.currentPage)
-			this.NgModel.$setViewValue(this.NgModel.$modelValue);
-		}
-		this.save = () => {
-			saveService
-				.save(this.currentPage.questons)
-				.then(()=>$state.go('end'))
 		}
 	}
 })
