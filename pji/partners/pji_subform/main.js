@@ -20,7 +20,6 @@ window.ko = ko
 window.SAILPLAY = function (opts) {
     if (initiated) return;
     initiated = true;
-    let countryCode = 506;
     let sp = new SailPlay({
         // auth_hash: auth_hash,
         domain: opts.domain || 'http://sailplay.ru',
