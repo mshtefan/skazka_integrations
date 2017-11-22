@@ -20,11 +20,12 @@ window.ko = ko
 window.SAILPLAY = function (opts) {
     if (initiated) return;
     initiated = true;
+    let countryCode = 506;
     let sp = new SailPlay({
         // auth_hash: auth_hash,
         domain: opts.domain || 'http://sailplay.ru',
         language: opts.language || 'en',
-        partner_id: opts.partner || 1737
+        partner_id: opts.partner || 1788
     })
 
     class PJI_Subform {
@@ -103,8 +104,14 @@ window.SAILPLAY = function (opts) {
                 for (let f of chunk) {
                     if ((f.type == 'birthday' || f.type == 'sign_up_date') && f.day() != 'Day' && f.month().id && f.year() != 'Year') {
                         data[f.type] = `${f.year()}-${("0" + f.month().id).slice(-2)}-${("0" + f.day()).slice(-2)}`
-                    } else
-                        data[f.type] = f.value()
+                    } else {
+                        if (f.maskMaxLength && f.countryCode) {
+                            if (f.maskMaxLength > f.value().length)
+                                data[f.type] = f.contryCode + f.value();
+                            else;
+                                data[f.type] = f.value();
+                        } else data[f.type] = f.value();
+                    }
                 }
             })
 
@@ -146,7 +153,7 @@ window.SAILPLAY = function (opts) {
                     addPhone: data.phone,
                     firstName: data.first_name,
                     lastName: data.last_name,
-                    sex: data.gender,
+                    sex: data.sex,
                     birthDate: data.birthday
                 }
 
@@ -189,15 +196,15 @@ window.SAILPLAY = function (opts) {
                 }, data_to_update))
             }
 
-            function updateTagsArray(fieldGroupsArray){
+            function updateTagsArray(fieldGroupsArray) {
                 var tagsArray = []
-                $.each(data, (k,v)=>{
-                    fieldGroupsArray.forEach((fieldsGroupName)=>{
-                        pji_subform[fieldsGroupName]().forEach((fieldsGroup)=>{
-                            fieldsGroup.forEach(function(field){
-                                if(field.autocomplete && (field.name.toLowerCase()==k.toLowerCase())){
-                                    field.autocomplete.forEach((entry)=>{
-                                        if(v && (entry.name.toLowerCase() == v.toLowerCase()) && entry.tag){
+                $.each(data, (k, v) => {
+                    fieldGroupsArray.forEach((fieldsGroupName) => {
+                        pji_subform[fieldsGroupName]().forEach((fieldsGroup) => {
+                            fieldsGroup.forEach(function (field) {
+                                if (field.autocomplete && (field.name.toLowerCase() == k.toLowerCase())) {
+                                    field.autocomplete.forEach((entry) => {
+                                        if (v && (entry.name.toLowerCase() == v.toLowerCase()) && entry.tag) {
                                             tagsArray.push(entry.tag)
                                         }
                                     })
@@ -210,9 +217,9 @@ window.SAILPLAY = function (opts) {
 
             }
 
-            function updateTags(fieldGroupsArray){
+            function updateTags(fieldGroupsArray) {
                 var tagsArray = updateTagsArray(fieldGroupsArray)
-                if(tagsArray.length){
+                if (tagsArray.length) {
                     sp.addTags(tagsArray, {
                         auth_hash: '',
                         email: this.email(),
@@ -238,10 +245,10 @@ window.SAILPLAY = function (opts) {
                     if (!this.sms_opt()) tags.push('SMS Opt-Out');
                     data = $.extend(true, {}, this.previous_data, data)
                     sp.addTags(tags, {
-                            auth_hash: '',
-                            email: this.email(),
-                            phone: ''
-                        })
+                        auth_hash: '',
+                        email: this.email(),
+                        phone: ''
+                    })
                         .then(updateVars(1))
                         .then(updateInfo)
                         .then(updateVars(0))
@@ -268,10 +275,10 @@ window.SAILPLAY = function (opts) {
                 let tags = ['Marketing Opt-In', 'Subscription form not finished'].concat(updateTagsArray(['mainFields']))
                 if (!this.sms_opt()) tags.push('SMS Opt-Out');
                 sp.addTags(tags, {
-                        auth_hash: '',
-                        email: this.email(),
-                        phone: ''
-                    })
+                    auth_hash: '',
+                    email: this.email(),
+                    phone: ''
+                })
                     .then(updateVars(2))
                     .then(updateInfo)
                     .then(updateVars(0))
@@ -291,9 +298,9 @@ window.SAILPLAY = function (opts) {
                     email: this.email(),
                     phone: ''
                 })
-                .then(updateVars(0))
-                .then(updateTags(['secondaryFields']))
-                .then(nextStep)
+                    .then(updateVars(0))
+                    .then(updateTags(['secondaryFields']))
+                    .then(nextStep)
 
             this.in_progress(false);
         }
@@ -325,15 +332,35 @@ window.SAILPLAY = function (opts) {
         return observable;
     };
 
+    $.jMaskGlobals = {
+        maskElements: 'input,td,span,div',
+        dataMaskAttr: '*[data-mask]',
+        dataMask: true,
+        watchInterval: 300,
+        watchInputs: true,
+        watchDataMask: false,
+        byPassKeys: [9, 16, 17, 18, 36, 37, 38, 39, 40, 91],
+        translation: {
+            // '0': {pattern: /\d/},
+            // '9': {pattern: /\d/, optional: true},
+            '#': { pattern: /\d/, recursive: true },
+            'd': { pattern: /\d/ },
+            'A': { pattern: /[a-zA-Z0-9]/ },
+            'S': { pattern: /[a-zA-Z]/ }
+        }
+    };
+
     let origValueUpdate = ko.bindingHandlers.value.update;
     ko.bindingHandlers.value.update = function (element, valueAccessor) {
         let val = valueAccessor(),
             mask = val.mask,
             newValue = val();
+
         $(element).unmask();
         origValueUpdate.apply(this, arguments);
+
         if (mask)
-            $(element).mask(mask);
+            $(element).mask(mask)
     };
 
     // --- validation
@@ -383,12 +410,12 @@ window.SAILPLAY = function (opts) {
             pji_subform.last_step(true)
 
         for (let fieldSet of [{
-                inSettings: 'main_fields',
-                inCode: 'mainFields'
-            }, {
-                inSettings: 'secondary_fields',
-                inCode: 'secondaryFields'
-            }]) {
+            inSettings: 'main_fields',
+            inCode: 'mainFields'
+        }, {
+            inSettings: 'secondary_fields',
+            inCode: 'secondaryFields'
+        }]) {
 
             let tempArr = [];
             for (let [index, field] of sp.specificConfig[fieldSet.inSettings].entries()) {
@@ -403,11 +430,11 @@ window.SAILPLAY = function (opts) {
                     type: field.type
                 }
 
-                if(field.autocomplete){
+                if (field.autocomplete) {
                     el.autocomplete = field.autocomplete
-                    if(field.autocomplete_required){
+                    if (field.autocomplete_required) {
                         el.value.extend({
-                            autocompleteRequired: field.autocomplete.map(x=>x.name)
+                            autocompleteRequired: field.autocomplete.map(x => x.name)
                         })
                     }
                 }
@@ -422,7 +449,7 @@ window.SAILPLAY = function (opts) {
 
                 var dateTexts = {}
 
-                if (sp.specificConfig.settings.texts.date){
+                if (sp.specificConfig.settings.texts.date) {
                     dateTexts.day = sp.specificConfig.settings.texts.date.day
                     dateTexts.month = sp.specificConfig.settings.texts.date.month
                     dateTexts.year = sp.specificConfig.settings.texts.date.year
@@ -465,27 +492,29 @@ window.SAILPLAY = function (opts) {
                         }())
                 }
 
-                if (field.type == 'phone') el.value.extend({
-                    mask: (field.phone && field.phone.mask) || '+56 (999) 99-99-99',
-                    pattern: (field.phone && field.phone.pattern) || "^(\\+56) \\(([0-9]{3})\\) ([0-9]{2})-([0-9]{2})-([0-9]{2})$"
-                })
+                if (field.type == 'phone') {
+                    el.maskMaxLength = field.phone && field.phone.maskMaxLength;
+                    el.countryCode = field.phone && field.phone.countryCode;
+
+                    el.value.extend({
+                        mask: (field.phone && field.phone.mask) || '+56 (999) 99-99-99',
+                        pattern: (field.phone && field.phone.pattern) || "^(\\+56) \\(([0-9]{3})\\) ([0-9]{2})-([0-9]{2})-([0-9]{2})$"
+                    })
+                }
 
                 tempArr.push(el)
 
             }
 
             pji_subform[fieldSet.inCode].push(tempArr)
-
-
-
-            pji_subform[fieldSet.inCode]().forEach(function(fieldArray){
-                fieldArray.forEach(function(field){
-                    if(field.autocomplete){
-                        var autocomplete = field.autocomplete.map(function(x){return x.name})
+            pji_subform[fieldSet.inCode]().forEach(function (fieldArray) {
+                fieldArray.forEach(function (field) {
+                    if (field.autocomplete) {
+                        var autocomplete = field.autocomplete.map(function (x) { return x.name })
                         $('[data-type=' + field.type + ']').autocomplete({
-                            source: (request, response)=>{
-                                var res = autocomplete.filter(x=>x.toLowerCase().includes(request.term.toLowerCase()))
-                                if(res.length){
+                            source: (request, response) => {
+                                var res = autocomplete.filter(x => x.toLowerCase().includes(request.term.toLowerCase()))
+                                if (res.length) {
                                     response(res)
                                 } else {
                                     response([{
@@ -516,8 +545,8 @@ window.SAILPLAY = function (opts) {
                 ko.validation.rules.pattern.message = texts.form_errors && texts.form_errors.pattern || 'Invalid format. Please check the spelling';
                 ko.validation.rules.required.message = texts.form_errors && texts.form_errors.required || 'Field is required. Please enter something';
                 ko.validation.rules['autocompleteRequired'] = {
-                    validator: function(val, autocompleteArray){
-                        return autocompleteArray.some((entry)=>val && (entry.toLowerCase()==val.toLowerCase()))
+                    validator: function (val, autocompleteArray) {
+                        return autocompleteArray.some((entry) => val && (entry.toLowerCase() == val.toLowerCase()))
                     },
                     message: texts.form_errors && texts.form_errors.autocomplete_required || "Incorrect value"
                 };

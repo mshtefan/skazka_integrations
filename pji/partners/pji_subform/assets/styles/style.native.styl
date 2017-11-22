@@ -3,3 +3,18 @@
         &_group 
             .validationMessage
                 display: block
+
+    &congrat .__sailplay-form
+        +above(930px)
+            display: flex;
+        +below(930px)
+            padding 10% 12% !important;
+
+    &congrat
+        +above(930px)
+            display: flex;
+        position: relative;
+        max-width: 1370px;
+        .__sailplay-form
+            max-width: none;
+            padding-bottom: 0;

@@ -82,12 +82,14 @@ form.form(data-bind="visible: !congrat()")
             label(for="sms_opt", data-bind="text: sms_opt_text")
 
     .form_row
-        a.btn(href="javascript:void(0)", data-bind="click: submit, text: btn_text, css: {'__sailplay-disabled': in_progress() || !submit_available() }")
-        div.agree
-            span(data-bind="text: user_agreement_line_1")
-            a(data-bind="text: user_agreement_link, attr: { href: user_agreement_link_href }")
-            br
-            span(data-bind="text: user_agreement_line_2")
+        .form_group
+            a.btn(href="javascript:void(0)", data-bind="click: submit, text: btn_text, css: {'__sailplay-disabled': in_progress() || !submit_available() }")
+        .form_group
+            div.agree
+                span(data-bind="text: user_agreement_line_1")
+                a(data-bind="text: user_agreement_link, attr: { href: user_agreement_link_href }")
+                br
+                span(data-bind="text: user_agreement_line_2")
     div.legal-text(data-bind="html: legal_text_html")
 
 
