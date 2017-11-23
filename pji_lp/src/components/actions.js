@@ -15,6 +15,18 @@ class actionsView {
         this.current_survey_result = ko.observable();
         this.close_invite_popup = this.close_invite_popup.bind(this);
 
+        this.texts = ko.observable();
+
+        subscribe(config => {
+            this.texts(config.config.action_texts)
+        }, 'config.load')
+
+        subscribe(sp => { 
+            sp.performComplete = () => {
+                this.current_action(0);
+            };
+         }, 'instance.success')
+
         subscribeAll(result => {
             const flatten = list => list.reduce(
                 (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []

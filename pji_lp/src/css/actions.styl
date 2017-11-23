@@ -6,6 +6,7 @@
 
         +below(700px) {
             flex-direction: column;
+            padding: 0 20px
 
             .actions__item {
                 flex: auto;
@@ -31,6 +32,26 @@
         &-active {
             background: #0f9675;
             color: white !important;
+            
+            .icon.poll {
+                background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/5300112a69355e7a132ce214aa68d34a.svg) !important;
+            }
+
+            .icon.invite {
+                background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/526950e1230ede71297c5109a6a730d5.svg) !important;
+            }
+
+            .icon.fb {
+                background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/2172b0b38b6e0b578c4f884f40344491.svg) !important;
+            }
+
+            .icon.tw {
+                background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/fefbcfbb9ae74d7f243fc714984eb784.svg) !important;
+            }
+
+            .actions__text-points {
+                color: white !important;
+            }
         }
 
         .icon {
@@ -46,6 +67,9 @@
     }
 
     &__header {
+        +below(700px) {
+            margin: 80px 40px 20px 20px
+        }
         font-family: 'Changa One';
         font-size: 48px;
         font-weight: 300;
@@ -59,12 +83,23 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        font-family: "Knockout";
+        font-size: 20px;
         padding-right: 28px;
         box-sizing: border-box;
+
+        +below(700px) {
+            font-size: 22px;
+        }
 
         &-points {
             color: #0f9675;
             font-weight: 600;
+            +below(700px) {
+                font-family: "Changa One";
+                font-size: 26px;
+                font-weight: 400;
+            }
         }
     }
 }

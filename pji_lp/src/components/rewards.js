@@ -35,8 +35,8 @@ class rewardsView {
 
     init_owl() {
         jQuery('.__sailplay-owl-carousel').owlCarousel({
-            stagePadding: 40,
-            margin: 20,
+            stagePadding: 20,
+            margin: 10,
             items: 1,
             loop: false,
             mouseDrag: true,
@@ -55,15 +55,21 @@ class rewardsView {
             navText: ['', ''],
             responsive: {
                 1024: {
-                    items: 4
+                    items: 4,
+                    stagePadding: 40,
+                    margin: 10                    
                 },
 
                 800: {
-                    items: 3
+                    items: 3,
+                    stagePadding: 40,
+                    margin: 10                                                 
                 },
 
                 600: {
-                    items: 2
+                    items: 2,
+                    stagePadding: 20,
+                    margin: 10                                        
                 }
             }
         });

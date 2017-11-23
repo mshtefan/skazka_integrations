@@ -10,16 +10,16 @@
         ">
         <span data-bind="text: $parent.current_action._actionId"></span>
         <!-- ko if: type == 'poll' -->
-        <div class="icon" style="background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/7160da3842dd6082e8fa41489497c2e7.svg)"></div>
+        <div class="icon poll" style="background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/7160da3842dd6082e8fa41489497c2e7.svg)"></div>
         <!-- /ko -->
         <!-- ko if: type == 'inviteFriend' -->
-        <div class="icon" style="background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/bd9af9952fee0968f26932fcbda42042.svg)"></div>
+        <div class="icon invite" style="background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/bd9af9952fee0968f26932fcbda42042.svg)"></div>
         <!-- /ko -->
         <!-- ko if: type == 'socialSharing' && socialType == 'fb' -->
-        <div class="icon" style="background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/68559e106d464f20cf061518fdb1ffc4.svg)"></div>
+        <div class="icon fb" style="background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/68559e106d464f20cf061518fdb1ffc4.svg)"></div>
         <!-- /ko -->
         <!-- ko if: type == 'socialSharing' && socialType == 'tw' -->
-        <div class="icon" style="background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/21750c8d58bf8d4596ed77f4135a490e.svg)"></div>
+        <div class="icon tw" style="background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/21750c8d58bf8d4596ed77f4135a490e.svg)"></div>
         <!-- /ko -->
         <div class="actions__text">
             <span data-bind="text: $parent.getTitle($data)"></span>
@@ -61,13 +61,13 @@
 <!-- ko if: start_invite -->
 <popup params="data: { data: { refer_link: refer_link, copy_link: copy_refer_link }, close: close_invite_popup }">
     <div class="popup__title">
-        <span class="popup__title-name">
+        <span class="popup__title-name" data-bind="text: texts() && texts().title">
             INVITE YOUR FRIENDS AND RECEIVE
         </span>
-        <span class="popup__title-points">
+        <span class="popup__title-points" data-bind="text: texts() && texts().reward">
             5 POINTS FOR EACH
         </span>
-        <div class="popup__title-descr">
+        <div class="popup__title-descr" data-bind="text: texts() && texts().descr">
             Send this link to friends that are not yet registered in Papa John's. For every friend subscribed using this link, you will
             recieve additional 75 points.
         </div>

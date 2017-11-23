@@ -14,7 +14,7 @@ class MainView {
             throw new Error('Please specify user auth_hash')
         }
 
-        this.partner_id = opts.partner || 1761;
+        this.partner_id = opts.partner || 1788;
         this.auth_hash = opts.auth_hash;
         this.domain = opts.domain || 'https://sailplay.net';
         this.config_name = opts.config || 'loyalty';
@@ -29,10 +29,13 @@ class MainView {
             this.getData();
             this.sp.getConfigByName(this.config_name)
                 .then(data => {
-                    if (data.config)
+                    if (data.config) {
                         this.config = data.config.config;
-                    else
+                        publish(data.config, 'config.load')
+                    }
+                    else {
                         this.config = null
+                    }
                 })
         })
 

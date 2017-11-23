@@ -2,17 +2,16 @@
     <div class="status-bar__header">
         You have earned <span data-bind="text: points"></span> POINTS
     </div>
-    <div class="status-bar__legend">
-        <div class="status-bar__legend-item" data-bind="css: { '__sailplay-status-bar__legend-item-active': points() > 10 }">10</div>
-        <div class="status-bar__legend-item" data-bind="css: { '__sailplay-status-bar__legend-item-active': points() > 20 }">20</div>
-        <div class="status-bar__legend-item" data-bind="css: { '__sailplay-status-bar__legend-item-active': points() > 30 }">30</div>
-        <div class="status-bar__legend-item" data-bind="css: { '__sailplay-status-bar__legend-item-active': points() > 40 }">40+</div>
+    <div class="status-bar__legend" data-bind="foreach: status_points">
+        <div class="status-bar__legend-item" data-bind="css: { '__sailplay-status-bar__legend-item-active': $parent.points() > $data }">
+            <span data-bind="text: $data"></span>
+            <span data-bind="if: ($index() == ($parent.status_points().length - 1))">+</span>
+        </div>
     </div>
     <div class="status-bar__line">
         <div class="status-bar__fill" data-bind="style: { width: fill }"></div>
-        <div class="status-bar__section" points="10"></div>
-        <div class="status-bar__section" points="20"></div>
-        <div class="status-bar__section" points="30"></div>
-        <div class="status-bar__section" points="40+"></div>
+        <!-- ko foreach: status_points -->
+        <div class="status-bar__section" data-bind="attr: { points: $data }"></div>
+        <!-- /ko -->
     </div>
 </div>
