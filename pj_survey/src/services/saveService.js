@@ -28,11 +28,12 @@ module.service('saveService', function(apiService, loginService, $q){
 
 		var loginCreds = loginService.auth
 		var user = {[loginCreds.auth_key]: loginCreds.auth_value}
+		var completedTag = apiService.config.completionTag
 
 		var parsedVars = _(varsAndTags.vars).mapObject(angular.toJson)
 
 		return apiService.user.vars.add({custom_vars: parsedVars, user})
-			.then(()=>apiService.user.tags.add(varsAndTags.tags, user))
+			.then(()=>apiService.user.tags.add(varsAndTags.tags.concat([completedTag]), user))
 	}
 
 	//every save return tags and vars array

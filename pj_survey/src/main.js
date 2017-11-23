@@ -20,21 +20,48 @@ export default angular.module('sorcery', [ Cookies, NgTouch, uiRouter, directive
 		template: '<main-component data-ng-model="$resolve.login"></main-component>',
 		resolve: {
 			login: (loginService, $state ) => {
+				console.log('logging')
 				return loginService.login().
 					then(
 						(res)=>{
-							return loginService.getConfig()
+							return res
 						},
 						(res)=> { //если не получилось залогиниться
-							$state.go('loginFailure')
+							switch (res) {
+								case 'cant login':
+									console.log('kl')
+									$state.go('loginFailure')
+									break;
+								case 'already completed':
+									$state.go('alreadyCompleted')
+									break;
+								default:
+									$state.go('loginFailure')
+									break;
+							}
 						})
+			}
+		}
+	})
+	$stateProvider.state({
+		url: "/alreadycompleted",
+		name: "alreadyCompleted",
+		template: "<already-completed data-ng-model='$resolve.login'><already-completed>",
+		resolve: {
+			login: (loginService, $state ) => {
+				return loginService.getConfig()
 			}
 		}
 	})
 	$stateProvider.state({
 		url: "/loginfail",
 		name: "loginFailure",
-		template: "login fail"
+		template: "<login-failure data-ng-model='$resolve.login'></login-failure>",
+		resolve: {
+			login: (loginService, $state ) => {
+				return loginService.getConfig()
+			}
+		}
 	})
 	$stateProvider.state({
 		url: "/success",
@@ -42,11 +69,7 @@ export default angular.module('sorcery', [ Cookies, NgTouch, uiRouter, directive
 		template: "<end data-ng-model='$resolve.login'></end>",
 		resolve: {
 			login: (loginService, $state ) => {
-				return loginService.login().
-					then(
-						(res)=>{
-							return loginService.getConfig()
-						})
+				return loginService.getConfig()
 			}
 		}
 	})
