@@ -106,8 +106,8 @@ window.SAILPLAY = function (opts) {
                     } else {
                         if (f.maskMaxLength && f.countryCode) {
                             if (f.maskMaxLength > f.value().length)
-                                data[f.type] = f.contryCode + f.value();
-                            else;
+                                data[f.type] = f.countryCode + f.value();
+                            else
                                 data[f.type] = f.value();
                         } else data[f.type] = f.value();
                     }
