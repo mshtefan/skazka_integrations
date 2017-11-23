@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Magic Stage</title>
 </head>
+
 <body>
     <sailplay-magic></sailplay-magic>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            window.SAILPLAY({
+                auth_hash: '99e3b05b2aff3fd576b1e94021e603c260e062eb',
+                domain: 'https://sailplay.net',
+                config: 'default',
+                visible: 1,
+                partner: 1761
+            })
+        })
+    </script>
 <script type="text/javascript" src="app.bundle.js"></script></body>
+
 </html>

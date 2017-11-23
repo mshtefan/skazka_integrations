@@ -14,9 +14,11 @@ class MainView {
             throw new Error('Please specify user auth_hash')
         }
 
-        this.partner_id = opts.partner_id || 1761;
+        this.partner_id = opts.partner || 1761;
         this.auth_hash = opts.auth_hash;
         this.domain = opts.domain || 'https://sailplay.net';
+        this.config_name = opts.config || 'loyalty';
+        this.visible = opts.visible === undefined ? 1 : opts.visible;
         this.sp = new SailPlay({
             partner_id: this.partner_id,
             domain: this.domain,
@@ -24,18 +26,29 @@ class MainView {
         })
 
         this.sp.config.subscribe(() => {
-            this.getData()
+            this.getData();
+            this.sp.getConfigByName(this.config_name)
+                .then(data => {
+                    if (data.config)
+                        this.config = data.config.config;
+                    else
+                        this.config = null
+                })
         })
 
         subscribe(() => this.getData(), 'update');
         subscribe(data => {
             Promise.all([
                 this.sp.addTags(data[0]),
-                this.sp.updateCustomVars({...data[1], ...{ auth_hash: this.auth_hash }})               
+                this.sp.updateCustomVars({ ...data[1],
+                    ...{
+                        auth_hash: this.auth_hash
+                    }
+                })
             ]).then(() => {
                 this.sp.completeAction(data[2])
             })
-            
+
         }, 'poll.complete');
 
         subscribe(action => {
@@ -74,7 +87,3 @@ window.SAILPLAY = function (opts = {}) {
 
     ko.applyBindings()
 }
-
-window.SAILPLAY({
-    auth_hash: '99e3b05b2aff3fd576b1e94021e603c260e062eb'
-})

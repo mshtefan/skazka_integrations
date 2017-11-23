@@ -1,5 +1,7 @@
 import {
-    subscribe, subscribeAll, publish
+    subscribe,
+    subscribeAll,
+    publish
 } from '../messager';
 import $ from 'jquery';
 
@@ -9,6 +11,7 @@ class actionsView {
         this.start_invite = ko.observable();
         this.start_survey = ko.observable();
         this.current_survey = ko.observable();
+        this.current_action = ko.observable();
         this.current_survey_result = ko.observable();
         this.close_invite_popup = this.close_invite_popup.bind(this);
 
@@ -17,7 +20,11 @@ class actionsView {
                 (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
             );
 
-            this.actions(ko.mapping.fromJS(flatten(result)))
+            this.actions(flatten(result).sort((a, b) => {
+                if (a.type == 'poll') return -1;
+                if (b.type == 'poll') return 1;
+            }))
+
         }, ['actions.list.success', 'custom_actions.list.success'])
 
         subscribe(result => {
@@ -34,11 +41,12 @@ class actionsView {
 
     perform(act) {
         this.start_invite(0);
-        this.start_survey(0);        
+        this.start_survey(0);
+        this.current_action(act);
 
-        if (act.type() == 'inviteFriend') {
+        if (act.type == 'inviteFriend') {
             this.start_invite(1);
-        } else if (act.type() == 'poll') {
+        } else if (act.type == 'poll') {
             this.current_survey(act);
             this.start_survey(1);
         } else {
@@ -47,7 +55,7 @@ class actionsView {
     }
 
     completePoll(act) {
-        
+
         let tags = [];
         let customVars = {};
 
@@ -64,8 +72,8 @@ class actionsView {
 
     close_invite_popup() {
         this.start_invite(0);
-        this.start_survey(0);        
-        jQuery('.__sailplay-gift__redeem-active').removeClass('__sailplay-gift__redeem-active');        
+        this.start_survey(0);
+        jQuery('.__sailplay-gift__redeem-active').removeClass('__sailplay-gift__redeem-active');
     }
 
     copy_refer_link() {
@@ -74,10 +82,10 @@ class actionsView {
     }
 
     getTitle(act) {
-        if (act.type() == 'poll') return this.titles()['survey'];
-        else if (act.type() == 'inviteFriend') return this.titles()['invite'];
-        else if (act.socialType() == 'tw') return this.titles()['tw'];
-        else if (act.socialType() == 'fb') return this.titles()['fb'];
+        if (act.type == 'poll') return this.titles()['survey'];
+        else if (act.type == 'inviteFriend') return this.titles()['invite'];
+        else if (act.socialType == 'tw') return this.titles()['tw'];
+        else if (act.socialType == 'fb') return this.titles()['fb'];
         else return ''
     }
 }
