@@ -15,7 +15,8 @@ export default angular.module('questions.textarea', [])
 				this.model = this.NgModel.$modelValue
 				this.label = this.NgModel.$modelValue.label
 				this.placeholder = textFilter(this.NgModel.$modelValue.placeholder)
-				
+				this.maxLength = this.NgModel.$modelValue.maxLength
+
 				autosize(document.querySelector('textarea-container textarea'))
 			}
 		}
