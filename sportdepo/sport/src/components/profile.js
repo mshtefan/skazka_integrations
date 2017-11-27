@@ -30,7 +30,7 @@ export default function(messager) {
         this.email_verified = ['Подтверждение контактных данных']
         this.registration = ['Пользователь заполнил профиль'];
         this.is_register = ko.observable(false);    
-        this.vars = ['city', 'address', 'child_birthdate', 'game_other'];
+        this.vars = ['city', 'address', 'children', 'game_other'];
         this.tooltip_opened = ko.observable(false);
 
         this.tooltipOpen = () => {
@@ -69,20 +69,67 @@ export default function(messager) {
                 messager.publish(value.user_points.confirmed, 'user_points');
                 messager.publish(value.purchases.sum, 'user_purchases_sum');
 
+                this.data().user['child_array'] = ko.observableArray()
+
+                // костыль для дизайна, пустая дата в конец
+                this.data().user['child_array'].push({
+                    child_bday: ko.observable(), 
+                    child_bmonth: ko.observable(),
+                    child_byear: ko.observable()
+                })
+
+                this.oldChildLength = 0
+
                 sailplay.jsonp.get(config.DOMAIN + config.urls.users.custom_variables.batch_get, {
                     names: JSON.stringify(this.vars),
                     auth_hash: config.auth_hash
                 }, result => {
                     if (result.vars.length) {
                         ko.utils.arrayForEach(result.vars, item => {
-                            if (item.name == 'child_birthdate') {
-                                this.data().user['child_bday'](item.value.split('-')[2]);
-                                this.data().user['child_bmonth'](this.popupVm.months().find(i => i && i.index == item.value.split('-')[1]));
-                                this.data().user['child_byear'](item.value.split('-')[0]);
+                            if (item.name == 'children' && item.value>0) {
+                                this.oldChildLength = item.value
+                                getChildrenVars(item.value)
                             } else if (this.data().user[item.name]) this.data().user[item.name](item.value)
                         })
+                        if(!result.vars.find(x=>x.name=='children')){
+                            getChildrenVars(1)
+                        }
                     }
                 })
+
+                var getChildrenVars = (childrenQuantity) => {
+                    // если есть дети, то делаем запрос на получених их из их юзерварса, каждая дата это один юзерварс
+                    // children это общее количество записей дат рождения детей
+                    var children_vars_names = []
+                    // например если там 3 даты, то они будут иметь название child_birthdate, child_birthdate_2, child_birthdate_3
+                    for (var i = 1; i <= childrenQuantity; i++) {
+                        children_vars_names.push('child_birthdate' + (i==1 ? '' : '_'+i))
+                    };
+                    sailplay.jsonp.get(config.DOMAIN + config.urls.users.custom_variables.batch_get, {
+                        names: JSON.stringify(children_vars_names),
+                        auth_hash: config.auth_hash
+                    }, result => {
+                        if (result.vars.length) {
+                            // сортируем полченные даты чтобы отображались по порядку на всякий случай
+                            var sortedResult = result.vars.sort((x,y)=>{
+                                function getIndex(item){
+                                    var regexResult = /_(\d+$)/.exec(item.name)
+                                    return regexResult ? regexResult[1] : "1"
+                                }
+                                var xIndex = getIndex(x)
+                                var yIndex = getIndex(y)
+                                return xIndex<yIndex
+                            })
+                            ko.utils.arrayForEach((sortedResult), item => {
+                                this.data().user['child_array'].unshift({
+                                  child_bday: ko.observable(item.value.split('-')[2]),
+                                  child_bmonth: ko.observable(this.popupVm.months().find(i => i && i.index == item.value.split('-')[1])),
+                                  child_byear: ko.observable(item.value.split('-')[0])
+                                })
+                            })
+                        }
+                    })
+                }
 
                 let tags = [].concat(this.training_tags, this.games_tags, this.for_who_tags, this.registration, this.email_verified),
                     tags_to_process = [];
@@ -170,7 +217,8 @@ export default function(messager) {
             is_profile: true,
             active_games: ko.observableArray([]),
             for_who: ko.observableArray(),
-            getField: (field, arr) => {                
+            child_array: ko.observableArray(),
+            getField: (field, arr) => {
                 if (!this.data()) return '';
                 if (!this.data().user[field]) {                    
                     if (arr) this.data().user[field] = ko.observableArray()                    
@@ -182,7 +230,7 @@ export default function(messager) {
                 if (field == 'child_byear') this.data().user[field].extend({min: 1863, pattern: { message: "wrong", params: '^[0-9]{4}$' }})
                 if (field == 'city') this.data().user[field].extend({required: true})
                 if (field == 'address') this.data().user[field].extend({required: true})                
-
+                //if (field == 'child_array') console.log(this.data().user[field])
                 return this.data().user[field]
             },
             width: ko.observable('356px'),
@@ -190,6 +238,8 @@ export default function(messager) {
                 document.body.className += ' no_scrol';
                 this.popupVm.step(1);
                 this.popupVm.width('356px')
+                if (this.data().user['child_array']) 
+                    this.popupVm.child_array(this.data().user['child_array']())
                 if (this.data().user['active_games'] && this.data().user['active_games'].length)
                     this.popupVm.active_games(this.data().user['active_games']);
 
@@ -198,6 +248,18 @@ export default function(messager) {
                     this.popupVm.is_register(true);
                 }
                 this.popupVm.opened(true)                    
+            },
+
+            removeChildrenBDay: (item)=>{
+                this.popupVm['child_array'].remove(item)
+            },
+
+            addChildrenBDay: ()=>{
+                this.popupVm['child_array'].push({
+                    child_bday: ko.observable(), 
+                    child_bmonth: ko.observable(),
+                    child_byear: ko.observable()
+                })
             },
 
             back: () => {
@@ -256,7 +318,7 @@ export default function(messager) {
                         .className = document.getElementsByClassName('check_training')[0].className
                         .replace(' error', '')                        
 
-                    if (!this.data().user.child_bday() || !/^[0-9]{1,2}$/.test(this.data().user.child_bday())) {
+/*                    if (!this.data().user.child_bday() || !/^[0-9]{1,2}$/.test(this.data().user.child_bday())) {
                         document.getElementsByClassName('child_bday')[0]
                             .className += ' error'
                         
@@ -288,7 +350,7 @@ export default function(messager) {
                             .className = document.getElementsByClassName('child_byear')[0].className
                             .replace(' error', '')                                                                        
                     }
-                }
+*/                }
 
                 return register_complete
             },
@@ -315,7 +377,7 @@ export default function(messager) {
             },
 
             finish: (_last) => {
-                
+                if(window.$('.bns_inner_block :invalid').length) return false
 
                 let user = ko.toJS(this.data().user);
                 let obj = { auth_hash: this.config.auth_hash },                
@@ -332,9 +394,38 @@ export default function(messager) {
                 if (user.birth_day && user.birth_month && user.birth_year)
                     primary['birthDate'] = `${user.birth_year}-${user.birth_month.index}-${user.birth_day}`
 
+//                if (user.child_array.length>0){
+//              теперь всегда проверяем длинну массива
+                if (true){
+                    var filteredArray = user.child_array.filter( function(element, index) {
+                        return element.child_byear && element.child_bmonth && element.child_bday
+                    })
+
+                    filteredArray.forEach( function(element, index) {
+                        var keyName = getNameByIndex(index+1)
+                        secondary[keyName] = `${element.child_byear}-${element.child_bmonth.index}-${element.child_bday}`
+                    });
+
+                    function getNameByIndex(index){
+                        if(index==1){
+                            return 'child_birthdate'
+                        } else {
+                            return 'child_birthdate_' + (index)
+                        }
+                    }
+                    
+                    secondary['children'] = filteredArray.length
+
+                    for (var i = filteredArray.length+1; i <= this.oldChildLength; i++) {
+                        secondary[getNameByIndex(i)] = 'deleted'
+                    };
+
+                    this.oldChildLength = filteredArray.length
+                }
+/*
                 if (user.child_bday && user.child_bmonth && user.child_byear)
                     secondary['child_birthdate'] = `${user.child_byear}-${user.child_bmonth.index}-${user.child_bday}`
-
+*/
                 let current_tags = [].concat(this.popupVm.for_who(), user.training, this.popupVm.active_games());
                 let all_tags = [].concat(this.training_tags, this.games_tags, this.for_who_tags);
                 let diff_tags = arr_diff(current_tags, all_tags);

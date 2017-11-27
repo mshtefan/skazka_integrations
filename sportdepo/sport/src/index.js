@@ -26,6 +26,8 @@ import ko from 'knockout';
 import 'knockout-mapping';
 import 'knockout.validation';
 
+window.ko = ko;
+
 require('array.prototype.find').shim();
 if (!('forEach' in Array.prototype)) {
     Array.prototype.forEach= function(action, that /*opt*/) {
