@@ -21,7 +21,7 @@ class StatusBarView {
 
         this.template = ko.pureComputed(() => {
             if (this.collected() == 0 && !this.currentStatusDetail())
-                return `Start collecting night to become a ${this.next_status().name} member`
+                return `Start collecting nights to become a ${this.next_status().name} member`
 
             let date = this.nightsExpire();
             date = `${date.toLocaleString('en-us', { month: 'short' })} ${date.getDate()}, ${date.getFullYear()}`

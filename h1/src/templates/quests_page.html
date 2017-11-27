@@ -1,4 +1,17 @@
 <div class="container" data-bind="visible: user">
+    <div class="profile profile--round" data-bind="if: user">
+        <div class="profile__name">
+            Hey <span data-bind="text: user().user.first_name"></span>!
+            <div class="profile__descr">
+                    <!-- <span data-bind="text: $parent.config().quest_description"></span>! -->
+                    <span>You deserve to be rewarded. Learn how Hotelsone Rewards can help you do it in 3 simple steps: </span><strong>Stay, Earn, Save</strong>
+                </div>
+        </div>
+        <div class="profile__title profile__title-top135">
+            <div class="brand">hotelsone</div>
+            <div class="rewards">rewards</div>
+        </div>
+    </div>
     <sailplay-banner>
         <div class="grid">
             <div class="grid__1-3">

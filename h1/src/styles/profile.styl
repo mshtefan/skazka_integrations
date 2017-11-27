@@ -7,6 +7,11 @@
     border-radius: top 10px;
     clearfix();
 
+    &--round {
+        border-radius: 10px
+        margin-bottom: 30.47px
+    }
+
     &:after {
         content: '';
         height vw(190px);
@@ -36,6 +41,18 @@
         float: left;
     }
 
+    &__descr {
+        white-space: normal;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: vw(38px);
+        font-weight: 400;
+        color: white;
+        position: relative;
+        margin-top:  20px;
+        float: left;
+    }
+
     &__title {
         margin-right: vw(80px);
         background-image: url('~assets/keyhole.png');
@@ -48,6 +65,10 @@
         float: right;
         padding-left: vw(105px);
         color: white;
+
+        &-top135 {
+            margin-top: 135px;
+        }
 
         div:nth-child(1) {
             font-size: vw(24px);
