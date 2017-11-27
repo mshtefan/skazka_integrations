@@ -1,0 +1,6 @@
+<div>
+	<label class="question-label" data-ng-bind="$ctrl.label | text"></label>
+	<div class="textarea-field">
+		<textarea maxlength="{{$ctrl.maxLength}}" data-ng-change='$ctrl.onChange()' placeholder="{{$ctrl.placeholder}}" data-ng-model="$ctrl.model.value"></textarea>
+	</div>
+</div>
