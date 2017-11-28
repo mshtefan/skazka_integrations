@@ -33,7 +33,7 @@ form.form(data-bind="visible: !congrat()")
  
                 input(data-bind="value: field.value, valueUpdate:'blur', visible: ['sex', 'birthday', 'sign_up_date'].indexOf(field.type) < 0, attr: {'data-type': field.type}")
 
-    .header(data-bind="visible: step() == 2")
+    .header.step2(data-bind="visible: step() == 2")
         .text(data-bind="text: title_step_2")
         .bottom_line
     div(data-bind="foreach: { data: secondaryFields, as: 'chunk' }, visible: step() == 2")
@@ -75,11 +75,13 @@ form.form(data-bind="visible: !congrat()")
         .form_group.full(data-bind="css: {'__sailplay-error': !email_opt.isValid() && email_opt.isModified()}")
             input.input_checkbox(type="checkbox", id="email_opt", data-bind="checked: email_opt")
             label(for="email_opt", data-bind="text: email_opt_text")
+            a.superscript(href="javascript:void(0)" data-bind="click: to_legal, visible: superscripts") 1
 
     .form_row(data-bind="visible: check_sms_opt_out_visible()")
         .form_group.full(data-bind="css: {'__sailplay-error': sms_opt.isValid && !sms_opt.isValid() && sms_opt.isModified()}")
             input.input_checkbox(type="checkbox", id="sms_opt", data-bind="checked: sms_opt")
             label(for="sms_opt", data-bind="text: sms_opt_text")
+            a.superscript(href="javascript:void(0)" data-bind="click: to_legal, visible: superscripts") 2            
 
     .form_row
         .form_group

@@ -22,6 +22,11 @@ sailplay-magic *
     div
         box-sizing: border-box;
 
+    &superscript
+        vertical-align: super;
+        font-size: 12px;
+        color: black;
+
     &input_checkbox
         display: none
 
@@ -229,9 +234,11 @@ sailplay-magic *
                 font-size: 14pt;
 
                 &[for="sms_opt"]
+                    float: left
                     padding: 0 0 0 40px
 
                 &[for="email_opt"]
+                    float: left                    
                     padding: 0 0 0 40px
 
             input

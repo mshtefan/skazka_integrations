@@ -30,52 +30,52 @@ window.SAILPLAY = function (opts) {
     class PJI_Subform {
         constructor() {
             this.mainFields = ko.observableArray(),
-                this.secondaryFields = ko.observableArray(),
+            this.secondaryFields = ko.observableArray(),
 
-                this.in_progress = ko.observable(false),
+            this.in_progress = ko.observable(false),
 
-                this.sms_opt = ko.observable(false),
-                this.email_opt = ko.observable(false),
+            this.sms_opt = ko.observable(false),
+            this.email_opt = ko.observable(false),
 
-                this.sms_opt_text = ko.observable(),
-                this.email_opt_text = ko.observable(),
+            this.sms_opt_text = ko.observable(),
+            this.email_opt_text = ko.observable(),
 
-                this.gender_male = ko.observable(),
-                this.gender_female = ko.observable(),
+            this.gender_male = ko.observable(),
+            this.gender_female = ko.observable(),
 
-                this.opt_out_description = ko.observable(),
-                this.legal_text_html = ko.observable(),
+            this.opt_out_description = ko.observable(),
+            this.legal_text_html = ko.observable(),
 
-                this.email = ko.observable(),
-                this.step = ko.observable(1),
-                this.last_step = ko.observable(),
-                this.congrat = ko.observable(false),
+            this.email = ko.observable(),
+            this.step = ko.observable(1),
+            this.last_step = ko.observable(),
+            this.congrat = ko.observable(false),
 
-                this.btn_text = ko.observable(),
-                this.user_agreement_line_1 = ko.observable(),
-                this.user_agreement_line_2 = ko.observable(),
-                this.user_agreement_link = ko.observable(),
-                this.user_agreement_link_href = ko.observable(),
+            this.btn_text = ko.observable(),
+            this.user_agreement_line_1 = ko.observable(),
+            this.user_agreement_line_2 = ko.observable(),
+            this.user_agreement_link = ko.observable(),
+            this.user_agreement_link_href = ko.observable(),
 
-                this.title = ko.observable(),
-                this.title_step_1 = ko.observable(),
-                this.title_step_2 = ko.observable(),
+            this.title = ko.observable(),
+            this.title_step_1 = ko.observable(),
+            this.title_step_2 = ko.observable(),
 
-                this.thank_title = ko.observable(),
-                this.thank_description = ko.observable(),
-                this.thank_button = ko.observable(),
-                this.thank_image = ko.observable(''),
-                this.thank_link_href = ko.observable(),
+            this.thank_title = ko.observable(),
+            this.thank_description = ko.observable(),
+            this.thank_button = ko.observable(),
+            this.thank_image = ko.observable(''),
+            this.thank_link_href = ko.observable(),
 
-                this.check_email_opt_out_visible = ko.computed(() => {
-                    let visible = true;
+            this.check_email_opt_out_visible = ko.computed(() => {
+                let visible = true;
 
-                    if (!sp.specificConfig.settings.email_opt) visible = false;
-                    if (sp.specificConfig.settings.reg_on_last_step && !this.last_step()) visible = false;
-                    if (!sp.specificConfig.settings.reg_on_last_step && this.last_step()) visible = false;
+                if (!sp.specificConfig.settings.email_opt) visible = false;
+                if (sp.specificConfig.settings.reg_on_last_step && !this.last_step()) visible = false;
+                if (!sp.specificConfig.settings.reg_on_last_step && this.last_step()) visible = false;
 
-                    return visible;
-                })
+                return visible;
+            })
 
             this.check_sms_opt_out_visible = ko.computed(() => {
                 let visible = true;
@@ -95,6 +95,14 @@ window.SAILPLAY = function (opts) {
 
                 return available;
             })
+
+            this.to_legal = function(){
+                $('html, body').animate({
+                    scrollTop: $('.__sailplay-legal-text').offset().top
+                })
+            }
+
+            this.superscripts = ko.observable();
         }
 
         getData(field_set) {
@@ -232,6 +240,11 @@ window.SAILPLAY = function (opts) {
                     self.step(self.step() + 1);
                     self.btn_text(sp.specificConfig.settings.texts.button_step_2)
                     self.last_step(true);
+                    setTimeout(() => {
+                        $('html, body').animate({
+                            scrollTop: $('.__sailplay-step2').offset().top
+                        })
+                    }, 100)
                 } else
                     self.congrat(true)
 
@@ -359,7 +372,10 @@ window.SAILPLAY = function (opts) {
         origValueUpdate.apply(this, arguments);
 
         if (mask)
-            $(element).mask(mask)
+            $(element).mask(mask, {
+                onChange: function(content) {
+                }
+            })
     };
 
     // --- validation
@@ -394,6 +410,8 @@ window.SAILPLAY = function (opts) {
 
         pji_subform.sms_opt_text(sp.specificConfig.settings.texts.sms_opt_text)
         pji_subform.email_opt_text(sp.specificConfig.settings.texts.email_opt_text)
+
+        pji_subform.superscripts(sp.specificConfig.settings.superscripts)
 
         var genders = {}
 
