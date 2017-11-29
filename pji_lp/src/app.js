@@ -10,10 +10,6 @@ import {
 
 class MainView {
     constructor(opts) {
-        if (!opts.auth_hash) {
-            throw new Error('Please specify user auth_hash')
-        }
-
         this.partner_id = opts.partner_id || 1788;
         this.auth_hash = opts.auth_hash;
         this.domain = opts.domain || 'https://sailplay.net';
