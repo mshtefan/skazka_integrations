@@ -32,6 +32,8 @@ window.SAILPLAY = function (opts) {
             this.mainFields = ko.observableArray(),
             this.secondaryFields = ko.observableArray(),
 
+            this.padding_on = ko.observable();
+
             this.in_progress = ko.observable(false),
 
             this.sms_opt = ko.observable(false),
@@ -66,6 +68,8 @@ window.SAILPLAY = function (opts) {
             this.thank_button = ko.observable(),
             this.thank_image = ko.observable(''),
             this.thank_link_href = ko.observable(),
+
+            this.allow_edit = ko.observable();
 
             this.check_email_opt_out_visible = ko.computed(() => {
                 let visible = true;
@@ -113,7 +117,7 @@ window.SAILPLAY = function (opts) {
                         data[f.type] = `${f.year()}-${("0" + f.month().id).slice(-2)}-${("0" + f.day()).slice(-2)}`
                     } else {
                         if (f.maskMaxLength && f.countryCode) {
-                            if (f.maskMaxLength > f.value().length)
+                            if (f.maskMaxLength > f.value().split(/[\D]/).join('').length)
                                 data[f.type] = f.countryCode + f.value();
                             else
                                 data[f.type] = f.value();
@@ -163,6 +167,15 @@ window.SAILPLAY = function (opts) {
                     sex: data.sex,
                     birthDate: data.birthday
                 }
+
+                sp.updateCustomVars({
+                    email: self.email(),
+                    "__form_edit_['phone']": data.phone,
+                    "__form_edit_['firstName']": data.first_name,
+                    "__form_edit_['lastName']": data.last_name,
+                    "__form_edit_['sex']": data.sex,
+                    "__form_edit_['birthDate']": data.birthday
+                })
 
                 return sp.updateUserInfo($.extend(true, {
                     email: self.email()
@@ -344,6 +357,21 @@ window.SAILPLAY = function (opts) {
         return observable;
     };
 
+    ko.extenders.maskMaxLength = function (observable, len) {
+        observable.maxLen = len;
+        return observable;
+    }
+
+    // ko.validation.rules['uniq_pattern'] = {
+    //     validator: function (val, content) {
+    //         let pattern = content[0];
+    //         console.log(parr)
+    //         console.log(val.match(new RegExp(pattern)))
+    //         return val.match(pattern)
+    //     },
+    //     message: ko.validation.rules.pattern.message
+    // }
+
     $.jMaskGlobals = {
         maskElements: 'input,td,span,div',
         dataMaskAttr: '*[data-mask]',
@@ -355,6 +383,7 @@ window.SAILPLAY = function (opts) {
         translation: {
             // '0': {pattern: /\d/},
             // '9': {pattern: /\d/, optional: true},
+            'm': { pattern: /^\d{1,11}$/ },
             '#': { pattern: /\d/, recursive: true },
             'd': { pattern: /\d/ },
             'A': { pattern: /[a-zA-Z0-9]/ },
@@ -368,14 +397,23 @@ window.SAILPLAY = function (opts) {
             mask = val.mask,
             newValue = val();
 
-        $(element).unmask();
         origValueUpdate.apply(this, arguments);
 
-        if (mask)
-            $(element).mask(mask, {
+        if (mask) {
+            if (newValue)
+                newValue = newValue.split(/[\D]/).join('');
+
+            let set_mask = (newValue && newValue.length > val.maxLen) ? 'ddddddddddd' : mask
+            
+            let options = {
                 onChange: function(content) {
+                    let set_mask = (content.split(/[\D]/).join('').length > val.maxLen) ? 'ddddddddddd' : mask
+                    $(element).mask(set_mask, options)
                 }
-            })
+            }
+
+            $(element).mask(set_mask, options)
+        }
     };
 
     // --- validation
@@ -412,6 +450,9 @@ window.SAILPLAY = function (opts) {
         pji_subform.email_opt_text(sp.specificConfig.settings.texts.email_opt_text)
 
         pji_subform.superscripts(sp.specificConfig.settings.superscripts)
+
+        pji_subform.allow_edit(sp.specificConfig.settings.allow_edit)
+        pji_subform.padding_on(sp.specificConfig.settings.padding)
 
         var genders = {}
 
@@ -514,6 +555,7 @@ window.SAILPLAY = function (opts) {
                     el.countryCode = field.phone && field.phone.countryCode;
 
                     el.value.extend({
+                        maskMaxLength: el.maskMaxLength,
                         mask: (field.phone && field.phone.mask) || '+56 (999) 99-99-99',
                         pattern: (field.phone && field.phone.pattern) || "^(\\+56) \\(([0-9]{3})\\) ([0-9]{2})-([0-9]{2})-([0-9]{2})$"
                     })
