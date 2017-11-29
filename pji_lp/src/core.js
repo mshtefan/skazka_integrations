@@ -185,12 +185,16 @@ export class SailPlay {
 
     getGifts() {
         return new Promise((resolve, reject) => {
+            let data = {
+                verbose: true
+            }
+
+            if (this.opts.auth_hash)
+                data.auth_hash = this.opts.auth_hash
+
             jsonp({
                 url: `${this.opts.domain}${this.config().urls.gifts.list()}`,
-                data: {
-                    auth_hash: this.opts.auth_hash,
-                    verbose: true
-                },
+                data: data,
                 success: resolve
             })
         })

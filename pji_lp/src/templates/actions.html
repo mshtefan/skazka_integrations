@@ -1,4 +1,4 @@
-<div class="actions__header">QUESTS FOR POINTS</div>
+<div class="actions__header" data-bind="text: texts() && texts().actions.title"></div>
 <div class="actions__list" data-bind="foreach: actions()">
     <div class="actions__item" data-bind="
         click: $parent.perform.bind($parent), 

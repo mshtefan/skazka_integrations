@@ -1,9 +1,10 @@
+<div data-bind="if: (gifts().length && user()) || (gifts().length && no_auth_widget())">
 <div class="rewards__header" data-bind="text: texts() && texts().rewards.title"></div>
 <div class="owl-carousel owl-theme" data-bind="foreach: gifts">
     <div class="gift" data-bind="attr: { 'data-id': $index }">
         <img class="gift__image" data-bind="attr: { src: thumbs.url_250x250 }" alt="">
         <div class="gift__name" data-bind="text: name"></div>
-        <a href="javascript:void(0)" class="gift__redeem" data-bind="css: { '__sailplay-disabled': $parent.readonly } "><span data-bind="text: $parent.texts() && $parent.texts().rewards.redeem_for"></span>
+        <a href="javascript:void(0)" class="gift__redeem" data-bind="css: { '__sailplay-disabled': ($parent.readonly || $parent.no_auth_widget) } "><span data-bind="text: $parent.texts() && $parent.texts().rewards.redeem_for"></span>
             <span data-bind="text: points"></span>
             <span class="uppercase" data-bind="text: $parent.texts() && $parent.texts().points"></span></a>
     </div>
@@ -28,3 +29,4 @@
     </div>
 </popup>
 <!-- /ko -->
+</div>

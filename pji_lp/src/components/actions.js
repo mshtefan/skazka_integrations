@@ -42,26 +42,31 @@ class actionsView {
         subscribe(result => {
             this.refer_link = result;
         }, 'referral.info')
-
-        this.titles = ko.observable({
-            fb: 'Join us on facebook',
-            tw: 'Share of twitter',
-            invite: 'Refer a friend',
-            survey: 'Complete a survey'
-        })
     }
 
     perform(act) {
+        let prev_was_invite = this.start_invite()
+
         this.start_invite(0);
         this.start_survey(0);
-        this.current_action(act);
 
         if (act.type == 'inviteFriend') {
+            if (prev_was_invite) {
+                this.current_action(0)
+                return
+            }
+            this.current_action(act);
+
             this.start_invite(1);
         } else if (act.type == 'poll') {
+            if (this.current_survey().name != act.name) {
+                this.current_action(0)                
+                return
+            }
             this.current_survey(act);
             this.start_survey(1);
         } else {
+            this.current_action(act);        
             publish(ko.mapping.toJS(act), 'action.perform');
         }
     }
@@ -94,10 +99,10 @@ class actionsView {
     }
 
     getTitle(act) {
-        if (act.type == 'poll') return this.titles()['survey'];
-        else if (act.type == 'inviteFriend') return this.titles()['invite'];
-        else if (act.socialType == 'tw') return this.titles()['tw'];
-        else if (act.socialType == 'fb') return this.titles()['fb'];
+        if (act.type == 'poll') return act.name;
+        else if (act.type == 'inviteFriend') return this.texts().actions.inv
+        else if (act.socialType == 'tw') return this.texts().actions.tw
+        else if (act.socialType == 'fb') return this.texts().actions.fb
         else return ''
     }
 }

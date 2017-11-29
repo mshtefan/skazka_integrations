@@ -1,4 +1,4 @@
-<div class="history" data-bind="if: history_filtered">
+<div class="history" data-bind="if: history_filtered().length">
     <div class="history__title" data-bind="text: texts() && texts().history.title"></div>
     <div class="history__table" data-bind="if: user">
         <div class="history__header">

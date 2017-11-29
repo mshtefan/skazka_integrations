@@ -18,6 +18,7 @@ class rewardsView {
         this.user = ko.observable();
         this.texts = ko.observable();
         this.readonly = ko.observable();
+        this.no_auth_widget = ko.observable();
 
         subscribe(gifts => {
             this.gifts(gifts);
@@ -37,6 +38,7 @@ class rewardsView {
         subscribe(config => {
             this.texts(config.config.texts)
             this.readonly(config.config.gifts_readonly)
+            this.no_auth_widget(config.config.no_auth_widget)
         }, 'config.load')
     }
 
