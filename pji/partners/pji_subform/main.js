@@ -117,7 +117,7 @@ window.SAILPLAY = function (opts) {
                         data[f.type] = `${f.year()}-${("0" + f.month().id).slice(-2)}-${("0" + f.day()).slice(-2)}`
                     } else {
                         if (f.maskMaxLength && f.countryCode) {
-                            if (f.maskMaxLength > f.value().split(/[\D]/).join('').length)
+                            if (f.maskMaxLength >= f.value().split(/[\D]/).join('').length)
                                 data[f.type] = f.countryCode + f.value();
                             else
                                 data[f.type] = f.value();
