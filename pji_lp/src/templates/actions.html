@@ -32,14 +32,14 @@
 </div>
 
 <!-- ko if: start_survey -->
-<popup class="poll" params="data: { data: { survey: current_survey, complete: completePoll }, close: close_invite_popup }">
+<popup class="poll" params="data: { data: { survey: current_survey, complete: completePoll, texts: texts }, close: close_invite_popup }">
     <div class="poll" data-bind="foreach: survey().content.questions">
-        <div class="popup__title poll__question">
+        <div class="poll__question">
             <div class="popup__title-name popup__title-uppercase" data-bind="text: text"></div>
             <div class="poll__choices" data-bind="foreach: options">
                 <!-- ko if: value.type == 'custom' -->
                 <div class="poll__choice">
-                    <input class="input_text" type="text" placeholder="Leave your comment" data-bind="value: value.value">
+                    <input class="input_text" type="text" data-bind="value: value.value, attr: { placeholder: $parentContext.$parent.texts() && $parentContext.$parent.texts().actions.poll_other }">
                 </div>
                 <!-- /ko -->
                 <!-- ko if: value.type == 'default' -->
@@ -56,7 +56,7 @@
             </div>
         </div>
     </div>
-    <a href="javascript:void(0)" data-bind="click: complete.bind($data, survey())" class="btn">Complete the survey</a>
+    <a href="javascript:void(0)" data-bind="click: complete.bind($data, survey()), text: survey().button_text" class="btn"></a>
 </popup>
 <!-- /ko -->
 

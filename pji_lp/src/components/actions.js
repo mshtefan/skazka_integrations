@@ -53,16 +53,19 @@ class actionsView {
         if (act.type == 'inviteFriend') {
             if (prev_was_invite) {
                 this.current_action(0)
+                this.current_survey(0)                
                 return
             }
             this.current_action(act);
-
             this.start_invite(1);
         } else if (act.type == 'poll') {
-            if (this.current_survey().name != act.name) {
+            if (this.current_survey() && this.current_survey().name == act.name) {
+                this.current_survey(0)
                 this.current_action(0)                
                 return
             }
+
+            this.current_action(act);                    
             this.current_survey(act);
             this.start_survey(1);
         } else {
@@ -100,9 +103,9 @@ class actionsView {
 
     getTitle(act) {
         if (act.type == 'poll') return act.name;
-        else if (act.type == 'inviteFriend') return this.texts().actions.inv
-        else if (act.socialType == 'tw') return this.texts().actions.tw
-        else if (act.socialType == 'fb') return this.texts().actions.fb
+        else if (act.type == 'inviteFriend') return this.texts() && this.texts().actions.inv
+        else if (act.socialType == 'tw') return this.texts() && this.texts().actions.tw
+        else if (act.socialType == 'fb') return this.texts() && this.texts().actions.fb
         else return ''
     }
 }
