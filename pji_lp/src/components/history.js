@@ -34,8 +34,9 @@ class historyView {
 
     getBalance(index) {
         return this.history_filtered().reduce((prev, current, _index) => {
-            if (index() >= _index)
+            if (index() > _index) {
                     return prev + parseInt(current.points_delta * -1);
+            }
                 else return prev
             },
             this.user().user_points.confirmed

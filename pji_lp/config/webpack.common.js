@@ -71,6 +71,8 @@ module.exports = {
             ]
           }
         }, {
+          loader: "cssimportant-loader"
+        }, {
           loader: "stylus-loader",
         }]
       }
