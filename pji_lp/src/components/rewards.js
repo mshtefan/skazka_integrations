@@ -16,6 +16,8 @@ class rewardsView {
         this.close_redeem_popup = this.close_redeem_popup.bind(this);
         this.confirm_redeem = this.confirm_redeem.bind(this);
         this.user = ko.observable();
+        this.texts = ko.observable();
+        this.readonly = ko.observable();
 
         subscribe(gifts => {
             this.gifts(gifts);
@@ -31,6 +33,11 @@ class rewardsView {
         subscribe(instance => {
             this.sp = instance
         }, 'instance.success')
+
+        subscribe(config => {
+            this.texts(config.config.texts)
+            this.readonly(config.config.gifts_readonly)
+        }, 'config.load')
     }
 
     init_owl() {
@@ -89,6 +96,8 @@ class rewardsView {
     }
 
     show_redeem_popup(index) {
+        if (this.readonly()) return 
+
         this.active_gift(this.gifts()[index]);
         this.start_redeem(true);
     }

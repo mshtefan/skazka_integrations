@@ -24,7 +24,9 @@
         <div class="actions__text">
             <span data-bind="text: $parent.getTitle($data)"></span>
             <span class="actions__text-points">+
-                <span data-bind="text: points"></span> points</span>
+                <span data-bind="text: points"></span>
+                <span data-bind="text: $parent.texts() && $parent.texts().points"></span>
+            </span>
         </div>
     </div>
 </div>
@@ -59,21 +61,14 @@
 <!-- /ko -->
 
 <!-- ko if: start_invite -->
-<popup params="data: { data: { refer_link: refer_link, copy_link: copy_refer_link }, close: close_invite_popup }">
+<popup params="data: { data: { texts: texts, refer_link: refer_link, copy_link: copy_refer_link }, close: close_invite_popup }">
     <div class="popup__title">
-        <span class="popup__title-name" data-bind="text: texts() && texts().title">
-            INVITE YOUR FRIENDS AND RECEIVE
-        </span>
-        <span class="popup__title-points" data-bind="text: texts() && texts().reward">
-            5 POINTS FOR EACH
-        </span>
-        <div class="popup__title-descr" data-bind="text: texts() && texts().descr">
-            Send this link to friends that are not yet registered in Papa John's. For every friend subscribed using this link, you will
-            recieve additional 75 points.
-        </div>
+        <span class="popup__title-name" data-bind="text: texts() && texts().actions.invite.title"></span>
+        <span class="popup__title-points" data-bind="text: texts() && texts().actions.invite.reward"></span>
+        <div class="popup__title-descr" data-bind="text: texts() && texts().actions.invite.descr"></div>
     </div>
 
     <input type="text" class="refer-input" readonly data-bind="value: refer_link">
-    <a href="javascript:void(0)" class="btn" data-bind="click: copy_link">Copy Link</a>
+    <a href="javascript:void(0)" class="btn" data-bind="click: copy_link, text: texts() && texts().actions.invite.copy_link"></a>
 </popup>
 <!-- /ko -->

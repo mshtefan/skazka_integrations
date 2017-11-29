@@ -10,6 +10,8 @@ class historyView {
         })
 
         this.user = ko.observable();
+        this.texts = ko.observable();
+        this.show_expires = ko.observable();
 
         subscribe(data => {
             this.history(data);
@@ -17,7 +19,12 @@ class historyView {
 
         subscribe(data => {
             this.user(data)
-        }, 'load.user.info')
+        }, 'load.user.info');
+
+        subscribe(config => {
+            this.texts(config.config.texts)
+            this.show_expires(config.config.show_expires)
+        }, 'config.load')
     }
 
     getDate(date) {

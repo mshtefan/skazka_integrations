@@ -18,7 +18,7 @@ class actionsView {
         this.texts = ko.observable();
 
         subscribe(config => {
-            this.texts(config.config.action_texts)
+            this.texts(config.config.texts)
         }, 'config.load')
 
         subscribe(sp => { 

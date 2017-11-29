@@ -14,7 +14,7 @@ class MainView {
             throw new Error('Please specify user auth_hash')
         }
 
-        this.partner_id = opts.partner || 1788;
+        this.partner_id = opts.partner_id || 1788;
         this.auth_hash = opts.auth_hash;
         this.domain = opts.domain || 'https://sailplay.net';
         this.config_name = opts.config || 'loyalty';

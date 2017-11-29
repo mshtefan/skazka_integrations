@@ -6,6 +6,7 @@ class statusBarView {
     constructor() {
         this.points = ko.observable();
         this.status_points = ko.observableArray();
+        this.texts = ko.observable();
 
         subscribe(data => {
             this.points(data.user_points.confirmed)
@@ -18,6 +19,10 @@ class statusBarView {
         this.fill = ko.computed(() => {
             return `${this.points() / 40 * 100}%`;
         })
+
+        subscribe(config => {
+            this.texts(config.config.texts)
+        }, 'config.load')
     }
 }
 

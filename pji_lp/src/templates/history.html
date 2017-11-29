@@ -1,16 +1,16 @@
-<div class="history">
-    <div class="history__title">YOUR REWARDS HISTORY</div>
+<div class="history" data-bind="if: history_filtered">
+    <div class="history__title" data-bind="text: texts() && texts().history.title"></div>
     <div class="history__table" data-bind="if: user">
         <div class="history__header">
-            <div class="history__column history__column-50">Date / Order Number</div>
-            <div class="history__column history__column-50">Points / Balance</div>
+            <div class="history__column history__column-50" data-bind="text: (texts() && texts().history.columns_names[0]) + ' / ' + (texts() && texts().history.columns_names[1])"></div>
+            <div class="history__column history__column-50" data-bind="text: (texts() && texts().history.columns_names[3]) + ' / ' + (texts() && texts().history.columns_names[5])"></div>
 
-            <div class="history__column">Date</div>
-            <div class="history__column">Order Number</div>
-            <div class="history__column">Status</div>
-            <div class="history__column">Points</div>
-            <div class="history__column">Expires</div>
-            <div class="history__column">Balance</div>
+            <div class="history__column" data-bind="text: texts() && texts().history.columns_names[0]"></div>
+            <div class="history__column" data-bind="css: { '__sailplay-history__column--wide': !show_expires() }, text: texts() && texts().history.columns_names[1]"></div>
+            <div class="history__column" data-bind="text: texts() && texts().history.columns_names[2]"></div>
+            <div class="history__column" data-bind="text: texts() && texts().history.columns_names[3]"></div>
+            <div class="history__column" data-bind="visible: show_expires, text: texts() && texts().history.columns_names[4]"></div>
+            <div class="history__column" data-bind="text: texts() && texts().history.columns_names[5]"></div>
         </div>
         <!-- ko foreach: history_filtered -->
         <div class="history__row">
@@ -18,31 +18,40 @@
             <div class="history__column history__column-50">
                 <span class="history__points">
                     <span data-bind="html: points_delta"></span>&nbsp;
-                    <span data-bind="if: points_delta > 0">earned</span>
-                    <span data-bind="if: points_delta < 0">debited</span>
+                    <span data-bind="if: points_delta > 0">
+                        <span data-bind="text: $parent.texts() && $parent.texts().history.earned"></span>
+                    </span>
+                    <span data-bind="if: points_delta < 0">
+                        <span data-bind="text: $parent.texts() && $parent.texts().history.debited"></span>                            
+                    </span>
                 </span>
                 <br>
                 <span>Balance:&nbsp;</span><span data-bind="text: $parent.getBalance($index)"></span>
             </div>
             <div class="history__column" data-bind="text: $parent.getDate(action_date)"></div>
             <div class="history__column">
-                <span data-bind="if: $data.order_num">#
-                    <span data-bind="text: order_num"></span>
+                <span data-bind="if: $data.order_num">#<span data-bind="text: order_num"></span>
                 </span>
                 <span data-bind="ifnot: $data.order_num">
                     Gift:
                     <span data-bind="text: name"></span>
                 </span>
             </div>
-            </spa nbn>
-            <div class="history__column">
-                <span data-bind="if: points_delta > 0">Earned</span>
-                <span data-bind="if: points_delta < 0">Debited</span>
+            <div class="history__column capital">
+                <span data-bind="if: points_delta > 0">
+                    <span data-bind="text: $parent.texts() && $parent.texts().history.earned"></span>                            
+                        
+                </span>
+                <span data-bind="if: points_delta < 0">
+                    <span data-bind="text: $parent.texts() && $parent.texts().history.debited"></span>                            
+                </span>
             </div>
             <div class="history__column history__points">
                 <span data-bind="if: points_delta > 0">+</span><span data-bind="text: points_delta"></span>
             </div>
-            <div class="history__column">Never</div>
+            <div class="history__column capital" data-bind="visible: $parent.show_expires">
+                <span data-bind="text: $parent.texts() && $parent.texts().history.never"></span>                                                
+            </div>
             <div class="history__column" data-bind="text: $parent.getBalance($index)"></div>
         </div>
         <!-- /ko -->

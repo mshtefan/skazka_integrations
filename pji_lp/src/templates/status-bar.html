@@ -1,6 +1,8 @@
 <div class="status-bar">
     <div class="status-bar__header">
-        You have earned <span data-bind="text: points"></span> POINTS
+        <span data-bind="text: texts() && texts().status.you_have"></span>
+        <span data-bind="text: points"></span>
+        <span class="uppercase" data-bind="text: texts() && texts().points"></span>        
     </div>
     <div class="status-bar__legend" data-bind="foreach: status_points">
         <div class="status-bar__legend-item" data-bind="css: { '__sailplay-status-bar__legend-item-active': $parent.points() > $data }">
