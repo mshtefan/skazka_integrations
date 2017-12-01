@@ -162,7 +162,7 @@ window._remoteLogin = () => {
 }
 
 window._logout = () => {
-    cookie.remove('sp_auth_hash', { path: '/', domain: cookie_domain})
+    cookie.remove('sp_auth_hash', { path: '', domain: cookie_domain})
 
     let req = document.createElement('iframe');
     req.width = 0;    

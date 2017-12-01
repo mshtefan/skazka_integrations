@@ -21,7 +21,7 @@ class CoupunsView {
         this.user_currency = ko.observable();
         this.filtered_coupons = ko.computed(() => {
             return ko.utils.arrayFilter(this.coupons(), item => {
-                return item.type == 'coupon' && item.category == this.user_currency()
+                return item.type == 'coupon' && item.category == (this.user_currency() || '786')
             })
         })
 

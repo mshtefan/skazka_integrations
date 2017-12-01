@@ -28,11 +28,11 @@
                         <li>
                             <strong>Booking:</strong> Points will add up quickly, so make sure you book your next business trip or
                             family holiday with
-                            <a href="http://www.hotelsone.com">HotelOne.com</a> and see them add up!
+                            <a href="http://www.hotelsone.com">HotelsOne.com</a> and see them add up!
                         </li>
                         <li>
                             <strong>Any Hotel:</strong> Watch the points rack up points when you stay at any hotel booked through
-                            <a href="http://www.hotelsone.com">HotelOne.com!</a>
+                            <a href="http://www.hotelsone.com">HotelsOne.com!</a>
                         </li>
                     </ul>
                 </div>
@@ -58,11 +58,11 @@
                         <li>
                             <strong>Statues Progress:</strong> Stay 10 nights and be upgraded to
                             <a href="#" data-bind="
-                        attr: { href: $parent.config().other_links.silver_member }, 
-                        text: $parent.config().statuses[0].name">Silver</a> status. Stay 25 and be upgraded to
+                        attr: { href: $parent.config() && $parent.config().other_links.silver_member }, 
+                        text: $parent.config() && $parent.config().statuses[0].name">Silver</a> status. Stay 25 and be upgraded to
                             <a href="#" data-bind="
-                        attr: { href: $parent.config().other_links.gold_member,
-                            text: $parent.config().statuses[1].name }">Gold</a> status where you will earn points 3x as fast!</li>
+                        attr: { href: $parent.config() && $parent.config().other_links.gold_member,
+                            text: $parent.config() && $parent.config().statuses[1].name }">Gold</a> status where you will earn points 3x as fast!</li>
                         <!-- /ko -->
                     </ul>
                 </div>
@@ -81,15 +81,15 @@
                         <li>
                             <strong>Cash Coupons:</strong> Here comes the fun bit. Use your points to redeem cash coupons to save
                             on your next booking through
-                            <a href="http://www.hotelsone.com">HotelOne.com!</a>
+                            <a href="http://www.hotelsone.com">HotelsOne.com!</a>
                         </li>
                         <li>
                             <strong>Redeem:</strong> To redeem your cash coupon, select an eligible hotel and click on ‘Book Now’.
                             Remember to be logged in to apply your cash coupon.</li>
                         <li>
                             <strong>Lowest Price Guarantee:</strong> For <a href="#" data-bind="
-                            attr: { href: $parent.config().other_links.gold_member,
-                                text: $parent.config().statuses[1].name }">Gold</a> members, if you placed a prepaid booking and find a
+                            attr: { href: $parent.config() && $parent.config().other_links.gold_member,
+                                text: $parent.config() && $parent.config().statuses[1].name }">Gold</a> members, if you placed a prepaid booking and find a
                             lower rate on another website for the same room type and stay dates, we will refund the difference
                             to your account in points. Terms and conditions apply.</li>
                     </ul>

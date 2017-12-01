@@ -10,7 +10,7 @@
                 <div class="banner__text">
                     Get the scoop on everything you need to know about HotelsOne Rewards, including
                     <!-- ko if: $parent.config() -->
-                    <a href="#" data-bind="attr: { href: $parent.config().other_links.how_it_works }">how it works</a>
+                    <a href="#" data-bind="attr: { href: $parent.config() && $parent.config().other_links.how_it_works }">how it works</a>
                     and the benefits of being a
                     <a href="#" data-bind="
                         attr: { href: $parent.config().other_links.silver_member }, 
@@ -51,7 +51,7 @@
                     <strong>Bonus Points</strong> when you complete a few simple actions.
                 </div>
                 <div class="center">
-                    <a href="" class="btn">View All Quests</a>
+                    <a data-bind="attr: { href: $parent.config() && $parent.config().other_links.how_it_works }" class="btn">View All Quests</a>
                 </div>
             </sailplay-banner>
         </div>
