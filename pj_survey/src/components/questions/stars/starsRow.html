@@ -1,0 +1,6 @@
+<div>
+	<label data-ng-bind="$ctrl.label | text"></label>
+	<div class="stars-row-container">
+		<div class="star" data-ng-class="{active: star.active}" data-ng-repeat="star in $ctrl.stars" data-ng-click="$ctrl.setStar($index)"></div>
+	</div>
+</div>

@@ -1,0 +1,7 @@
+<div class="main-container">
+	<progress-bar data-ng-if="$ctrl.progress.enabled" data-style="$ctrl.progress.styles" data-ng-model="$ctrl.currentPage"></progress-bar>
+	<img data-ng-src="{{$ctrl.content.logo}}">
+	<label class="top-label" data-ng-bind="$ctrl.content.label | text"></label>
+	<page data-ng-model="$ctrl.currentPage" data-ng-change="$ctrl.onChange()"></page>
+	<button class="submit" data-ng-click="$ctrl.save()" data-ng-class="{disabled: !$ctrl.isValid}" data-ng-bind="$ctrl.content.finish_button_label | text"></button>
+</div>
