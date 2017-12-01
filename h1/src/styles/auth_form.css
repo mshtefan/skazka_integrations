@@ -65,7 +65,7 @@ input:focus {
 
 .auth_wrapper .error {
     position: absolute;
-    margin-top: 100px;
+    margin-top: 105px;
 }
 
 form[data-ng-submit*="restore_pass"] .email_field:before {
@@ -78,10 +78,6 @@ form[data-ng-show*="restore_pass_2"] .email_field:after {
 
 form[data-ng-show*="restore_pass_3"] .email_field:after {
     content: ''
-}
-
-.email_field .error {
-    margin-top: 45px;
 }
 
 .email_field:after {
@@ -163,4 +159,9 @@ form[data-ng-show*="restore_pass_3"] .email_field:after {
     	margin-top: 16px !important;
     	float: left!important;
     }
+}
+
+
+body > div > div:nth-child(2) > form.ng-pristine.ng-valid-email.ng-invalid.ng-invalid-required.ng-submitted > div.email_field > div {
+    margin-top: 45px !important;
 }
