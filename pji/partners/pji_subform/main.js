@@ -71,6 +71,10 @@ window.SAILPLAY = function (opts) {
 
             this.allow_edit = ko.observable();
 
+            this.day_input_size = ko.observable();
+            this.month_input_size = ko.observable();
+            this.year_input_size = ko.observable();
+
             this.check_email_opt_out_visible = ko.computed(() => {
                 let visible = true;
 
@@ -453,6 +457,10 @@ window.SAILPLAY = function (opts) {
 
         pji_subform.allow_edit(sp.specificConfig.settings.allow_edit)
         pji_subform.padding_on(sp.specificConfig.settings.padding)
+
+        pji_subform.day_input_size(sp.specificConfig.settings.day_input_size)
+        pji_subform.month_input_size(sp.specificConfig.settings.month_input_size)
+        pji_subform.year_input_size(sp.specificConfig.settings.year_input_size)
 
         var genders = {}
 

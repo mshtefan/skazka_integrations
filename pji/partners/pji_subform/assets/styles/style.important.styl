@@ -26,6 +26,7 @@ sailplay-magic *
         padding: 100px;
 
     &superscript
+        text-decoration: none;
         vertical-align: super;
         font-size: 12px;
         color: black;
@@ -80,7 +81,7 @@ sailplay-magic *
 
         width: 45%;
         float: right;
-        margin-top: 80px;
+        margin-top: 73px;
         font-size: 18px;
         color: #898989;
         font-weight: 300;
@@ -232,7 +233,8 @@ sailplay-magic *
                 font-size: 14pt;
 
             label
-                display: block;
+                align-items: center;
+                display: flex;
                 padding: 12px 0;
                 font-size: 18pt;
 
@@ -264,6 +266,7 @@ sailplay-magic *
                 box-sizing: border-box;
                 border: 1px solid #e0e0e0;
                 padding: 13px 25px;
+                height: 57px;
                 padding-left: 10px;
                 margin-right: 2%;
                 +below(380px)
@@ -273,13 +276,12 @@ sailplay-magic *
 
                 .__sailplay-select_value
                     float: left;
-                    font-size: 20px;
 
                 svg
                     width: 12px;
-                    height: 1em;
+                    height: 20px;
                     position: absolute;
-                    right: .7em;
+                    right: 12px;
                     vertical-align: middle;
                     margin-top: 3px;
                     pointer-events: none;
