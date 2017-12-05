@@ -1,12 +1,12 @@
 <!-- ko if: user -->
 <div class="status-bar">
-    <div class="status-bar__title">Your status progress</div>
-    <div class="status-bar__text">Since
+    <div class="status-bar__title" data-bind="text: texts() && texts().status.your_status_progress">Your status progress</div>
+    <div class="status-bar__text"><span data-bind="text: texts() && texts().status.since"></span>
         <span data-bind="text: since"></span>
     </div>
     <div class="status-bar__hint arrow_pos_1">
         <div class="status-bar__collected">
-            <span class="value" data-bind="text: collected"></span>&nbsp;nights collected</div>         
+            <span class="value" data-bind="text: collected"></span>&nbsp;<span data-bind="text: texts() && texts().status.nights_collected">nights collected</span></div>         
         <div class="status-bar__text" data-bind="html: user_status() && template()"></div>
     </div>
     <div class="status-bar__line" data-bind="foreach: ko.utils.range(1,25)">

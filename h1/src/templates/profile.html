@@ -4,14 +4,14 @@
         <span data-bind="text: user().last_name"></span>
     </div>
     <div class="profile__title">
-        <div class="brand">hotelsone</div>
-        <div class="rewards">rewards</div>
+        <div class="brand" data-bind="text: texts().profile.brand"></div>
+        <div class="rewards" data-bind="text: texts().profile.rewards"></div>
     </div>
 </div>
 <div class="profile__info" data-bind="if: user_points">
     <div class="points">
         <span class="value" data-bind="text: user_points().confirmed">0</span>
-        <span class="text">hotelsone rewards points</span>
+        <span class="text" data-bind="text: texts().profile.points"></span>
     </div>
-    <a href="#" class="details" data-bind="click: openProfile">Member details</a>
+    <a href="#" class="details" data-bind="click: openProfile, text: texts().profile.settings_button"></a>
 </div>

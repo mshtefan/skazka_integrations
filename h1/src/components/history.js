@@ -23,6 +23,7 @@ class HistoryView {
         this.registered = ko.observable();
         this.night_counter = ko.observable();
         this.collected = ko.observable(0);
+        this.texts = ko.observable();
 
         switch (this.type) {
             case 'purchase':
@@ -77,6 +78,10 @@ class HistoryView {
 
             this.registered(registered.create_date);
         })
+
+        sp.config.subscribe(data => {
+            this.texts(data.partner.loyalty_page_config.texts);
+        })     
 
         sp.history.subscribe(data => {
             this.history(ko.mapping.toJS(data));

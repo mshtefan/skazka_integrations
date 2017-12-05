@@ -10,7 +10,12 @@ class CouponRedeemed extends Dialog {
         this.$template = $(require('@templates/coupon_redeemed.html'));
         this.preventClose(false);
         this.coupon = coupon_data;
+        this.texts = ko.observable();
         this.coupon_header = sp.config().partner.loyalty_page_config.texts.coupon_redeemed_header
+
+        sp.config.subscribe(data => {
+            this.texts(data.partner.loyalty_page_config.texts);
+        })        
     }
 }
 
@@ -19,10 +24,15 @@ class CoupunsView {
         this.coupons = ko.observableArray();
         this.user_points = ko.observable();
         this.user_currency = ko.observable();
+        this.texts = ko.observable();
         this.filtered_coupons = ko.computed(() => {
             return ko.utils.arrayFilter(this.coupons(), item => {
                 return item.type == 'coupon' && item.category == (this.user_currency() || '786')
             })
+        })
+
+        sp.config.subscribe(data => {
+            this.texts(data.partner.loyalty_page_config.texts);
         })
 
         sp.user.subscribe(data => {

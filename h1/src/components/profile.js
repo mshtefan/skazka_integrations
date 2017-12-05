@@ -60,6 +60,7 @@ class ProfileEditor extends Dialog {
 
         this.preventClose = ko.observable(preventClose);
         this.user = ko.mapping.fromJS(ko.mapping.toJS(sp.user().user));
+        this.texts = ko.observable(sp.config().partner.loyalty_page_config.texts);
 
         this.user.email.extend({
             required: true,
@@ -97,8 +98,6 @@ class ProfileEditor extends Dialog {
             country: this.country,
             city: this.city
         });
-
-        window.suka = this;
 
         sp.getGiftsCategories()
             .then(data => {
@@ -181,6 +180,11 @@ class ProfileView {
     constructor() {
         this.user = ko.observable(0);
         this.user_points = ko.observable(0);
+        this.texts = ko.observable();
+
+        sp.config.subscribe(data => {
+            this.texts(data.partner.loyalty_page_config.texts)
+        })
 
         sp.user.subscribe(data => {
             if (!data) return

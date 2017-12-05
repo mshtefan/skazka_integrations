@@ -1,7 +1,7 @@
 <!-- ko if: coupons().length -->
 <div class="coupons">
-    <div class="coupons__title">Cash coupons</div>
-    <div class="coupons__text">Redeem your points for Cash Coupons to use on your next hotel booking!</div>
+    <div class="coupons__title" data-bind="text: texts() && texts().coupon.cash_coupons">Cash coupons</div>
+    <div class="coupons__text" data-bind="text: texts() && texts().coupon.redeem_motivation">Redeem your points for Cash Coupons to use on your next hotel booking!</div>
     <div class="coupons__list">
         <div class="owl-carousel owl-theme" data-bind="foreach: filtered_coupons">
             <div class="coupons__item">
@@ -12,7 +12,8 @@
                         <span data-bind="text: points"></span> points</div><br>
                     <a href="javascript:void(0)" class="btn" data-bind="
                         click: $parent.redeemCoupon, 
-                        css: { '__sailplay-disabled': points > $parent.user_points() }">Redeem Now</a>
+                        css: { '__sailplay-disabled': points > $parent.user_points() },
+                        text: texts() && texts().coupon.redeem_button">Redeem Now</a>
                 </div>
             </div>
         </div>

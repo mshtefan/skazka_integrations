@@ -131,14 +131,15 @@ class MainView {
         sp.auth_hash = cookie.get('sp_auth_hash');
 
         sp.config.subscribe(data => {
-            if (window._invisible)
-                return
-
             if (!sp.auth_hash) {
                 if (window._prompt_login) {
                     new Login()
                 }
             }
+
+            if (window._invisible)
+                return
+
             if (sp.auth_hash) {
                 sp.getUserInfo({
                     user_status: 1

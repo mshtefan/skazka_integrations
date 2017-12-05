@@ -10,6 +10,7 @@ class StatusBarView {
         this.collected_date = ko.observable();
         this.night_counter = ko.observable();
         this.next_status = ko.observable();
+        this.texts = ko.observable();
 
         this.nightsExpire = ko.computed(() => {
             let year = new Date();
@@ -21,18 +22,34 @@ class StatusBarView {
 
         this.template = ko.pureComputed(() => {
             if (this.collected() == 0 && !this.currentStatusDetail())
-                return `Start collecting nights to become a ${this.next_status().name} member`
+                return (this.texts() && this.texts().status.start_collecting.replace('<next_status_name>', this.next_status().name)) || ''
 
             let date = this.nightsExpire();
             date = `${date.toLocaleString('en-us', { month: 'short' })} ${date.getDate()}, ${date.getFullYear()}`
 
             if (this.currentStatusDetail().grade == 2)
                 if (this.collected() >= this.next_status().nights)
-                    return `You will retain Gold status after ${date}`;
-                else
-                    return `Collect <strong>${this.next_status().nights - this.collected()}</strong> nights by ${date} to retain <strong>${this.currentStatusDetail().name}</strong> member.?`
+                    return (this.texts() && this.texts().status.gold_retain.replace('<retain_date>', date)) || '';
+                else {
+                    let result = this.texts() && this.texts().status.status_retain;
+                    if (result) {
+                        result = result.replace('<nights_need>', this.next_status().nights - this.collected());
+                        result = result.replace('<retain_date>', date)
+                        result = result.replace('<status_name>', this.currentStatusDetail().name)
+                    }
 
-            return `Collect <strong>${this.next_status().nights - this.collected()}</strong> nights by ${date} to become a <strong>${this.next_status().name}</strong> member.`
+                    return result || ''
+                }
+                    
+
+            let result = this.texts() && this.texts().status.status_become;
+            if (result) {
+                result = result.replace('<night_need>', this.next_status().nights - this.collected());
+                result = result.replace('<retain_date>', date)
+                result = result.replace('next_status_name', this.next_status().name)
+            }
+
+            return result || ''
         })
 
         sp.user.subscribe(data => {
@@ -59,6 +76,7 @@ class StatusBarView {
         })
 
         sp.config.subscribe(data => {
+            this.texts(data.partner.loyalty_page_config.texts);
             this.statuses(data.partner.loyalty_page_config.statuses);
             this.night_counter(data.partner.loyalty_page_config.night_counter_tag);
         })
