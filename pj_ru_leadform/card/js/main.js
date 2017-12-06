@@ -70,7 +70,7 @@ $(function(){
         var manager =  $(this).find('input[name=manager]').first().val();
         if(email){
           SAILPLAY.jsonp.get(DOMAIN + '/js-api/' + current_region.partner_id + '/users/update/', { email: email }, function(){
-            SAILPLAY.jsonp.get(DOMAIN + '/js-api/' + current_region.partner_id + '/tags/add/', {action: 'add', tags: [ 'Заполнил анкету в ресторане', department, manager ], email: email}, function(){
+            SAILPLAY.jsonp.get(DOMAIN + '/js-api/' + current_region.partner_id + '/tags/add/', {action: 'add', tags: [ magic_config.submit_tag, department, manager ], email: email}, function(){
               alert('Клиент успешно подписан. E-Mail: ' + email);
             });
           });
