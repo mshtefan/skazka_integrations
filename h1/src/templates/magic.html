@@ -4,23 +4,14 @@
             <sailplay-profile></sailplay-profile>
             <sailplay-status-bar></sailplay-status-bar>
             <sailplay-banner>
-                <div class="banner__title">
+                <!-- ko if: $parent.config() -->                                
+                <div class="banner__title" data-bind="text: $parent.texts() && $parent.texts().loyalty.more_information">
                     Want More Information?
                 </div>
-                <div class="banner__text">
-                    Get the scoop on everything you need to know about HotelsOne Rewards, including
-                    <!-- ko if: $parent.config() -->
-                    <a href="#" data-bind="attr: { href: $parent.config() && $parent.config().other_links.how_it_works }">how it works</a>
-                    and the benefits of being a
-                    <a href="#" data-bind="
-                        attr: { href: $parent.config().other_links.silver_member }, 
-                        text: $parent.config().statuses[0].name">Silver</a>
-                    and
-                    <a href="#" data-bind="
-                        attr: { href: $parent.config().other_links.gold_member,
-                            text: $parent.config().statuses[1].name }">Gold</a> member.
-                    <!-- /ko -->
+                <div class="banner__text" data-bind="html: $parent.texts() && $parent.texts().loyalty.more_information_text">
+                    Get the scoop on everything you need to know about HotelsOne Rewards, including <a href="#">how it works</a> and the benefits of being a <a href="#">Silver</a> and <a href="#">Gold</a> member.
                 </div>
+                <!-- /ko -->                
             </sailplay-banner>
             <sailplay-history></sailplay-history>
             <sailplay-coupons></sailplay-coupons>
@@ -29,29 +20,29 @@
         <div class="grid__1-3">
             <sailplay-status></sailplay-status>
             <sailplay-questions></sailplay-questions>
-            <sailplay-banner params="image: 'https://sailplays3.cdnvideo.ru/media/assets/assetfile/9ffb2101bf83bd1efc11c30c554318aa.png'">
-                <div class="banner__title half">
+            <sailplay-banner params="image: texts() && texts().loyalty.banner_image">
+                <div class="banner__title half" data-bind="text: $parent.texts() && $parent.texts().loyalty.line_2_1">
                     Save up to 50% with Insider Prices
                 </div>
-                <div class="banner__text half">
+                <div class="banner__text half" data-bind="html: $parent.texts() && $parent.texts().loyalty.line_2_2">
                     Unlock instant savings with up to
                     <strong>50% off</strong> hotels with member only Insider Prices.
                 </div>
-                <div class="banner__insider-logo">
+                <div class="banner__insider-logo"  data-bind="style: { backgroundImage: 'url(\'' + ($parent.texts() && $parent.texts().brand_white) + '\')' }, text: $parent.texts() && $parent.texts().loyalty.insider_price">
                     Insider Prices
                 </div>
             </sailplay-banner>
             <sailplay-banner>
-                <div class="banner__title center">
+                <div class="banner__title center" data-bind="html: $parent.texts() && $parent.texts().loyalty.way_to_earn">
                     More Ways To Earn
                 </div>
                 <img src="https://sailplays3.cdnvideo.ru/media/assets/assetfile/d7a81e2b9114a3e5618691ece3d2d779.png" alt="" class="banner__image">
-                <div class="banner__text center">
+                <div class="banner__text center" data-bind="html: $parent.texts() && $parent.texts().loyalty.earn_text">
                     Earn
                     <strong>Bonus Points</strong> when you complete a few simple actions.
                 </div>
                 <div class="center">
-                    <a data-bind="attr: { href: $parent.config() && $parent.config().other_links.how_it_works }" class="btn">View All Quests</a>
+                    <a data-bind="attr: { href: $parent.config() && $parent.config().other_links.how_it_works }, text: $parent.texts() && $parent.texts().loyalty.view_all" class="btn">View All Quests</a>
                 </div>
             </sailplay-banner>
         </div>

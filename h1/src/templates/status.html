@@ -1,4 +1,4 @@
 <div class="status">
     <img class="status__icon" data-bind="attr: { src: statusBadge }">
-    <div class="status__text"><span data-bind="text: statusName"></span> member</div>
+    <div class="status__text"><span data-bind="text: statusName"></span> <span data-bind="text: texts() && texts().status_string.member">member</span></div>
 </div>

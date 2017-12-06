@@ -121,6 +121,7 @@ class MainView {
     constructor(options) {
         this.config = ko.observable();
         this.user = ko.observable();
+        this.texts = ko.observable();
 
         sp.init(options);
 
@@ -131,9 +132,11 @@ class MainView {
         sp.auth_hash = cookie.get('sp_auth_hash');
 
         sp.config.subscribe(data => {
+            this.texts(data.partner.loyalty_page_config.texts)
+
             if (!sp.auth_hash) {
                 if (window._prompt_login) {
-                    new Login()
+                    new Login(true)
                 }
             }
 

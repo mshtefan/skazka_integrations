@@ -3,7 +3,12 @@ let sp = require('@lib/sp')
 class QuestsView {
     constructor(params) {
         this.quests = ko.observableArray()
+        this.texts = ko.observable()
 
+        sp.config.subscribe(data => {
+            this.texts(data.partner.loyalty_page_config.texts);
+        })     
+        
         sp.user.subscribe(data => {
             if (!data) return
             

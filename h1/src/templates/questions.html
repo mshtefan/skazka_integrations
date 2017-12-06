@@ -1,13 +1,13 @@
 <div class="questions">
-    <div class="questions__title">Got Questions?</div>
+    <div class="questions__title" data-bind="text: texts() && texts().questions.title">Got Questions?</div>
     <ol class="questions__list" data-bind="foreach: questions">
         <li>
             <a href="#" data-bind="text: question, attr: { href: link }"></a>
         </li>
     </ol>
     <div class="questions__desc">
-        For further information check out our
-        <a href="#" data-bind="attr: { href: faq_link }">FAQ’s page</a>
-        page to find all the information you’ll need and more!
+        <span data-bind="text: texts() && texts().questions.line_1">For further information check out our</span>
+        <a href="#" data-bind="attr: { href: faq_link }, text: texts() && texts().questions.faq_link">FAQ’s page</a>
+        <span data-bind="text: texts() && texts().questions.line_2">page to find all the information you’ll need and more!</span>
     </div>
 </div>

@@ -1,6 +1,6 @@
 <div class="dialog__shadow" data-bind="click: close">
     <div class="dialog">
-        <div class="dialog__header">
+        <div class="dialog__header" data-bind="style: { backgroundImage: 'url(\'' + (texts() && texts().brand_white) + '\')' }">
             <a href="#" class="dialog__close" data-bind="
                 visible: !preventClose(), 
                 click: close.bind($data, true)

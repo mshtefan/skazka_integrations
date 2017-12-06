@@ -89,7 +89,7 @@ class StatusBarView {
         });
 
         sp.tags.subscribe(data => {
-            if (this.night_counter) {
+            if (this.night_counter && data) {
                 let counter = ko.utils.arrayFirst(data, item => {
                     return item.tag == this.night_counter()
                 })

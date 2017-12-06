@@ -4,12 +4,12 @@
             Hey <span data-bind="text: user().user.first_name"></span>!
             <div class="profile__descr">
                     <!-- <span data-bind="text: $parent.config().quest_description"></span>! -->
-                    <span>You deserve to be rewarded. Learn how Hotelsone Rewards can help you do it in 3 simple steps: </span><strong>Stay, Earn, Save</strong>
+                    <span data-bind="html: texts() && texts().quest_page.title">You deserve to be rewarded. Learn how Hotelsone Rewards can help you do it in 3 simple steps: <strong>Stay, Earn, Save</strong></span>
                 </div>
         </div>
         <div class="profile__title profile__title-top135">
-            <div class="brand">hotelsone</div>
-            <div class="rewards">rewards</div>
+            <div class="brand" data-bind="text: texts().profile.brand">hotelsone</div>
+            <div class="rewards" data-bind="text: texts().profile.rewards">rewards</div>
         </div>
     </div>
     <sailplay-banner>
@@ -18,21 +18,12 @@
                 <img class="banner__image big" src="~assets/moon.png"></img>
             </div>
             <div class="grid__2-3">
-                <div class="banner__title">1. Stay</div>
+                <div class="banner__title" data-bind="text: $parent.texts() && $parent.texts().quest_page.title_1">1. Stay</div>
                 <div class="banner__text">
-                    <ul class="banner__list">
-                        <li>
+                    <ul class="banner__list" data-bind="foreach: $parent.texts() && $parent.texts().quest_page.keys_1">
+                        <li data-bind="html: $data">
                             <strong>Login:</strong> Always log in before you book to ensure you can collect your points. You can
                             check out your upcoming, cancelled and completed booking anytime
-                        </li>
-                        <li>
-                            <strong>Booking:</strong> Points will add up quickly, so make sure you book your next business trip or
-                            family holiday with
-                            <a href="http://www.hotelsone.com">HotelsOne.com</a> and see them add up!
-                        </li>
-                        <li>
-                            <strong>Any Hotel:</strong> Watch the points rack up points when you stay at any hotel booked through
-                            <a href="http://www.hotelsone.com">HotelsOne.com!</a>
                         </li>
                     </ul>
                 </div>
@@ -45,27 +36,16 @@
                 <img class="banner__image big" src="~assets/cash.png"></img>
             </div>
             <div class="grid__2-3">
-                <div class="banner__title">2. Earn</div>
+                <!-- ko if: $parent.config() -->                                        
+                <div class="banner__title" data-bind="text: $parent.texts() && $parent.texts().quest_page.title_2">2. Earn</div>
                 <div class="banner__text">
-                    <ul class="banner__list">
-                        <li>
+                    <ul class="banner__list" data-bind="foreach: $parent.texts() && $parent.texts().quest_page.keys_2">
+                        <li data-bind="html: $data">
                             <strong>Check Out:</strong> Once you’ve completed your stay and checked out, your well earned points
                             will automatically be added onto your account.automatically be added onto your account.</li>
-                        <li>
-                            <strong>Earned Nights:</strong> And don’t forgot each night you’ve just stayed also gets you one sleep
-                            closer to a status upgrade.</li>
-                        <!-- ko if: $parent.config() -->
-                        <li>
-                            <strong>Statues Progress:</strong> Stay 10 nights and be upgraded to
-                            <a href="#" data-bind="
-                        attr: { href: $parent.config() && $parent.config().other_links.silver_member }, 
-                        text: $parent.config() && $parent.config().statuses[0].name">Silver</a> status. Stay 25 and be upgraded to
-                            <a href="#" data-bind="
-                        attr: { href: $parent.config() && $parent.config().other_links.gold_member,
-                            text: $parent.config() && $parent.config().statuses[1].name }">Gold</a> status where you will earn points 3x as fast!</li>
-                        <!-- /ko -->
                     </ul>
                 </div>
+                <!-- /ko -->                
             </div>
         </div>
     </sailplay-banner>
@@ -75,23 +55,14 @@
                 <img class="banner__image big" src="~assets/suit.png"></img>
             </div>
             <div class="grid__2-3">
-                <div class="banner__title">3. Save</div>
+                <div class="banner__title" data-bind="text: $parent.texts() && $parent.texts().quest_page.title_3">3. Save</div>
                 <div class="banner__text">
-                    <ul class="banner__list">
-                        <li>
+                    <ul class="banner__list" data-bind="foreach: $parent.texts() && $parent.texts().quest_page.keys_3">
+                        <li data-bind="html: $data">
                             <strong>Cash Coupons:</strong> Here comes the fun bit. Use your points to redeem cash coupons to save
                             on your next booking through
                             <a href="http://www.hotelsone.com">HotelsOne.com!</a>
                         </li>
-                        <li>
-                            <strong>Redeem:</strong> To redeem your cash coupon, select an eligible hotel and click on ‘Book Now’.
-                            Remember to be logged in to apply your cash coupon.</li>
-                        <li>
-                            <strong>Lowest Price Guarantee:</strong> For <a href="#" data-bind="
-                            attr: { href: $parent.config() && $parent.config().other_links.gold_member,
-                                text: $parent.config() && $parent.config().statuses[1].name }">Gold</a> members, if you placed a prepaid booking and find a
-                            lower rate on another website for the same room type and stay dates, we will refund the difference
-                            to your account in points. Terms and conditions apply.</li>
                     </ul>
                 </div>
             </div>
@@ -105,11 +76,11 @@
                         <img class="banner__image small" src="~assets/house.png"></img>
                     </div>
                     <div class="grid__3-4">
-                        <div class="banner__text big">
+                        <div class="banner__text big" data-bind="html: $parent.texts() && $parent.texts().quest_page.house_big_text">
                             265,000 Eligible Hotels
                         </div>
                         <br>
-                        <div class="banner__text small">
+                        <div class="banner__text small" data-bind="html: $parent.texts() && $parent.texts().quest_page.house_small_text">
                             Members can collect points on more than 265,000 eligible hotels in over 195 countries.
                         </div>
                     </div>
@@ -120,14 +91,14 @@
             <sailplay-banner>
                 <div class="grid">
                     <div class="grid__1-4">
-                        <img class="banner__image small" src="~assets/keyhole_red.png"></img>
+                        <img class="banner__image small" data-bind="attr: { src: $parent.texts() && $parent.texts().brand_red }"></img>
                     </div>
                     <div class="grid__3-4">
-                        <div class="banner__text big">
+                        <div class="banner__text big" data-bind="html: $parent.texts() && $parent.texts().quest_page.keyhole_text_1">
                             Insider Prices
                         </div>
                         <br>
-                        <div class="banner__text small">
+                        <div class="banner__text small" data-bind="html: $parent.texts() && $parent.texts().quest_page.keyhole_text_2">
                             Unlock instant savings with up to 50% off hotels with member-only Insider Prices.
                         </div>
                     </div>
@@ -141,19 +112,15 @@
     <div class="grid">
         <div class="grid__1-3">
             <sailplay-banner>
-                <div class="banner__title small">More rewards, sooner</div>
-                <div class="banner__text">
+                <!-- ko if: $parent.config() -->                
+                <div class="banner__title small" data-bind="html: $parent.texts() && $parent.texts().quest_page.more_rewards_title">More rewards, sooner</div>
+                <div class="banner__text" data-bind="html: $parent.texts() && $parent.texts().quest_page.more_rewards_text">
                     Travel a lot? Earn an upgrade to
                     <strong class="red">Hotelsone Rewards</strong>
-                    <!-- ko if: $parent.config() -->
-                    <a href="#" data-bind="
-                        attr: { href: $parent.config().other_links.silver_member }, 
-                        text: $parent.config().statuses[0].name">Silver</a> or
-                    <a href="#" data-bind="
-                        attr: { href: $parent.config().other_links.gold_member,
-                            text: $parent.config().statuses[1].name }">Gold</a> membership and earn your points faster.
-                    <!-- /ko -->
+                    <a href="#">Silver</a> or
+                    <a href="#">Gold</a> membership and earn your points faster.
                 </div>
+                <!-- /ko -->
             </sailplay-banner>
         </div>
         <div class="grid__2-3">

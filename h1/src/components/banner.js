@@ -6,7 +6,7 @@ class BannerView {
 
     getBackground() {
         if (!this.background()) return null
-        return `url(${this.background() || ''})`;
+        return `url(${this.background()() || ''})`;
     }
 
     getBackgroundColor() {

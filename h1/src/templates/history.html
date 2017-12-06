@@ -26,7 +26,7 @@
                 <span data-bind="text: price"></span>
             </div>
             <div class="history__item-points">
-                <span data-bind="text: points_delta"></span> <span data-bind="text: texts() && texts().history.pts"></span></span></div>
+                <span data-bind="text: points_delta"></span> <span data-bind="text: $parent.texts() && $parent.texts().history.pts"></span></span></div>
         </div>
     </div>
     <!-- /ko -->

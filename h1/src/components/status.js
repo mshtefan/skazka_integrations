@@ -4,7 +4,12 @@ class StatusView {
     constructor() {
         this.statusBadge = ko.observable();
         this.statusName = ko.observable();
+        this.texts = ko.observable();
 
+        sp.config.subscribe(data => {
+            this.texts(data.partner.loyalty_page_config.texts);
+        })     
+        
         sp.user.subscribe(data => {
             if (!data) {
                 this.statusBadge(false);
