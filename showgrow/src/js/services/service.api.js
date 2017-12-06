@@ -54,6 +54,18 @@
         });
       };
 
+      self.config = void 0;
+
+      self.magic_config = function () {
+        return $q(function (resolve, reject) {
+          sp.on('magic.config.success', function (res) {
+            self.config = res.config.config
+            resolve(res)
+          })
+          sp.send('magic.config', window.MAGIC_CONFIG);
+        })
+      }
+
       self.actions.custom = function () {
         return $q(function (resolve, reject) {
           sp.on('load.actions.custom.list.success', function (res) {

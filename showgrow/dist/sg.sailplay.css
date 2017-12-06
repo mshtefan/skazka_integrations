@@ -1025,7 +1025,8 @@
   position: relative;
   top: 0;
 }
-.sp_widget .sp_gifts-slider__slide:hover:not(.this-disabled) .sp_gifts-slider__slide-bonus {
+.sp_widget .sp_gifts-slider__slide:hover:not(.this-disabled) .sp_gifts-slider__slide-bonus,
+.sp_widget .sp_gifts-slider__slide:hover:not(.this-disabled) .sp_gifts-slider__slide-name {
   color: white;
 }
 .sp_widget .sp_gifts-slider__slide:hover .sp_gifts-slider__slide-bonus {
@@ -1138,8 +1139,9 @@
 }
 .sp_widget .sp_badges-cell {
   background-color: #EFEFEF;
-  padding: 30px 15px 15px;
+  padding: 30px 0;
   min-height: 242px;
+  margin: 0 15px;
   -webkit-transition: all 150ms linear 0ms;
   transition: all 150ms linear 0ms;
 }
@@ -1147,6 +1149,10 @@
   background-color: #fff;
   -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+.sp_widget .sp_badges-cell.inactive {
+  filter: grayscale(1) !important;
+  background-color: #ddd !important;
 }
 .sp_widget .sp_badges-cell__img {
   margin-bottom: 16px;
@@ -1393,6 +1399,15 @@
   font-size: 21px;
   margin-top: 35px;
   margin-bottom: 45px;
+}
+.sp_widget .v2 .sp_gifts-slider__slide {
+  max-height: 371px;
+}
+.sp_widget .v2 .sp_status-descr-tabs__row {
+  display: flex;
+}
+.sp_widget .v2 .sp_status-descr-tabs__col {
+  flex-grow: 1;
 }
 .sp_common-popup__close {
   position: absolute;

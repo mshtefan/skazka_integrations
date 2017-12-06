@@ -1,0 +1,4 @@
+<div class="stars-container">
+	<label class="question-label" data-ng-bind="$ctrl.label | text"></label>
+	<stars-row data-ng-repeat="row in $ctrl.model.values" data-ng-model="row" data-rows-nr="$ctrl.rowsNr" data-ng-change="$ctrl.onChange($index, row)" class="stars-row-continer"></stars-row>
+</div>
