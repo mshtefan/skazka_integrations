@@ -96,7 +96,7 @@ form.form(data-bind="visible: !congrat(), css: { '__sailplay-padding': padding_o
 
 
 .congrat(data-bind="visible: congrat")
-    .form
+    .form(data-bind="css: { '__sailplay-padding': padding_on }")
         .ib-50
             .title(data-bind="text: thank_title")
             .description(data-bind="text: thank_description")
