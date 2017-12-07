@@ -56,7 +56,7 @@ class HistoryView {
 
         sp.tags.subscribe(data => {
             this.night_counter(sp.config().partner.loyalty_page_config.night_counter_tag);
-
+            if (!data) return
             let registered = ko.utils.arrayFirst(data, item => {
                 return item.tag == sp.config().partner.loyalty_page_config.registered_tag
             })

@@ -67,14 +67,10 @@ class Login extends Dialog {
             }).then(() => {
                 if (auth_callback && exec_callback) auth_callback();
 
-                sp.tagsAdd({
-                    tags: sp.config().partner.loyalty_page_config.registered_tag
-                }).then(() => {
-                    if (sp.redirect) {
-                        location.assign(sp.config().partner.loyalty_page_config.lp_url);
-                        return
-                    }
-                })
+                if (sp.redirect) {
+                    location.assign(sp.config().partner.loyalty_page_config.lp_url);
+                    return
+                }
 
                 sp.tagsList({
                     show_calculated_values: 1
@@ -90,7 +86,7 @@ class Login extends Dialog {
                     .then(result => {
                         
                         sp.tagsAdd({
-                            tags: sp.config().partner.loyalty_page_config.after_register_tag
+                            tags: [sp.config().partner.loyalty_page_config.after_register_tag, sp.config().partner.loyalty_page_config.registered_tag]
                         }, data.auth_hash)
 
                         if (!result.tags[0].exist) {
@@ -101,7 +97,7 @@ class Login extends Dialog {
                                 authorize(data.auth_hash);
                             } else {
                                 sp.show_doi_message(1)
-                                cookie.set('sp_auth_hash', data.auth_hash, { path: '/', domain: cookie_domain} );                                
+                                cookie.set('sp_auth_hash', data.auth_hash, { path: '', domain: cookie_domain} );                                
                             }
                             return
                         } else {
