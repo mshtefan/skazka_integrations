@@ -59,7 +59,7 @@ class Login extends Dialog {
         let data = ko.utils.parseJson(event.data)
 
         function authorize(auth_hash, exec_callback) {
-            cookie.set('sp_auth_hash', auth_hash, { path: '', domain: cookie_domain});
+            cookie.set('sp_auth_hash', auth_hash, { path: '/', domain: cookie_domain});
             sp.auth_hash = auth_hash;
 
             sp.getUserInfo({
@@ -97,7 +97,7 @@ class Login extends Dialog {
                                 authorize(data.auth_hash);
                             } else {
                                 sp.show_doi_message(1)
-                                cookie.set('sp_auth_hash', data.auth_hash, { path: '', domain: cookie_domain} );                                
+                                cookie.set('sp_auth_hash', data.auth_hash, { path: '/', domain: cookie_domain} );                                
                             }
                             return
                         } else {
@@ -162,7 +162,7 @@ window._remoteLogin = () => {
 }
 
 window._logout = () => {
-    cookie.remove('sp_auth_hash', { path: '', domain: cookie_domain})
+    cookie.remove('sp_auth_hash', { path: '/', domain: cookie_domain})
 
     let req = document.createElement('iframe');
     req.width = 0;    

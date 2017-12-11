@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import __jquery__ from 'jquery';
 let sp = require('@lib/sp');
 
 ko.bindingHandlers.dateText = {
@@ -144,7 +144,7 @@ class HistoryView {
             "custom_action": "Custom action"
         }
 
-        if ($.isFunction(texts[history_item.action]))
+        if (__jquery__.isFunction(texts[history_item.action]))
             return texts[history_item.action](history_item)
         return texts[history_item.action];
     }
