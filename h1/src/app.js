@@ -15,7 +15,7 @@ let sp = require('@lib/sp');
 
 class Login extends Dialog {
     init(redirect) {
-        this.$template = $(require('@templates/login.html'));
+        this.$template = jQuery(require('@templates/login.html'));
         this.show_doi_message = ko.observable();
         this.redirect_url = sp.config().partner.loyalty_page_config.lp_url;
         sp.redirect = redirect;
