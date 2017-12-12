@@ -5,6 +5,7 @@ import {
 import ko from 'knockout';
 import 'knockout.validation';
 import $ from 'jquery';
+import "babel-polyfill";
 require('@lib/styles/helpers.important.styl');
 require('@lib/jquery-ui.min.js');
 require('@lib/jquery-ui.min.css');
