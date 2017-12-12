@@ -1,8 +1,8 @@
-import $ from 'jquery'
+import __jquery__ from 'jquery'
 import { Dialog } from '@lib/dialog'
 let sp = require('@lib/sp');
 
-$.noConflict();
+__jquery__.noConflict();
 require('maskedinput');
 
 ko.validation.rules['date'] = {
@@ -38,22 +38,22 @@ ko.bindingHandlers.masked = {
     init: function (element, valueAccessor, allBindingsAccessor) {
         var mask = allBindingsAccessor().mask || {};
         var options = allBindingsAccessor().mask_options || {};
-        $(element).mask(mask, options);
+        __jquery__(element).mask(mask, options);
         ko.utils.registerEventHandler(element, 'focusout', function () {
             var observable = valueAccessor();
-            observable($(element).val());
+            observable(__jquery__(element).val());
         });
     },
     update: function (element, valueAccessor) {
         var value = ko.utils.unwrapObservable(valueAccessor());
-        $(element).val(value);
-        $(element).trigger('input.mask') // apply mask
+        __jquery__(element).val(value);
+        __jquery__(element).trigger('input.mask') // apply mask
     }
 };
 
 class ProfileEditor extends Dialog {
     init(preventClose) {
-        this.$template = $(require('@templates/edit_profile.html'));
+        this.$template = __jquery__(require('@templates/edit_profile.html'));
 
         this.user_currency = ko.observable();
         this.user_currencies = ko.observableArray();

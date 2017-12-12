@@ -1,13 +1,15 @@
-import $ from 'jquery';
-import 'owl.carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css'
+import __jquery__ from 'jquery';
 import { Dialog } from '@lib/dialog';
+
+__jquery__.noConflict();
+require('owl.carousel')
+require('owl.carousel/dist/assets/owl.carousel.css')
 
 let sp = require('@lib/sp')
 
 class CouponRedeemed extends Dialog {
     init(coupon_data) {
-        this.$template = $(require('@templates/coupon_redeemed.html'));
+        this.$template = __jquery__(require('@templates/coupon_redeemed.html'));
         this.preventClose(false);
         this.coupon = coupon_data;
         this.texts = ko.observable();
@@ -65,21 +67,21 @@ class CoupunsView {
     }
 
     initNative() {
-        $(document).ready(() => {
-            $('.__sailplay-owl-carousel')
+        __jquery__(document).ready(() => {
+            __jquery__('.__sailplay-owl-carousel')
                 .removeClass('__sailplay-owl-carousel')
                 .addClass('__sailplay-owl-native')
         })
     }
 
     initOwl() {
-        $(document).ready(() => {
-            $('.__sailplay-owl-carousel').find('.__sailplay-owl-stage-outer').remove();
-            $('.__sailplay-owl-carousel').find('.__sailplay-owl-nav').remove()
-            $('.__sailplay-owl-carousel').find('.__sailplay-owl-dots').remove()
+        __jquery__(document).ready(() => {
+            __jquery__('.__sailplay-owl-carousel').find('.__sailplay-owl-stage-outer').remove();
+            __jquery__('.__sailplay-owl-carousel').find('.__sailplay-owl-nav').remove()
+            __jquery__('.__sailplay-owl-carousel').find('.__sailplay-owl-dots').remove()
 
-            $('.__sailplay-owl-carousel').trigger('destroy.owl.carousel');
-            $('.__sailplay-owl-carousel').owlCarousel({
+            __jquery__('.__sailplay-owl-carousel').trigger('destroy.owl.carousel');
+            __jquery__('.__sailplay-owl-carousel').owlCarousel({
                 items: 1,
                 loop: false,
                 nav: true,

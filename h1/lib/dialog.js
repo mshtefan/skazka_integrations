@@ -1,3 +1,5 @@
+import jQuery from 'jquery';
+
 export class Dialog {
     constructor(options) {
         this.preventClose = ko.observable(true);
@@ -7,7 +9,7 @@ export class Dialog {
             throw new Error('You need to implement init() method')
 
         this.$template.appendTo('body')
-        $('body').addClass('__sailplay-no-scroll');
+        jQuery('body').addClass('__sailplay-no-scroll');
 
         setTimeout(() => {
             this.$template.attr('aria-hidden', false)
@@ -28,7 +30,7 @@ export class Dialog {
         if (this.preventClose() || obj !== true && ev && !/shadow/.test(ev.target.className))
             return true
 
-        $('body').removeClass('__sailplay-no-scroll');
+        jQuery('body').removeClass('__sailplay-no-scroll');
         this.$template.closest('.__sailplay-dialog__shadow').css('opacity', 0);
         this.$template.find('.__sailplay-dialog')
             .css('opacity', 0)
