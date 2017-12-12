@@ -39,6 +39,10 @@ module.exports = {
         }
       },
       {
+        test: /[\/\\]node_modules[\/\\]owl.carousel[\/\\]dist[\/\\]owl.carousel\.js$/,
+        loader: "imports-loader?jQuery=jquery"
+      },
+      {
         test: /\.html$/,
         loader: './cssRename-loader!html-loader'
       },
@@ -104,8 +108,7 @@ module.exports = {
       template: 'index.html'
     }),
     new webpack.ProvidePlugin({
-      jQuery: "jquery",
-      'window.jQuery': 'jquery'
+      jQuery: "jquery"
     })
   ]
 };

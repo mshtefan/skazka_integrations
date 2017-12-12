@@ -2,7 +2,7 @@ import __jquery__ from 'jquery';
 import { Dialog } from '@lib/dialog';
 
 __jquery__.noConflict();
-require('owl.carousel')
+require('owl.carousel');
 require('owl.carousel/dist/assets/owl.carousel.css')
 
 let sp = require('@lib/sp')
@@ -76,32 +76,32 @@ class CoupunsView {
 
     initOwl() {
         __jquery__(document).ready(() => {
-            __jquery__('.__sailplay-owl-carousel').find('.__sailplay-owl-stage-outer').remove();
-            __jquery__('.__sailplay-owl-carousel').find('.__sailplay-owl-nav').remove()
-            __jquery__('.__sailplay-owl-carousel').find('.__sailplay-owl-dots').remove()
+            // __jquery__('.__sailplay-owl-carousel').find('.__sailplay-owl-stage-outer').remove();
+            // __jquery__('.__sailplay-owl-carousel').find('.__sailplay-owl-nav').remove()
+            // __jquery__('.__sailplay-owl-carousel').find('.__sailplay-owl-dots').remove()
 
-            __jquery__('.__sailplay-owl-carousel').trigger('destroy.owl.carousel');
-            __jquery__('.__sailplay-owl-carousel').owlCarousel({
-                items: 1,
-                loop: false,
-                nav: true,
-                dots: true,
-                refreshClass: '__sailplay-owl-refresh',
-                loadedClass: '__sailplay-owl-loaded',
-                loadingClass: '__sailplay-owl-loading',
-                rtlClass: '__sailplay-owl-rtl',
-                navContainerClass: '__sailplay-owl-nav',
-                responsiveClass: '__sailplay-owl-responsive',
-                dragClass: '__sailplay-owl-drag',
-                itemClass: '__sailplay-owl-item',
-                stageClass: '__sailplay-owl-stage',
-                stageOuterClass: '__sailplay-owl-stage-outer',
-                grabClass: '__sailplay-owl-grab',
-                navClass: ['__sailplay-owl-prev', '__sailplay-owl-next'],
-                dotClass: '__sailplay-owl-dot',
-                dotsClass: '__sailplay-owl-dots',
-                navText: ['', '']
-            });
+            // __jquery__('.__sailplay-owl-carousel').trigger('destroy.owl.carousel');
+            // __jquery__('.__sailplay-owl-carousel').owlCarousel({
+            //     items: 1,
+            //     loop: false,
+            //     nav: true,
+            //     dots: true,
+            //     refreshClass: '__sailplay-owl-refresh',
+            //     loadedClass: '__sailplay-owl-loaded',
+            //     loadingClass: '__sailplay-owl-loading',
+            //     rtlClass: '__sailplay-owl-rtl',
+            //     navContainerClass: '__sailplay-owl-nav',
+            //     responsiveClass: '__sailplay-owl-responsive',
+            //     dragClass: '__sailplay-owl-drag',
+            //     itemClass: '__sailplay-owl-item',
+            //     stageClass: '__sailplay-owl-stage',
+            //     stageOuterClass: '__sailplay-owl-stage-outer',
+            //     grabClass: '__sailplay-owl-grab',
+            //     navClass: ['__sailplay-owl-prev', '__sailplay-owl-next'],
+            //     dotClass: '__sailplay-owl-dot',
+            //     dotsClass: '__sailplay-owl-dots',
+            //     navText: ['', '']
+            // });
         })
     }
 }
