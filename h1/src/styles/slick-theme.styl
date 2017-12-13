@@ -1,0 +1,32 @@
+.slick-next, .slick-prev {
+    z-index: 100;
+    size(vw(60px), vw(100px));
+    margin-top: vw(-50px);
+    background: rgba(0, 0, 0, 0.2);
+
+    &:after {
+        content: '';
+        display: block;
+        size(100%);
+        background: url('~assets/arrow.svg') no-repeat center;
+        background-size: vw(30px);
+    }
+}
+
+.slick-prev {
+    absolute: left top 50%;
+    border-radius: right 10px;
+
+    &:after {
+        transform: rotateZ(90deg);
+    }
+}
+
+.slick-next {
+    absolute: right top 50%;
+    border-radius: left 10px;
+
+    &:after {
+        transform: rotateZ(-90deg);
+    }
+}

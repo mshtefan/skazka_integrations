@@ -2,8 +2,10 @@ import __jquery__ from 'jquery';
 import { Dialog } from '@lib/dialog';
 
 __jquery__.noConflict();
-require('owl.carousel');
-require('owl.carousel/dist/assets/owl.carousel.css')
+// require('owl.carousel');
+// require('owl.carousel/dist/assets/owl.carousel.css')
+require('imports-loader?jQuery=jquery!slick-carousel');
+require('slick-carousel/slick/slick.css');
 
 let sp = require('@lib/sp')
 
@@ -76,6 +78,11 @@ class CoupunsView {
 
     initOwl() {
         __jquery__(document).ready(() => {
+            __jquery__('.__sailplay-owl-carousel').slick({
+                prevArrow: '.__sailplay-slick-prev',
+                nextArrow: '.__sailplay-slick-next',
+            });
+
             // __jquery__('.__sailplay-owl-carousel').find('.__sailplay-owl-stage-outer').remove();
             // __jquery__('.__sailplay-owl-carousel').find('.__sailplay-owl-nav').remove()
             // __jquery__('.__sailplay-owl-carousel').find('.__sailplay-owl-dots').remove()
