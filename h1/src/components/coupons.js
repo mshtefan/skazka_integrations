@@ -14,12 +14,8 @@ class CouponRedeemed extends Dialog {
         this.$template = __jquery__(require('@templates/coupon_redeemed.html'));
         this.preventClose(false);
         this.coupon = coupon_data;
-        this.texts = ko.observable();
+        this.texts = ko.observable(sp.config().partner.loyalty_page_config.texts);
         this.coupon_header = sp.config().partner.loyalty_page_config.texts.coupon_redeemed_header
-
-        sp.config.subscribe(data => {
-            this.texts(data.partner.loyalty_page_config.texts);
-        })        
     }
 }
 

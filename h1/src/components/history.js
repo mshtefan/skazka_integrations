@@ -141,11 +141,17 @@ class HistoryView {
             "social_share": "Shared our website on ",
             "share_badge": "Shared a badge on ",
             "earn_badge": 'Earn badge ',
-            "custom_action": "Custom action"
+            "custom_action": "Custom action",
+            "like": item => {
+                return `Like us on ${{fb: 'Facebook', gp: 'Google+'}[item.social_type]}`
+            },
+            "partner_page": item => {
+                return `Shared our website on ${{fb: 'Facebook', gp: 'Google+'}[item.social_type]}`
+            }
         }
 
-        if (__jquery__.isFunction(texts[history_item.action]))
-            return texts[history_item.action](history_item)
+        if (__jquery__.isFunction(texts[history_item.action] || texts[history_item.social_action]))
+            return (texts[history_item.action] || texts[history_item.social_action])(history_item)
         return texts[history_item.action];
     }
 }
