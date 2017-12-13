@@ -70,11 +70,14 @@ window.SAILPLAY = function (opts) {
             this.thank_image = ko.observable(''),
             this.thank_link_href = ko.observable(),
 
+            this.second_step_submit = ko.observable();
             this.allow_edit = ko.observable();
 
             this.day_input_size = ko.observable();
             this.month_input_size = ko.observable();
             this.year_input_size = ko.observable();
+
+            this.day_text = this.month_text = this.year_text = ''
 
             this.check_email_opt_out_visible = ko.computed(() => {
                 let visible = true;
@@ -173,14 +176,15 @@ window.SAILPLAY = function (opts) {
                     birthDate: data.birthday
                 }
 
-                sp.updateCustomVars({
-                    email: self.email(),
-                    "__form_edit_['phone']": data.phone,
-                    "__form_edit_['firstName']": data.first_name,
-                    "__form_edit_['lastName']": data.last_name,
-                    "__form_edit_['sex']": data.sex,
-                    "__form_edit_['birthDate']": data.birthday
-                })
+                if (self.allow_edit)
+                    sp.updateCustomVars({
+                        email: self.email(),
+                        "__form_edit_['phone']": data.phone,
+                        "__form_edit_['firstName']": data.first_name,
+                        "__form_edit_['lastName']": data.last_name,
+                        "__form_edit_['sex']": data.sex,
+                        "__form_edit_['birthDate']": data.birthday
+                    })
 
                 return sp.updateUserInfo($.extend(true, {
                     email: self.email()
@@ -263,8 +267,15 @@ window.SAILPLAY = function (opts) {
                             scrollTop: $('.__sailplay-step2').offset().top
                         })
                     }, 100)
-                } else
+                } else {
+                    sp.addTags([self.second_step_submit()], {
+                        auth_hash: '',
+                        email: self.email(),
+                        phone: ''
+                    })
+
                     self.congrat(true)
+                }
 
                 setTimeout(() => self.in_progress(false))
             }
@@ -458,10 +469,15 @@ window.SAILPLAY = function (opts) {
 
         pji_subform.allow_edit(sp.specificConfig.settings.allow_edit)
         pji_subform.padding_on(sp.specificConfig.settings.padding)
+        pji_subform.second_step_submit(sp.specificConfig.settings.second_step_submit)
 
         pji_subform.day_input_size(sp.specificConfig.settings.day_input_size)
         pji_subform.month_input_size(sp.specificConfig.settings.month_input_size)
         pji_subform.year_input_size(sp.specificConfig.settings.year_input_size)
+
+        pji_subform.day_text = sp.specificConfig.settings.texts.date.day
+        pji_subform.month_text = sp.specificConfig.settings.texts.date.month        
+        pji_subform.year_text = sp.specificConfig.settings.texts.date.year
 
         var genders = {}
 
