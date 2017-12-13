@@ -2,10 +2,10 @@ import __jquery__ from 'jquery';
 import { Dialog } from '@lib/dialog';
 
 __jquery__.noConflict();
-// require('owl.carousel');
-// require('owl.carousel/dist/assets/owl.carousel.css')
-require('imports-loader?jQuery=jquery!slick-carousel');
-require('slick-carousel/slick/slick.css');
+require('owl.carousel');
+require('owl.carousel/dist/assets/owl.carousel.css')
+// require('imports-loader?jQuery=jquery!slick-carousel');
+// require('slick-carousel/slick/slick.css');
 
 let sp = require('@lib/sp')
 

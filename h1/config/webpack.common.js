@@ -56,6 +56,16 @@ module.exports = {
           loader: "style-loader"
         }, {
           loader: "css-loader"
+        }, {
+          loader: "postcss-loader",
+          options: {
+            sourceMap: true,
+            ident: 'postcss',
+            plugins: (loader) => [
+              require('precss'),
+              require('postcss-class-prefix')('__sailplay-')
+            ]
+          }
         }]
       },
       {
