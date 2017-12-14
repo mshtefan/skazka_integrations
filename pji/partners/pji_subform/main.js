@@ -176,15 +176,33 @@ window.SAILPLAY = function (opts) {
                     birthDate: data.birthday
                 }
 
-                if (self.allow_edit)
+                if (self.allow_edit) {
+                    let data_vars = {};
+                    for (let key of Reflect.ownKeys(data)) {
+                        switch (key) {
+                            case 'phone':
+                                if (data[key]) data_vars.phone = data[key];
+                                break
+                            case 'first_name':
+                                if (data[key]) data_vars.firstName = data[key];
+                                break
+                            case 'last_name':
+                                if (data[key]) data_vars.lastName = data[key];
+                                break
+                            case 'sex':
+                                if (data[key]) data_vars.sex = data[key];
+                                break
+                            case 'birthday':
+                                if (data[key]) data_vars.birthDate = data[key];
+                                break
+                        }
+                    }
+
                     sp.updateCustomVars({
                         email: self.email(),
-                        "__form_edit_['phone']": data.phone,
-                        "__form_edit_['firstName']": data.first_name,
-                        "__form_edit_['lastName']": data.last_name,
-                        "__form_edit_['sex']": data.sex,
-                        "__form_edit_['birthDate']": data.birthday
+                        ...data_vars
                     })
+                }
 
                 return sp.updateUserInfo($.extend(true, {
                     email: self.email()
@@ -341,6 +359,7 @@ window.SAILPLAY = function (opts) {
                 })
                     .then(updateVars(0))
                     .then(updateTags(['secondaryFields']))
+                    .then(updateInfo)
                     .then(nextStep)
 
             this.in_progress(false);
