@@ -59,6 +59,11 @@
         background: white;        
         text-align: center;
         position: relative;
+        .owl-item {
+            .coupons__item {
+                display: flex;
+            }
+        }
 
         .owl-next, .owl-prev {
             z-index: 100;
@@ -119,6 +124,7 @@
         justify-content: space-around;
         // padding: 0 vw(60px);
         height: vw(400px);
+        display: none;
 
         backface-visibility: hidden;
         transform: translateZ(0) scale(1.0, 1.0);

@@ -23,11 +23,15 @@ class CoupunsView {
     constructor(params) {
         this.coupons = ko.observableArray();
         this.user_points = ko.observable();
-        this.user_currency = ko.observable();
+        this.user_currency = ko.computed(() => {
+            return ko.utils.arrayFirst(sp.custom_variables(), item => {
+                return item.name == 'Currency'
+            })
+        })
         this.texts = ko.observable();
         this.filtered_coupons = ko.computed(() => {
             return ko.utils.arrayFilter(this.coupons(), item => {
-                return item.type == 'coupon' && item.category == (this.user_currency() || '786')
+                return item.type == 'coupon' && item.category == (this.user_currency() && this.user_currency().value || '786')
             })
         })
 
@@ -41,16 +45,8 @@ class CoupunsView {
             this.user_points(sp.user().user_points.confirmed());
             sp.getGifts()
                 .then(data => {
-                    ko.utils.arrayForEach(sp.custom_variables(), item => {
-                        switch (item.name) {
-                            case 'Currency':
-                                this.user_currency(item.value)
-                                break;
-                        }
-                    })
-
                     this.coupons(data.gifts)
-                    setTimeout(params.no_owl ? this.initNative : this.initOwl, 50)
+                    setTimeout(params.no_owl ? this.initNative : this.initOwl, 10)
                 })
         })
     }
@@ -79,7 +75,6 @@ class CoupunsView {
             $owl.find('.__sailplay-owl-stage-outer').remove();
             $owl.find('.__sailplay-owl-nav').remove()
             $owl.find('.__sailplay-owl-dots').remove()
-
 
             $owl.owlCarousel('destroy')
 
