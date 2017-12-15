@@ -181,19 +181,19 @@ window.SAILPLAY = function (opts) {
                     for (let key of Reflect.ownKeys(data)) {
                         switch (key) {
                             case 'phone':
-                                if (data[key]) data_vars.phone = data[key];
+                                if (data[key]) data_vars["__form_edit_['phone']"] = data[key];
                                 break
                             case 'first_name':
-                                if (data[key]) data_vars.firstName = data[key];
+                                if (data[key]) data_vars["__form_edit_['firstName']"] = data[key];
                                 break
                             case 'last_name':
-                                if (data[key]) data_vars.lastName = data[key];
+                                if (data[key]) data_vars["__form_edit_['lastName']"] = data[key];
                                 break
                             case 'sex':
-                                if (data[key]) data_vars.sex = data[key];
+                                if (data[key]) data_vars["__form_edit_['sex']"] = data[key];
                                 break
                             case 'birthday':
-                                if (data[key]) data_vars.birthDate = data[key];
+                                if (data[key]) data_vars["__form_edit_['birthDate']"] = data[key];
                                 break
                         }
                     }
