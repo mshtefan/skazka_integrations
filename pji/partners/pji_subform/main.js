@@ -249,7 +249,7 @@ window.SAILPLAY = function (opts) {
                     fieldGroupsArray.forEach((fieldsGroupName) => {
                         pji_subform[fieldsGroupName]().forEach((fieldsGroup) => {
                             fieldsGroup.forEach(function (field) {
-                                if (field.autocomplete && (field.name.toLowerCase() == k.toLowerCase())) {
+                                if (field.autocomplete && (field.type.toLowerCase() == k.toLowerCase())) {
                                     field.autocomplete.forEach((entry) => {
                                         if (v && (entry.name.toLowerCase() == v.toLowerCase()) && entry.tag) {
                                             tagsArray.push(entry.tag)
@@ -269,7 +269,7 @@ window.SAILPLAY = function (opts) {
                 if (tagsArray.length) {
                     sp.addTags(tagsArray, {
                         auth_hash: '',
-                        email: this.email(),
+                        email: self.email(),
                         phone: ''
                     })
                 }
@@ -534,6 +534,8 @@ window.SAILPLAY = function (opts) {
 
                 if (field.autocomplete) {
                     el.autocomplete = field.autocomplete
+                    el.autocomplete_visible = 
+                        field.autocomplete_visible === undefined ? true : field.autocomplete_visible
                     if (field.autocomplete_required) {
                         el.value.extend({
                             autocompleteRequired: field.autocomplete.map(x => x.name)
@@ -615,6 +617,7 @@ window.SAILPLAY = function (opts) {
                     if (field.autocomplete) {
                         var autocomplete = field.autocomplete.map(function (x) { return x.name })
                         $('[data-type=' + field.type + ']').autocomplete({
+                            disabled: !field.autocomplete_visible,
                             source: (request, response) => {
                                 var res = autocomplete.filter(x => x.toLowerCase().includes(request.term.toLowerCase()))
                                 if (res.length) {
