@@ -1,10 +1,10 @@
-import mainStyle from '@lib/styles/style.styl';
+import mainStyle from '@lib/styles/style.important.styl';
 import { SailPlay } from '@lib/core.js'
 import ko from 'knockout';
-require('@lib/styles/helpers.styl')
+require('@lib/styles/helpers.important.styl')
 
 import mainTemplate from './main.pug';
-require('./assets/styles/style.styl')
+require('./assets/styles/style.native.styl')
 
 let initiated = false;
 
@@ -20,7 +20,7 @@ function shuffle(a) {
 // const domain = 'http://sailplay.ru';
 // const partner_id = 1737
 
-window.SAILPLAY = function (opts) {
+window.SAILPLAY___ = function (opts) {
     if (initiated) return;
     initiated = true;
 
