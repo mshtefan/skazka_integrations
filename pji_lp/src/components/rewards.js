@@ -1,5 +1,6 @@
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import '../../imports-loader?jQuery=jquery!owl.carousel';
+import jQuery from 'jquery';
 import {
     subscribe,
     publish
@@ -22,9 +23,7 @@ class rewardsView {
 
         subscribe(gifts => {
             this.gifts(gifts);
-            setTimeout(() => {
-                this.init_owl();
-            }, 50)
+            setTimeout(this.init_owl.bind(this), 1000)
         }, 'gifts.list.success')
 
         subscribe(user => {
@@ -43,12 +42,13 @@ class rewardsView {
     }
 
     init_owl() {
+        var indexBeforeChange = -1;
         jQuery('.__sailplay-owl-carousel').owlCarousel({
             stagePadding: 20,
             margin: 10,
             items: 1,
             loop: false,
-            mouseDrag: true,
+            mouseDrag: false,
             nav: true,
             refreshClass: '__sailplay-owl-refresh',
             loadedClass: '__sailplay-owl-loaded',
@@ -61,6 +61,9 @@ class rewardsView {
             stageOuterClass: '__sailplay-owl-stage-outer',
             grabClass: '__sailplay-owl-grab',
             navClass: ['__sailplay-owl-prev', '__sailplay-owl-next'],
+            onDrag: () => {
+                indexBeforeChange = event.page.index;
+            },
             navText: ['', ''],
             responsive: {
                 1024: {
@@ -83,11 +86,13 @@ class rewardsView {
             }
         });
 
-        jQuery(document).on('click', '.__sailplay-gift__redeem', event => {
+        jQuery(document).on('mousedown', '.__sailplay-gift__redeem', event => {
             let index = jQuery(event.currentTarget).parent().data('id');
             jQuery('.__sailplay-gift__redeem-active').removeClass('__sailplay-gift__redeem-active');   
             jQuery(event.currentTarget).addClass('__sailplay-gift__redeem-active')     
             this.show_redeem_popup(index);
+            event.stopPropagation();
+            return false;
         })
     }
 

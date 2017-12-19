@@ -56,9 +56,15 @@ class MainView {
     }
 
     getData() {
-        this.sp.getUserInfo().then(data => publish(data, 'load.user.info'))
+        this.sp.getUserInfo().then(data => {
+            if (data.status == 'error') return            
+            publish(data, 'load.user.info')}
+        )
         this.sp.getGifts().then(data => publish(data.gifts, 'gifts.list.success'));
-        this.sp.getActions().then(data => publish(data.data.actions, 'actions.list.success'));
+        this.sp.getActions().then(data => {
+            if (data.status == 'error') return
+            publish(data.data.actions, 'actions.list.success');
+        })
         this.sp.getCustomActions().then(data => publish(data.actions, 'custom_actions.list.success'));
         this.sp.getReferral().then(data => publish(`${this.domain}${data.referrer}`, 'referral.info'));
         this.sp.getHistory().then(data => publish(data.history, 'load.user.history'));

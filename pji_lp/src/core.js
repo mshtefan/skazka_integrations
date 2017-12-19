@@ -46,7 +46,7 @@ export class SailPlay {
 
         var checkPopupInterval = setInterval(() => {
             if (w == null || w.closed) {
-                this.performComplete()                
+                this.performComplete()
                 clearInterval(checkPopupInterval);
             }
         }, 100);
@@ -54,7 +54,7 @@ export class SailPlay {
 
     performAction(action, pji) {
         if (action.socialType && this.actions_config().connectedAccounts) {
-            if (this.actions_config().connectedAccounts[action.socialType] && action.socialType  != 'tw' && action.socialType != 'gp') {
+            if (this.actions_config().connectedAccounts[action.socialType] && action.socialType != 'tw' && action.socialType != 'gp') {
                 this.openSocialRegNeedPopup(action);
             } else {
                 this.share(action);
@@ -98,7 +98,7 @@ export class SailPlay {
         var socialFrame = this.popupWindow(frameUrl, 'social_action', 200, 210);
         var checkPopupInterval = setInterval(() => {
             if (socialFrame == null || socialFrame.closed) {
-                this.performComplete()                
+                this.performComplete()
                 clearInterval(checkPopupInterval);
             }
         }, 200);
@@ -257,7 +257,7 @@ export class SailPlay {
                 success: resolve
             })
         })
-    }    
+    }
 
     getCustomActions() {
         return new Promise((resolve, reject) => {
@@ -268,7 +268,7 @@ export class SailPlay {
                 },
                 success: resolve
             })
-        })        
+        })
     }
 
     getReferral() {
@@ -279,7 +279,7 @@ export class SailPlay {
                     auth_hash: this.opts.auth_hash
                 },
                 success: resolve
-            })            
+            })
         })
     }
 
@@ -295,7 +295,7 @@ export class SailPlay {
             })
         })
     }
- 
+
     purchaseGift(gift_data) {
         return new Promise((resolve, reject) => {
             jsonp({
@@ -306,15 +306,35 @@ export class SailPlay {
                     dep_id: this.config().partner.depId() || ''
                 },
                 success: (data) => {
-                    jsonp({
-                        url: `${this.opts.domain}${this.config().urls.gifts.purchase.force_confirm()}`,
-                        data: {
+                    if (data.request_to_partner_url) {
+
+                        let req = {
                             gift_public_key: data.gift_public_key,
                             auth_hash: this.opts.auth_hash,
-                            no_user_sms: true
-                        },
-                        success: resolve
-                    })
+                            gift_sku: data.gift_sku
+                        }
+
+                        if (data.user_phone)
+                            req['user_phone'] = data.user_phone
+
+                        if (data.email)
+                            req['email'] = data.email
+
+                        jsonp({
+                            url: data.request_to_partner_url,
+                            data: req,
+                            success: resolve
+                        })
+                    } else
+                        jsonp({
+                            url: `${this.opts.domain}${this.config().urls.gifts.purchase.force_confirm()}`,
+                            data: {
+                                gift_public_key: data.gift_public_key,
+                                auth_hash: this.opts.auth_hash,
+                                no_user_sms: true
+                            },
+                            success: resolve
+                        })
                 }
             })
         })
