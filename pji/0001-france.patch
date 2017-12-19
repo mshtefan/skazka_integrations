@@ -1,0 +1,94 @@
+From 3bb9bd8c37f0dd15327098347a9b76957e5e800f Mon Sep 17 00:00:00 2001
+From: Nikolaev Andrey <a.nikolaev@sailplay.ru>
+Date: Tue, 19 Dec 2017 19:33:56 +0300
+Subject: [PATCH] france
+
+---
+ pji/partners/pji_subform/assets/styles/style.important.styl | 13 ++++++-------
+ pji/partners/pji_subform/main.js                            |  4 ++--
+ 2 files changed, 8 insertions(+), 9 deletions(-)
+
+diff --git a/pji/partners/pji_subform/assets/styles/style.important.styl b/pji/partners/pji_subform/assets/styles/style.important.styl
+index ee9c916..275da23 100644
+--- a/pji/partners/pji_subform/assets/styles/style.important.styl
++++ b/pji/partners/pji_subform/assets/styles/style.important.styl
+@@ -1,6 +1,5 @@
+ @import 'jeet'
+ @import 'nib'
+-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,600');
+ @font-face
+     font-family: "Knockout";
+     src: url(../fonts/knockout.woff);
+@@ -152,7 +151,7 @@ sailplay-magic *
+         padding-top: 60px
+         .__sailplay-text
+             float: left;
+-            font-family: Roboto;
++            font-family: Helvetica Neue, Arial;
+             font-weight: bold;
+             font-size: 20pt;
+ 
+@@ -184,7 +183,7 @@ sailplay-magic *
+         max-width: 965px;
+         box-sizing: border-box;
+         width: 100%;
+-        font-family: Roboto;
++        font-family: Helvetica Neue, Arial;
+         font-size: 24px;
+         
+         .__sailplay-form_row
+@@ -204,7 +203,7 @@ sailplay-magic *
+                 padding-top: 20px;
+ 
+             position: relative;
+-            font-family: Roboto;
++            font-family: Helvetica Neue, Arial;
+             font-size: 22px;
+             font-weight: 300;
+             width: 45%;
+@@ -249,7 +248,7 @@ sailplay-magic *
+             input
+                 border: 1px solid #e0e0e0;
+                 border-radius: 5px;
+-                font-family: Roboto
++                font-family: Helvetica Neue, Arial
+                 font-size: 20px;
+                 background: white;
+                 font-weight: 300;
+@@ -374,7 +373,7 @@ sailplay-magic *
+         border-radius: 5px;
+         color: white !important;
+         text-decoration: none;
+-        font-family: Roboto;
++        font-family: Helvetica Neue, Arial;
+         width: 45%;
+         font-weight: 600;
+         font-size: 24px;
+@@ -388,7 +387,7 @@ sailplay-magic *
+     background-color: white;
+     & li
+         & div    
+-            font-family: Roboto
++            font-family: Helvetica Neue, Arial
+             font-size: 20px;
+             font-weight: 300;
+             width: 100%;
+diff --git a/pji/partners/pji_subform/main.js b/pji/partners/pji_subform/main.js
+index c6ebb49..929252c 100644
+--- a/pji/partners/pji_subform/main.js
++++ b/pji/partners/pji_subform/main.js
+@@ -126,9 +126,9 @@ window.SAILPLAY = function (opts) {
+                     } else {
+                         if (f.maskMaxLength && f.countryCode) {
+                             if (f.maskMaxLength >= f.value().split(/[\D]/).join('').length)
+-                                data[f.type] = f.countryCode + f.value();
++                                data[f.type] = f.countryCode + f.value().slice(1);
+                             else
+-                                data[f.type] = f.value();
++                                data[f.type] = f.value().slice(1);
+                         } else data[f.type] = f.value();
+                     }
+                 }
+-- 
+2.14.2
+
