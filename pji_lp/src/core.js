@@ -318,7 +318,7 @@ export class SailPlay {
                             req['user_phone'] = data.user_phone
 
                         if (data.email)
-                            req['email'] = data.email
+                            req['user_email'] = data.email
 
                         jsonp({
                             url: data.request_to_partner_url,
