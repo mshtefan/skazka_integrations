@@ -7,7 +7,7 @@ import 'knockout.validation';
 import $ from 'jquery';
 import "babel-polyfill";
 require('@lib/styles/helpers.important.styl');
-require('@lib/jquery-ui.min.js');
+require('@lib/jquery-ui._autocomplete.js');
 require('@lib/jquery-ui.min.css');
 
 import mainTemplate from './main.pug';
@@ -616,7 +616,7 @@ window.SAILPLAY = function (opts) {
                 fieldArray.forEach(function (field) {
                     if (field.autocomplete) {
                         var autocomplete = field.autocomplete.map(function (x) { return x.name })
-                        $('[data-type=' + field.type + ']').autocomplete({
+                        $('[data-type=' + field.type + ']')._autocomplete({
                             disabled: !field.autocomplete_visible,
                             source: (request, response) => {
                                 var res = autocomplete.filter(x => x.toLowerCase().includes(request.term.toLowerCase()))
