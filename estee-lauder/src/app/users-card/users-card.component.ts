@@ -89,7 +89,7 @@ import { UserCard } from '../user-card';
 
                 <div class="popup-controls">
                     <a href="#" class="button" (click)="$event.preventDefault();showApproveDialog=false;lockPage(false)">Отмена</a>
-                    <a href="#" class="button button_black" [ngClass]="{button_disabled: !occupationModel}" (click)="$event.preventDefault();onApprove.emit({user: user, occupation: occupationModel});showApproveDialog=false;lockPage(false)">Принять</a>
+                    <a href="#" class="button button_black" [ngClass]="{button_locked: !occupationModel}" (click)="$event.preventDefault();onApprove.emit({user: user, occupation: occupationModel});showApproveDialog=false;lockPage(false)">Принять</a>
                 </div>
 
             </div>
