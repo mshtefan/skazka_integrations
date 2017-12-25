@@ -89,7 +89,7 @@ import { UserCard } from '../user-card';
 
                 <div class="popup-controls">
                     <a href="#" class="button" (click)="$event.preventDefault();showApproveDialog=false;lockPage(false)">Отмена</a>
-                    <a href="#" class="button button_black" [ngClass]="{button_locked: !occupationModel}" (click)="$event.preventDefault();onApprove.emit({user: user, occupation: occupationModel});showApproveDialog=false;lockPage(false)">Принять</a>
+                    <a href="#" class="button button_black" [ngClass]="{button_locked: !occupationModel}" (click)="$event.preventDefault();approve()">Принять</a>
                 </div>
 
             </div>
@@ -146,6 +146,13 @@ export class UsersCardComponent implements OnInit, OnChanges {
 
     ngOnChanges(res) {
         if (this.user) this.occupationModel = this.user.getOccupation()
+    }
+
+    approve() {
+        if(!this.occupationModel) return;
+        this.onApprove.emit({user: this.user, occupation: this.occupationModel});
+        this.showApproveDialog=false;
+        this.lockPage(false)
     }
 
     // CARD
