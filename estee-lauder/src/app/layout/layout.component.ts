@@ -7,7 +7,7 @@ import { UserCard } from './../user-card';
 
 const SEARCH_DEBOUNCE_TIMEOUT = 500;
 const SCROLL_DEBOUNCE_TIMEOUT = 1000;
-const RACE_CONDITION_TIMEOUT = 3000;
+const RACE_CONDITION_TIMEOUT = 1500;
 
 @Component({
   selector: 'app-layout',
