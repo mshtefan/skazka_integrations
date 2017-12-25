@@ -140,6 +140,7 @@ export class LayoutComponent implements OnInit {
   }
 
   approveUser(data: any) {
+    if(!data.user || !data.occupation) return;
     this.loading = true;
     let user: UserCard = data.user;
     let occupation: any = data.occupation;
