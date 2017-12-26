@@ -1,0 +1,699 @@
+/* You can add global styles to this file, and also import other style files */
+// @import 'nib'
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:700&subset=cyrillic');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700,900&subset=cyrillic');
+
+desktop = 1024px
+tablet = 640px
+mobile = 320px
+
+blue = #66b8e0
+red = #d84e4e
+green = #4ee47b
+grey = #b2b2b2
+
+@keyframes rotation 
+  0%
+      transform rotate(0deg)
+  100%
+      transform rotate(360deg)
+
+
+html 
+    width 100%
+    height 100%
+
+body
+    width 100%
+    height 100%
+    margin 0
+    padding 0
+    font-family 'Roboto', sans-serif
+    
+
+.layout 
+    display flex
+    position fixed
+    top 0
+    left 0
+    width 100%
+    height 100%
+    z-index 1
+    flex-direction row
+    flex-wrap wrap
+    overflow auto
+    &-left
+        display block
+        box-sizing border-box
+        width 100%
+        height auto
+        align-content flex-start
+        @media screen and (min-width: tablet)
+            display flex
+            flex-wrap wrap
+            width 100%
+        @media screen and (min-width: desktop)
+            width 30%
+            height 100%
+            position relative
+    &-right
+        display block
+        box-sizing border-box
+        width 100%
+        height auto
+        background white
+        padding 40px 20px    
+        @media screen and (min-width: tablet)
+            flex-wrap wrap
+            display flex
+            padding 40px 70px
+        @media screen and (min-width: desktop)
+            width 70%
+            display block
+            overflow auto
+    a
+        color blue
+    &-loader
+        display none
+        position fixed
+        z-index 100
+        background rgba(0,0,0,0.6)
+        left 0
+        top 0
+        width 100%
+        height 100%
+        &:before
+            content ''
+            position absolute
+            z-index 1
+            left 0
+            right 0
+            top 0
+            bottom 0
+            margin auto
+            width 70px
+            height 70px
+            display block
+            animation rotation 2s infinite
+            background url('assets/icon-loader.svg') no-repeat center center/contain
+    &.type_locked
+        -webkit-overflow-scrolling touch
+        overflow hidden
+    &.type_loading
+        .layout-loader
+            display block
+    @media screen and (min-width: desktop)
+        overflow hidden
+.user-types
+    display flex
+    align-items center
+    justify-content stretch
+    text-align left
+    border-bottom solid 1px rgba(151, 151, 151, 0.4)
+    padding 0 36px
+    width 100%
+    height 70px
+    box-sizing border-box
+    background black
+    position relative
+    z-index 4
+    &_value
+        font-size 24px
+        color rgba(255, 255, 255, 0.3)
+        letter-spacing 1px
+        text-transform uppercase
+        width 100%
+        height auto
+        position relative
+        cursor pointer
+        font-family 'Roboto Condensed'
+        font-weight bold
+        &:after
+            content ''
+            width 17px
+            height 7px
+            position absolute
+            right 0
+            top 0
+            bottom 0
+            margin auto
+            background url('assets/icon-down__white.svg') no-repeat center center/contain
+            @media screen and (min-width: desktop)
+                right 20px
+        @media screen and (min-width: desktop)
+            position static 
+            overflow hidden
+            text-overflow ellipsis
+    &-list
+        display flex
+        position absolute
+        left 0
+        top 100%
+        max-height 0
+        height auto
+        overflow hidden
+        width 100%
+        flex-direction column
+        background black
+        &__layout
+            display none
+            position fixed
+            left 0
+            top 0
+            z-index 1
+            width 100%
+            height 100%
+        &__item
+            cursor pointer
+            display block
+            font-size 24px
+            color rgba(255, 255, 255, 0.3)
+            letter-spacing 1px
+            text-transform uppercase
+            position relative
+            font-family 'Roboto Condensed'
+            font-weight bold
+            padding 0 36px
+            box-sizing border-box
+            width 100%
+            height 68px
+            line-height 68px
+            z-index 2
+    &.type_fixed
+        position fixed
+        @media screen and (min-width: desktop)
+            position relative
+    &.type_open
+        background #272727
+        .user-types-list__layout
+            display block
+        .user-types_value
+            &:after
+                transform rotate(180deg)
+        .user-types-list
+            max-height none
+            background #272727
+    @media screen and (min-width: tablet)
+        width 85%
+        border-bottom none
+    @media screen and (min-width: desktop)
+        width 75%
+        border-bottom 1px solid rgba(151, 151, 151, 0.3)
+.user-search
+    display flex
+    align-items center
+    justify-content stretch
+    text-align left
+    padding 0 36px
+    width 100%
+    height 70px
+    box-sizing border-box
+    background black
+    position relative
+    z-index 3
+    input
+        width 100%
+        height 100%
+        display none
+        -moz-appearance none
+        -webkit-appearance none
+        -ms-progress-appearance none 
+        appearance none
+        color white
+        font-size 24px
+        line-height 70px
+        letter-spacing 1px
+        padding-right 30px
+        font-weight normal
+        text-transform uppercase
+        box-sizing border-box
+        border none
+        outline none
+        background black
+        position relative
+        z-index 1
+    i 
+        position absolute
+        left 0
+        top 0 
+        right 0
+        bottom 0
+        margin auto
+        width 25px
+        height 25px
+        z-index 2
+        display block
+        background url('assets/icon-search.svg') no-repeat center center/contain
+    &.type_focus
+        i
+            background url('assets/icon-close.svg') no-repeat center center/contain
+            right 36px
+            left auto
+        input
+            display block
+    &.type_fixed
+        position fixed
+        top 70px
+        @media screen and (min-width: desktop)
+            position absolute
+    @media screen and (min-width: tablet)
+        width 15%
+        border-left 1px solid rgba(151, 151, 151, 0.3)
+        border-bottom none
+        &.type_focus
+            position absolute
+            right 0
+            top 0
+            width 100%
+            z-index 4
+        &.type_fixed
+            right 0
+            top 0
+    @media screen and (min-width: desktop)
+        width 25%
+        border-bottom 1px solid rgba(151, 151, 151, 0.3)
+.user-list
+    background black
+    &-item
+        display flex
+        color blue
+        width 100%
+        height 80px
+        box-sizing border-box
+        padding 0 35px
+        align-items center
+        justify-content center
+        flex-wrap wrap
+        text-align left
+        align-content center
+        background black
+        &__id
+            font-size 16px
+            color white
+            opacity 0.4
+            height 20px
+            line-height 20px
+            width 20%
+            margin-bottom 5px
+        &__name
+            font-size 18px
+            color blue
+            opacity 0.4
+            height 22px
+            font-weight bold
+            line-height 22px
+            width 80%
+            margin-bottom 5px
+        &__date
+            font-size 16px
+            color white
+            opacity 0.4
+            height 20px
+            line-height 20px
+            width 20%
+        &__occupation
+            font-size 14px
+            color blue
+            opacity 0.4
+            height 18px
+            font-weight bold
+            line-height 18px
+            width 80%
+        div
+            overflow hidden
+            white-space nowrap
+            text-overflow ellipsis
+        @media screen and (min-width: desktop)
+            &.type_single
+                display none
+    &-container
+        display none
+        position fixed
+        height calc(100% - 140px)
+        background black
+        width 100%
+        top 140px
+        overflow auto
+        left 0
+        z-index 2
+        @media screen and (min-width: tablet)
+            height calc(100% - 70px)
+            top 70px
+        @media screen and (min-width: desktop)
+            position relative
+            top 0
+            left 0
+            height 100%
+            display block
+    &.type_open
+        .user-list-container
+            display block
+    &-refresh
+        height 100%
+        color white
+        display flex
+        justify-content center
+        align-items center
+        flex-direction column
+        font-size 18px
+        line-height 22px
+        text-align center
+        i
+            width 100px
+            height 100px
+            display block
+            background url('assets/icon-refresh.svg') no-repeat center center/contain
+        p
+            margin 25px 0 35px
+    @media screen and (min-width: tablet)
+        width 100%
+        z-index 1
+        height auto
+        // height calc(100% - 70px)
+    @media screen and (min-width: desktop)
+        height calc(100% - 70px)
+
+.user-card
+    width 100%
+    &-header
+        padding-bottom 40px
+        border-bottom 1px solid rgba(151, 151, 151, 0.3)
+        @media screen and (min-width: tablet)
+            display flex
+            flex-wrap wrap
+            justify-content center
+            align-items flex-start
+        &__left
+            @media screen and (min-width: tablet)
+                width 50%
+        &__right
+            @media screen and (min-width: tablet)
+                width 50%
+                text-align right
+    &__name
+        display block
+        font-size 36px
+        color black
+        letter-spacing 1.2px
+        text-transform uppercase
+        position relative
+        font-family 'Roboto Condensed'
+        font-weight bold
+        width 100%
+        line-height 36px            
+    &__occupation
+        margin-top 6px
+        margin-bottom 24px
+        display block
+        font-size 20px
+        color black
+        position relative
+        width 100%
+        line-height 24px
+        @media screen and (min-width: tablet)
+            margin-bottom 0
+    &__age
+        display block
+        font-size 30px
+        letter-spacing 1.2px
+        text-transform uppercase
+        position relative
+        font-family 'Roboto Condensed'
+        font-weight bold
+        width 100%
+        line-height 36px
+        color grey
+    &__date
+        display block
+        font-size 15px
+        position relative
+        font-family 'Roboto Condensed'
+        width 100%
+        line-height 24px
+        opacity 0.3
+        color black
+        @media screen and (min-width: tablet)
+            margin-bottom 0
+    &-contacts
+        margin-top 25px
+        border-bottom 1px solid rgba(151,151,151,0.3)
+        padding-bottom 15px
+        &__left
+            @media screen and (min-width: tablet)
+                width 50%
+        &__right
+            @media screen and (min-width: tablet)
+                width 50%
+                text-align right
+        &__button
+            margin-top 30px
+            text-align left !important
+            padding-left 94px
+            background url('assets/icon-mail.svg') no-repeat 30px center/34px auto
+            @media screen and (min-width: tablet)
+                margin-top 0
+        @media screen and (min-width: tablet)
+            display flex
+            flex-wrap wrap
+            justify-content center
+            align-items flex-start
+    &-field
+        margin-top 27px
+        &:first-child
+            margin-top 0
+        &__label
+            display block
+            font-size 16px
+            position relative
+            width 100%
+            line-height 24px
+            opacity 0.3
+            color black
+        &__value
+            display block
+            font-size 16px
+            position relative
+            width 100%
+            line-height 24px
+            color black
+    &-comment
+        margin-top 35px
+    &-files
+        margin-top 30px
+        &-item
+            text-decoration none
+            outline none
+            position relative
+            min-height 50px
+            margin-bottom 25px
+            padding-left 65px
+            text-align left
+            box-sizing border-box
+            background url('assets/icon-download.svg') no-repeat left top/50px auto
+            font-size 16px
+            line-height 20px
+            display flex
+            flex-direction column
+            justify-content center
+            align-items left
+            &:last-child
+                margin-bottom 0
+            &__name
+                color blue
+                white-space normal
+                overflow hidden
+                text-overflow ellipsis
+            &__size
+                margin-top 4px
+                color rgba(0, 0, 0, 0.4)
+            &:hover
+                .user-card-files-item__name
+                    text-decoration underline
+
+
+    &-controls
+        text-align center
+        margin-top 35px
+        .button
+            margin-top 24px
+            &:first-child
+                margin-top 0
+            @media screen and (min-width: tablet)
+                margin-top 0
+                &:first-child
+                    margin-right 24px
+
+.button, a.button
+    width 100%
+    height 60px
+    text-align center
+    text-decoration none
+    display inline-block
+    box-sizing border-box
+    border 1px solid black
+    line-height 58px
+    text-transform uppercase
+    font-size 18px
+    letter-spacing 0.8px
+    color black
+    max-width 280px
+    font-weight bold
+    &.button_black
+        background black
+        color white
+    &.button_white
+        background transparent
+        color white
+        border-color white
+    &.button_disabled
+        border none
+        opacity 0.2
+        cursor default
+        background transparent
+    &.button_locked
+        opacity 0.2
+        cursor default
+    @media screen and (min-width: tablet)
+        max-width 225px
+
+.popup
+    z-index 10
+    position fixed
+    top 0
+    left 0 
+    width 100%
+    height 100%
+    display flex
+    justify-content center
+    align-items flex-start
+    overflow auto
+    &-layout
+        position fixed
+        background black
+        opacity 0.4
+        top 0
+        left 0 
+        width 100%
+        height 100%
+        z-index 1
+    &-content
+        margin 5% 0
+        box-sizing border-box
+        display block
+        max-width 90%
+        height auto
+        background white
+        padding 40px 20px 
+        z-index 2
+        @media screen and (min-width: tablet)
+            padding 45px 60px
+            width 600px
+    &-title
+        line-height 36px
+        font-size 30px
+        letter-spacing 1.2px
+        text-align left
+        font-family 'Roboto Condensed'
+        font-weight bold
+        color #000000
+        text-transform uppercase
+    &-controls
+        text-align center
+        .button
+            margin-top 24px
+            &:first-child
+                margin-top 0
+            @media screen and (min-width: tablet)
+                margin-top 0
+                &:first-child
+                    margin-right 24px
+
+.form-field
+    margin-top 40px
+    .select
+        margin-top 8px
+        margin-bottom 24px
+        position relative
+        width 100%
+        height 60px
+        box-sizing border-box
+        display flex
+        justify-content center
+        align-items center
+        z-index 1
+        &-options
+            box-sizing border-box
+            display none
+            position absolute
+            top 100%
+            left 0
+            width 100%
+            max-height 182px
+            overflow auto
+            border-top none
+            border-left 1px solid black
+            border-right 1px solid black
+            border-bottom 1px solid black
+            background white
+        &-option
+            display flex
+            cursor pointer
+            width 100%
+            height 60px
+            line-height 58px
+            box-sizing border-box
+            border-top 1px solid rgba(151, 151, 151, 0.3)
+            justify-content stretch
+            align-items stretch
+            text-align center
+            font-size 16px
+            &-discount
+                width 80px
+                font-weight bold
+                letter-spacing 0.8px
+                height 100%
+            &-text
+                margin 0 22px
+            &.selected-value
+                width 100%
+                height 100%
+                text-align center
+                border-right 1px solid black
+                border-top 1px solid black
+                border-bottom 1px solid black
+                border-left 1px solid black
+                position relative
+                &:after
+                    content ''
+                    width 17px
+                    height 7px
+                    position absolute
+                    right 24px
+                    top 0
+                    bottom 0
+                    margin auto
+                    background url('assets/icon-down__black.svg') no-repeat center center/contain
+        &.type_open
+            .selected-value
+                border-bottom none
+                &:after
+                    transform rotate(180deg)
+            .select-options
+                display block
+    textarea 
+        margin-top 8px
+        margin-bottom 24px
+        resize none
+        width 100%
+        height 125px
+        padding 5px
+        border-radius 0
+        outline none
+        border 1px solid black
+        box-sizing border-box
+    .field__label 
+        line-height 24px
+        font-size 16px
+        text-align left
+        color black
+        
