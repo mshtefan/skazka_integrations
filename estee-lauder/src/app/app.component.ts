@@ -13,7 +13,7 @@ export class AppComponent {
   constructor(private API: ApiService) {
     this.API.getPartnerConfig({
       name: 'moderation',
-      partner_id: 231,
+      partner_id: 1822,
       domain: window.location.origin
     })
       .subscribe((res: any): any => {
