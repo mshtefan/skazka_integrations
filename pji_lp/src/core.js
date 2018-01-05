@@ -311,7 +311,8 @@ export class SailPlay {
                         let req = {
                             gift_public_key: data.gift_public_key,
                             auth_hash: this.opts.auth_hash,
-                            gift_sku: data.gift_sku
+                            gift_sku: data.gift_sku,
+                            gift_points: gift_data.points
                         }
 
                         if (data.user_phone)
