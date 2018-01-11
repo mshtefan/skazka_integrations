@@ -111,7 +111,12 @@ class rewardsView {
 
     confirm_redeem() {
         this.sp.purchaseGift(this.active_gift())
-            .then(data => location.reload())
+            .then(data => {
+                console.log('data', data)
+                if(data && data.returnURL) {
+                    window.location.href += data.returnURL
+                }
+            })
     }
 }
 
