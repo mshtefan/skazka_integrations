@@ -174,7 +174,7 @@ window._logout = () => {
         document.body.removeChild(req);
         sp.auth_hash = '';
         sp.user(false);
-        if (sp.config().partner.loyalty_page_config.logout_url) {
+        if (sp.config().partner.loyalty_page_config.logout_url || sp.config().partner.loyalty_page_config.force_logout_redirect) {
             location.assign(sp.config().partner.loyalty_page_config.logout_url)
         }
     }
@@ -188,7 +188,8 @@ for (let component of [
     'banner',
     'history',
     'coupons',
-    'quests'
+    'quests',
+    'subscribe-toggler'
 ]) {
     ko.components.register(`sailplay-${component}`, require(`./components/${component}`))
 }

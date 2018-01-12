@@ -27,7 +27,7 @@ class StatusBarView {
             let date = this.nightsExpire();
             date = `${date.toLocaleString('en-us', { month: 'short' })} ${date.getDate()}, ${date.getFullYear()}`
 
-            if (this.currentStatusDetail().grade == 2)
+            if (this.currentStatusDetail() && this.currentStatusDetail().grade == 2)
                 if (this.collected() >= this.next_status().nights)
                     return (this.texts() && this.texts().status.gold_retain.replace('<retain_date>', date)) || '';
                 else {

@@ -253,6 +253,26 @@
             })
         }
 
+        tagsDelete(options, auth_hash) {
+            if (!this.inited())
+                throw new Error('sp not inited');
+
+            return new Promise((resolve, reject) => {
+                jsonp({
+                    url: `${this.options.domain}${this.config().urls.tags.delete}`,
+                    data: {
+                        ...options,
+                        origin_user_id: this.user() && this.user().user.origin_user_id() || 0,
+                        auth_hash: auth_hash || this.auth_hash,
+                    },
+                    success: result => {
+                        this.tagsList(this.latest_tags_options)
+                        resolve(result);
+                    }
+                })
+            })
+        }
+
         updateUserInfo(data) {
             if (!this.inited())
                 throw new Error('sp not inited');
