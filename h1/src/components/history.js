@@ -24,6 +24,7 @@ class HistoryView {
         this.night_counter = ko.observable();
         this.collected = ko.observable(0);
         this.texts = ko.observable();
+        this.purchases = ko.observable();
 
         switch (this.type) {
             case 'purchase':
@@ -35,11 +36,12 @@ class HistoryView {
         }
 
         this[this.collection] = ko.computed(() => {
+
             let collection = ko.utils.arrayFilter(this.history(), item => {
                 if (this.type == 'purchase')
                     return item.action == 'purchase'
                 if (this.type == 'activity')
-                    return item.action != 'purchase'
+                    return true
             })
 
             if (this.type == 'activity')
@@ -47,8 +49,44 @@ class HistoryView {
                     return new Date(a.action_date) - new Date(b.action_date)
                 })
 
+            collection.forEach(item => {
+                if (item.action == 'purchase') {
+                    sp.purchaseGet(item.id)
+                        .then(data => {
+                            let purchases = this.purchases() || {};
+                            purchases[item.id] = data;
+                            this.purchases(purchases)
+                        })
+                }
+                return item;
+            })
+
             return collection;
         });
+
+        this.getName = item => {
+            if (!item) return;
+            let purchases = this.purchases();
+            return purchases &&
+                purchases[item.id] &&
+                purchases[item.id].cart &&
+                purchases[item.id].cart.cart &&
+                purchases[item.id].cart.cart.positions[0] &&
+                purchases[item.id].cart.cart.positions[0].name || item.order_num
+        }
+
+        this.getLink = item => {
+            if (!item) return;
+            let purchases = this.purchases();
+            let link = purchases &&
+                purchases[item.id] &&
+                purchases[item.id].cart &&
+                purchases[item.id].cart.cart &&
+                purchases[item.id].cart.cart.positions[0] &&
+                purchases[item.id].cart.cart.positions[0].product &&
+                purchases[item.id].cart.cart.positions[0].product.sku;
+            return link && `https://www.hotelsone.com/gsl.html?dsti=${link}&dstt=8`
+        }
 
         this.pageCount = ko.computed(() => {
             return Math.ceil(this[this.collection]().length / this.limitPerPage())
@@ -76,23 +114,16 @@ class HistoryView {
                 return
             }
 
-            this.registered(registered.create_date);
+            this.registered(registered.create_date.split(' ').join('T'));
         })
 
         sp.config.subscribe(data => {
             this.texts(data.partner.loyalty_page_config.texts);
-        })     
+        })
 
         sp.history.subscribe(data => {
             this.history(ko.mapping.toJS(data));
         })
-    }
-
-    redirectToProduct(item) {
-        sp.purchaseGet(item.id)
-            .then(data => {
-                location.assign(`https://www.hotelsone.com/gsl.html?dsti=${data.cart.cart.positions[0].product.sku}&dstt=8`)
-            })
     }
 
     listCurrentPage() {
@@ -126,8 +157,9 @@ class HistoryView {
     getTexts(history_item) {
         let texts = {
             "purchase": "Purchase",
+            "unconfirmed_purchase": "Purchase (points unconfirmed)",
             "gift_purchase": item => {
-                return `You've redeemed a <strong>${item.name}</strong>(${item.coupon_number})`
+                return `You've redeemed a <strong>${item.name}</strong> (${item.coupon_number})`
             },
             "badge": "Badge",
             "extra": "Points Added",
@@ -143,15 +175,22 @@ class HistoryView {
             "earn_badge": 'Earn badge ',
             "custom_action": "Custom action",
             "like": item => {
-                return `Like us on ${{fb: 'Facebook', gp: 'Google+'}[item.social_type]}`
+                return `Like us on ${{ fb: 'Facebook', gp: 'Google+' }[item.social_type]}`
             },
             "partner_page": item => {
-                return `Shared our website on ${{fb: 'Facebook', gp: 'Google+'}[item.social_type]}`
+                return `Shared our website on ${{ fb: 'Facebook', gp: 'Google+' }[item.social_type]}`
             }
         }
 
         if (__jquery__.isFunction(texts[history_item.action] || texts[history_item.social_action]))
             return (texts[history_item.action] || texts[history_item.social_action])(history_item)
+        if (this.texts() && this.texts().history && this.texts().history.labels) {
+            let action = history_item.action;
+            if(history_item.action == 'purchase' && !history_item.is_completed) {
+                action = 'unconfirmed_purchase'
+            }
+            return this.texts().history.labels[action] || texts[history_item.action];
+        }
         return texts[history_item.action];
     }
 }

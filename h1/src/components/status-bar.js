@@ -105,7 +105,7 @@ class StatusBarView {
                         this.collected_on_bar(this.collected() + this.currentStatusDetail().nights)
                     else if (this.currentStatusDetail().grade == 2)
                         this.collected_on_bar(this.statuses()[0].nights + this.currentStatusDetail().nights)
-                    this.collected_date(counter.create_date)
+                    this.collected_date(counter.create_date.split(' ').join('T'))
                 }
             }
         })
