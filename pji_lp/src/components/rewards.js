@@ -114,7 +114,7 @@ class rewardsView {
             .then(data => {
                 console.log('data', data)
                 if(data && data.returnURL) {
-                    window.location.href += data.returnURL
+                    window.location.href = data.returnURL
                 }
             })
     }
