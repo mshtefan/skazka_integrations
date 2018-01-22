@@ -110,7 +110,9 @@ module.exports = {
       template: 'index.html'
     }),
     new webpack.ProvidePlugin({
-      jQuery: "jquery"
+    $: "jquery",
+    jQuery: "jquery",
+    "window.jQuery": "jquery"
     })
   ]
 };

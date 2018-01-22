@@ -1,4 +1,15 @@
 let sp = require('@lib/sp');
+import { Dialog } from '@lib/dialog';
+import __jquery__ from 'jquery';
+
+class SubscribeToggled extends Dialog {
+    init(toggle_data) {
+        this.$template = __jquery__(require('@templates/subscribe_toggled.html'));
+        this.preventClose(false);
+        this.texts = ko.observable(sp.config().partner.loyalty_page_config.texts);
+        this.unsubscribed = toggle_data;  
+    }
+}
 
 class SubscribeTogglerView {
     constructor() {
@@ -28,7 +39,7 @@ class SubscribeTogglerView {
         this.holder = true;
         let remove = sp.config().partner.loyalty_page_config[this.unsubscribed() ? 'unsubscribe_tag' : 'subscribe_tag']
         let add = sp.config().partner.loyalty_page_config[this.unsubscribed() ? 'subscribe_tag' : 'unsubscribe_tag']
-        sp.tagsDelete({ tags: remove }).then(() => { sp.tagsAdd({ tags: add }).then(() => { this.holder = false }) })
+        sp.tagsDelete({ tags: remove }).then(() => { sp.tagsAdd({ tags: add }).then(() => { new SubscribeToggled(this.unsubscribed)}).then(() => { this.holder = false }) })
     }
 
 }
