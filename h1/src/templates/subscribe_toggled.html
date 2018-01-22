@@ -2,16 +2,16 @@
     <div class="dialog">
         <div class="dialog__header">
             <a href="#" class="dialog__close" data-bind="click: close.bind($data, true)"></a>
-            <!-- ko text: texts() && texts().subscribe_toggler[unsubscribed() ? 'subscribe_header' : 'unsubscribe_header'] --><!-- /ko -->
+            <!-- ko text: texts() && texts().subscribe_toggler[unsubscribed() ? 'unsubscribe_header' : 'subscribe_header'] --><!-- /ko -->
             </div>
         <div class="dialog__body">
             <div class="dialog__form center">
                 <div class="dialog__title">
-                    <div data-bind="text: texts() && texts().subscribe_toggler[unsubscribed() ? 'subscribe_title' : 'unsubscribe_title']"></div>
+                    <div data-bind="text: texts() && texts().subscribe_toggler[unsubscribed() ? 'unsubscribe_title' : 'subscribe_title']"></div>
 
                 </div>
                 <div class="dialog__text">
-                    <div><span data-bind="text: texts() && texts().subscribe_toggler[unsubscribed() ? 'subscribe_message' : 'unsubscribe_message']"></span>
+                    <div><span data-bind="text: texts() && texts().subscribe_toggler[unsubscribed() ? 'unsubscribe_message' : 'subscribe_message']"></span>
                     </div>
                 </div>
             </div>
