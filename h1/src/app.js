@@ -174,8 +174,12 @@ window._logout = () => {
         document.body.removeChild(req);
         sp.auth_hash = '';
         sp.user(false);
-        if (sp.config().partner.loyalty_page_config.logout_url || sp.config().partner.loyalty_page_config.force_logout_redirect) {
+        if (sp.config().partner.loyalty_page_config.logout_url) {
             location.assign(sp.config().partner.loyalty_page_config.logout_url)
+        }
+        else if (sp.config().partner.loyalty_page_config.force_logout_redirect)
+        {
+            location.reload()
         }
     }
 }
