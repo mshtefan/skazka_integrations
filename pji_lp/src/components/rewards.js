@@ -21,9 +21,14 @@ class rewardsView {
         this.readonly = ko.observable();
         this.no_auth_widget = ko.observable();
 
+        this.elements_loaded = ko.computed(function () { //init carousel only after texts and gifts have been retireved
+            if(this.texts() && this.gifts()) {
+                setTimeout(this.init_owl.bind(this), 10)
+            }
+        }, this)
+
         subscribe(gifts => {
             this.gifts(gifts);
-            setTimeout(this.init_owl.bind(this), 1000)
         }, 'gifts.list.success')
 
         subscribe(user => {
@@ -39,6 +44,8 @@ class rewardsView {
             this.readonly(config.config.gifts_readonly)
             this.no_auth_widget(config.config.no_auth_widget)
         }, 'config.load')
+
+        
     }
 
     init_owl() {
