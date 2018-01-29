@@ -1,4 +1,4 @@
-form.form(data-bind="visible: !congrat()")
+form.form(data-bind="visible: !congrat(), css: { '__sailplay-padding': padding_on }")
     .title(data-bind="text: title")
     .header
         .text(data-bind="text: title_step_1")
@@ -10,30 +10,30 @@ form.form(data-bind="visible: !congrat()")
                 div(data-bind="if: field.type == 'sex'")
                     .toggle_bar
                         input#toggle_male.toggle.toggle_left(name="toggle" type="radio" value="1" data-bind="checked: field.value")
-                        label.btn(for="toggle_male") Male
+                        label.btn(for="toggle_male" data-bind="text: $root.gender_male")
                         input#toggle_female.toggle.toggle_right(name="toggle" type="radio" value="2" data-bind="checked: field.value")
-                        label.btn(for="toggle_female") Female
+                        label.btn(for="toggle_female" data-bind="text: $root.gender_female")
                 div(data-bind="if: ~(['sign_up_date', 'birthday'].indexOf(field.type))")
-                    label.select(style="width: 28%")
+                    label.select(data-bind="attr: { style: 'font-size: ' + $root.day_input_size() + 'px !important; width: 28%' }")
                         div.select_value(data-bind="text: field.day")
-                        select(data-bind="options: field.days, value: field.day, optionsCaption: 'Day'")
+                        select(data-bind="options: field.days, value: field.day, optionsCaption: $root.day_text")
                         svg(viewBox="0 0 1000 1000")
                             path(fill="#898989" transform="rotate(90 500 500)" d="M767.9,499.9L291.6,10l-59.4,61.3l416.6,428.7L232.1,928.7l59.5,61.3L767.9,499.9z")
-                    label.select(style="width: 40%")
+                    label.select(data-bind="attr: { style: 'font-size: ' + $root.month_input_size() + 'px !important; width: 40%' }")
                         span(data-bind="with: field.month")
                             div.select_value(data-bind="text: name")
-                        select(data-bind="options: field.months, optionsText: 'name', value: field.month, optionsCaption: 'Month'")
+                        select(data-bind="options: field.months, optionsText: 'name', value: field.month, optionsCaption: $root.month_text")
                         svg(viewBox="0 0 1000 1000")
                             path(fill="#898989" transform="rotate(90 500 500)" d="M767.9,499.9L291.6,10l-59.4,61.3l416.6,428.7L232.1,928.7l59.5,61.3L767.9,499.9z")
-                    label.select(style="width: 28%")
+                    label.select(data-bind="attr: { style: 'font-size: ' + $root.year_input_size() + 'px !important; width: 28%' }")
                         div.select_value(data-bind="text: field.year")
-                        select(data-bind="options: field.years, value: field.year, optionsCaption: 'Year'")
+                        select(data-bind="options: field.years, value: field.year, optionsCaption: $root.year_text")
                         svg(viewBox="0 0 1000 1000")
                             path(fill="#898989" transform="rotate(90 500 500)" d="M767.9,499.9L291.6,10l-59.4,61.3l416.6,428.7L232.1,928.7l59.5,61.3L767.9,499.9z")
  
-                input(data-bind="value: field.value, visible: ['sex', 'birthday', 'sign_up_date'].indexOf(field.type) < 0")
+                input(data-bind="value: field.value, valueUpdate:'blur', visible: ['sex', 'birthday', 'sign_up_date'].indexOf(field.type) < 0, attr: {'data-type': field.type}")
 
-    .header(data-bind="visible: step() == 2")
+    .header.step2(data-bind="visible: step() == 2")
         .text(data-bind="text: title_step_2")
         .bottom_line
     div(data-bind="foreach: { data: secondaryFields, as: 'chunk' }, visible: step() == 2")
@@ -43,36 +43,60 @@ form.form(data-bind="visible: !congrat()")
                 div(data-bind="if: field.type == 'sex'")
                     .toggle_bar
                         input#toggle_male.toggle.toggle_left(name="toggle" type="radio" value="1" data-bind="checked: field.value")
-                        label.btn(for="toggle_male") Male
+                        label.btn(for="toggle_male" data-bind="text: $root.gender_male")
                         input#toggle_female.toggle.toggle_right(name="toggle" type="radio" value="2" data-bind="checked: field.value")
-                        label.btn(for="toggle_female") Female
+                        label.btn(for="toggle_female" data-bind="text: $root.gender_female")
                 div(data-bind="if: ~(['sign_up_date', 'birthday'].indexOf(field.type))")
-                    label.select(style="width: 28%")
+                    label.select(style="width: 28%", data-bind="style: { fontSize: $root.day_input_size() + 'px !important;' }")
                         div.select_value(data-bind="text: field.day")
-                        select(data-bind="options: field.days, value: field.day, optionsCaption: 'Day'")
+                        select(data-bind="options: field.days, value: field.day, optionsCaption: $root.day_text")
                         svg(viewBox="0 0 1000 1000")
                             path(fill="#898989" transform="rotate(90 500 500)" d="M767.9,499.9L291.6,10l-59.4,61.3l416.6,428.7L232.1,928.7l59.5,61.3L767.9,499.9z")
-                    label.select(style="width: 40%")
+                    label.select(style="width: 40%", data-bind="style: { fontSize: $root.month_input_size() + 'px !important;' }")
                         span(data-bind="with: field.month")
                             div.select_value(data-bind="text: name")
-                        select(data-bind="options: field.months, optionsText: 'name', value: field.month, optionsCaption: 'Month'")
+                        select(data-bind="options: field.months, optionsText: 'name', value: field.month, optionsCaption: $root.month_text")
                         svg(viewBox="0 0 1000 1000")
                             path(fill="#898989" transform="rotate(90 500 500)" d="M767.9,499.9L291.6,10l-59.4,61.3l416.6,428.7L232.1,928.7l59.5,61.3L767.9,499.9z")
-                    label.select(style="width: 28%")
+                    label.select(style="width: 28%", data-bind="style: { fontSize: $root.year_input_size() + 'px !important;' }")
                         div.select_value(data-bind="text: field.year")
-                        select(data-bind="options: field.years, value: field.year, optionsCaption: 'Year'")
+                        select(data-bind="options: field.years, value: field.year, optionsCaption: $root.year_text")
                         svg(viewBox="0 0 1000 1000")
                             path(fill="#898989" transform="rotate(90 500 500)" d="M767.9,499.9L291.6,10l-59.4,61.3l416.6,428.7L232.1,928.7l59.5,61.3L767.9,499.9z")
  
-                input(data-bind="value: field.value, visible: ['sex', 'birthday', 'sign_up_date'].indexOf(field.type) < 0")  
-    a.btn(href="javascript:void(0)", data-bind="click: submit, text: btn_text")
-    div.agree(data-bind="visible: last_step")
-        span(data-bind="text: user_agreement_line_1")
-        a(data-bind="text: user_agreement_link, attr: { href: user_agreement_link_href }")
-        br
-        span(data-bind="text: user_agreement_line_2")
+                input(data-bind="value: field.value, valueUpdate:'blur', visible: ['sex', 'birthday', 'sign_up_date'].indexOf(field.type) < 0, attr: {'data-type': field.type}")
+                
+                
+    .form_row(data-bind="visible: check_email_opt_out_visible() || check_sms_opt_out_visible()")
+        .form_group.full
+            label(data-bind="text: opt_out_description")
+
+    .form_row(data-bind="visible: check_email_opt_out_visible()")
+        .form_group.full(data-bind="css: {'__sailplay-error': !email_opt.isValid() && email_opt.isModified()}")
+            input.input_checkbox(type="checkbox", id="email_opt", data-bind="checked: email_opt")
+            label(for="email_opt", data-bind="text: email_opt_text")
+            a.superscript(href="javascript:void(0)" data-bind="click: to_legal, visible: superscripts") 1
+
+    .form_row(data-bind="visible: check_sms_opt_out_visible()")
+        .form_group.full(data-bind="css: {'__sailplay-error': sms_opt.isValid && !sms_opt.isValid() && sms_opt.isModified()}")
+            input.input_checkbox(type="checkbox", id="sms_opt", data-bind="checked: sms_opt")
+            label(for="sms_opt", data-bind="text: sms_opt_text")
+            a.superscript(href="javascript:void(0)" data-bind="click: to_legal, visible: superscripts") 2            
+
+    .form_row
+        .form_group
+            a.btn(href="javascript:void(0)", data-bind="click: submit, text: btn_text, css: {'__sailplay-disabled': in_progress() || !submit_available() }")
+        .form_group
+            div.agree
+                span(data-bind="text: user_agreement_line_1")
+                a(data-bind="text: user_agreement_link, attr: { href: user_agreement_link_href }")
+                br
+                span(data-bind="text: user_agreement_line_2")
+    div.legal-text(data-bind="html: legal_text_html")
+
+
 .congrat(data-bind="visible: congrat")
-    .form
+    .form(data-bind="css: { '__sailplay-padding': padding_on }")
         .ib-50
             .title(data-bind="text: thank_title")
             .description(data-bind="text: thank_description")
