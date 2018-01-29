@@ -1,0 +1,39 @@
+<div data-bind="if: (gifts().length && user()) || (gifts().length && no_auth_widget())">
+<div class="rewards__header" data-bind="text: texts() && texts().rewards.title"></div>
+<div class="owl-carousel owl-theme" data-bind="foreach: gifts">
+    <div class="gift" data-bind="attr: { 'data-id': $index }">
+        <div class="gift__gradient"><img class="gift__image" data-bind="attr: { src: thumbs.url_250x250 }" alt=""></div>
+        <div class="gift__name" data-bind="text: name"></div>
+        <!-- ko if: $parent.user() && points <= $parent.user().user_points.confirmed -->
+        <a href="javascript:void(0)" class="gift__redeem gift__redeem-available " data-bind="css: { '__sailplay-disabled': ($parent.readonly() || !$parent.user() && $parent.no_auth_widget()) } "><span data-bind="text: $parent.texts() && $parent.texts().rewards.redeem_for"></span>
+            <span data-bind="text: points"></span>
+            <span class="uppercase" data-bind="text: $parent.texts() && $parent.texts().points"></span></a>
+        <!-- /ko -->
+        <!-- ko if: !$parent.user() || points > $parent.user().user_points.confirmed -->
+        <a href="javascript:void(0)" class="gift__redeem" data-bind="css: { '__sailplay-disabled': ($parent.readonly() || !$parent.user() && $parent.no_auth_widget()) } "><span data-bind="text: $parent.texts() && $parent.texts().rewards.redeem_for"></span>
+            <span data-bind="text: points"></span>
+            <span class="uppercase" data-bind="text: $parent.texts() && $parent.texts().points"></span></a>
+        <!-- /ko -->
+    </div>
+</div>
+<!-- ko if: start_redeem -->
+<popup params="data: { data: { texts: texts, gift: active_gift, redeem: confirm_redeem, user: user }, close: close_redeem_popup }">
+    <div class="redeem">
+        <img class="redeem__image" data-bind="attr: { src: gift().thumbs.url_250x250 }" alt="">
+        <div class="redeem__text"</div>
+            <span class="redeem__text-name" data-bind="text: gift().name"></span>&nbsp;
+            <span class="redeem__text-points uppercase"><span data-bind="text: gift().points"></span>
+                <span class="uppercase" data-bind="text: texts() && texts().points"></span>
+            </span>
+            <div class="redeem__text-descr" data-bind="text: gift().descr"></div><br>
+            <!-- ko if: gift().points <= user().user_points.confirmed -->
+            <a href="javascript:void(0)" data-bind="click: redeem, text: texts() && texts().rewards.redeem" class="btn"></a>
+            <!-- /ko -->
+            <!-- ko if: gift().points > user().user_points.confirmed -->
+            <a href="javascript:void(0)" class="btn disabled" data-bind="text: texts() && texts().rewards.not_enought"></a>
+            <!-- /ko -->
+        </div>
+    </div>
+</popup>
+<!-- /ko -->
+</div>

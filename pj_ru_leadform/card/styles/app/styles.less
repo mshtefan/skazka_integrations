@@ -1,0 +1,116 @@
+@import "../libs/mixins";
+@import "../core/common";
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,500,700);
+
+@blue: #0f5fae;
+@dark: #444340;
+
+
+#pjsp {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #454340;
+    -webkit-text-size-adjust: 100%;
+}
+
+#pjsp *{
+    .box-sizing(content-box);
+}
+
+::-webkit-input-placeholder {color:#999;}
+::-moz-placeholder          {color:#999;}/* Firefox 19+ */
+:-moz-placeholder           {color:#999;}/* Firefox 18- */
+:-ms-input-placeholder      {color:#999;}
+
+
+// Base Layout
+#pjsp {
+    position: fixed;
+    z-index: 90;
+    width: 576px;
+    height: 440px;
+    left: 50%;
+    top: 50%;
+    margin-left: -288px;
+    margin-top: -188px;
+    background-color: #f5f2e9;
+    box-shadow: 0 2px #2d694a;
+    border-radius: 5px;
+    text-align: left;
+
+
+    //foter
+    .pjsp-footer{
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        height: 178px;
+        padding-left: 76px;
+        padding-right: 78px;
+        background-color: #4eac79;
+        border-radius: 0 0 5px 5px;
+    }
+
+    .pjsp-footer-btn{
+        margin: 0 0 33px 0;
+        display: block;
+        width: 100%;
+        .box-sizing(border-box);
+        font-size: 10px;
+        padding-top: 10px;
+        font-family: 'Roboto', Arial, sans-serif;
+        padding-bottom: 6px;
+    }
+    
+    .pjsp-footer-input{
+        margin-bottom: 29px;
+        height: 27px;
+        .box-sizing(border-box);
+        width: 100%;
+        background: #ffffff;
+        font-size: 12px;
+        font-weight: 300;
+        padding: 0 10px;
+        box-shadow: 0 1px #347855 inset;
+        border: none !important;
+        font-family: 'Roboto', Arial, sans-serif;
+
+        &:focus{
+            outline: none;
+        }
+    }
+
+    .pjsp-footer-label{
+        padding-top: 34px;
+        margin-bottom: 7px;
+        font-size: 12px;
+        font-weight: 300;
+        color: #ffffff;
+    }
+
+    .pjsp-content{
+        padding-left: 76px;
+        padding-right: 78px;
+        padding-top: 33px;
+    }
+
+    .pjsp-content-label{
+        font-size: 12px;
+        font-weight: 300;
+        margin-bottom: 7px;
+    }
+
+    .pjsp-content-select{
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
+    }
+
+}
+
+.ui-menu-item {
+  font-size: 14px !important;
+}

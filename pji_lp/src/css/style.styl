@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,600');
+@import url('https://fonts.googleapis.com/css?family=Changa+One');
+
+@font-face {
+    font-family: "Knockout";
+    src: url(../../assets/fonts/knockout.woff);
+}
+
+@import './status-bar'
+@import './rewards'
+@import './actions'
+@import './popup'
+@import './history'
+
+.container {
+    font-family: "Roboto";
+}
+
+.btn {
+    color: white;
+    font-family: "Knockout";
+    font-size: 24px;
+    padding: 15px 40px
+    background: #0f9675;
+    border-radius: 5px;
+    display: inline-block;
+    text-decoration: none;
+    +below(550px) {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+    +above(700px) {
+        &:hover {
+            background: #117959;
+            color: white;
+        }
+    }
+}
+
+.capital {
+    text-transform: capitalize;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.disabled {
+    opacity: .4;
+    pointer-events: none;
+}
+
+*[class="__sailplay-owl-prev disabled"] {
+    display: none;
+}
+
+*[class="__sailplay-owl-next disabled"] {
+    display: none;
+}
+
+
+.input_poll
+    display: none
+
+.input_poll:checked + label
+    &:before
+        content: ''
+        position: absolute
+        width: 16px;
+        height: 16px;
+        top: 5px;
+        left: 5px;
+        background-image: url(../../assets/icons/check.svg);
+        background-color: #0F9675;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 1
+    &:after
+        background: #0F9675    
+        border: 1px solid #0F9675;        
+
+.input_poll + label
+    max-width: 200px
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    padding-left: 40px
+    &:after
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        width: 23px;
+        height: 23px;
+        top: 0;
+        background: #dee2e1
+        border: 1px solid #dee2e1;
+
+.input_poll[type="radio"]:checked + label:before {
+    background: white;
+    width: 13px;
+    height: 13px;
+    top: 6px;
+    left: 6px;
+    border-radius: 50%;
+}
+
+.input_poll[type="radio"]:checked + label:after {
+}
+
+.input_poll[type="radio"] + label:after {
+    border-radius: 50%;
+}
+
+.input_text
+    border: 0;
+    border-bottom: 1px solid #0f9675;
+    color: black;
+    outline: none;
+    padding: 15px;
+    padding-left: 0;
+    width: 50%;
+    font-size: 18px;
+    margin-left: 40px;

@@ -1,0 +1,74 @@
+<div class="actions__header" data-bind="text: texts() && texts().actions.title, visible: actions().length"></div>
+<div class="actions__list" data-bind="foreach: actions()">
+    <div class="actions__item" data-bind="
+        click: $parent.perform.bind($parent), 
+        css: { '__sailplay-actions__item-active': 
+        $parent.current_action() && (
+            ($parent.current_action()._actionId && $parent.current_action()._actionId == $data._actionId) || 
+            ($parent.current_action().id && $parent.current_action().id == $data.id)
+        ) }
+        ">
+        <span data-bind="text: $parent.current_action._actionId"></span>
+        <!-- ko if: type == 'poll' -->
+        <div class="icon poll" style="background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/7160da3842dd6082e8fa41489497c2e7.svg)"></div>
+        <!-- /ko -->
+        <!-- ko if: type == 'inviteFriend' -->
+        <div class="icon invite" style="background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/bd9af9952fee0968f26932fcbda42042.svg)"></div>
+        <!-- /ko -->
+        <!-- ko if: type == 'socialSharing' && socialType == 'fb' -->
+        <div class="icon fb" style="background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/68559e106d464f20cf061518fdb1ffc4.svg)"></div>
+        <!-- /ko -->
+        <!-- ko if: type == 'socialSharing' && socialType == 'tw' -->
+        <div class="icon tw" style="background-image: url(https://sailplays3.cdnvideo.ru/media/assets/assetfile/21750c8d58bf8d4596ed77f4135a490e.svg)"></div>
+        <!-- /ko -->
+        <div class="actions__text">
+            <span data-bind="text: $parent.getTitle($data)"></span>
+            <span class="actions__text-points">+
+                <span data-bind="text: points"></span>
+                <span data-bind="text: $parent.texts() && $parent.texts().points"></span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- ko if: start_survey -->
+<popup class="poll" params="data: { data: { survey: current_survey, complete: completePoll, texts: texts }, close: close_invite_popup }">
+    <div class="poll" data-bind="foreach: survey().content.questions">
+        <div class="poll__question">
+            <div class="popup__title-name popup__title-uppercase" data-bind="text: text"></div>
+            <div class="poll__choices" data-bind="foreach: options">
+                <!-- ko if: value.type == 'custom' -->
+                <div class="poll__choice">
+                    <input class="input_text" type="text" data-bind="value: value.value, attr: { placeholder: $parentContext.$parent.texts() && $parentContext.$parent.texts().actions.poll_other }">
+                </div>
+                <!-- /ko -->
+                <!-- ko if: value.type == 'default' -->
+                <div class="poll__choice">
+                    <input data-bind="attr: { 
+                            id: 'check_' + $parentContext.$index() + '_' + $index(), 
+                            type: $parent.type,
+                            name: 'question_' + $parentContext.$index(),
+                            value: value.event
+                        }, checked: $parent.result" class="input_poll">
+                    <label data-bind="text: text, attr: { for: 'check_' + $parentContext.$index() + '_' + $index() }"></label>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+    <a href="javascript:void(0)" data-bind="click: complete.bind($data, survey()), text: survey().button_text" class="btn"></a>
+</popup>
+<!-- /ko -->
+
+<!-- ko if: start_invite -->
+<popup params="data: { data: { texts: texts, refer_link: refer_link, copy_link: copy_refer_link }, close: close_invite_popup }">
+    <div class="popup__title">
+        <span class="popup__title-name" data-bind="text: texts() && texts().actions.invite.title"></span>
+        <span class="popup__title-points" data-bind="text: texts() && texts().actions.invite.reward"></span>
+        <div class="popup__title-descr" data-bind="text: texts() && texts().actions.invite.descr"></div>
+    </div>
+
+    <input type="text" class="refer-input" readonly data-bind="value: refer_link">
+    <a href="javascript:void(0)" class="btn" data-bind="click: copy_link, text: texts() && texts().actions.invite.copy_link"></a>
+</popup>
+<!-- /ko -->

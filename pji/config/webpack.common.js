@@ -25,15 +25,6 @@ module.exports = {
     }
   },
 
-  output: {
-    libraryTarget: "var",
-    library: "Foo"
-  },
-
-  externals: {
-    "jquery": "jQuery"
-  },
-
   module: {
     rules: [
       {
@@ -42,8 +33,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env', 'es2015'],
-            plugins: ['transform-object-rest-spread']
+            presets: ['env', 'es2015']
           }
         }
       },
@@ -60,27 +50,7 @@ module.exports = {
         loader: 'url-loader'
       },
       {
-        test: /\.css$/,
-        use: [{
-          loader: "style-loader"
-        }, {
-          loader: "css-loader"
-        }]
-      },
-      {
-        test: /\.important.styl$/,
-        use: [{
-          loader: "style-loader"
-        }, {
-          loader: "css-loader"
-        }, {
-          loader: "cssimportant-loader"
-        }, {
-          loader: "stylus-loader",
-        }]
-      },
-      {
-        test: /\.native.styl$/,
+        test: /\.styl$/,
         use: [{
           loader: "style-loader"
         }, {
@@ -105,13 +75,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'pj',
       template: 'src/index.pug'
-    })
-    ,
-
-    new webpack.ProvidePlugin({
-      "$": "jquery",
-      "jQuery": "jquery",
-      "window.jQuery": "jquery"
     })
   ]
 };

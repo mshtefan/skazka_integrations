@@ -1,0 +1,68 @@
+<div class="bns_overlay_inner">
+    <div class="js-person-main">
+        <span class="bns_over_head">Заполнить профиль</span>
+        <div class="bns_input_block">
+            <input type="text" placeholder="Фамилия" name="surname" value="{{lastName}}">
+        </div>
+        <div class="bns_input_block">
+            <input type="text" placeholder="Имя" name="name" value="{{firstName}}">
+        </div>
+        <div class="bns_input_block">
+            <input type="text" placeholder="Отчество" name="middle_name" value="{{middleName}}">
+        </div>
+        <div class="bns_input_block">
+            <input type="text" placeholder="Телефон" name="phone" value="{{phone}}">
+        </div>
+        <div class="bns_input_block">
+            <input type="text" placeholder="Email" name="email" value="{{email}}">
+        </div>
+        <div class="bns_input_block bns_input_block_date">
+            <label>Дата рождения</label>
+            <div class="bns_select js-select">
+                <span>{{day}}</span>
+                <input name="day" type="hidden" value="{{day}}">
+                <div class="bns_select_popup">
+                    {{#each days}}
+                        <a href="{{value}}">{{text}}</a>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="bns_select js-select">
+                <span>{{monthText}}</span>
+                <input name="month" type="hidden" value="{{month}}">
+                <div class="bns_select_popup">
+                    {{#each months}}
+                        <a href="{{value}}">{{text}}</a>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="bns_select js-select">
+                <span>{{year}}</span>
+                <input name="year" type="hidden" value="{{year}}">
+                <div class="bns_select_popup">
+                    {{#each years}}
+                        <a href="{{value}}">{{text}}</a>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+        <div class="bns_input_block bns_input_block_pol">
+            <label>Пол</label>
+            <input type="radio" name="pol" id="bns_pol" {{#if male}}checked{{/if}} value="1">
+            <label for="bns_pol">Мужской</label>
+            <input type="radio" name="pol" id="bns_pol2" {{#if female}}checked{{/if}} value="2">
+            <label for="bns_pol2">Женский</label>
+        </div>
+        <div class="bns_over_btn">
+            <p></p>
+            <a href="#" class="bns_btn_cent btn_close js-popup-close">Назад</a>
+            <a href="#" class="bns_btn_cent js-save">Сохранить</a>
+        </div>
+    </div>
+    <div class="js-person-message bns_over_btn">
+        <p></p>
+        <a href="#" class="bns_btn_cent js-mess-ok"><span>Ok</span></a>
+    </div>
+</div>
+
+

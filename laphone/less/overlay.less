@@ -1,0 +1,363 @@
+.bns_overlay {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  position: fixed;
+  overflow-y: auto;
+  position: fixed;
+  left: 0;
+  top: 0;
+  text-align: center;
+  z-index: 100000;
+  &:before {
+    content: '';
+    height: 100%;
+    vertical-align: middle;
+    display: inline-block;
+  }
+  .bns_overlay_inner {
+    width: 440px;
+    background-color: #fff;
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+    padding: 20px 50px;
+    box-sizing: border-box;
+    .bns_over_head {
+      float: left;
+      width: 100%;
+      color: #010202;
+      font-size: 29px;
+      font-weight: bold;
+      margin-bottom: 31px;
+    }
+    .bns_over_btn {
+      float: left;
+      width: 100%;
+      text-align: center;
+      margin-top: 15px;
+      a {
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 34px;
+        text-align: center;
+        width: 130px;
+        border-radius: 5px;
+        text-decoration: nonr;
+        display: inline-block;
+        background-color: #a4e002;
+        text-transform: uppercase;
+        text-decoration: none;
+        &.bns_btn_left {
+          float: left;
+        }
+        &.bns_btn_right {
+          float: right;
+        }
+      }
+    }
+    .bns_over_gift {
+      float: left;
+      width: 100%;
+      text-align: center;
+      img {
+        margin-bottom:29px;
+      }
+      .bns_over_gift_name {
+        float: left;
+        width: 100%;
+        color: #000000;
+        font-size: 15px;
+        font-weight: 300;
+        margin-bottom: 8px;
+      }
+      .bns_over_gift_bal {
+        float: left;
+        width: 100%;
+        color: #f901a4;
+        font-size: 17px;
+        font-weight: bold;
+        margin-bottom: 25px;
+      }
+      .bns_over_gift_desc {
+        text-align: left;
+        color: #020405;
+        font-size: 12px;
+        font-weight: 300;
+        float: left;
+        width: 100%;
+      }
+    }
+    .bns_input_block {
+      float: left;
+      width: 100%;
+      margin-bottom: 15px;
+      input[type="text"] {
+        float: left;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #dddddd;
+        height: 30px;
+        padding: 0px 15px;
+        font-size: 12px;
+        font-weight: 300;
+      }
+      label {
+        float: left;
+        width: 100%;
+        color: #000000;
+        font-size: 12px;
+        font-weight: 300;
+        margin-bottom: 6px;
+      }
+      input[type="radio"] {
+        display: none;
+      }
+      input[type="radio"] + label {
+        width: 100px;
+        padding-left:25px;
+        position: relative;
+        line-height: 15px;
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 11px;
+          height: 11px;
+          background-color: #dddddd;
+          border: 2px solid #dddddd;
+          border-radius: 100%;
+        }
+      }
+      input[type="radio"]:checked + label {
+        &:before {
+          background-color: #f901a4;
+        }
+      }
+    }
+    .bns_select {
+      float: left;
+      position: relative;
+      z-index: 1;
+      width: 31%;
+      margin-right: 3.5%;
+      &:last-child {
+        margin-right: 0;
+      }
+      &.act {
+        .bns_select_popup {
+          display: block;
+        }
+      }
+      span {
+        float: left;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #dddddd;
+        line-height: 30px;
+        padding: 0px 13px;
+        cursor: pointer;
+        position: relative;
+        color: #000000;
+        font-size: 12px;
+        font-weight: 300;
+        &:after {
+          width: 9px;
+          height: 4px;
+          background-image: url("@{burl}sel_arr.png");
+          position: absolute;
+          right: 7px;
+          top:50%;
+          margin-top: -2px;
+          display: block;
+          content: '';
+        }
+      }
+      .bns_select_popup {
+        position: absolute;
+        left: 0;
+        top:30px;
+        border: 1px solid #dddddd;
+        box-sizing: border-box;
+        width: 100%;
+        background-color: #fff;
+        display: none;
+        max-height: 130px;
+        overflow-y: auto;
+        a {
+          width: 100%;
+          line-height: 22px;
+          color: #000000;
+          font-size: 12px;
+          text-decoration: none;
+          display: inline-block;
+          padding: 0px 13px;
+          box-sizing: border-box;
+          &:hover {
+            color: #50b848;
+          }
+        }
+      }
+    }
+    .bns_hist_main {
+      float: left;
+      width: 100%;
+      table {
+        float: left;
+        width: 100%;
+        tr {
+          &:last-child {
+            td {
+              border-bottom: 0px;
+            }
+          }
+          td {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #8e8a8a;
+          }
+        }
+        .bns_date {
+          float: left;
+          width: 100%;
+          color: #000;
+          font-size: 12px;
+          font-weight: 300;
+          margin-bottom: 5px;
+        }
+        .bns_text1 {
+          float: left;
+          width: 100%;
+          color: #000000;
+          font-size: 12px;
+          font-weight: 300;
+          margin-bottom: 5px;
+        }
+        .bns_text2 {
+          float: left;
+          width: 100%;
+          font-size: 12px;
+          font-weight: 300;
+          color: #c7c7c7;
+          margin-bottom: 5px;
+        }
+        .bns_v_mid {
+          vertical-align: middle;
+          width: 90px;
+          text-align: right;
+        }
+        .bns_bal {
+          color: #f901a4;
+          font-size: 13px;
+          font-weight: bold;
+          &.bns_bal_min {
+            color: #000000;
+          }
+        }
+      }
+      .bns_hist_page {
+        float: left;
+        width:100%;
+        a {
+          float: left;
+          min-width:30px;
+          line-height: 30px;
+          border-radius: 5px;
+          color: #000000;
+          font-size: 12px;
+          text-align: center;
+          text-decoration: none;
+          white-space: nowrap;
+          &.act {
+            background-color: #dddddd;
+          }
+          &.bns_next_page {
+            width: auto;
+            margin-left: 15px;
+          }
+        }
+      }
+    }
+    .bns_over_stat_main {
+      float: left;
+      width: 100%;
+      .bns_over_stat_col {
+        max-width: 350px;
+        display: inline-block;
+      }
+      .bns_over_stat_item {
+        display: inline-block;
+        max-width: 350px;
+        height: 100px;
+        &.act {
+          outline: 2px solid #fc7fd0;
+        }
+        .bns_over_stat_left {
+          float: left;
+          width:30%;
+          text-align: center;
+          img {
+            width: 65px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+          }
+        }
+        .bns_over_stat_right {
+          float: left;
+          width: 70%;
+          box-sizing: border-box;
+          padding-right: 50px;
+          .bns_name {
+            float: left;
+            width: 100%;
+            color: #000;
+            font-size: 15px;
+            font-weight: bold;
+            margin-top: 13px;
+            margin-bottom:10px;
+          }
+          .bns_desc {
+            float: left;
+            width: 100%;
+            color: #000;
+            font-size: 13px;
+            font-weight: 300;
+            max-height: 42px;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+  }
+  &.bns_overlay_stat {
+    .bns_overlay_inner {
+      padding: 0px;
+      .bns_over_head {
+        padding: 20px 50px 0px;
+      }
+      .bns_over_btn {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+.js-person-message {
+  display: none;
+}
+
+.bns_btn_cent + .bns_btn_cent {
+  margin-left: 50px;
+  @media screen and (max-width: 360px) {
+    margin-left: 0;
+  }
+}
+
+.bns_overlay .bns_overlay_inner .overlay-gifts {
+  margin: 0 -50px;
+  width: auto;
+}

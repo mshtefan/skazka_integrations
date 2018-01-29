@@ -1,0 +1,23 @@
+<div class="bns_info">
+    <div class="bns_info_left">
+        <div class="bns_ava">
+            {{#if pic}}
+                <img src="{{pic}}" alt="">
+            {{/if}}
+        </div>
+        <div class="bns_info_text">
+            <span class="bns_name">{{name}}</span>
+            <span class="bns_phone">{{phone}}</span>
+            <span class="bns_email">{{email}}</span>
+            <a href="#" class="bns_edit js-open-popup-edit">Редактировать</a>
+        </div>
+    </div>
+    <div class="bns_info_center">
+                <span class="bns_bal">
+                    <span class="bns_bal_num">{{#if pointsValue}}{{pointsValue}}{{else}}0{{/if}}</span>
+                    <span class="bns_bal_text">{{pointsText}}</span>
+                </span>
+        <a href="#" class="nms_hist js-open-popup-history">История начислений</a>
+    </div>
+    <div class="js-badges"></div>
+</div>

@@ -1,0 +1,19 @@
+<div class="status-bar" data-bind="if: points() != undefined">
+    <div class="status-bar__header">
+        <span data-bind="text: texts() && texts().status.you_have"></span>
+        <span data-bind="text: points"></span>
+        <span class="uppercase" data-bind="text: texts() && texts().points"></span>        
+    </div>
+    <div class="status-bar__legend" data-bind="foreach: status_points">
+        <div class="status-bar__legend-item" data-bind="css: { '__sailplay-status-bar__legend-item-active': $parent.points() > $data }">
+            <span data-bind="text: $data"></span>
+            <span data-bind="if: ($index() == ($parent.status_points().length - 1))">+</span>
+        </div>
+    </div>
+    <div class="status-bar__line">
+        <div class="status-bar__fill" data-bind="style: { width: fill }"></div>
+        <!-- ko foreach: status_points -->
+        <div class="status-bar__section" data-bind="attr: { points: $data }"></div>
+        <!-- /ko -->
+    </div>
+</div>
