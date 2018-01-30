@@ -139,7 +139,7 @@ window.SAILPLAY = function (opts) {
             return data
         }
 
-          submit() {
+        submit() {
             setTimeout(() => this.in_progress(true));
 
             let self = this;
@@ -444,8 +444,7 @@ window.SAILPLAY = function (opts) {
 
     let getPhoneValue = function ( { value, maskMaxLength, countryCode} ) {
         let phoneValue = value;
-        if (maskMaxLength && countryCode)
-            if (maskMaxLength >= value.split(/[\D]/).join('').length)
+        if (maskMaxLength && countryCode && maskMaxLength >= value.split(/[\D]/).join('').length)
                 phoneValue = countryCode + value;
         return phoneValue;
     }
@@ -633,7 +632,8 @@ window.SAILPLAY = function (opts) {
                     if (!field.can_be_not_unique) el.value.extend({
                       isPhoneUnique: {
                         maskMaxLength: el.maskMaxLength,
-                        countryCode: el.countryCode
+                        countryCode: el.countryCode,
+                        in_progress: pji_subform.in_progress
                       }
                     })
                 }
@@ -691,18 +691,20 @@ window.SAILPLAY = function (opts) {
                 };
                 ko.validation.rules['isPhoneUnique'] = {
                   async: true,
-                  validator: function(val, maskData, callback){
+                  validator: function(val, params, callback){
+                      params.in_progress && params.in_progress(true);
                       let isValid = true;
                       let phoneExists = sp.updateCustomVars({
-                          phone: getPhoneValue ({
+                          phone: getPhoneValue   ({
                             value: val,
-                            maskMaxLength: maskData.maskMaxLength,
-                            countryCode: maskData.countryCode
+                            maskMaxLength: params.maskMaxLength,
+                            countryCode: params.countryCode
                           })
                       })
                       phoneExists.then(data => {
                         if(data.message != "User not found")
                           isValid = false;
+                        params.in_progress && params.in_progress(false);
                         callback(isValid);
                       })
                   },
