@@ -17,7 +17,7 @@
 
     .run(function (sp) {
 
-      sp.send('init', {partner_id: 1556, domain: 'http://sailplay.ru', lang: 'en'});
+      sp.send('init', {partner_id: 1556, domain: '//sailplay.ru', lang: 'en'});
 
     })
 
@@ -113,10 +113,10 @@
               data.force_update = true;
             }
 
-            sp.jsonp.get('http://sailplay.net/js-api/' + sp.config().partner.id + '/custom/tribune-reg/', data, function (res) {
+            sp.jsonp.get('//sailplay.net/js-api/' + sp.config().partner.id + '/custom/tribune-reg/', data, function (res) {
                 if (res.status == 'ok') {
                   if (data.EZPay)
-                      sp.jsonp.get('http://sailplay.net/js-api/' + sp.config().partner.id + '/tags/add/', EZ_tag_data(data), function (res) {
+                      sp.jsonp.get('//sailplay.net/js-api/' + sp.config().partner.id + '/tags/add/', EZ_tag_data(data), function (res) {
                           res.status == 'ok' ? complete_submit(true) : complete_submit(false)
                       });
                   else
