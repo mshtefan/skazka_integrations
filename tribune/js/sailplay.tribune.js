@@ -38,6 +38,7 @@
             market: '',
             send_sms: false,
             send_email: false,
+            EZPay: false,
             send_email_type: 'Activation Email'
           };
 
@@ -113,30 +114,38 @@
             }
 
             sp.jsonp.get('//sailplay.net/js-api/' + sp.config().partner.id + '/custom/tribune-reg/', data, function (res) {
-
-              scope.$apply(function () {
-
                 if (res.status == 'ok') {
-
-                  scope.submited = true;
-
-                  $timeout(function () {
-                    scope.submited = false;
-                  }, 5000);
-
-                } else if (res.status == 'error') {
-
-                  scope.attention = conflict_texts[res.status_code] || null;
-                  scope.force_button = true;
-
-                }
-
-              })
-
-
+                  if (data.EZPay)
+                      sp.jsonp.get('//sailplay.net/js-api/' + sp.config().partner.id + '/tags/add/', EZ_tag_data(data), function (res) {
+                          res.status == 'ok' ? complete_submit(true) : complete_submit(false)
+                      });
+                  else
+                    complete_submit(true)
+                } else
+                    complete_submit(false)
             });
+          }
 
+          function complete_submit(status) {
+            scope.$apply(function () {
 
+              if (status) {
+                scope.submited = true;
+                $timeout(function () {
+                  scope.submited = false;
+                }, 5000);
+              } else {
+                scope.attention = conflict_texts[res.status_code] || null;
+                scope.force_button = true;
+              }
+            })
+          }
+
+          function EZ_tag_data(data) {
+              return {
+                  email: data.email,
+                  tags: "EZPay_".concat(data.market)
+              }
           }
 
           function get_date() {
