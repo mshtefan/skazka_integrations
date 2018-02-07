@@ -17,7 +17,7 @@
             <div class="quests__item-title"><strong data-bind="text: name"></strong></div>
             <div class="quests__item-text" data-bind="text: description">Text</div>
             <div class="quests__item-points"><strong data-bind="text: points"></strong> <strong data-bind="text: $parent.texts() && $parent.texts().quests.points">points</strong></div>
-            <a href="javascipr:void(0)" class="btn" data-bind="text: button_text, attr: { href: content.url }"></a>
+            <a href="javascipr:void(0)" target="_blank" class="btn" data-bind="text: button_text, attr: { href: content.url }"></a>
         </div>
         <!-- /ko  -->
     </div>
