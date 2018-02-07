@@ -1,6 +1,7 @@
 import __jquery__ from 'jquery'
 import { Dialog } from '@lib/dialog'
 let sp = require('@lib/sp');
+let profile_callback = window._profile_callback;
 
 __jquery__.noConflict();
 require('maskedinput');
@@ -170,7 +171,8 @@ class ProfileEditor extends Dialog {
             'Country': this.country() || '',
             'Currency': this.user_currency() || ''
         });
-
+        if (profile_callback) 
+            profile_callback();
         this.preventClose(false);
         this.close();
     }
