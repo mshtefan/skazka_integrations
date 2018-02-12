@@ -8,7 +8,7 @@
             <div class="quests__item-title"><strong data-bind="text: $parent.getTitle($data)"></strong></div>
             <div class="quests__item-text" data-bind="text: $parent.getDesc($data)">Text</div>
             <div class="quests__item-points"><strong data-bind="text: points"></strong> <strong data-bind="text: $parent.texts() && $parent.texts().quests.points">points</strong></div>
-            <a href="javascipr:void(0)" target="_blank" data-bind="click: $parent.perform.bind($data), text: $parent.texts() && $parent.texts().quests.view_button" class="btn">View Quest</a>
+            <a href="javascipt:void(0)" target="_blank" data-bind="click: $parent.perform.bind($data), text: $parent.texts() && $parent.texts().quests.view_button" class="btn">View Quest</a>
         </div>
         <!-- /ko -->
         <!-- ko if: type == 'static_page' -->
@@ -17,7 +17,7 @@
             <div class="quests__item-title"><strong data-bind="text: name"></strong></div>
             <div class="quests__item-text" data-bind="text: description">Text</div>
             <div class="quests__item-points"><strong data-bind="text: points"></strong> <strong data-bind="text: $parent.texts() && $parent.texts().quests.points">points</strong></div>
-            <a href="javascipr:void(0)" target="_blank" class="btn" data-bind="text: button_text, attr: { href: content.url }"></a>
+            <a href="javascipt:void(0)" target="_blank" class="btn" data-bind="text: button_text, attr: { href: content.url }"></a>
         </div>
         <!-- /ko  -->
     </div>

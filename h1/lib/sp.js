@@ -47,7 +47,7 @@
                             },
                             success: config_data => {
                                 data.config.partner.loyalty_page_config = config_data.config.config;
-                                self.config(data.config);                                
+                                self.config(data.config);
                             }
                         })
                     } else
@@ -193,7 +193,7 @@
                         resolve(result)
                     }
                 })
-            })            
+            })
         }
 
         tagsList(options, auth_hash) {
@@ -219,7 +219,7 @@
 
         tagsExist(tags_arr = [], auth_hash) {
             if (!this.inited())
-                throw new Error('sp not inited');            
+                throw new Error('sp not inited');
 
             return new Promise((resolve, reject) => {
                 jsonp({
@@ -393,7 +393,7 @@
                 top = height - (height / 2);
             }
 
-            return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
+            return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left, "_blank");
         };
 
         openSocialRegNeedPopup(action) {
