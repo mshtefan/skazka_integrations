@@ -45,7 +45,7 @@ class rewardsView {
             this.no_auth_widget(config.config.no_auth_widget)
         }, 'config.load')
 
-        
+
     }
 
     init_owl() {
@@ -53,7 +53,8 @@ class rewardsView {
         jQuery('.__sailplay-owl-carousel').owlCarousel({
             stagePadding: 20,
             margin: 10,
-            items: 1,
+            //items: 1,
+            autoWidth: true,
             loop: false,
             mouseDrag: false,
             nav: true,
@@ -76,27 +77,27 @@ class rewardsView {
                 1024: {
                     items: 4,
                     stagePadding: 40,
-                    margin: 10                    
+                    margin: 10
                 },
 
                 800: {
                     items: 3,
                     stagePadding: 40,
-                    margin: 10                                                 
+                    margin: 10
                 },
 
                 600: {
                     items: 2,
                     stagePadding: 20,
-                    margin: 10                                        
+                    margin: 10
                 }
             }
         });
 
         jQuery(document).on('mousedown', '.__sailplay-gift__redeem', event => {
             let index = jQuery(event.currentTarget).parent().data('id');
-            //jQuery('.__sailplay-gift__redeem-active').removeClass('__sailplay-gift__redeem-active');   
-            //jQuery(event.currentTarget).addClass('__sailplay-gift__redeem-active')     
+            //jQuery('.__sailplay-gift__redeem-active').removeClass('__sailplay-gift__redeem-active');
+            //jQuery(event.currentTarget).addClass('__sailplay-gift__redeem-active')
             this.show_redeem_popup(index);
             event.stopPropagation();
             return false;
@@ -106,11 +107,11 @@ class rewardsView {
     close_redeem_popup() {
         this.start_redeem(false);
         this.active_gift();
-        //jQuery('.__sailplay-gift__redeem-active').removeClass('__sailplay-gift__redeem-active');        
+        //jQuery('.__sailplay-gift__redeem-active').removeClass('__sailplay-gift__redeem-active');
     }
 
     show_redeem_popup(index) {
-        if (this.readonly()) return 
+        if (this.readonly()) return
 
         this.active_gift(this.gifts()[index]);
         this.start_redeem(true);
