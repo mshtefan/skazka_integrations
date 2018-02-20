@@ -444,7 +444,7 @@
         }
 
         share(action) {
-            var frameUrl = `${this.options.domain}/js-api/${this.config().partner.id}/actions/social-widget/?auth_hash=${this.auth_hash}`;
+            var frameUrl = `${this.options.domain}/js-api/${this.config().partner.id}/actions/social-widget/v2/?auth_hash=${this.auth_hash}`;
             frameUrl += '&socialType=' + action.socialType + '&action=' + action.action + '&link=' + action.shortLink + '&pic=' + (this.actions_config().partnerCustomPic ? this.actions_config().partnerCustomPic : this.config().partner.logo);
             frameUrl += '&msg=' + this.actions_config().messages[action.action];
             frameUrl += '&_actionId=' + action['_actionId'];
