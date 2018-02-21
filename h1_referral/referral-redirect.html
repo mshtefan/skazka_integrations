@@ -1,0 +1,20 @@
+<script type="text/javascript" src="https://sailplays3.cdnvideo.ru/media/assets/assetfile/2dc05dadfd4a276a0a06eafe80ebe676.js"></script>
+<body>
+</body>
+<script>
+window.onload = function(){
+var params = SAILPLAY.url_params();
+
+var req = document.createElement('iframe');
+    req.width = 0;
+    req.height = 0;
+    req.style.border = 'none';
+    req.src = params.referral;
+    document.body.appendChild(req);
+    req.onload = () => {
+        document.body.removeChild(req);
+        window.location.href = params.link;
+    }
+}
+</script>
+
