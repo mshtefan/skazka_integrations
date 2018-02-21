@@ -393,7 +393,7 @@
                 top = height - (height / 2);
             }
 
-            return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left, "_blank");
+            return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
         };
 
         openSocialRegNeedPopup(action) {
@@ -415,13 +415,9 @@
 
         performAction(action) {
             if (action.socialType && this.actions_config().connectedAccounts) {
-                if (this.actions_config().connectedAccounts[action.socialType] && action.socialType != 'tw' && action.socialType != 'gp') {
-                    this.openSocialRegNeedPopup(action);
-                } else {
-                    this.share(action);
-                }
+                      return this.share(action);
             } else if (!action.socialType && !action.content) {
-                var frameUrl = `${this.options.domain}/popup/${this.config().partner.id}/widgets/custom/${action.type}/?auth_hash=${this.auth_hash}`;
+                var frameUrl = `https://sailplay.net/popup/${this.config().partner.id}/widgets/custom/${action.type}/?auth_hash=${this.auth_hash}`;
                 frameUrl += '&lang=' + this.config().lang || 'en';
                 frameUrl += '&from_sdk=0';
                 var actionFrame = this.popupWindow(frameUrl, 'SailPlay', 600, 400);
@@ -439,27 +435,36 @@
                 // iframe.frameBorder = "0";
                 // iframe.allowTransparency="true";
 
-                var iframeUrl = `${this.options.domain}${this.config().urls.actions.custom.render.replace(':action_id', action.id)}?auth_hash=${this.auth_hash}&lang=${this.options.lang || 'en'}`
+                var iframeUrl = `https://sailplay.net${this.config().urls.actions.custom.render.replace(':action_id', action.id)}?auth_hash=${this.auth_hash}&lang=${this.options.lang || 'en'}`
             };
         }
 
         share(action) {
-            var frameUrl = `${this.options.domain}/js-api/${this.config().partner.id}/actions/social-widget/?auth_hash=${this.auth_hash}`;
-            frameUrl += '&socialType=' + action.socialType + '&action=' + action.action + '&link=' + action.shortLink + '&pic=' + (this.actions_config().partnerCustomPic ? this.actions_config().partnerCustomPic : this.config().partner.logo);
+            var frameUrl = `https://sailplay.net/js-api/${this.config().partner.id}/actions/social-widget/v2/?auth_hash=${this.auth_hash}&text=Associate Account`;
+            frameUrl += '&socialType=' + action.socialType + '&action=' + action.action + '&link=' + encodeURIComponent(action.shortLink) + '&pic=' + (this.actions_config().partnerCustomPic ? this.actions_config().partnerCustomPic : this.config().partner.logo);
             frameUrl += '&msg=' + this.actions_config().messages[action.action];
             frameUrl += '&_actionId=' + action['_actionId'];
+            frameUrl += action.socialType == 'gp' ? '&account_connected=true' : '&account_connected=false'
+
+            return frameUrl;
+          /*  var height = 200
+            var width = 210
 
             if (action.action == 'purchase') {
                 frameUrl += '&purchasePublicKey=' + this.actions_config().purchasePublicKey;
             }
+            if (action.socialType == 'gp') {
+                height = 400
+                width = 400
+            }
 
-            var socialFrame = this.popupWindow(frameUrl, 'social_action', 200, 210);
+            var socialFrame = this.popupWindow(frameUrl, 'social_action', height, width);
             var checkPopupInterval = setInterval(() => {
                 if (socialFrame == null || socialFrame.closed) {
                     this.performComplete()
                     clearInterval(checkPopupInterval);
                 }
-            }, 200);
+            }, 200);*/
 
         };
     }
