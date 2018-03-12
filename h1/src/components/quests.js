@@ -46,9 +46,11 @@ class QuestsView {
                         return get_order(a) - get_order(b)
                     })
                     let urls = []
-                    for (var i=merge.length + 1; i--;) {
-                        urls.push(ko.observable(""))
+                    for (var i=0; i < merge.length; i++) {
+                        let iframeUrlCurrent = merge.length+1 == i ? "" : (merge[i].type == "socialSharing" ? sp.performAction(merge[i]) : "")
+                        urls.push(ko.observable(iframeUrlCurrent))
                     }
+                    urls.push(ko.observable(""))
                     this.iframeUrls(urls)
                     this.quests(merge)
 
@@ -68,9 +70,9 @@ class QuestsView {
         this.iframeUrls()[id].valueHasMutated()
     }
 
-    tripadvisor(url) {
+    trustpilot(url) {
       window.open(url.content.url)
-      sp.tagsAdd({tags: ["TripAdvisor"], email: sp.user().user.email()}, sp.auth_hash)
+      sp.tagsAdd({tags: ["TrustPilot"], email: sp.user().user.email()}, sp.auth_hash)
       setTimeout(sp.getUserInfo(), 1000)
     }
 

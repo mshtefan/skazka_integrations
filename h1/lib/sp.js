@@ -440,11 +440,12 @@
         }
 
         share(action) {
-            var frameUrl = `https://sailplay.net/js-api/${this.config().partner.id}/actions/social-widget/v2/?auth_hash=${this.auth_hash}&text=Associate Account`;
+            var button_text = action.action=='partner_page' ? 'Share' : 'Associate account'
+            var frameUrl = `https://sailplay.net/js-api/${this.config().partner.id}/actions/social-widget/v2/?auth_hash=${this.auth_hash}`;
             frameUrl += '&socialType=' + action.socialType + '&action=' + action.action + '&link=' + encodeURIComponent(action.shortLink) + '&pic=' + (this.actions_config().partnerCustomPic ? this.actions_config().partnerCustomPic : this.config().partner.logo);
-            frameUrl += '&msg=' + this.actions_config().messages[action.action];
+            frameUrl += '&msg=' + this.actions_config().messages[action.action] + '&text=' + button_text;
             frameUrl += '&_actionId=' + action['_actionId'];
-            frameUrl += action.socialType == 'gp' ? '&account_connected=true' : '&account_connected=false'
+            frameUrl += action.socialType == 'gp' ? '&account_connected=true' : '&account_connected=' + (action.action == 'partner_page' && action.socialType == 'fb' ? 'true' : 'false')
 
             return frameUrl;
           /*  var height = 200
