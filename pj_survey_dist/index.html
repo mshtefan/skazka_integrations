@@ -21,10 +21,10 @@
     
     var sConfig = {
 
-      partner_id: 5,
+      partner_id: params.partner_id || 5,
       dep_id: params.dep_id || '',
-      domain: "//sailplay.ru",
-      lang:  "ru",
+      domain: params.domain || "//sailplay.ru",
+      lang:  params.lang || "ru",
       config: params.config || "pjsurvey"
 
     }
