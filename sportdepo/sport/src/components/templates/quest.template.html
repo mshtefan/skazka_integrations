@@ -58,7 +58,7 @@
         </div>
     </div>    
     <!-- ko foreach: actions -->
-    <div class="bns_qust_item" data-bind="click: $parent.perform.bind($data, $data)">
+    <div class="bns_qust_item" data-bind="click: $parent.perform.bind($data, $data), event: {mouseenter: $parent.onMouseEnter.bind($data)}">
         <div class="bns_qust_item_left">
             <!-- ko if: $parent.isAction($data, 'partner_page') || $parent.isAction($data, 'like') || $parent.isAction($data, 'purchase')-->
             <svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -160,9 +160,14 @@
 
             <span class="bns_qust_item_right_bal">
                 <span class="bns_qust_item_right_bal_num" data-bind="text: points"></span>
-            <span class="bns_qust_item_right_bal_text">баллов</span>
+                <span class="bns_qust_item_right_bal_text">баллов</span>
             </span>
-            <a href="#" class="bns_qust_item_right_btn">Выполнить</a>
+            <!-- ko if: socialType -->
+                <a href="#" class="bns_qust_item_right_btn bns_social_iframe">Выполнить</a>
+            <!-- /ko -->     
+            <!-- ko if: !socialType -->
+                <a href="#" class="bns_qust_item_right_btn">Выполнить</a>
+            <!-- /ko -->           
         </div>
     </div>
     <!-- /ko -->

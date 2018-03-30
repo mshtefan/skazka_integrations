@@ -1,6 +1,7 @@
 import ko from 'knockout';
 import sailplay from 'sailplay-hub';
 import 'sailplay-hub-actions';
+import 'jquery';
 
 export default function(messager) {
     return function (params) {
@@ -13,7 +14,9 @@ export default function(messager) {
         }
 
         this.perform = action => {
-            sailplay.send('actions.perform', action)
+            if(!action.socialType) {
+                sailplay.send('actions.perform', action)
+            }
         }
 
         this.openProfile = () => {
@@ -24,6 +27,33 @@ export default function(messager) {
             location.href = '/personal/#settings';
             location.reload();
         }
+
+
+        $('body').on('mouseenter', '.bns_qust_item', function() {
+            $(this).addClass('type_hovered');
+         }).on('mouseleave', '.bns_qust_item', function() {
+            $(this).removeClass('type_hovered');
+         }).on('hover', '.bns_qust_item iframe', function() {
+            $(this).parents('.bns_qust_item').addClass('type_hovered');
+         });
+
+        this.onMouseEnter = (action, e) => {
+            let isIframe = e.target.tagName == 'IFRAME';
+            let button = e.target.parentElement;
+            if(!isIframe) {
+                button = e && e.target && e.target.getElementsByClassName && e.target.getElementsByClassName('bns_social_iframe')[0];
+            }
+            if(action.socialType && button && !button.classList.contains('parsed')) {
+                button.classList.add('parsed');
+                sailplay.actions.parse(button, action)
+            }
+        }
+
+        sailplay.on('actions.perform.success', data => {
+            setTimeout(() => {
+                messager.publish(this.config, 'init');            
+            }, 500)
+        })  
 
         sailplay.on('actions.perform.complete', data => {
             setTimeout(() => {
