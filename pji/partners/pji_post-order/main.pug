@@ -17,8 +17,14 @@
     .col.col--6.col-mobile
       img(data-bind="attr: { src: closestGift() && closestGift().thumbs.url_250x250 }", alt="").h-w-100.h-round
     .col.col--18.col-mobile
+      <!-- ko if: pointsNeeded() <= 0 -->
+      .text.h-fs--30.h-text--upper.h-mt--3p #[span(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.first_line_prefix")] #[span.h-text--red(data-bind="text: latestPoints")] #[span.h-text--red(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.points_text")] 
+      .text.h-fs--30.h-text--upper #[span(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.enough_points_text")] 
+      <!-- /ko -->
+      <!-- ko if: pointsNeeded() > 0 -->
       .text.h-fs--30.h-text--upper.h-mt--7p #[span(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.first_line_prefix")] #[span.h-text--red(data-bind="text: latestPoints")] #[span.h-text--red(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.points_text")] 
       .text.h-fs--30.h-text--upper #[span.h-text--red(data-bind="text: pointsNeeded")] #[span.h-text--red(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.points_text")] #[span(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.second_line_postfix")] #[span.h-text--red(data-bind="text: closestGift().name")]
+      <!-- /ko -->
       .text.h-fs--14.h-text--roboto.h-mt--3p.mobile #[span(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.motivation_prefix")] #[a.h-text--turq.h-text--bold(data-bind="attr: { href: specificConfig() && specificConfig().pjUrl }, text: specificConfig() && specificConfig().texts.in_loyalty.papa_link")] #[span(data-bind="text: specificConfig() && specificConfig().texts.in_loyalty.motivation_postfix")]
   .row.h-border--top.h-border--gray(data-bind="foreach: activeActions")
     .span.span--8.col-mobile.h-border--left.h-border--gray.actions

@@ -1,4 +1,4 @@
-import mainStyle from '@lib/styles/style.important.styl';
+  import mainStyle from '@lib/styles/style.important.styl';
 import { SailPlay } from '@lib/core.js'
 import ko from 'knockout';
 require('@lib/styles/helpers.important.styl')
@@ -20,7 +20,7 @@ function shuffle(a) {
 // const domain = 'http://sailplay.ru';
 // const partner_id = 1737
 
-window.SAILPLAY___ = function (opts) {
+window.SAILPLAY = function (opts) {
     if (initiated) return;
     initiated = true;
 
@@ -54,15 +54,15 @@ window.SAILPLAY___ = function (opts) {
 
         closeOnOverlayCustomAction(data, e) {
             if (~e.target.className.indexOf('h-screen--full')) {
-                pji_post.showCustomAction(false)     
+                pji_post.showCustomAction(false)
                 pji_post.customActionSrc('');
-                pji_post.updateActions()                
+                pji_post.updateActions()
             }
         },
 
         closeOnOverlay(data, e) {
             if (~e.target.className.indexOf('h-screen--full'))
-            pji_post.showModal(false)            
+            pji_post.showModal(false)
         },
 
         close_modal(data, e) {
@@ -71,7 +71,7 @@ window.SAILPLAY___ = function (opts) {
 
         close() {
             pji_post.showCustomAction(false);
-            pji_post.updateActions();            
+            pji_post.updateActions();
         },
 
         redirect() {
@@ -190,17 +190,17 @@ window.SAILPLAY___ = function (opts) {
                 sp.addTags(['Loyalty Opt-in']);
                 let texts = ev.currentTarget.querySelectorAll('span');
                 texts[0].classList.add('__sailplay-hidden_default');
-                setTimeout(() => { 
-                    texts[1].classList.remove('__sailplay-hidden_default')                            
+                setTimeout(() => {
+                    texts[1].classList.remove('__sailplay-hidden_default')
                 }, 200)
 
                 setTimeout(() => {
-                    texts[1].classList.add('__sailplay-hidden_default')       
+                    texts[1].classList.add('__sailplay-hidden_default')
                 }, 1000)
 
                 setTimeout(() => {
                     pji_post.state = 'signed'
-                    texts[2].classList.remove('__sailplay-hidden_default')                                                                                 
+                    texts[2].classList.remove('__sailplay-hidden_default')
                 }, 1200)
             }
         }
@@ -239,7 +239,7 @@ window.SAILPLAY___ = function (opts) {
                         sailplay_element.style.display = 'block';
                     }, 100)
                 } else {
-                    pji_post.getLatestPoints()                    
+                    pji_post.getLatestPoints()
                     pji_post.getMinAvailableGifts()
 
                     setTimeout(() => {

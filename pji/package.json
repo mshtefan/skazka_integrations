@@ -1,11 +1,11 @@
 {
-  "name": "pj_preoreder",
+  "name": "pj_postoreder",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server --inline --progress --port 8080",
-    "build": "node_modules/.bin/rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
+    "build": "node_modules/.bin/rimraf dist && webpack --config config/webpack.dev.js --progress --profile --bail",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
