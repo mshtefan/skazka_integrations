@@ -440,7 +440,7 @@
         }
 
         share(action) {
-            var button_text = action.action=='partner_page' ? 'Share' : 'Associate account'
+            var button_text = action.action=='partner_page' ? 'Share' : 'Link account'
             var frameUrl = `https://sailplay.net/js-api/${this.config().partner.id}/actions/social-widget/v2/?auth_hash=${this.auth_hash}`;
             frameUrl += '&socialType=' + action.socialType + '&action=' + action.action + '&link=' + encodeURIComponent(action.shortLink) + '&pic=' + (this.actions_config().partnerCustomPic ? this.actions_config().partnerCustomPic : this.config().partner.logo);
             frameUrl += '&msg=' + this.actions_config().messages[action.action] + '&text=' + button_text;
