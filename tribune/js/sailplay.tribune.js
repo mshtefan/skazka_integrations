@@ -228,6 +228,10 @@
             {
               label: 'Lake County News',
               value: 'LakeCountyNews'
+            },
+            {
+              label: 'New York Daily News',
+              value: 'NewYorkDailyNews'
             }
           ];
 
