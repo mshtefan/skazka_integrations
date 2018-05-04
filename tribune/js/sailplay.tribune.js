@@ -166,7 +166,7 @@
               value: 'SanDiegoUnion'
             },
             {
-              label: 'latimes',
+              label: 'LA Times',
               value: 'latimes'
             },
             {
