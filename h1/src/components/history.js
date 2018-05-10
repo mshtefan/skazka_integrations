@@ -25,6 +25,14 @@ class HistoryView {
         this.collected = ko.observable(0);
         this.texts = ko.observable();
         this.purchases = ko.observable();
+        this.user = ko.observable();
+
+        this.registered =  ko.pureComputed(() => {
+            if (!this.user()) return ''
+
+            let date = new Date(this.user().register_date())
+            return `${date.toLocaleString('en-us', { month: 'long' })} ${date.getDate()}, ${date.getFullYear()}`
+        });
 
         switch (this.type) {
             case 'purchase':
@@ -114,8 +122,17 @@ class HistoryView {
                 return
             }
 
-            this.registered(registered.create_date.split(' ').join('T'));
+            //this.registered(registered.create_date.split(' ').join('T'));
         })
+
+        sp.user.subscribe(data => {
+            if (!data) {
+                this.user(false);
+                return
+            }
+
+            this.user(data.user);
+        });
 
         sp.config.subscribe(data => {
             this.texts(data.partner.loyalty_page_config.texts);

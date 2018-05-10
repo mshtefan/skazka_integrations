@@ -39,8 +39,9 @@
                             css: { '__sailplay-error': !user.birth_date.isValid() }" placeholder="MM / DD / YYYY">
                     </label>
                     <label class="span_3-5">
-                        <span data-bind="text: texts().profile.popup.form_labels.mobile_phone">Mobile Phone Number</span>
-                        <input type="text" placeholder="">
+                        <span data-bind="text: texts().profile.popup.form_labels.mobile_phone">Mobile Phone Numsber</span>
+                        <input type="text"  data-bind="
+                            value: user.phone" placeholder="">
                     </label>
                 </div>
                 <div class="form-group half-margin">

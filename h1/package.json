@@ -38,7 +38,7 @@
     "webpack-dev-server": "^2.9.2",
     "webpack-merge": "^4.1.0"
   },
-  "name": "pji_lp",
+  "name": "h1",
   "version": "1.0.0",
   "main": "index.js",
   "devDependencies": {
