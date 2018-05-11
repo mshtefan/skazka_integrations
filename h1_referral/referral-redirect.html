@@ -9,7 +9,7 @@ var req = document.createElement('iframe');
     req.width = 0;
     req.height = 0;
     req.style.border = 'none';
-    req.src = params.referral;
+    req.src = params.request;
     document.body.appendChild(req);
     req.onload = () => {
         document.body.removeChild(req);
