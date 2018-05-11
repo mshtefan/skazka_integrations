@@ -1,11 +1,33 @@
-<script type="text/javascript" src="https://sailplays3.cdnvideo.ru/media/assets/assetfile/2dc05dadfd4a276a0a06eafe80ebe676.js"></script>
 <body>
 </body>
 <script>
-window.onload = function(){
-var params = SAILPLAY.url_params();
 
-var req = document.createElement('iframe');
+url_params = function () {
+      // This function is anonymous, is executed immediately and
+      // the return value is assigned to QueryString!
+      var query_string = {};
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        var uri_component = pair && pair[1] ? pair[1].replace(/%([^\d].)/, "%25$1") : '';
+        // If first entry with this name
+        if (typeof query_string[pair[0]] === "undefined") {
+          query_string[pair[0]] = decodeURIComponent(uri_component);
+          // If second entry with this name
+        } else if (typeof query_string[pair[0]] === "string") {
+          query_string[pair[0]] = [query_string[pair[0]], decodeURIComponent(uri_component)];
+          // If third or later entry with this name
+        } else {
+          query_string[pair[0]].push(decodeURIComponent(uri_component));
+        }
+      }
+      return query_string;
+    };
+
+window.onload = function(){
+	var params = url_params();
+	var req = document.createElement('iframe');
     req.width = 0;
     req.height = 0;
     req.style.border = 'none';
@@ -17,4 +39,3 @@ var req = document.createElement('iframe');
     }
 }
 </script>
-
