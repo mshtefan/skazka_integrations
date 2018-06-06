@@ -6,7 +6,9 @@ class historyView {
     constructor() {
         this.history = ko.observableArray();
         this.history_filtered = ko.computed(() => {
-            return ko.utils.arrayFilter(this.history(), item => ['purchase', 'gift_purchase'].indexOf(item.action) > -1);
+            return ko.utils.arrayFilter(this.history(), item => 
+                (['purchase', 'gift_purchase'].indexOf(item.action) > -1) && (item.action !== 'purchase' || item.is_completed === true)
+            );
         })
 
         this.user = ko.observable();
